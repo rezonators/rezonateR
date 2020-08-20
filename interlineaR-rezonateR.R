@@ -77,10 +77,11 @@ rez_pangloss = function(url, filename){
 rez_interlineaR = function(infile, filename){
   rezImport = infile$words
   sentences = infile$sentences %>% rename(sent_form = form, sent_translation = translation, sent_audio_start = audio_start, sent_audio_end = audio_end)
-  rezImport = rezImport %>% left_join(infile$morphemes %>% group_by(word_id) %>% summarise(word_form = paste0(token, collapse = "-")), by = "word_id")
-  rezImport = rezImport %>% left_join(infile$morphemes %>% filter(!is.na(gloss)) %>% group_by(word_id) %>% summarise(word_gloss = paste0(gloss, collapse = "-")), by = "word_id")
-  rezImport = rezImport %>% left_join(sentences, by = "sentence_id")
-  write_csv(rezImport, filename)
+  rezImport = rezImport %>% left_join(infile$morphemes %>% group_by(word_id, text_id) %>% summarise(word_form = paste0(token, collapse = "-")), by = c("word_id", "text_id"))
+  rezImport = rezImport %>% left_join(infile$morphemes %>% filter(!is.na(gloss)) %>% group_by(word_id, text_id) %>% summarise(word_gloss = paste0(gloss, collapse = "-")), by = c("word_id", "text_id"))
+  rezImport = rezImport %>% left_join(sentences, by = c("sentence_id", "text_id"))
+  write_tsv(rezImport, filename)
+  rezImport
 }
 
-rez_pangloss("https://cocoon.huma-num.fr/data/mazaudon/masters/crdo-TAJ_ORIGTAM.xml", "tamang1.csv")
+tamang1_rez = rez_pangloss("https://cocoon.huma-num.fr/data/mazaudon/masters/crdo-TAJ_ORIGTAM.xml", "tamang1.txt")
