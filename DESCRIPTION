@@ -1,16 +1,30 @@
 Package: rezonateR
-Title: What the Package Does (One Line, Title Case)
+Title: A Support Package for Working with Rezonator in R
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    c(person(given = "John W",
+           family = "Du Bois",
+           role = c("cre"),
+           email = "dubois@ucsb.edu"),
+    person(given = "Ryan Ka Yau",
+           family = "Lai",
+           role = c("aut"),
+           email = "kayaulai@ucsb.edu",
+           comment = c(ORCID = "0000-0001-6478-0649")))
+Maintainer: Ryan Ka Yau Lai <kayaulai@ucsb.edu>
+Description: This is a package, still in very early alpha, that a) takes data annotated in Rezonator and turns it into a format useable in R, and b) moulds data in formats currently unsupported by Rezonator into a shape importable into Rezonator.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    xml2,
+    rjson
+Depends:
+    dplyr,
+    readr
