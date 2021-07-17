@@ -1,6 +1,6 @@
 #' Import a Rez file
 #'
-#' Import a Rez file. This returns an object containing, among other things, a nodeMap object containing raw information, and data frames for tokens, units, chunks, track chain entries, track chains, containing only key information.
+#' Import a Rez file. This returns an object containing, among other things, a nodeMap object containing raw information, and data frames for tokens, units, chunks, track chain entries, track chains, containing only key information likely to be useful for the user.
 #'
 #' @param path A character vector of paths to the files to be imported. For Windows users, please use / instead of \.
 #' @param docnames A character vector of the document names. If left blank, a docname will be generated according to the filenames of files you import. For example, the document foo/bar.rez will be named 'bar'.
@@ -22,15 +22,29 @@ importRez = function(paths, docnames = ""){
     docnames = sapply(1:length(paths), function(x) substr(paths[x], docnames_start, docnames_end))
   }
 
+  nodeMapSep = list()
   for(x in 1:length(paths)){
     path = paths[x]
-
-    #Importing .rez file
-    rezJSON = rjson::fromJSON(file = path)
-    nodeMap = nodeMap(rezJSON[["ROOT"]][[1]][["nodeMap"]])
+    rezJSON = rjson::fromJSON(file = path) #Importing the file
+    nodeMapSep[[x]] = nodeMap(rezJSON[["ROOT"]][[1]][["nodeMap"]], docnames[x]) #Getting an individual node map
   }
 
-  returnObj = list(nodeMap = nodeMap)
+  if(length(paths) > 1){
+    fullNodeMap = Reduce(mergeNodeMaps, nodeMapSep[2:length(nodeMapSep)], mergeNodeMaps[[1]])
+  } else {
+    fullNodeMap = nodeMapSep[[1]]
+  }
+
+  entryDF = nodeToDF(fullNodeMap[["entry"]], entryDFFields)
+  unitDF = nodeToDF(fullNodeMap[["unit"]], unitDFFields)
+  tokenDF = nodeToDF(fullNodeMap[["token"]], tokenDFFields)
+  chunkDF = nodeToDF(fullNodeMap[["chunk"]], chunkDFFields)
+  trackDF = nodeToDF(fullNodeMap[["track"]], trackDFFields)
+  trackChainDF = nodeToDF(fullNodeMap[["trackChain"]], trackChainDFFields)
+  linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
+  docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
+
+  returnObj = list(nodeMap = fullNodeMap, entryDF = entryDF, unitDF = unitDF, tokenDF = tokenDF, chunkDF = chunkDF, trackDF = trackDF, trackChainDF = trackChainDF, linkDF = linkDF, docDF = docDF)
   return(returnObj)
 }
 
@@ -70,32 +84,91 @@ nodeMap = function(importNodeMap, docname){
         rawNodeMap[[node$type]] = list()
       }
       rawNodeMap[[node$type]][[nodeName]] = node
+      rawNodeMap[[node$type]][[nodeName]][["doc"]] = docname
     }
   }
 
-  return(new_nodeMap(rawNodeMap, docname, nameLists, maps))
+  return(new_nodeMap(rawNodeMap, nameLists, maps))
 }
 
-new_nodeMap = function(organisedNodeMap, docname, idLists, smallMaps){
+#Constructor function for nodeMap.
+new_nodeMap = function(organisedNodeMap, idLists, smallMaps){
   stopifnot(is.list(organisedNodeMap))
-  stopifnot(is.character(docname))
   stopifnot(is.list(idLists))
   stopifnot(is.list(smallMaps))
 
-  structure(organisedNodeMap, class = "nodeMap", docname = docname, idLists = idLists, smallMaps = smallMaps)
+  structure(organisedNodeMap, class = "nodeMap", idLists = idLists, smallMaps = smallMaps)
 }
 
-getChainInfo= function(chain){
-  chainInfo = list(chainID = chain$chain)
-  chainInfo = c(reInfo, chain$tagMap)
+#Merge two node maps. Does not currently check for non-unique IDs.
+#Not to be called directly. Merge two rezCorpus objects instead.
+mergeNodeMaps = function(nm1, nm2){
+  nm1_only = setminus(names(nm1), names(nm2))
+  nm2_only = setminus(names(nm2), names(nm1))
+  if(length(nm1_only) != 0 | length(nm2_only) != 0){
+    warning(paste0("The following node types are not found in all documents: ", paste(c(nm1_only, nm2_only, ", ")), "."))
+  }
+
+  nodeTypes = union(names(nm1), names(nm2))
+  for(nodeType in nodeTypes){
+    if(!(nodeType %in% union(nm1_only, nm2_only))){
+      nm_new = mergeNodeLists(nm1[[nodeType]], nm2[[nodeType]])
+    }
+  }
 }
 
-getREInfo= function(re){
-  reInfo = list(chainID = re$chain)
-  reInfo = c(reInfo, re$tagMap)
+#Merge two node lists. Only to be called by mergeNodeMaps.
+mergeNodeLists = function(nl1, nl2){
+  nl1_only = setminus(nl1[[1]]$tagMap)
+  nl2_only = setminus(nl2[[1]]$tagMap)
+  if(length(nl1_only) != 0 | length(nl2_only) != 0){
+    warning("The two documents do not have compatible field names. New tags will be created.")
+  }
+  for(field in nl1_only){
+    nl2 = lapply(nl2, function(x) c(x, field = ""))
+  }
+  for(field in nl2_only){
+    nl1 = lapply(nl1, function(x) c(x, field = ""))
+  }
+  return(c(nl1, nl2))
 }
 
-#An skeleton for when it's needed
-getLinkInfo= function(re){
+
+#Extract tags from a node list.
+extractTags = function(nodeList){
+  tags = list()
+  fields = names(nodeList[[1]]$tagMap)
+  for(field in fields){
+    tags[[field]] = sapply(nodeList, function(x) x$tagMap[[field]])
+  }
+  return(tags)
 }
 
+entryDFFields = c("doc", "unit", "token")
+unitDFFields = c("doc", "unitStart", "unitEnd", "unitSeq", "pID")
+tokenDFFields = c("doc", "unit", "discourseTokenSeq", "tokenSeq")
+chunkDFFields = c("doc", "name")
+trackDFFields = c("doc", "chain", "sourceLink", "token")
+trackChainDFFields = c("doc", "chainSeq", "name")
+linkDFFields = c("doc", "source", "goal", "type")
+corpusDFFields = c("doc")
+docDFFields = c("doc")
+
+#Extract information from a node and turn into a data.frame.
+nodeToDF = function(nodeList, fields){
+  propList = list(id = names(nodeList))
+
+  for(field in fields){
+    propList[[field]] = sapply(nodeList, function(x) x[[field]])
+  }
+  if("tagMap" %in% names(nodeList[[1]])){
+    propList = c(propList, extractTags(nodeList))
+  }
+  if(any(sapply(propList, is.list))){
+    missing = names(propList)[sapply(propList, is.list)]
+    warning("One or more of the fields specified is not present in some of the nodes. These will be removed: ", paste(missing, sep = ", "))
+    for(prop in missing) propList[[prop]] = NULL
+  }
+  df = data.frame(propList)
+  return(df)
+}
