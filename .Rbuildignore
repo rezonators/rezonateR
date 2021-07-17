@@ -1,3 +1,5 @@
 ^rezonateR\.Rproj$
 ^\.Rproj\.user$
 ^/graph_stats$
+^LICENSE\.md$
+^attaches\.R$
