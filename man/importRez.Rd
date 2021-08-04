@@ -4,14 +4,18 @@
 \alias{importRez}
 \title{Import a Rez file}
 \usage{
-importRez(path)
+importRez(paths, docnames = "", concatFields = c("word", "wordWylie", "lit"))
 }
 \arguments{
-\item{path}{}
+\item{docnames}{A character vector of the document names. If left blank, a docname will be generated according to the filenames of files you import. For example, the document foo/bar.rez will be named 'bar'.}
+
+\item{concatFields}{A string of names of token-level fields, for example word or transcription, that should be concatenated to form chunk- or entry-level fields. For example, if your word field is called 'word' and you have an IPA transcription field called 'ipa', then concatFields should be c("word", "ipa").}
+
+\item{path}{A character vector of paths to the files to be imported. For Windows users, please use / instead of \.}
 }
 \value{
 rezRObject
 }
 \description{
-Import a Rez file, returning an R object containing a the node map, word grid, unit grid and chain grid.
+Import a Rez file. This returns an object containing, among other things, a nodeMap object containing raw information, and data frames for tokens, units, chunks, track chain entries, track chains, containing only key information likely to be useful for the user.
 }

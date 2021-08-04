@@ -4,48 +4,109 @@
 #'
 #' @param path A character vector of paths to the files to be imported. For Windows users, please use / instead of \.
 #' @param docnames A character vector of the document names. If left blank, a docname will be generated according to the filenames of files you import. For example, the document foo/bar.rez will be named 'bar'.
+#' @param concatFields A string of names of token-level fields, for example word or transcription, that should be concatenated to form chunk- or entry-level fields. For example, if your word field is called 'word' and you have an IPA transcription field called 'ipa', then concatFields should be c("word", "ipa").
+#' @param layerRegex A list, each of which is a component (just track or chunk for now; stack and rez to be added later). In each list entry, there are three components: 'field' is the field on which the splitting is based; 'regex' is a vector of regular expressions; 'names' is a vector of layer names. 'regex' should have one fewer entry than 'names', as the last of the 'names' should be the default case.
 #'
 #' @return rezRObject
-#' @import stringr
+#' @import stringr, rlang
 #' @export
-importRez = function(paths, docnames = ""){
-  if(length(paths) != length(docnames) & docnames != ""){
-    docnames = ""
-    warning("Number of input paths does not match the number of document names. I will name your documents automatically, according to your filenames.")
-  }
-  if(docnames == ""){
-    #Detecting document names
-    lastSlashLocs = str_locate_all(path, "/")
-    lastRezLocs = str_locate_all(path, "\\.rez")
-    docnames_start = sapply(1:length(paths), function(x) lastSlashLocs[[x]][nrow(lastSlashLocs[[x]]),1] + 1)
-    docnames_end = sapply(1:length(paths), function(x) lastRezLocs[[x]][nrow(lastRezLocs[[x]]),1] - 1)
-    docnames = sapply(1:length(paths), function(x) substr(paths[x], docnames_start, docnames_end))
-  }
+  importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie", "lit"), layerRegex){
+    if(length(paths) != length(docnames) & docnames != ""){
+      docnames = ""
+      warning("Number of input paths does not match the number of document names. I will name your documents automatically, according to your filenames.")
+    }
+    if(docnames == ""){
+      #Detecting document names
+      lastSlashLocs = str_locate_all(path, "/")
+      lastRezLocs = str_locate_all(path, "\\.rez")
+      docnames_start = sapply(1:length(paths), function(x) lastSlashLocs[[x]][nrow(lastSlashLocs[[x]]),1] + 1)
+      docnames_end = sapply(1:length(paths), function(x) lastRezLocs[[x]][nrow(lastRezLocs[[x]]),1] - 1)
+      docnames = sapply(1:length(paths), function(x) substr(paths[x], docnames_start, docnames_end))
+    }
 
-  nodeMapSep = list()
-  for(x in 1:length(paths)){
-    path = paths[x]
-    rezJSON = rjson::fromJSON(file = path) #Importing the file
-    nodeMapSep[[x]] = nodeMap(rezJSON[["ROOT"]][[1]][["nodeMap"]], docnames[x]) #Getting an individual node map
-  }
+    nodeMapSep = list()
+    for(x in 1:length(paths)){
+      path = paths[x]
+      rezJSON = rjson::fromJSON(file = path) #Importing the file
+      nodeMapSep[[x]] = nodeMap(rezJSON[["ROOT"]][[1]][["nodeMap"]], docnames[x]) #Getting an individual node map
+    }
 
-  if(length(paths) > 1){
-    fullNodeMap = Reduce(mergeNodeMaps, nodeMapSep[2:length(nodeMapSep)], mergeNodeMaps[[1]])
-  } else {
-    fullNodeMap = nodeMapSep[[1]]
-  }
+    #Merging node maps together when there are multiple docs
+    if(length(paths) > 1){
+      fullNodeMap = Reduce(mergeNodeMaps, nodeMapSep[2:length(nodeMapSep)], mergeNodeMaps[[1]])
+    } else {
+      fullNodeMap = nodeMapSep[[1]]
+    }
 
-  entryDF = nodeToDF(fullNodeMap[["entry"]], entryDFFields)
-  unitDF = nodeToDF(fullNodeMap[["unit"]], unitDFFields)
-  tokenDF = nodeToDF(fullNodeMap[["token"]], tokenDFFields)
-  chunkDF = nodeToDF(fullNodeMap[["chunk"]], chunkDFFields)
-  trackDF = nodeToDF(fullNodeMap[["track"]], trackDFFields)
-  trackChainDF = nodeToDF(fullNodeMap[["trackChain"]], trackChainDFFields)
-  linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
-  docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
+    #DF representation
+    unitDF = nodeToDF(fullNodeMap[["unit"]], unitDFFields)
+    tokenDF = nodeToDF(fullNodeMap[["token"]], tokenDFFields)
+    entryDF = nodeToDF(fullNodeMap[["entry"]], entryDFFields)
+    chunkDF = nodeToDF(fullNodeMap[["chunk"]], chunkDFFields)
+    trackDF = nodeToDF(fullNodeMap[["track"]], trackDFFields)
+    trackChainDF = nodeToDF(fullNodeMap[["trackChain"]], trackChainDFFields)
+    linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
+    docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
 
-  returnObj = list(nodeMap = fullNodeMap, entryDF = entryDF, unitDF = unitDF, tokenDF = tokenDF, chunkDF = chunkDF, trackDF = trackDF, trackChainDF = trackChainDF, linkDF = linkDF, docDF = docDF)
-  return(returnObj)
+
+    #Adding fields to higher-level DFs that depend on lower-level DFs.
+    entryDF = entryDF %>% left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"))
+    unitDF = concatStringFields(entryDF, unitDF, fullNodeMap[["unit"]], concatFields, tokenListName = "entryList")
+    unitDF = getSeqBounds(entryDF, unitDF, fullNodeMap[["unit"]], "discourseTokenSeq", tokenListName = "entryList")
+
+    chunkDF = getSeqBounds(tokenDF, chunkDF, fullNodeMap[["chunk"]], c("tokenSeq", "discourseTokenSeq"))
+    chunkDF = concatStringFields(tokenDF, chunkDF, fullNodeMap[["chunk"]], concatFields)
+
+    trackDF = trackDF %>% left_join(mergeTokenChunk(tokenDF, chunkDF), by = c(token = "id", doc = "doc"))
+
+    #Adding fields to lower-level DFs that depend on higher-level DFs.
+    trackDF = trackDF %>% left_join(trackChainDF, by = c(chain = "id", doc = "doc"))
+
+    #TODO: Rez, Stack, Clique
+
+    #Split DFs by layer
+    #layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
+    layeredTypes = c("track", "chunk")
+    for(type in layeredTypes){
+      if(type %in% names(layerRegex)){
+        info = layerRegex[[type]]
+        #Validate input
+        if(length(info[["regex"]]) > length(info[["names"]])){
+          stop("You have more regexes than name for track layers.")
+        } else if(length(info[["names"]]) > length(info[["regex"]]) + 1){
+          stop("In the track layers, the number of names should be equal to or one more than the number of regexes.")
+        } else if(length(info[["names"]]) == length(info[["regex"]])){
+          info[["regex"]] = info[["regex"]][-length(info[["regex"]])]
+          warning("In the track layers, you have as many regexes as you have names. I will ignore the last regex; it will be the default case.")
+        }
+
+        #Split DFs into layers
+        conds = c(paste0("str_detect(", info[["field"]], ", \'", c(info[["regex"]]), "\')"), "T")
+        cwText = paste0(conds, " ~ '", info[["names"]], "'")
+        splitLayers = function(x){
+          result = mutate(x, layer = case_when(!!!parse_exprs(cwText))) %>% group_split(layer)
+          names(result) = sort(info[["names"]])
+          result
+        }
+
+        if(type == "track"){
+          trackDF = trackDF %>% splitLayers
+          trackChainDF = trackChainDF %>% splitLayers
+        } else if(type == "chunk"){
+          chunkDF = chunkDF %>% splitLayers
+        }
+      } else {
+        if(type == "track"){
+          trackDF = list("default" = trackDF)
+          trackChainDF = list("default" = trackChainDF)
+        } else if(type == "chunk"){
+          chunkDF = list("default" = chunkDF)
+        }
+      }
+    }
+
+    returnObj = list(nodeMap = fullNodeMap, entryDF = entryDF, unitDF = unitDF, tokenDF = tokenDF, chunkDF = chunkDF, trackDF = trackDF, trackChainDF = trackChainDF, linkDF = linkDF, docDF = docDF)
+    return(returnObj)
 }
 
 nodeMap = function(importNodeMap, docname){
@@ -137,7 +198,7 @@ mergeNodeLists = function(nl1, nl2){
 #Extract tags from a node list.
 extractTags = function(nodeList){
   tags = list()
-  fields = names(nodeList[[1]]$tagMap)
+  fields = unique(unlist(lapply(nodeList, function(x) names(x[["tagMap"]]))))
   for(field in fields){
     tags[[field]] = sapply(nodeList, function(x) x$tagMap[[field]])
   }
@@ -156,19 +217,103 @@ docDFFields = c("doc")
 
 #Extract information from a node and turn into a data.frame.
 nodeToDF = function(nodeList, fields){
+  #For each property extract the vector of values of that property
+  #Node map organisation is node -> property, we want property -> node for DF
   propList = list(id = names(nodeList))
-
   for(field in fields){
     propList[[field]] = sapply(nodeList, function(x) x[[field]])
   }
+
+  #
   if("tagMap" %in% names(nodeList[[1]])){
     propList = c(propList, extractTags(nodeList))
   }
   if(any(sapply(propList, is.list))){
     missing = names(propList)[sapply(propList, is.list)]
-    warning("One or more of the fields specified is not present in some of the nodes. These will be removed: ", paste(missing, sep = ", "))
-    for(prop in missing) propList[[prop]] = NULL
+    warning("One or more of the fields specified is not present in some of the nodes: ", paste(missing, sep = ", "))
+    for(prop in missing){
+      propList[[prop]] = sapply(propList[[prop]], function(x){
+        if(is.null(x)) NA else x
+      })
+    }
   }
-  df = data.frame(propList)
+  df = data.frame(propList, stringsAsFactors = F)
   return(df)
+}
+
+lowerToHigher = function(simpleDF, complexDF, complexNodeMap, fieldnames, higherFieldnames = "", action, seqName = "discourseTokenSeq", tokenListName = "tokenList"){
+  if(!all(complexDF$id %in% names(complexNodeMap))){
+    stop("Some of the IDs in the complex DF are not found in the complex node map. Action terminated. Check that your complex DF and complex node map match.")
+  } else {
+    #Reorder the complex node map to match the id column of the complex DF and discard unneeded entries.
+    complexNodeMap = complexNodeMap[complexDF$id]
+  }
+
+  #If there are no higher fieldnames passed, then the higher DF has the same fieldname as the lower DF.
+  if(all(higherFieldnames == "")){
+    higherFieldnames = fieldnames
+  }
+
+  #Get the values of the field for the higher DF, and store in the colsToAdd list.
+  colsToAdd = list()
+  for(i in 1:length(fieldnames)){
+    fieldname = fieldnames[i]
+    higherFieldname = higherFieldnames[i]
+    colsToAdd[[higherFieldname]] = sapply(complexNodeMap, function(entry){
+      simpleDF %>% filter(id %in% entry[[tokenListName]]) %>% arrange(!!as.symbol(seqName)) %>% select(!!fieldname) %>% unlist %>% action
+    })
+  }
+
+  #Integrate the data in the colsToAdd list to the complexDF and return.
+  oldFieldnames = intersect(names(complexDF), higherFieldnames)
+  newFieldnames = setdiff(higherFieldnames, names(complexDF))
+  complexDF = complexDF %>% mutate(across(all_of(oldFieldnames), function(x) colsToAdd[[cur_column()]]))
+  for(name in newFieldnames){
+    values = colsToAdd[[name]]
+    complexDF = complexDF %>% mutate(!!name := values)
+  }
+
+  complexDF
+}
+
+#' Concatenate string values in a lower-level data frame
+#'
+#' Not currently available to users. I will later write a wrapper so that the user doesn't have to directly pass the DFs and node map, but can simply pass the full rez object and the names of the two DFs, and the function will also return the full rez object.
+#'
+#' @param simpleDF The lower-level dataframe, for example the token dataframe for chunks and units, or the unit dataframe for stacks.
+#' @param complexDF The dataframe that you're trying to add the concatenated fields to.
+#' @param complexNodeMap The node map corresponding to the simpleDF.
+#' @param fieldnames The fields to be concatenated.
+#'
+#' @return complexDF
+concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, tokenListName = "tokenList"){
+  lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, "", function(x) paste(x, collapse = ""), tokenListName = tokenListName)
+}
+
+getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleIsAtom = T, seqName = "", tokenListName = "tokenList"){
+  if(seqName == ""){
+    if(simpleIsAtom){
+      seqName = "discourseTokenSeq"
+    } else {
+      seqName = "discourseTokenSeqFirst"
+    }
+  }
+
+  if(simpleIsAtom){
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, paste0(fieldnames, "First"), min, seqName = seqName, tokenListName = tokenListName)
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, paste0(fieldnames, "Last"), max, seqName = seqName, tokenListName = tokenListName)
+  } else {
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, paste0(fieldnames, "First"), paste0(fieldnames, "First"), min, seqName = seqName, tokenListName = tokenListName)
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, paste0(fieldnames, "Last"), paste0(fieldnames, "Last"), max, seqName = seqName, tokenListName = tokenListName)
+  }
+  complexDF
+}
+
+
+#Merge token and chunk DFs.
+#This is mostly for handling track chains.
+mergeTokenChunk = function(tokenDF, chunkDF){
+  tokenDF = tokenDF %>% mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
+  commonFields = intersect(colnames(tokenDF), colnames(chunkDF))
+  (tokenDF %>% select(commonFields)) %>% rbind(chunkDF %>% select(commonFields))
 }
