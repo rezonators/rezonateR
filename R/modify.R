@@ -6,7 +6,7 @@ getRezrDFAttr = function(df, attr, fields = ""){
   if(all(fields == "")){
     attr(df, attr, fields)
   } else {
-    attr(df, attr, fields)[fields]
+    attr(df, attr, fields)[[fields]]
   }
 }
 
@@ -32,14 +32,17 @@ setRezrDFAttr = function(df, attr, fields = "", value){
     }
     attr(df, attr) = value
   } else {
-    attr(df, attr)[fields] = value
+    attr(df, attr)[[fields]] = value
   }
   df
 }
 
-setFieldaccess = function(df, fields = "", value) setRezrDFAttr(df, "fieldaccess", fields, value)
-setUpdateFunct = function(df, fields = "", value) setRezrDFAttr(df, "updateFunct", fields, value)
-setInNodeMap = function(df, fields = "", value) setRezrDFAttr(df, "inNodeMap", fields, value)
+#setFieldaccess = function(df, fields = "", value) setRezrDFAttr(df, "fieldaccess", fields, value)
+#setUpdateFunct = function(df, fields = "", value) setRezrDFAttr(df, "updateFunct", fields, value)
+#setInNodeMap = function(df, fields = "", value) setRezrDFAttr(df, "inNodeMap", fields, value)
+
+#`updateFunct<-` = function(df, value) setRezrDFAttr(df, "updateFunct", "", value)
+`updateFunct<-` = function(df, fields = "", value) setRezrDFAttr(df, "updateFunct", fields, value)
 
 
 #' Set the field access type from a data.frame
@@ -138,12 +141,13 @@ rez_validate_fieldchange = function(df, changedFields){
 #'
 #' @return resultDF
 rez_mutate = function(df, ..., fieldaccess = "flex"){
+
   #Validation
   #If it's dynamic, list should throw an error
   if("try-error" %in% class(try(list(...), silent=TRUE))){
     if("try-error" %in% class(try(expr(...), silent=TRUE))){
       changedFields = character()
-      warning("Could not figure out a way to validate the current mutate.")
+      message("Could not figure out a way to validate the current mutate. Please ensure you're not touching any fields you shouldn't touch ...")
     } else if(any(str_detect(as.character(expr(...)), ":="))){
       #For dynamically specified field
       quoted_field = str_extract(as.character(expr(...)), "\\\".+\\\"")
@@ -155,10 +159,7 @@ rez_mutate = function(df, ..., fieldaccess = "flex"){
   }
   rez_validate_fieldchange(df, changedFields)
 
-  #Creation of updateFunction
-  if(fieldaccess == "auto"){
-    #rez_dfop(df, fieldaccess, mutate)
-  }
+  #TODO: Automatically create update function for the user if 'auto' is specified.
 
   rez_dfop(df, mutate, fieldaccess = fieldaccess, ...)
 }
@@ -212,6 +213,8 @@ rez_group_split = function(df, ...){
   }
   result
 }
+
+
 
 rez_reload(df, field = ""){
 
