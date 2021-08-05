@@ -1,3 +1,5 @@
+#This is a series of functions turning .rez files into rezonateR objects.
+
 #' Import a Rez file
 #'
 #' Import a Rez file. This returns an object containing, among other things, a nodeMap object containing raw information, and data frames for tokens, units, chunks, track chain entries, track chains, containing only key information likely to be useful for the user.
@@ -10,7 +12,7 @@
 #' @return rezRObject
 #' @import stringr, rlang
 #' @export
-  importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie", "lit"), layerRegex){
+importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie", "lit"), layerRegex){
     if(length(paths) != length(docnames) & docnames != ""){
       docnames = ""
       warning("Number of input paths does not match the number of document names. I will name your documents automatically, according to your filenames.")
@@ -48,19 +50,18 @@
     linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
     docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
 
-
     #Adding fields to higher-level DFs that depend on lower-level DFs.
-    entryDF = entryDF %>% left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"))
+    entryDF = entryDF %>% rez_left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"))
     unitDF = concatStringFields(entryDF, unitDF, fullNodeMap[["unit"]], concatFields, tokenListName = "entryList")
     unitDF = getSeqBounds(entryDF, unitDF, fullNodeMap[["unit"]], "discourseTokenSeq", tokenListName = "entryList")
 
     chunkDF = getSeqBounds(tokenDF, chunkDF, fullNodeMap[["chunk"]], c("tokenSeq", "discourseTokenSeq"))
     chunkDF = concatStringFields(tokenDF, chunkDF, fullNodeMap[["chunk"]], concatFields)
 
-    trackDF = trackDF %>% left_join(mergeTokenChunk(tokenDF, chunkDF), by = c(token = "id", doc = "doc"))
+    trackDF = trackDF %>% rez_left_join(mergeTokenChunk(tokenDF, chunkDF), by = c(token = "id", doc = "doc"))
 
     #Adding fields to lower-level DFs that depend on higher-level DFs.
-    trackDF = trackDF %>% left_join(trackChainDF, by = c(chain = "id", doc = "doc"))
+    trackDF = trackDF %>% rez_left_join(trackChainDF, by = c(chain = "id", doc = "doc"))
 
     #TODO: Rez, Stack, Clique
 
@@ -84,7 +85,7 @@
         conds = c(paste0("str_detect(", info[["field"]], ", \'", c(info[["regex"]]), "\')"), "T")
         cwText = paste0(conds, " ~ '", info[["names"]], "'")
         splitLayers = function(x){
-          result = mutate(x, layer = case_when(!!!parse_exprs(cwText))) %>% group_split(layer)
+          result = mutate(x, layer = case_when(!!!parse_exprs(cwText))) %>% rez_group_split(layer)
           names(result) = sort(info[["names"]])
           result
         }
@@ -216,6 +217,13 @@ corpusDFFields = c("doc")
 docDFFields = c("doc")
 
 #Extract information from a node and turn into a data.frame.
+#Field types:
+#key - Primary key of the table, can't be changed.
+#core - Integral to the object. If changed, no guarantee that we can still get the Rez file.
+#flex - Can be flexibly changed with minimal damage.
+#auto - Automatically generated from other fields. Any change will be overridden when updating the table.
+#fkey - foreign key to another table.
+#foreign - Value is automatically determined from another table. Any change will be overridden when updating the table.
 nodeToDF = function(nodeList, fields){
   #For each property extract the vector of values of that property
   #Node map organisation is node -> property, we want property -> node for DF
@@ -238,8 +246,36 @@ nodeToDF = function(nodeList, fields){
     }
   }
   df = data.frame(propList, stringsAsFactors = F)
-  return(df)
+
+  #Attributes of the rezrDFs
+  #The first column is always the primary key, then the fields that are direct properties of the node, then members of the tagMap.
+  #updateFunct is just an empty list since there are no update functions yet (they are only relevant to auto fields).
+  fieldaccess = c("key", rep("core", length(fields)), rep("flex", length(propList) - length(fields) - 1))
+  fieldaccess[which(fields == "name")] = "flex"
+  names(fieldaccess) = names(propList)
+  #attr(df, "fieldaccess") = fieldaccess
+
+  inNodeMap = c("key", rep("primary", length(fields)), rep("tagmap", length(propList) - length(fields) - 1))
+  names(inNodeMap) = names(propList)
+
+  return(new_rezrDF(as_tibble(df), fieldaccess, list(), inNodeMap))
 }
+
+new_rezrDF = function(df, fieldaccess, updateFunct, inNodeMap){
+  #Validate all components of the DF
+  stopifnot(is.tibble(df))
+  stopifnot(is.vector(fieldaccess))
+  stopifnot(!is.null(names(fieldaccess)))
+  stopifnot(is.list(updateFunct))
+  if(length(updateFunct) > 1){
+    stopifnot(all(sapply(updateFunct, is.function)))
+  }
+  stopifnot(is.vector(inNodeMap))
+  stopifnot(!is.null(names(inNodeMap)))
+
+  structure(df, class = c("rezrDF", "tbl_df", "tbl", "data.frame"), fieldaccess = fieldaccess, updateFunct = updateFunct, inNodeMap = inNodeMap)
+}
+
 
 lowerToHigher = function(simpleDF, complexDF, complexNodeMap, fieldnames, higherFieldnames = "", action, seqName = "discourseTokenSeq", tokenListName = "tokenList"){
   if(!all(complexDF$id %in% names(complexNodeMap))){
@@ -270,7 +306,7 @@ lowerToHigher = function(simpleDF, complexDF, complexNodeMap, fieldnames, higher
   complexDF = complexDF %>% mutate(across(all_of(oldFieldnames), function(x) colsToAdd[[cur_column()]]))
   for(name in newFieldnames){
     values = colsToAdd[[name]]
-    complexDF = complexDF %>% mutate(!!name := values)
+    complexDF = complexDF %>% rez_mutate("foreign", !!name := values)
   }
 
   complexDF
@@ -290,6 +326,7 @@ concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, t
   lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, "", function(x) paste(x, collapse = ""), tokenListName = tokenListName)
 }
 
+#Get the max and min of a certain value (typically sequence or time) from a lower object table to a higher object table.
 getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleIsAtom = T, seqName = "", tokenListName = "tokenList"){
   if(seqName == ""){
     if(simpleIsAtom){
@@ -311,9 +348,11 @@ getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleI
 
 
 #Merge token and chunk DFs.
-#This is mostly for handling track chains.
+#This is mostly for handling chains, which may refer to a mix of tokens and chunks in Rezonator. (Single-token chain entries are not automatically stored as chunks in Rezonator.)
 mergeTokenChunk = function(tokenDF, chunkDF){
+  #This is because chunk have begins/end; tokens do not.
   tokenDF = tokenDF %>% mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
+
   commonFields = intersect(colnames(tokenDF), colnames(chunkDF))
-  (tokenDF %>% select(commonFields)) %>% rbind(chunkDF %>% select(commonFields))
+  (tokenDF %>% select(all_of(commonFields))) %>% rbind(chunkDF %>% select(commonFields))
 }
