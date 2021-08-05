@@ -84,8 +84,10 @@ fieldaccess = function(df, fields = ""){
 #'
 #' @return resultDF
 #' @export
-rez_dfop = function(df, fieldaccess, updateFunct = NA, .f, ...){
-  oldNames = colnames(df)
+rez_dfop = function(df, fieldaccess, updateFunct = NA, oldNames = "", .f, ...){
+  if(all(oldNames) == ""){
+    oldNames = colnames(df)
+  }
   resultDF = .f(df, ...)
   newNames = colnames(resultDF)
   #Find which columns (if any) are new
@@ -167,12 +169,33 @@ rez_mutate = function(df, fieldaccess = "flex", ...){
 #'
 #' @return resultDF
 rez_left_join = function(df1, df2, fieldaccess = "foreign", ...){
-  #TODO: Replace NA with actual update functions.
-  if("suffix" %in% names(list(...))){
-    rez_dfop(df1, fieldaccess, NA, .f = left_join, df2, suffix = c("", "_lower"), ...)
-  } else {
-    rez_dfop(df1, fieldaccess, NA, .f = left_join, df2,  ...)
+  oldNames = colnames(df1)
+
+  updateFunction = NA
+
+  if(fieldaccess == "foreign"){
+    updateFunction = NA
+  } else if(fieldaccess == "auto"){
+    warning("You are creating new fields using a left_join, but specified field access as 'auto'. I cannot automatically attach an update function for you; please set update function manually using set_updateFunct. Alternatively, set fieldaccess to foreign.")
   }
+
+  suffixIncl = F
+  if(!("try-error" %in% class(try(list(...), silent=TRUE)))){
+    if("suffix" %in% names(list(...))){
+      suffixIncl = T
+    }
+  }
+
+  if(!suffixIncl){
+    result = rez_dfop(df1, fieldaccess, updateFunction, .f = left_join, df2, suffix = c("", "_lower"), ...)
+  } else {
+    #We need to specify oldNames to rez_dfop because the names of fields in df1 may be changed.
+    leftSuffix = list(...)[["suffix"]][1]
+    oldNames = unique(c(oldNames, paste0(oldNames, leftSuffix)))
+    result = rez_dfop(df1, fieldaccess, updateFunction, oldNames = oldNames, .f = left_join, df2, ...)
+  }
+
+  result
 }
 
 rez_group_split = function(df, ...){
