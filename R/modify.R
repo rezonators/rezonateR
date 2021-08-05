@@ -6,7 +6,7 @@ getRezrDFAttr = function(df, attr, fields = ""){
   if(all(fields == "")){
     attr(df, attr, fields)
   } else {
-    attr(df, attr, fields)[[fields]]
+    attr(df, attr, fields)[fields]
   }
 }
 
@@ -32,7 +32,11 @@ setRezrDFAttr = function(df, attr, fields = "", value){
     }
     attr(df, attr) = value
   } else {
-    attr(df, attr)[[fields]] = value
+    if(length(fields) == 1){
+      attr(df, attr)[[fields]] = value
+    } else {
+      attr(df, attr)[fields] = value
+    }
   }
   df
 }
@@ -43,6 +47,8 @@ setRezrDFAttr = function(df, attr, fields = "", value){
 
 #`updateFunct<-` = function(df, value) setRezrDFAttr(df, "updateFunct", "", value)
 `updateFunct<-` = function(df, fields = "", value) setRezrDFAttr(df, "updateFunct", fields, value)
+`fieldaccess<-` = function(df, fields = "", value) setRezrDFAttr(df, "fieldaccess", fields, value)
+`inNodeMap<-` = function(df, fields = "", value) setRezrDFAttr(df, "inNodeMap", fields, value)
 
 
 #' Set the field access type from a data.frame
@@ -96,10 +102,10 @@ rez_dfop = function(df, .f, ..., fieldaccess = "flex", updateFunct = NA, oldName
   #Find which columns (if any) are new
   addedNames = setdiff(newNames, oldNames)
   #Set the column to the given fieldaccess value
-  attr(resultDF, "fieldaccess")[addedNames] = fieldaccess
-  attr(resultDF, "inNodeMap")[addedNames] = "no"
+  fieldaccess(resultDF, addedNames) = fieldaccess
+  inNodeMap(resultDF, addedNames) = "no"
   if(!is.na(updateFunct)){
-    attr(resultDF, "updateFunct") = c(updateFunct(resultDF), updateFunct)
+    updateFunct(resultDF) = c(updateFunct(resultDF), updateFunct)
   }
   resultDF
 }
@@ -146,6 +152,7 @@ rez_mutate = function(df, ..., fieldaccess = "flex"){
   #If it's dynamic, list should throw an error
   if("try-error" %in% class(try(list(...), silent=TRUE))){
     if("try-error" %in% class(try(expr(...), silent=TRUE))){
+      #TODO: Validate these cases
       changedFields = character()
       message("Could not figure out a way to validate the current mutate. Please ensure you're not touching any fields you shouldn't touch ...")
     } else if(any(str_detect(as.character(expr(...)), ":="))){
@@ -214,8 +221,50 @@ rez_group_split = function(df, ...){
   result
 }
 
+reload = function(x, ...){
+  if("rezrDF" %in% class(x)){
+    reload.rezrDF(x, ...)
+  } else if("rezrObj" %in% class(x)){
+    reload.rezrObj(x, ...)
+  }
+}
 
+reload.rezrDF = function(df, fields = ""){
+  if(all(fields == "")){
+    #TODO: Reload all auto fields
+  } else {
+    for(field in fields){
+      if(!(field %in% names(updateFunct(df)))){
+        stop("The field " %+% field %+% " does not have an update function defined.")
+      }
+      #print(updateFunct(df)[[field]])
+      df = updateFunct(df)[[field]](df)
+    }
+  }
+  df
+}
 
-rez_reload(df, field = ""){
+new_updateFunction = function(f, deps){
+  stopifnot(is.list(deps))
+  stopifnot(is.function(f))
 
+  structure(f, class = c("updateFunction", "function"), deps = deps)
+}
+
+createUpdateFunction = function(df, field, x){
+  #Create the function itself
+  field = enexpr(field)
+  x = enexpr(x)
+  funct = eval(expr(function(df) mutate(df, !!field := !!x)))
+
+  #Figure out dependencies
+  deps = list()
+  x_flat = flatten_expr(x)
+  for(item in x_flat){
+    if(item %in% colnames(df)){
+      deps[[deparse(field)]] = c(deps[[deparse(field)]], item)
+    }
+  }
+
+  new_updateFunction(funct, deps)
 }
