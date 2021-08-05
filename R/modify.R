@@ -84,8 +84,8 @@ fieldaccess = function(df, fields = ""){
 #'
 #' @return resultDF
 #' @export
-rez_dfop = function(df, fieldaccess, updateFunct = NA, oldNames = "", .f, ...){
-  if(all(oldNames) == ""){
+rez_dfop = function(df, .f, ..., fieldaccess = "flex", updateFunct = NA, oldNames = ""){
+  if(all(oldNames == "")){
     oldNames = colnames(df)
   }
   resultDF = .f(df, ...)
@@ -137,13 +137,13 @@ rez_validate_fieldchange = function(df, changedFields){
 #' @param ... Other functions passed onto mutate, i.e. the columns you will be changing or adding.
 #'
 #' @return resultDF
-rez_mutate = function(df, fieldaccess = "flex", ...){
+rez_mutate = function(df, ..., fieldaccess = "flex"){
   #Validation
   #If it's dynamic, list should throw an error
   if("try-error" %in% class(try(list(...), silent=TRUE))){
     if("try-error" %in% class(try(expr(...), silent=TRUE))){
       changedFields = character()
-      warning("Validation failed for the current mutate.")
+      warning("Could not figure out a way to validate the current mutate.")
     } else if(any(str_detect(as.character(expr(...)), ":="))){
       #For dynamically specified field
       quoted_field = str_extract(as.character(expr(...)), "\\\".+\\\"")
@@ -154,7 +154,13 @@ rez_mutate = function(df, fieldaccess = "flex", ...){
     changedFields = names(list(...))
   }
   rez_validate_fieldchange(df, changedFields)
-  rez_dfop(df, fieldaccess, NA, mutate, ...)
+
+  #Creation of updateFunction
+  if(fieldaccess == "auto"){
+    #rez_dfop(df, fieldaccess, mutate)
+  }
+
+  rez_dfop(df, mutate, fieldaccess = fieldaccess, ...)
 }
 
 #' Perform a left join on two rez data.frames and change field access status.
@@ -168,7 +174,7 @@ rez_mutate = function(df, fieldaccess = "flex", ...){
 #' @param ... Other functions passed onto left_join, i.e. the columns you will be changing or adding.
 #'
 #' @return resultDF
-rez_left_join = function(df1, df2, fieldaccess = "foreign", ...){
+rez_left_join = function(df1, df2, ..., fieldaccess = "foreign"){
   oldNames = colnames(df1)
 
   updateFunction = NA
@@ -187,12 +193,12 @@ rez_left_join = function(df1, df2, fieldaccess = "foreign", ...){
   }
 
   if(!suffixIncl){
-    result = rez_dfop(df1, fieldaccess, updateFunction, .f = left_join, df2, suffix = c("", "_lower"), ...)
+    result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, df2, suffix = c("", "_lower"), ...)
   } else {
     #We need to specify oldNames to rez_dfop because the names of fields in df1 may be changed.
     leftSuffix = list(...)[["suffix"]][1]
     oldNames = unique(c(oldNames, paste0(oldNames, leftSuffix)))
-    result = rez_dfop(df1, fieldaccess, updateFunction, oldNames = oldNames, .f = left_join, df2, ...)
+    result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, oldNames = oldNames, df2, ...)
   }
 
   result
