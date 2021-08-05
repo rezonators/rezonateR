@@ -23,3 +23,12 @@ flatten_expr = function(x, includeFunct = T){
   }
   result
 }
+
+listAt = function(list, address, sep = "/"){
+  locations = strsplit(address, sep)[[1]]
+  currLoc = list
+  for(loc in locations){
+    currLoc = currLoc[[loc]]
+  }
+  currLoc
+}

@@ -315,4 +315,10 @@ getUpdateOrder = function(depsList){
   updateOrder
 }
 
+createLeftJoinUpdate = function(rezObj, df, field, x){
 
+}
+
+updateLeftJoin = function(rezObj, df, field, x){
+
+}
