@@ -1,13 +1,19 @@
 `%+%` = function(a, b) paste0(a, b)
 
-flatten_expr = function(x){
+flatten_expr = function(x, includeFunct = T){
   x_list = as.list(x)
   result = character(0)
-  for(i in 1:length(x_list)){
+
+  if(!includeFunct){
+    start = 2
+  } else {
+    start = 1
+  }
+  for(i in start:length(x_list)){
     item = x[[i]]
     if(length(as.list(item)) > 1){
-      #print("Still some ways to go!")
-      #print(item)
+      #print("Still some ways to pgo!")
+      #print(item)p
       result = c(result, flatten_expr(item))
     } else {
       #print("Reached a bottom!")

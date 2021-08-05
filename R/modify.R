@@ -1,12 +1,15 @@
 #A group of functions for handling the modification of Rez data structures.
 #At the moment, it handles the data frames only. At one point, the node maps will also be handled through this interface.
 
-
 getRezrDFAttr = function(df, attr, fields = ""){
   if(all(fields == "")){
     attr(df, attr, fields)
   } else {
-    attr(df, attr, fields)[fields]
+    if(length(fields) == 1){
+      attr(df, attr, fields)[[fields]]
+    } else {
+      attr(df, attr, fields)[fields]
+    }
   }
 }
 
@@ -25,6 +28,21 @@ fieldaccess = function(df, fields = "") getRezrDFAttr(df, "fieldaccess", fields)
 updateFunct = function(df, fields = "") getRezrDFAttr(df, "updateFunct", fields)
 inNodeMap = function(df, fields = "") getRezrDFAttr(df, "inNodeMap", fields)
 
+
+#setFieldaccess = function(df, fields = "", value) setRezrDFAttr(df, "fieldaccess", fields, value)
+#setUpdateFunct = function(df, fields = "", value) setRezrDFAttr(df, "updateFunct", fields, value)
+#setInNodeMap = function(df, fields = "", value) setRezrDFAttr(df, "inNodeMap", fields, value)
+#`updateFunct<-` = function(df, value) setRezrDFAttr(df, "updateFunct", "", value)
+
+#' Set an attribute in a data.frame
+#'
+#' Set an attribute in a data.frame.
+#'
+#' @param df The data.frame whose field access attributes you want to set.
+#' @param field The field whose access attribute you want to set. If left blank, a vector containing all the attributes is output.
+#' @param value The value you want to set the fields to. It may be one single value for all of the entries, a vector for each entry in fields, or if fields is unspecified, a named vector containing field access status of all fields in the data.frame.
+#'
+#' @return fieldaccess
 setRezrDFAttr = function(df, attr, fields = "", value){
   if(all(fields == "")){
     if(!setequal(colnames(df), names(fields))){
@@ -40,27 +58,9 @@ setRezrDFAttr = function(df, attr, fields = "", value){
   }
   df
 }
-
-#setFieldaccess = function(df, fields = "", value) setRezrDFAttr(df, "fieldaccess", fields, value)
-#setUpdateFunct = function(df, fields = "", value) setRezrDFAttr(df, "updateFunct", fields, value)
-#setInNodeMap = function(df, fields = "", value) setRezrDFAttr(df, "inNodeMap", fields, value)
-
-#`updateFunct<-` = function(df, value) setRezrDFAttr(df, "updateFunct", "", value)
 `updateFunct<-` = function(df, fields = "", value) setRezrDFAttr(df, "updateFunct", fields, value)
 `fieldaccess<-` = function(df, fields = "", value) setRezrDFAttr(df, "fieldaccess", fields, value)
 `inNodeMap<-` = function(df, fields = "", value) setRezrDFAttr(df, "inNodeMap", fields, value)
-
-
-#' Set the field access type from a data.frame
-#'
-#' Set field access type data from a data.frame.
-#'
-#' @param df The data.frame whose field access attributes you want to set.
-#' @param field The field whose access attribute you want to set. If left blank, a vector containing all the attributes is output.
-#' @param value The value you want to set the fields to. It may be one single value for all of the entries, a vector for each entry in fields, or if fields is unspecified, a named vector containing field access status of all fields in the data.frame.
-#'
-#' @return fieldaccess
-#' @export
 
 
 #' Extract the update functions from a rezrDF
@@ -72,13 +72,6 @@ setRezrDFAttr = function(df, attr, fields = "", value){
 #'
 #' @return updateFunct
 #' @export
-fieldaccess = function(df, fields = ""){
-  if(all(fields == "")){
-    attr(df, "updateFunct")
-  } else {
-    attr(df, "updateFunct")[fields]
-  }
-}
 
 
 #The rez_ data.frame functions
@@ -216,6 +209,7 @@ rez_group_split = function(df, ...){
   split = df %>% group_split(...)
   result = list()
   for(i in 1:length(split)){
+    print(fieldaccess(df))
     result[[i]] = new_rezrDF(split[[i]], fieldaccess(df), updateFunct(df), inNodeMap(df))
   }
   result
@@ -230,16 +224,23 @@ reload = function(x, ...){
 }
 
 reload.rezrDF = function(df, fields = ""){
-  if(all(fields == "")){
-    #TODO: Reload all auto fields
-  } else {
-    for(field in fields){
-      if(!(field %in% names(updateFunct(df)))){
-        stop("The field " %+% field %+% " does not have an update function defined.")
+  if(length(updateFunct(df)) > 1){
+    if(all(fields == "")){
+      #TODO: Reload all auto fields in the DF
+      depsList = lapply(updateFunct(df), function(x) deps(x))
+      order = getUpdateOrder(depsList)
+      df = reload.rezrDF(df, order)
+    } else {
+      for(field in fields){
+        if(!(field %in% names(updateFunct(df)))){
+          stop("The field " %+% field %+% " does not have an update function defined.")
+        }
+        #print(updateFunct(df)[[field]])
+        df = updateFunct(df)[[field]](df)
       }
-      #print(updateFunct(df)[[field]])
-      df = updateFunct(df)[[field]](df)
     }
+  } else {
+    warning("Reloading rezrDF with no update functions. The rezrDF was unchanged.")
   }
   df
 }
@@ -251,6 +252,19 @@ new_updateFunction = function(f, deps){
   structure(f, class = c("updateFunction", "function"), deps = deps)
 }
 
+
+#' Create an update function.
+#'
+#' This is for 'auto' fields only; 'foreign' field take createUpdateFunction.
+#'
+#' @param df The rezrDF for which you want to create an update function.
+#' @param field The field for which you want to create an update function.
+#' @param x An R expression. For example, if you want to column2 to be updated to always be three times column3, then x should be column3 * 3.
+#'
+#' @return An update function with automatically generated dependency information. I will figure out the dependency information for you, so you don't have to define it yourself.
+#' @export
+#'
+#' @examples
 createUpdateFunction = function(df, field, x){
   #Create the function itself
   field = enexpr(field)
@@ -259,12 +273,46 @@ createUpdateFunction = function(df, field, x){
 
   #Figure out dependencies
   deps = list()
-  x_flat = flatten_expr(x)
+  x_flat = flatten_expr(x, includeFunct = F)
   for(item in x_flat){
+    print(item)
     if(item %in% colnames(df)){
-      deps[[deparse(field)]] = c(deps[[deparse(field)]], item)
+      deps = c(deps, item)
     }
   }
 
   new_updateFunction(funct, deps)
 }
+
+deps = function(updateFunct){
+  attr(updateFunct, "deps")
+}
+
+getUpdateOrder = function(depsList){
+  updateOrder = character(0)
+  done = F
+  #depsList = depsListOld
+  while(!done){
+    for(field in names(depsList)){
+      currDeps = depsList[[field]]
+      updateable = T
+      for(dep in currDeps){
+        if(dep %in% names(depsList)){
+          #If field depends on something that has an entry in the depsList, then it's not safe to update!
+          updateable = F
+        }
+      }
+      if(updateable){
+        #i.e. This field doesn't depend on anything inside the depsList, yay!
+        updateOrder = c(updateOrder, field)
+        #We can remove this guy from the devList since, after updating this this guy, we can safely update stuff that depends on it and other updated entries alone.
+        depsList[[field]] = NULL
+      }
+    }
+    if(length(names(depsList)) == 0) done = T
+  }
+
+  updateOrder
+}
+
+

@@ -50,6 +50,7 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
     linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
     docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
 
+
     #Adding fields to higher-level DFs that depend on lower-level DFs.
     entryDF = entryDF %>% rez_left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"))
     unitDF = concatStringFields(entryDF, unitDF, fullNodeMap[["unit"]], concatFields, tokenListName = "entryList")
@@ -253,6 +254,7 @@ nodeToDF = function(nodeList, fields){
   fieldaccess = c("key", rep("core", length(fields)), rep("flex", length(propList) - length(fields) - 1))
   fieldaccess[which(fields == "name")] = "flex"
   names(fieldaccess) = names(propList)
+
   #attr(df, "fieldaccess") = fieldaccess
 
   inNodeMap = c("key", rep("primary", length(fields)), rep("tagmap", length(propList) - length(fields) - 1))
