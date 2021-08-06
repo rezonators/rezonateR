@@ -54,6 +54,10 @@ test_that("rezrDF modification works", {
   rezEx[["trackDF"]][["refexpr"]] = reloadForeign(rezEx[["trackDF"]][["refexpr"]], rezEx)
   expect(rezEx[["trackDF"]][["refexpr"]]$tokenSeqFirst[1] != 120, failure_message = "Reload failed.")
 
+  updateFunct(rezEx[["chunkDF"]][["refexpr"]], "word") = createLowerToHigherUpdate(rezEx[["chunkDF"]][["refexpr"]], rezObj, address = "tokenDF/word", fkeyAddress = "chunk/tokenList", action = function(x) paste(x, collapse = ""), field = "word", fkeyInDF = FALSE, seqName = "discourseTokenSeq")
+  rezEx[["chunkDF"]][["refexpr"]] = rezEx[["chunkDF"]][["refexpr"]] %>% mutate(word = "hahaha")
+  rezEx[["chunkDF"]][["refexpr"]] = reloadForeign(rezEx[["chunkDF"]][["refexpr"]], rezEx, c("word"))
+  expect(rezEx[["chunkDF"]][["refexpr"]]$word[1] !="hahaha", failure_message = "Reload failed.")
 
 
 })

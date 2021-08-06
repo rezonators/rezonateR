@@ -430,7 +430,7 @@ getTargetTableInfo = function(rezObj, address, field){
 #' @export
 #'
 #' @examples
-updateLowerToHigher = function(df, rezObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq", tokenListName = "tokenList"){
+updateLowerToHigher = function(df, rezObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
   if(length(fkeyAddress) > 1){
     stop("Multiple sources are currently not supported in the updateLowerToHigher function. Sorry!")
   } else if(fkeyInDF){
@@ -451,19 +451,19 @@ updateLowerToHigher = function(df, rezObj, address, fkeyAddress, action, field =
     if(length(fkeyPath) > 1){
       stop("Nested node maps are not currently supported. Please check your foreign key address.")
     }
-    complexNodeMap = rezObj[[fkeyPath]]
-    fieldnames = fiel
+    complexNodeMap = rezObj %>% listAt("nodeMap/" %+% fkeyPath)
+    fieldnames = field
 
   } else {
     #TODO: Placeholder for when I support fkeyInDF = T
   }
-  lowerToHigher(df2, df, complexNodeMap, df2field, field, action, seqName, tokenListName)
+  lowerToHigher(df2, df, complexNodeMap, df2field, field, action, seqName, fkeyField)
 
 }
 
-createLowerToHigherUpdate = function(df, rezObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq", tokenListName = "tokenList"){
+createLowerToHigherUpdate = function(df, rezObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
   #Create the function itself (easy!)
-  funct = function(df, rezObj) updateLowerToHigher(df, rezObj, address, fkeyAddress, action, field, fkeyInDF, seqName, tokenListName)
+  funct = function(df, rezObj) updateLowerToHigher(df, rezObj, address, fkeyAddress, action, field, fkeyInDF, seqName)
 
   #Figure out the deps (actually still pretty simple!)
   deps = address
