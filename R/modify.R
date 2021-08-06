@@ -362,7 +362,7 @@ createLeftJoinUpdate = function(df, rezObj, address, fkey, field = ""){
 #'
 #' @examples
 updateLeftJoin = function(df1, rezObj, address, fkey, field = ""){
-  #Get the target table, target field, primary key
+  #Get the source table, source field, source primary key, target field if unspecified
   targetTableInfo = getTargetTableInfo(rezObj, address, field)
   unpackList(targetTableInfo)
 
@@ -417,12 +417,12 @@ getTargetTableInfo = function(rezObj, address, field){
   return(list(df2key = df2key, df2field = df2field, df2 = df2, field = field))
 }
 
-#' Update a field using a lowerToUpper operation.
+#' Update a field using a lowerToHigher operation.
 #'
 #' @param df The target rezrDF to be updated.
 #' @param rezObj The full rezObj.
 #' @param address An address to the field from the original df, from the rezObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.
-#' @param fkey If fkeyInDF = FALSE, an address to the list of foreign keys inside the nodeMap (from the root rezObj). If fkeyInDF = TRUE, a field in the target rezrDF containing a vector of foreign keys.
+#' @param fkey If fkeyInDF = FALSE, an address to the list of foreign keys inside the nodeMap (from the root rezObj). If fkeyInDF = TRUE, a field in the target rezrDF containing a vector of foreign keys (not currently supported and will result in an error).
 #' @param field The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.
 #' @param fkeyInDF See fkey description.
 #'
@@ -430,13 +430,48 @@ getTargetTableInfo = function(rezObj, address, field){
 #' @export
 #'
 #' @examples
-updateLowerToUpper = function(df, rezObj, address, fkeyAddress, field = "", fkeyInDF = FALSE){
-  #Get the target table, target field, primary key
+updateLowerToHigher = function(df, rezObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq", tokenListName = "tokenList"){
+  if(length(fkeyAddress) > 1){
+    stop("Multiple sources are currently not supported in the updateLowerToHigher function. Sorry!")
+  } else if(fkeyInDF){
+    stop("Foreign keys in the current DF in the lowerToHigher function are not currently supported. Please use the correponding nodeMap.")
+  }
+
+  #Get the source table, source field, primary key
   targetTableInfo = getTargetTableInfo(rezObj, address, field)
   unpackList(targetTableInfo)
+  #This operation yields four new variables in the local environment:
+  #df2key (source DF key), df2field (source DF info field), df2 (source DF), field (target DF, if not specified at the beginning)
+
+  if(!fkeyInDF){
+    #TODO: Multiple sources
+    fkeyAddressVec = strsplit(fkeyAddress, "/")[[1]]
+    fkeyField = fkeyAddressVec[length(fkeyAddressVec)]
+    fkeyPath = fkeyAddressVec[-length(fkeyAddressVec)]
+    if(length(fkeyPath) > 1){
+      stop("Nested node maps are not currently supported. Please check your foreign key address.")
+    }
+    complexNodeMap = rezObj[[fkeyPath]]
+    fieldnames = fiel
+
+  } else {
+    #TODO: Placeholder for when I support fkeyInDF = T
+  }
+  lowerToHigher(df2, df, complexNodeMap, df2field, field, action, seqName, tokenListName)
+
 }
 
-#then create lowerToUpper update functions, and finally combine auto and foreign reloads
+createLowerToHigherUpdate = function(df, rezObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq", tokenListName = "tokenList"){
+  #Create the function itself (easy!)
+  funct = function(df, rezObj) updateLowerToHigher(df, rezObj, address, fkeyAddress, action, field, fkeyInDF, seqName, tokenListName)
+
+  #Figure out the deps (actually still pretty simple!)
+  deps = address
+
+  new_updateFunction(funct, deps)
+}
+
+#then create lowerToHigher update functions, and finally combine auto and foreign reloads
 reloadForeign = function(df, rezObj, fields = ""){
   if(all(fields == '')){
     #Only select fields that are foreign AND have an update function
