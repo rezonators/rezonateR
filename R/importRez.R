@@ -265,7 +265,7 @@ nodeToDF = function(nodeList, fields){
 
 new_rezrDF = function(df, fieldaccess, updateFunct, inNodeMap){
   #Validate all components of the DF
-  stopifnot(is.tibble(df))
+  stopifnot(is_tibble(df))
   stopifnot(is.vector(fieldaccess))
   stopifnot(!is.null(names(fieldaccess)))
   stopifnot(is.list(updateFunct))

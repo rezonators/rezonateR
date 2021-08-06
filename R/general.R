@@ -32,3 +32,10 @@ listAt = function(list, address, sep = "/"){
   }
   currLoc
 }
+
+unpackList = function(list){
+  parentEnv = env_parent(current_env())
+  for(name in names(list)){
+    parentEnv[[name]] = list[[name]]
+  }
+}

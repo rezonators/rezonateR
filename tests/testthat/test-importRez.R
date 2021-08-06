@@ -48,4 +48,12 @@ test_that("rezrDF modification works", {
   rezEx[["entryDF"]] = reloadForeign(rezEx[["entryDF"]], rezEx)
   expect(rezEx[["entryDF"]]$wordWylie[1] != "hohoho", failure_message = "Reload failed.")
   expect(rezEx[["tokenDF"]]$word[1] != "hahaha", failure_message = "Reload failed.")
+
+  updateFunct(rezEx[["trackDF"]][["refexpr"]], "word") = createLeftJoinUpdate(rezEx[["trackDF"]][["refexpr"]], rezEx, address = c("tokenDF/tokenSeq", "chunkDF/refexpr/tokenSeqFirst"), fkey = "token", field = "tokenSeqFirst")
+  rezEx[["trackDF"]][["refexpr"]] = rezEx[["trackDF"]][["refexpr"]] %>% mutate(tokenSeqFirst = 120)
+  rezEx[["trackDF"]][["refexpr"]] = reloadForeign(rezEx[["trackDF"]][["refexpr"]], rezEx)
+  expect(rezEx[["trackDF"]][["refexpr"]]$tokenSeqFirst[1] != 120, failure_message = "Reload failed.")
+
+
+
 })

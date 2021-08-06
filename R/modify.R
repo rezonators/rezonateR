@@ -324,6 +324,20 @@ getUpdateOrder = function(depsList){
   updateOrder
 }
 
+#' Create a left join update function.
+#'
+#' A function factory that allows the user to create an update function based on a left join.
+#'
+#' @param df The rezrDF to be updated.
+#' @param rezObj The full rezObj.
+#' @param address The address of the field you want to get data from in the *source* rezrDF. May be a vector if you have more than one source rezrDF. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.
+#' @param fkey The name of the foreign key in the target rezrDF.
+#' @param field The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.
+#'
+#' @return An update function for the left join defined.
+#' @export
+#'
+#' @examples
 createLeftJoinUpdate = function(df, rezObj, address, fkey, field = ""){
   #Create the function itself (easy!)
   funct = function(df, rezObj) updateLeftJoin(df, rezObj, address, fkey, field)
@@ -334,12 +348,14 @@ createLeftJoinUpdate = function(df, rezObj, address, fkey, field = ""){
   new_updateFunction(funct, deps)
 }
 
+
 #' Update a field using a left join.
 #'
 #' @param df1 The rezrDF to be updated.
 #' @param rezObj The full rezObj.
-#' @param address An address to the field from the original df, from the rezObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb'.
+#' @param address An address to the field from the original df, from the rezObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.
 #' @param fkey The foreign key(s). Should match the number of primary keys in the df you're pulling information from (i.e. fieldaccess set as 'key').
+#' @param field The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.
 #'
 #' @return The updated data frame.
 #' @export
@@ -347,6 +363,26 @@ createLeftJoinUpdate = function(df, rezObj, address, fkey, field = ""){
 #' @examples
 updateLeftJoin = function(df1, rezObj, address, fkey, field = ""){
   #Get the target table, target field, primary key
+  targetTableInfo = getTargetTableInfo(rezObj, address, field)
+  unpackList(targetTableInfo)
+
+  #Create the by-line
+  if(length(fkey) != length(df2key)){
+    stop("Number of foreign keys does not match the number of primary keys in df1.")
+  }
+  by = character()
+  for(i in 1:length(fkey)){
+    by[[fkey[[i]]]] = df2key[[i]]
+  }
+  destField = parse_expr(splitAdd[length(splitAdd)])
+
+  #Perform the join
+  newVals = left_join(df1 %>% select(!!fkey), df2 %>% select(!!df2key, !!df2field), by = by) %>% pull(!!df2field)
+  df1 = df1 %>% mutate(!!field := newVals)
+  df1
+}
+
+getTargetTableInfo = function(rezObj, address, field){
   if(length(address) == 1){
     splitAdd = strsplit(address, sep)[[1]]
     df2Add = splitAdd[-length(splitAdd)]
@@ -377,21 +413,30 @@ updateLeftJoin = function(df1, rezObj, address, fkey, field = ""){
     df2s_prejoin = lapply(1:length(df2s), function(x) as.data.frame(df2s[[x]]) %>% select(!!df2key := df2keys[[x]], !!field := df2fields[[x]]))
     df2 = Reduce(rbind, df2s_prejoin[2:length(df2s_prejoin)], df2s_prejoin[[1]])
   }
-  if(length(fkey) != length(df2key)){
-    stop("Number of foreign keys does not match the number of primary keys in df1.")
-  }
-  by = character()
-  for(i in 1:length(fkey)){
-    by[[fkey[[i]]]] = df2key[[i]]
-  }
-  destField = parse_expr(splitAdd[length(splitAdd)])
 
-  newVals = left_join(df1 %>% select(!!fkey), df2 %>% select(!!df2key, !!df2field), by = by) %>% pull(!!df2field)
-  df1 = df1 %>% mutate(!!field := newVals)
-  df1
+  return(list(df2key = df2key, df2field = df2field, df2 = df2, field = field))
 }
 
-#For tomorrow: test reloadForeign on combined DFs, then create lowerToUpper update functions, and finally combine auto and foreign reloads
+#' Update a field using a lowerToUpper operation.
+#'
+#' @param df The target rezrDF to be updated.
+#' @param rezObj The full rezObj.
+#' @param address An address to the field from the original df, from the rezObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.
+#' @param fkey If fkeyInDF = FALSE, an address to the list of foreign keys inside the nodeMap (from the root rezObj). If fkeyInDF = TRUE, a field in the target rezrDF containing a vector of foreign keys.
+#' @param field The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.
+#' @param fkeyInDF See fkey description.
+#'
+#' @return The updated data frame.
+#' @export
+#'
+#' @examples
+updateLowerToUpper = function(df, rezObj, address, fkeyAddress, field = "", fkeyInDF = FALSE){
+  #Get the target table, target field, primary key
+  targetTableInfo = getTargetTableInfo(rezObj, address, field)
+  unpackList(targetTableInfo)
+}
+
+#then create lowerToUpper update functions, and finally combine auto and foreign reloads
 reloadForeign = function(df, rezObj, fields = ""){
   if(all(fields == '')){
     #Only select fields that are foreign AND have an update function
@@ -405,3 +450,4 @@ reloadForeign = function(df, rezObj, fields = ""){
   }
   df
 }
+
