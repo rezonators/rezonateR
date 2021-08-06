@@ -224,29 +224,33 @@ reload = function(x, ...){
 }
 
 reload.rezrDF = function(df, fields = ""){
+  #TODO: Check all the update functions are actually there
   if(length(updateFunct(df)) > 1){
-    if(all(fields == "")){
-      #TODO: Reload all auto fields in the DF
-      depsList = lapply(updateFunct(df), function(x) deps(x))
-      order = getUpdateOrder(depsList)
-      df = reload.rezrDF(df, order)
-    } else {
-      for(field in fields){
-        if(!(field %in% names(updateFunct(df)))){
-          stop("The field " %+% field %+% " does not have an update function defined.")
-        }
-        #print(updateFunct(df)[[field]])
-        df = updateFunct(df)[[field]](df)
-      }
-    }
+    df = reloadLocal(df, fields = "")
   } else {
     warning("Reloading rezrDF with no update functions. The rezrDF was unchanged.")
   }
   df
 }
 
+reloadLocal = function(df, fields = ""){
+  if(all(fields == "")){
+    depsList = lapply(updateFunct(df), function(x) deps(x))
+    order = getUpdateOrder(depsList)
+    df = reload.rezrDF(df, order)
+  } else {
+    for(field in fields){
+      if(!(field %in% names(updateFunct(df)))){
+        stop("The field " %+% field %+% " does not have an update function defined.")
+      }
+      #print(updateFunct(df)[[field]])
+      df = updateFunct(df)[[field]](df)
+    }
+  }
+}
+
 new_updateFunction = function(f, deps){
-  stopifnot(is.list(deps))
+  stopifnot(is.vector(deps))
   stopifnot(is.function(f))
 
   structure(f, class = c("updateFunction", "function"), deps = deps)
@@ -272,7 +276,7 @@ createUpdateFunction = function(df, field, x){
   funct = eval(expr(function(df) mutate(df, !!field := !!x)))
 
   #Figure out dependencies
-  deps = list()
+  deps = character(0)
   x_flat = flatten_expr(x, includeFunct = F)
   for(item in x_flat){
     print(item)
@@ -286,6 +290,11 @@ createUpdateFunction = function(df, field, x){
 
 deps = function(updateFunct){
   attr(updateFunct, "deps")
+}
+
+`deps<-` = function(updateFunct, value){
+  attr(updateFunct, "deps") = x
+  updateFunct
 }
 
 getUpdateOrder = function(depsList){
@@ -315,10 +324,84 @@ getUpdateOrder = function(depsList){
   updateOrder
 }
 
-createLeftJoinUpdate = function(rezObj, df, field, x){
+createLeftJoinUpdate = function(df, rezObj, address, fkey, field = ""){
+  #Create the function itself (easy!)
+  funct = function(df, rezObj) updateLeftJoin(df, rezObj, address, fkey, field)
 
+  #Figure out the deps (actually still pretty simple!)
+  deps = address
+
+  new_updateFunction(funct, deps)
 }
 
-updateLeftJoin = function(rezObj, df, field, x){
+#' Update a field using a left join.
+#'
+#' @param df1 The rezrDF to be updated.
+#' @param rezObj The full rezObj.
+#' @param address An address to the field from the original df, from the rezObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb'.
+#' @param fkey The foreign key(s). Should match the number of primary keys in the df you're pulling information from (i.e. fieldaccess set as 'key').
+#'
+#' @return The updated data frame.
+#' @export
+#'
+#' @examples
+updateLeftJoin = function(df1, rezObj, address, fkey, field = ""){
+  #Get the target table, target field, primary key
+  if(length(address) == 1){
+    splitAdd = strsplit(address, sep)[[1]]
+    df2Add = splitAdd[-length(splitAdd)]
+    df2 = listAt(rezObj, df2Add)
+    df2key = names(fieldaccess(df2)[fieldaccess(df2) == "key"])
+    df2field = splitAdd[length(splitAdd)]
+    if(field == ""){
+      field = df2field
+    }
+  } else {
+    #Most common example:
+    #address = c("tokenDF/tokenSeq", "chunkDF/refexpr/tokenSeqFirst")
 
+    splitAdds = strsplit(address, sep)
+    df2Adds = lapply(splitAdds, function(x) paste0(x[-length(x)], collapse = "/"))
+    df2s = lapply(df2Adds, function(x) listAt(rezObj, x))
+    df2keys = sapply(df2s, function(x) names(fieldaccess(x)[fieldaccess(x) == "key"]))
+    df2fields = sapply(splitAdds, function(x) x[length(x)])
+    if(field == ""){
+      if(length(unique(df2fields)) == 1){
+        field = df2fields[[1]]
+      } else {
+        stop("Please specify a field name.")
+      }
+    }
+    df2key = df2keys[[1]]
+    df2field = field
+    df2s_prejoin = lapply(1:length(df2s), function(x) as.data.frame(df2s[[x]]) %>% select(!!df2key := df2keys[[x]], !!field := df2fields[[x]]))
+    df2 = Reduce(rbind, df2s_prejoin[2:length(df2s_prejoin)], df2s_prejoin[[1]])
+  }
+  if(length(fkey) != length(df2key)){
+    stop("Number of foreign keys does not match the number of primary keys in df1.")
+  }
+  by = character()
+  for(i in 1:length(fkey)){
+    by[[fkey[[i]]]] = df2key[[i]]
+  }
+  destField = parse_expr(splitAdd[length(splitAdd)])
+
+  newVals = left_join(df1 %>% select(!!fkey), df2 %>% select(!!df2key, !!df2field), by = by) %>% pull(!!df2field)
+  df1 = df1 %>% mutate(!!field := newVals)
+  df1
+}
+
+#For tomorrow: test reloadForeign on combined DFs, then create lowerToUpper update functions, and finally combine auto and foreign reloads
+reloadForeign = function(df, rezObj, fields = ""){
+  if(all(fields == '')){
+    #Only select fields that are foreign AND have an update function
+    fields = intersect(names(fieldaccess(df)[fieldaccess(df) == "foreign"]), names(updateFunct(df)))
+  }
+  for(field in fields){
+    if(!(field %in% names(updateFunct(df)))){
+      stop("The field " %+% field %+% " does not have an update function defined.")
+    }
+    df = df %>% updateFunct(df)[[field]](rezObj)
+  }
+  df
 }

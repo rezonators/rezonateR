@@ -13,6 +13,7 @@ test_that("rezrDF modification works", {
   rezEx[["tokenDF"]] = rezEx[["tokenDF"]] %>% rez_mutate(fieldaccess = "flex", word2 = word %+% ", lol.")
 
   #A bunch of auto stuff to test out updating.
+  #First local updates.
   rezEx[["tokenDF"]] = rezEx[["tokenDF"]] %>% rez_mutate(fieldaccess = "auto", word3 = wordWylie %+% ", lol.")
   updateFunct(rezEx[["tokenDF"]], "word3") = createUpdateFunction(tokenDF, word3, wordWylie %+% ", lol.")
   rezEx[["tokenDF"]] = rezEx[["tokenDF"]] %>% rez_mutate(fieldaccess = "auto", word4 = word3 %+% ", lol.")
@@ -35,5 +36,16 @@ test_that("rezrDF modification works", {
   expect(rezEx[["tokenDF"]]$word4[1] != "hahaha", failure_message = "Reload failed.")
   expect(rezEx[["tokenDF"]]$word5[1] != "hihihi", failure_message = "Reload failed.")
 
-  expect_type(rezEx[["tokenDF"]]$word2, "character")
+  #Then foreign updates.
+  updateFunct(rezEx[["entryDF"]], "word") = createLeftJoinUpdate(rezEx[["entryDF"]], rezEx, "tokenDF/word", "token")
+  updateFunct(rezEx[["entryDF"]], "wordWylie") = createLeftJoinUpdate(rezEx[["entryDF"]], rezEx, "tokenDF/wordWylie", "token")
+  rezEx[["entryDF"]] = rezEx[["entryDF"]] %>% mutate(word = "hahaha", wordWylie = "hohoho")
+  rezEx[["entryDF"]] = reloadForeign(rezEx[["entryDF"]], rezEx, c("word", "wordWylie"))
+  expect(rezEx[["entryDF"]]$wordWylie[1] != "hohoho", failure_message = "Reload failed.")
+  expect(rezEx[["entryDF"]]$word[1] != "hahaha", failure_message = "Reload failed.")
+
+  rezEx[["entryDF"]] = rezEx[["entryDF"]] %>% mutate(word = "hahaha", wordWylie = "hohoho")
+  rezEx[["entryDF"]] = reloadForeign(rezEx[["entryDF"]], rezEx)
+  expect(rezEx[["entryDF"]]$wordWylie[1] != "hohoho", failure_message = "Reload failed.")
+  expect(rezEx[["tokenDF"]]$word[1] != "hahaha", failure_message = "Reload failed.")
 })
