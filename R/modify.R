@@ -1,6 +1,18 @@
 #A group of functions for handling the modification of Rez data structures.
 #At the moment, it handles the data frames only. At one point, the node maps will also be handled through this interface.
 
+#' Extract/set an attribute of a rezrDF.
+#'
+#' Extract an attribute of a data.frame (inNodeMap, fieldaccess, updateFunct), or set it.
+#'
+#' @rdname getRezrDFAttr
+#' @param df The data.frame whose field access attributes you want to see.
+#' @param attr The attribute that you want to extract.
+#' @param fields The field whose access attribute you want to see. If left blank, a vector containing all the attributes is output.
+#' @param value The value you want to set it to.
+#'
+#' @return The value of the attribute you want to extract (for extract functions), and the DF with the value set (for set functions).
+#' @export
 getRezrDFAttr = function(df, attr, fields = ""){
   if(all(fields == "")){
     attr(df, attr, fields)
@@ -13,36 +25,20 @@ getRezrDFAttr = function(df, attr, fields = ""){
   }
 }
 
-#Field access types
-
-#' Extract the field access type from a data.frame
-#'
-#' Extract field access type data from a data.frame.
-#'
-#' @param df The data.frame whose field access attributes you want to see.
-#' @param fields The field whose access attribute you want to see. If left blank, a vector containing all the attributes is output.
-#'
-#' @return fieldaccess
+#' @rdname getRezrDFAttr
 #' @export
 fieldaccess = function(df, fields = "") getRezrDFAttr(df, "fieldaccess", fields)
+
+#' @rdname getRezrDFAttr
+#' @export
 updateFunct = function(df, fields = "") getRezrDFAttr(df, "updateFunct", fields)
+
+#' @rdname getRezrDFAttr
+#' @export
 inNodeMap = function(df, fields = "") getRezrDFAttr(df, "inNodeMap", fields)
 
-
-#setFieldaccess = function(df, fields = "", value) setRezrDFAttr(df, "fieldaccess", fields, value)
-#setUpdateFunct = function(df, fields = "", value) setRezrDFAttr(df, "updateFunct", fields, value)
-#setInNodeMap = function(df, fields = "", value) setRezrDFAttr(df, "inNodeMap", fields, value)
-#`updateFunct<-` = function(df, value) setRezrDFAttr(df, "updateFunct", "", value)
-
-#' Set an attribute in a data.frame
-#'
-#' Set an attribute in a data.frame.
-#'
-#' @param df The data.frame whose field access attributes you want to set.
-#' @param field The field whose access attribute you want to set. If left blank, a vector containing all the attributes is output.
-#' @param value The value you want to set the fields to. It may be one single value for all of the entries, a vector for each entry in fields, or if fields is unspecified, a named vector containing field access status of all fields in the data.frame.
-#'
-#' @return fieldaccess
+#' @rdname getRezrDFAttr
+#' @export
 setRezrDFAttr = function(df, attr, fields = "", value){
   if(all(fields == "")){
     if(!setequal(colnames(df), names(fields))){
@@ -58,20 +54,18 @@ setRezrDFAttr = function(df, attr, fields = "", value){
   }
   df
 }
-`updateFunct<-` = function(df, fields = "", value) setRezrDFAttr(df, "updateFunct", fields, value)
-`fieldaccess<-` = function(df, fields = "", value) setRezrDFAttr(df, "fieldaccess", fields, value)
-`inNodeMap<-` = function(df, fields = "", value) setRezrDFAttr(df, "inNodeMap", fields, value)
 
-
-#' Extract the update functions from a rezrDF
-#'
-#' Extract update functions from a rezrDF
-#'
-#' @param df The rezrDF whose field access attributes you want to see.
-#' @param fields The field whose access attribute you want to see. If left blank, a vector containing all the attributes is output.
-#'
-#' @return updateFunct
+#' @rdname getRezrDFAttr
 #' @export
+`updateFunct<-` = function(df, fields = "", value) setRezrDFAttr(df, "updateFunct", fields, value)
+
+#' @rdname getRezrDFAttr
+#' @export
+`fieldaccess<-` = function(df, fields = "", value) setRezrDFAttr(df, "fieldaccess", fields, value)
+
+#' @rdname getRezrDFAttr
+#' @export
+`inNodeMap<-` = function(df, fields = "", value) setRezrDFAttr(df, "inNodeMap", fields, value)
 
 
 #The rez_ data.frame functions
@@ -108,7 +102,7 @@ rez_dfop = function(df, .f, ..., fieldaccess = "flex", updateFunct = NA, oldName
 #'
 #' This function ensures that the fields in a DF you wish to change are actually a good idea to change. It produces an error if a primary key is among the fields you wish to change, and warnings otherwise. This is automatically called if you use a rezonateR-internal function such as rez_mutate.
 #'
-#' @param df
+#' @param df The rezrDF you are planning to change.
 #' @param changedFields The fields you want to change.
 #'
 #' @export
@@ -267,8 +261,6 @@ new_updateFunction = function(f, deps){
 #'
 #' @return An update function with automatically generated dependency information. I will figure out the dependency information for you, so you don't have to define it yourself.
 #' @export
-#'
-#' @examples
 createUpdateFunction = function(df, field, x){
   #Create the function itself
   field = enexpr(field)
@@ -329,18 +321,16 @@ getUpdateOrder = function(depsList){
 #' A function factory that allows the user to create an update function based on a left join.
 #'
 #' @param df The rezrDF to be updated.
-#' @param rezObj The full rezObj.
+#' @param rezrObj The full rezrObj.
 #' @param address The address of the field you want to get data from in the *source* rezrDF. May be a vector if you have more than one source rezrDF. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.
 #' @param fkey The name of the foreign key in the target rezrDF.
 #' @param field The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.
 #'
 #' @return An update function for the left join defined.
 #' @export
-#'
-#' @examples
-createLeftJoinUpdate = function(df, rezObj, address, fkey, field = ""){
+createLeftJoinUpdate = function(df, rezrObj, address, fkey, field = ""){
   #Create the function itself (easy!)
-  funct = function(df, rezObj) updateLeftJoin(df, rezObj, address, fkey, field)
+  funct = function(df, rezrObj) updateLeftJoin(df, rezrObj, address, fkey, field)
 
   #Figure out the deps (actually still pretty simple!)
   deps = address
@@ -352,18 +342,16 @@ createLeftJoinUpdate = function(df, rezObj, address, fkey, field = ""){
 #' Update a field using a left join.
 #'
 #' @param df1 The rezrDF to be updated.
-#' @param rezObj The full rezObj.
-#' @param address An address to the field from the original df, from the rezObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.
+#' @param rezrObj The full rezrObj.
+#' @param address An address to the field from the original df, from the rezrObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.
 #' @param fkey The foreign key(s). Should match the number of primary keys in the df you're pulling information from (i.e. fieldaccess set as 'key').
 #' @param field The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.
 #'
 #' @return The updated data frame.
 #' @export
-#'
-#' @examples
-updateLeftJoin = function(df1, rezObj, address, fkey, field = ""){
+updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
   #Get the source table, source field, source primary key, target field if unspecified
-  targetTableInfo = getTargetTableInfo(rezObj, address, field)
+  targetTableInfo = getTargetTableInfo(rezrObj, address, field)
   unpackList(targetTableInfo)
 
   #Create the by-line
@@ -382,11 +370,11 @@ updateLeftJoin = function(df1, rezObj, address, fkey, field = ""){
   df1
 }
 
-getTargetTableInfo = function(rezObj, address, field){
+getTargetTableInfo = function(rezrObj, address, field){
   if(length(address) == 1){
     splitAdd = strsplit(address, sep)[[1]]
     df2Add = splitAdd[-length(splitAdd)]
-    df2 = listAt(rezObj, df2Add)
+    df2 = listAt(rezrObj, df2Add)
     df2key = names(fieldaccess(df2)[fieldaccess(df2) == "key"])
     df2field = splitAdd[length(splitAdd)]
     if(field == ""){
@@ -398,7 +386,7 @@ getTargetTableInfo = function(rezObj, address, field){
 
     splitAdds = strsplit(address, sep)
     df2Adds = lapply(splitAdds, function(x) paste0(x[-length(x)], collapse = "/"))
-    df2s = lapply(df2Adds, function(x) listAt(rezObj, x))
+    df2s = lapply(df2Adds, function(x) listAt(rezrObj, x))
     df2keys = sapply(df2s, function(x) names(fieldaccess(x)[fieldaccess(x) == "key"]))
     df2fields = sapply(splitAdds, function(x) x[length(x)])
     if(field == ""){
@@ -420,17 +408,16 @@ getTargetTableInfo = function(rezObj, address, field){
 #' Update a field using a lowerToHigher operation.
 #'
 #' @param df The target rezrDF to be updated.
-#' @param rezObj The full rezObj.
-#' @param address An address to the field from the original df, from the rezObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.
-#' @param fkey If fkeyInDF = FALSE, an address to the list of foreign keys inside the nodeMap (from the root rezObj). If fkeyInDF = TRUE, a field in the target rezrDF containing a vector of foreign keys (not currently supported and will result in an error).
+#' @param rezrObj The full rezrObj.
+#' @param address An address to the field from the original df, from the rezrObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.
+#' @param fkeyAddress If fkeyInDF = FALSE, an address to the list of foreign keys inside the nodeMap (from the root rezrObj). If fkeyInDF = TRUE, a field in the target rezrDF containing a vector of foreign keys (not currently supported and will result in an error).
+#' @param action The function to be performed on the values in the source rezrDF to combine them into a single value.
 #' @param field The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.
 #' @param fkeyInDF See fkey description.
 #'
 #' @return The updated data frame.
 #' @export
-#'
-#' @examples
-updateLowerToHigher = function(df, rezObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
+updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
   if(length(fkeyAddress) > 1){
     stop("Multiple sources are currently not supported in the updateLowerToHigher function. Sorry!")
   } else if(fkeyInDF){
@@ -438,7 +425,7 @@ updateLowerToHigher = function(df, rezObj, address, fkeyAddress, action, field =
   }
 
   #Get the source table, source field, primary key
-  targetTableInfo = getTargetTableInfo(rezObj, address, field)
+  targetTableInfo = getTargetTableInfo(rezrObj, address, field)
   unpackList(targetTableInfo)
   #This operation yields four new variables in the local environment:
   #df2key (source DF key), df2field (source DF info field), df2 (source DF), field (target DF, if not specified at the beginning)
@@ -451,7 +438,7 @@ updateLowerToHigher = function(df, rezObj, address, fkeyAddress, action, field =
     if(length(fkeyPath) > 1){
       stop("Nested node maps are not currently supported. Please check your foreign key address.")
     }
-    complexNodeMap = rezObj %>% listAt("nodeMap/" %+% fkeyPath)
+    complexNodeMap = rezrObj %>% listAt("nodeMap/" %+% fkeyPath)
     fieldnames = field
 
   } else {
@@ -461,9 +448,24 @@ updateLowerToHigher = function(df, rezObj, address, fkeyAddress, action, field =
 
 }
 
-createLowerToHigherUpdate = function(df, rezObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
+#' Create an update function based on a lowerToHigher-type action.
+#'
+#' @param df The target rezrDF you want to modify.
+#' @param rezrObj The rezrObj.
+#' @param address The address to the info field that you want from your source DF.
+#' @param fkeyAddress The address to the token list in the nodeMap that corresponds to the target rezrDF.
+#' @param action
+#' @param field
+#' @param fkeyInDF
+#' @param seqName
+#'
+#' @return
+#' @export
+#'
+#' @examples
+createLowerToHigherUpdate = function(df, rezrObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
   #Create the function itself (easy!)
-  funct = function(df, rezObj) updateLowerToHigher(df, rezObj, address, fkeyAddress, action, field, fkeyInDF, seqName)
+  funct = function(df, rezrObj) updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, field, fkeyInDF, seqName)
 
   #Figure out the deps (actually still pretty simple!)
   deps = address
@@ -471,8 +473,15 @@ createLowerToHigherUpdate = function(df, rezObj, address, fkeyAddress, action, f
   new_updateFunction(funct, deps)
 }
 
-#then create lowerToHigher update functions, and finally combine auto and foreign reloads
-reloadForeign = function(df, rezObj, fields = ""){
+#' Reload foreign fields in a rezrDF.
+#'
+#' @param df The rezrDF you want to modify.
+#' @param rezrObj The entire rezrObj.
+#' @param fields The fields of the rezrDF you want to modify.
+#'
+#' @return The modified rezrDF.
+#' @export
+reloadForeign = function(df, rezrObj, fields = ""){
   if(all(fields == '')){
     #Only select fields that are foreign AND have an update function
     fields = intersect(names(fieldaccess(df)[fieldaccess(df) == "foreign"]), names(updateFunct(df)))
@@ -481,8 +490,7 @@ reloadForeign = function(df, rezObj, fields = ""){
     if(!(field %in% names(updateFunct(df)))){
       stop("The field " %+% field %+% " does not have an update function defined.")
     }
-    df = df %>% updateFunct(df)[[field]](rezObj)
+    df = df %>% updateFunct(df)[[field]](rezrObj)
   }
   df
 }
-

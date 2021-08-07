@@ -10,7 +10,8 @@
 #' @param layerRegex A list, each of which is a component (just track or chunk for now; stack and rez to be added later). In each list entry, there are three components: 'field' is the field on which the splitting is based; 'regex' is a vector of regular expressions; 'names' is a vector of layer names. 'regex' should have one fewer entry than 'names', as the last of the 'names' should be the default case.
 #'
 #' @return rezRObject
-#' @import stringr, rlang
+#' @import stringr
+#' @import rlang
 #' @export
 importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie", "lit"), layerRegex){
     if(length(paths) != length(docnames) & docnames != ""){
@@ -233,7 +234,7 @@ nodeToDF = function(nodeList, fields){
     propList[[field]] = sapply(nodeList, function(x) x[[field]])
   }
 
-  #
+  #Add tagMap tags
   if("tagMap" %in% names(nodeList[[1]])){
     propList = c(propList, extractTags(nodeList))
   }

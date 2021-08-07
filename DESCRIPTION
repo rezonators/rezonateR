@@ -26,4 +26,6 @@ Imports:
     rjson
 Depends:
     dplyr,
-    readr
+    readr,
+    stringr,
+    rlang

@@ -1,4 +1,17 @@
-`%+%` = function(a, b) paste0(a, b)
+#' Concatenate two strings together with nothing in between.
+#'
+#' This is intended to be an equivalent of Python +.
+#'
+#' @param a A character object.
+#' @param b A character
+#'
+#' @return The concatenated string.
+#' @export
+#'
+#' @examples "3" %+% "a"
+`%+%` = function(a, b){
+  paste0(a, b)
+}
 
 flatten_expr = function(x, includeFunct = T){
   x_list = as.list(x)
