@@ -42,6 +42,7 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
     }
 
     #DF representation
+    #TODO: Conditional on these things actually existing
     unitDF = nodeToDF(fullNodeMap[["unit"]], unitDFFields)
     tokenDF = nodeToDF(fullNodeMap[["token"]], tokenDFFields)
     entryDF = nodeToDF(fullNodeMap[["entry"]], entryDFFields)
@@ -108,7 +109,7 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
       }
     }
 
-    returnObj = list(nodeMap = fullNodeMap, entryDF = entryDF, unitDF = unitDF, tokenDF = tokenDF, chunkDF = chunkDF, trackDF = trackDF, trackChainDF = trackChainDF, linkDF = linkDF, docDF = docDF)
+    returnObj = new_rezrObj(list(nodeMap = fullNodeMap, entryDF = entryDF, unitDF = unitDF, tokenDF = tokenDF, chunkDF = chunkDF, trackDF = trackDF, trackChainDF = trackChainDF, linkDF = linkDF, docDF = docDF))
     return(returnObj)
 }
 
@@ -264,6 +265,15 @@ nodeToDF = function(nodeList, fields){
   return(new_rezrDF(as_tibble(df), fieldaccess, list(), inNodeMap))
 }
 
+#' Constructor function for rezrDF
+#'
+#' @param df The data.frame
+#' @param fieldaccess A set of field access values
+#' @param updateFunct A set of update functions
+#' @param inNodeMap Whether the fields of the data.frame are in the node map
+#'
+#' @return A rezrDF object
+#' @export
 new_rezrDF = function(df, fieldaccess, updateFunct, inNodeMap){
   #Validate all components of the DF
   stopifnot(is_tibble(df))
@@ -358,4 +368,18 @@ mergeTokenChunk = function(tokenDF, chunkDF){
 
   commonFields = intersect(colnames(tokenDF), colnames(chunkDF))
   (tokenDF %>% select(all_of(commonFields))) %>% rbind(chunkDF %>% select(commonFields))
+}
+
+#' Constructor function for rezrObj.
+#'
+#' @param list
+#'
+#' @return The rezObj.
+#' @export
+new_rezrObj = function(list){
+  stopifnot("nodeMap" %in% names(list))
+  stopifnot("tokenDF" %in% names(list))
+  stopifnot("unitDF" %in% names(list))
+
+  structure(list, class = "rezrObj")
 }
