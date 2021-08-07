@@ -3,12 +3,12 @@
 #' This is intended to be an equivalent of Python +.
 #'
 #' @param a A character object.
-#' @param b A character
+#' @param b A character object.
 #'
 #' @return The concatenated string.
 #' @export
 #'
-#' @examples "3" %+% "a"
+#' @examples "3" %+% "a" #You get "3a"
 `%+%` = function(a, b){
   paste0(a, b)
 }
