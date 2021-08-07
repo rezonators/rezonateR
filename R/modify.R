@@ -209,29 +209,55 @@ rez_group_split = function(df, ...){
   result
 }
 
+#' Functions for reloading auto and foreign fields.
+#'
+#' @rdname reload
+#' @param df The rezrDF you want to modify.
+#' @param rezrObj The entire rezrObj.
+#' @param fields The fields of the rezrDF you want to modify.
+#'
+#' @return The modified rezrDF. Foreign fields are always updated before auto fields. If the fields parameter is not available, I will find the best update order; otherwise, I will use the order you provide except for the rule where foreign fields are updated first.
+#' @export
 reload = function(x, ...){
-  if("rezrDF" %in% class(x)){
-    reload.rezrDF(x, ...)
-  } else if("rezrObj" %in% class(x)){
-    reload.rezrObj(x, ...)
-  }
+  UseMethod("reload")
 }
 
-reload.rezrDF = function(df, fields = ""){
-  #TODO: Check all the update functions are actually there
+#' @rdname reload
+#' @export
+reload.rezrDF = function(df, rezrObj, fields = ""){
   if(length(updateFunct(df)) > 1){
-    df = reloadLocal(df, fields = "")
+    if(all(fields == "")){
+      df = reloadForeign(df, rezrObj, fields = "")
+      df = reloadLocal(df, fields = "")
+    } else {
+      faList = fieldaccess(df)
+      autoFields = intersect(faList[faList == "auto"], fields)
+      foreignFields = intersect(faList[faList == "foreign"], fields)
+      df = reloadForeign(df, fields = foreignFields)
+      df = reloadLocal(df, fields = autoFields)
+    }
   } else {
     warning("Reloading rezrDF with no update functions. The rezrDF was unchanged.")
   }
   df
 }
 
+#' @rdname reload
+#' @export
 reloadLocal = function(df, fields = ""){
   if(all(fields == "")){
-    depsList = lapply(updateFunct(df), function(x) deps(x))
-    order = getUpdateOrder(depsList)
-    df = reload.rezrDF(df, order)
+    autoFields = names(fieldaccess(df)[fieldaccess(df) == "auto"])
+    fields = intersect(names(updateFunct(df)), autoFields)
+    if(length(fields) > 0){
+      if(length(setdiff(autoFields, fields)) > 1){
+        warning("The following auto fields have no updateFunction and cannot be updated:" %+%  paste(length(setdiff(autoFields, fields)), collapse = ", ") %+% ".")
+      }
+      updateFunctList = updateFunct(df)[fields]
+
+      depsList = lapply(updateFunctList, function(x) deps(x))
+      order = getUpdateOrder(depsList)
+      df = reloadLocal(df, order)
+    }
   } else {
     for(field in fields){
       if(!(field %in% names(updateFunct(df)))){
@@ -241,8 +267,39 @@ reloadLocal = function(df, fields = ""){
       df = updateFunct(df)[[field]](df)
     }
   }
+  df
 }
 
+#' @rdname reload
+#' @export
+reloadForeign = function(df, rezrObj, fields = ""){
+  if(all(fields == '')){
+    #Only select fields that are foreign AND have an update function
+    foreignFields = names(fieldaccess(df)[fieldaccess(df) == "foreign"])
+    updateableFields = names(updateFunct(df))
+    fields = intersect(foreignFields, updateableFields)
+    if(length(setdiff(foreignFields, fields)) > 1){
+      warning("The following foreign fields have no updateFunction and cannot be updated:" %+%  paste(length(setdiff(foreignFields, fields)), collapse = ", ") %+% ".")
+    }
+  }
+  for(field in fields){
+    if(!(field %in% names(updateFunct(df)))){
+      stop("The field " %+% field %+% " does not have an update function defined.")
+    }
+    df = df %>% updateFunct(df)[[field]](rezrObj)
+  }
+  df
+}
+
+
+#' A constructor function for updateFunction objects
+#'
+#' @rdname updateFunction
+#' @param f The function itself.
+#' @param deps The dependencies of the function. Either a vector of single field names, or a single foreign field specified using an address, e.g. 'chunkDF/refexpr/word' refers to the word field of the refexpr layer of chunkDF.
+#'
+#' @return An updateFunction object
+#' @export
 new_updateFunction = function(f, deps){
   stopifnot(is.vector(deps))
   stopifnot(is.function(f))
@@ -471,26 +528,4 @@ createLowerToHigherUpdate = function(df, rezrObj, address, fkeyAddress, action, 
   deps = address
 
   new_updateFunction(funct, deps)
-}
-
-#' Reload foreign fields in a rezrDF.
-#'
-#' @param df The rezrDF you want to modify.
-#' @param rezrObj The entire rezrObj.
-#' @param fields The fields of the rezrDF you want to modify.
-#'
-#' @return The modified rezrDF.
-#' @export
-reloadForeign = function(df, rezrObj, fields = ""){
-  if(all(fields == '')){
-    #Only select fields that are foreign AND have an update function
-    fields = intersect(names(fieldaccess(df)[fieldaccess(df) == "foreign"]), names(updateFunct(df)))
-  }
-  for(field in fields){
-    if(!(field %in% names(updateFunct(df)))){
-      stop("The field " %+% field %+% " does not have an update function defined.")
-    }
-    df = df %>% updateFunct(df)[[field]](rezrObj)
-  }
-  df
 }

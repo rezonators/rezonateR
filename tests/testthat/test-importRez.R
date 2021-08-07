@@ -59,5 +59,14 @@ test_that("rezrDF modification works", {
   rezEx[["chunkDF"]][["refexpr"]] = reloadForeign(rezEx[["chunkDF"]][["refexpr"]], rezEx, c("word"))
   expect(rezEx[["chunkDF"]][["refexpr"]]$word[1] !="hahaha", failure_message = "Reload failed.")
 
+  updateFunct(rezEx[["chunkDF"]][["refexpr"]], "word3") = createUpdateFunction(tokenDF, word3, word %+% ", lol.")
+  fieldaccess(rezEx[["chunkDF"]][["refexpr"]], "word3") = "auto"
+  fieldaccess(rezEx[["chunkDF"]][["refexpr"]], "word") = "foreign"
+  rezEx[["chunkDF"]][["refexpr"]] = rezEx[["chunkDF"]][["refexpr"]] %>% mutate(word3 = "hohoho")
+  rezEx[["chunkDF"]][["refexpr"]] = rezEx[["chunkDF"]][["refexpr"]] %>% mutate(word = "hahaha")
+  rezEx[["chunkDF"]][["refexpr"]] = reload(rezEx[["chunkDF"]][["refexpr"]], rezEx)
+  expect(rezEx[["chunkDF"]][["refexpr"]]$word[1] !="hahaha", failure_message = "Reload failed.")
+  expect(rezEx[["chunkDF"]][["refexpr"]]$word3[1] !="hohoho", failure_message = "Reload failed.")
+
 
 })

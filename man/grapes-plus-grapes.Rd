@@ -9,7 +9,7 @@ a \%+\% b
 \arguments{
 \item{a}{A character object.}
 
-\item{b}{A character}
+\item{b}{A character object.}
 }
 \value{
 The concatenated string.
@@ -18,5 +18,5 @@ The concatenated string.
 This is intended to be an equivalent of Python +.
 }
 \examples{
-"3" \%+\% "a"
+"3" \%+\% "a" #You get "3a"
 }
