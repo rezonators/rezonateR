@@ -289,8 +289,26 @@ new_rezrDF = function(df, fieldaccess, updateFunct, inNodeMap){
   structure(df, class = c("rezrDF", "tbl_df", "tbl", "data.frame"), fieldaccess = fieldaccess, updateFunct = updateFunct, inNodeMap = inNodeMap)
 }
 
+lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fieldnames, higherFieldnames = "", action, seqName = "discourseTokenSeq", tokenListName = "tokenList", simpleDFAddress = "", complexNodeMapAddress = "", rezrObj = NULL, fieldaccess = "foreign"){
+  if(is.null(complexNodeMap)){
+    if(!all(complexNodeMapAddress == "") & !is.null(rezrObj)){
+      complexNodeMap = listAt(rezrObj, "nodeMap/" %+% complexNodeMapAddress)
+    } else {
+      stop("No complex node map and/or rezrObj specified.")
+    }
+  }
+  if(is.null(simpleDF)){
+    if(!all(simpleDFAddress == "") & !is.null(rezrObj)){
+      simpleDF = listAt(rezrObj, simpleDFAddress)
+    } else {
+      stop("No complex DF and/or rezrObj specified.")
+    }
+  }
 
-lowerToHigher = function(simpleDF, complexDF, complexNodeMap, fieldnames, higherFieldnames = "", action, seqName = "discourseTokenSeq", tokenListName = "tokenList"){
+  if(!all(higherFieldnames == "") & length(fieldnames) != length(higherFieldnames)){
+    stop("Field name vectors do not match in length.")
+  }
+
   if(!all(complexDF$id %in% names(complexNodeMap))){
     stop("Some of the IDs in the complex DF are not found in the complex node map. Action terminated. Check that your complex DF and complex node map match.")
   } else {
@@ -313,13 +331,30 @@ lowerToHigher = function(simpleDF, complexDF, complexNodeMap, fieldnames, higher
     })
   }
 
-  #Integrate the data in the colsToAdd list to the complexDF and return.
+  #Integrate the data in the colsToAdd list to the complexDF
   oldFieldnames = intersect(names(complexDF), higherFieldnames)
   newFieldnames = setdiff(higherFieldnames, names(complexDF))
   complexDF = complexDF %>% mutate(across(all_of(oldFieldnames), function(x) colsToAdd[[cur_column()]]))
   for(name in newFieldnames){
     values = colsToAdd[[name]]
-    complexDF = complexDF %>% rez_mutate("foreign", !!name := values)
+    complexDF = complexDF %>% rez_mutate(!!name := values, fieldaccess = fieldaccess)
+  }
+
+  if(length(fieldaccess) > 1){
+    stop("Multiple field access values not yet implemented for lowerToHigher functions. Please perform action separately.")
+  }
+
+  #Attribute stuff
+  for(i in 1:length(higherFieldnames)){
+    field = fieldnames[i]
+    higherField = higherFieldnames[i]
+    if(!(higherField %in% names(updateFunct(complexDF)))){
+        if(simpleDFAddress != "" & complexNodeMapAddress != ""){
+          updateFunct(complexDF, higherField) = createLowerToHigherUpdate(simpleDFAddress %+% "/" %+% field, complexNodeMapAddress %+% "/" %+% tokenListName, action, higherField, fkeyInDF = FALSE, seqName)
+        } else {
+          message("You didn't specify simple and/or complex DF addresses, so I cannot create an update function for you.")
+        }
+    }
   }
 
   complexDF

@@ -52,3 +52,23 @@ unpackList = function(list){
     parentEnv[[name]] = list[[name]]
   }
 }
+
+#Words: Words you want to chomp the suffix from
+#Suffix: A regex
+chompSuffix = function(words, suffix){
+  if(suffix != ""){
+    sapply(words, function(x){
+      newWord = x
+      if(str_ends(x, suffix)){
+        locs = str_locate_all(x, suffix)[[1]]
+        suffixStart = locs[nrow(locs),1]
+        newWord = substr(x, 1, suffixStart - 1)
+      }
+      newWord
+    })
+  } else {
+    words
+  }
+}
+
+find

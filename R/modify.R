@@ -41,8 +41,9 @@ inNodeMap = function(df, fields = "") getRezrDFAttr(df, "inNodeMap", fields)
 #' @export
 setRezrDFAttr = function(df, attr, fields = "", value){
   if(all(fields == "")){
-    if(!setequal(colnames(df), names(fields))){
-      warning("The data.frame does not have the same field as the value vector that you are giving me. Please check that the value vector is correct, or specifiy the fields you want to set.")
+    if(!setequal(colnames(df), names(value))){
+      if(attr != "updateFunct" | length(setdiff(names(value), colnames(df))) != 0)
+      warning("The data.frame does not have the same field as the value vector that you are giving me. Please check that the value vector is correct, or specifiy the fields you want to set. " %+% "Data frame column names: " %+% paste(colnames(df), collapse = ", ") %+% "; value vector names: " %+% paste(colnames(df), collapse = ", ") %+% ".")
     }
     attr(df, attr) = value
   } else {
@@ -169,7 +170,9 @@ rez_mutate = function(df, ..., fieldaccess = "flex"){
 #' @param ... Other functions passed onto left_join, i.e. the columns you will be changing or adding.
 #'
 #' @return resultDF
-rez_left_join = function(df1, df2, ..., fieldaccess = "foreign"){
+rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", address = "", fkey = "", rezrObj = NULL){
+  #TODO: No need to specify df2 if address is provided
+
   oldNames = colnames(df1)
 
   updateFunction = NA
@@ -187,13 +190,64 @@ rez_left_join = function(df1, df2, ..., fieldaccess = "foreign"){
     }
   }
 
+  #Figuring out missing info from other info:
+  #a) Figuring out the DF from the address
+  df2Add = strsplit(address, "/")[[1]]
+  if(is.null(df2)){
+    if(!is.null(rezrObj) & !(all(address == ""))){
+      df2 = listAt(rezrObj, df2Add)
+    } else{
+      stop("You need to specify either a right data.frame, or an address with a rezrObj.")
+    }
+  }
+
+  #b) Figuring out foreign key from the by-line
+  autoBy = character(0)
+  if(is.null(list(...)[["by"]])){
+    if(!all(fkey == "")){
+      i = 1
+      for(key in fkey){
+        autoBy[key] = names(fieldaccess(df2)[fieldaccess(df2) == "key"])[i]
+        i = i + 1
+        message("You didn't give me a by-line for the left join. So I figured it out for you from your key information.")
+      }
+    }
+  }
+
+  #c) Figuring out by-line from the foreign key
+  if(all(fkey == "")){
+    if(!is.null(list(...)[["by"]])){
+      fkey = names(list(...)[["by"]])[1]
+      message("You didn't give me a foreign key for future updates, so I'm assuming it's the first of your by-fields.")
+    }
+  }
+
   if(!suffixIncl){
     result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, df2, suffix = c("", "_lower"), ...)
+
+    #For the update function
+    newNames = setdiff(names(result), oldNames)
+    rightTblNames = chompSuffix(newNames, "_lower")
   } else {
     #We need to specify oldNames to rez_dfop because the names of fields in df1 may be changed.
     leftSuffix = list(...)[["suffix"]][1]
     oldNames = unique(c(oldNames, paste0(oldNames, leftSuffix)))
     result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, oldNames = oldNames, df2, ...)
+
+    #For the update function
+    newNames = setdiff(names(result), oldNames)
+    rightTblNames = chompSuffix(newNames, list(...)[["suffix"]][2])
+  }
+
+  #Update function stuff
+  if(all(address == "") | all(fkey == "")){
+    message("You didn't provide an address and/or foreign key, so I won't be adding an update function automatically. Nuh-uh!")
+  } else {
+    for(i in 1:length(newNames)){
+        newName = newNames[i]
+        rightTblName = rightTblNames[i]
+        updateFunct(result, newName) = createLeftJoinUpdate(address %+% "/" %+% rightTblName, fkey, newName)
+    }
   }
 
   result
@@ -203,7 +257,6 @@ rez_group_split = function(df, ...){
   split = df %>% group_split(...)
   result = list()
   for(i in 1:length(split)){
-    print(fieldaccess(df))
     result[[i]] = new_rezrDF(split[[i]], fieldaccess(df), updateFunct(df), inNodeMap(df))
   }
   result
@@ -263,7 +316,6 @@ reloadLocal = function(df, fields = ""){
       if(!(field %in% names(updateFunct(df)))){
         stop("The field " %+% field %+% " does not have an update function defined.")
       }
-      #print(updateFunct(df)[[field]])
       df = updateFunct(df)[[field]](df)
     }
   }
@@ -279,7 +331,7 @@ reloadForeign = function(df, rezrObj, fields = ""){
     updateableFields = names(updateFunct(df))
     fields = intersect(foreignFields, updateableFields)
     if(length(setdiff(foreignFields, fields)) > 1){
-      warning("The following foreign fields have no updateFunction and cannot be updated:" %+%  paste(length(setdiff(foreignFields, fields)), collapse = ", ") %+% ".")
+      warning("The following foreign fields have no updateFunction and cannot be updated:" %+%  paste(setdiff(foreignFields, fields), collapse = ", ") %+% ".")
     }
   }
   for(field in fields){
@@ -312,13 +364,13 @@ new_updateFunction = function(f, deps){
 #'
 #' This is for 'auto' fields only; 'foreign' field take createUpdateFunction.
 #'
-#' @param df The rezrDF for which you want to create an update function.
 #' @param field The field for which you want to create an update function.
 #' @param x An R expression. For example, if you want to column2 to be updated to always be three times column3, then x should be column3 * 3.
+#' @param df The rezrDF for which you want to create an update function.
 #'
 #' @return An update function with automatically generated dependency information. I will figure out the dependency information for you, so you don't have to define it yourself.
 #' @export
-createUpdateFunction = function(df, field, x){
+createUpdateFunction = function(field, x, df){
   #Create the function itself
   field = enexpr(field)
   x = enexpr(x)
@@ -328,7 +380,6 @@ createUpdateFunction = function(df, field, x){
   deps = character(0)
   x_flat = flatten_expr(x, includeFunct = F)
   for(item in x_flat){
-    print(item)
     if(item %in% colnames(df)){
       deps = c(deps, item)
     }
@@ -385,7 +436,7 @@ getUpdateOrder = function(depsList){
 #'
 #' @return An update function for the left join defined.
 #' @export
-createLeftJoinUpdate = function(df, rezrObj, address, fkey, field = ""){
+createLeftJoinUpdate = function(address, fkey, field = ""){
   #Create the function itself (easy!)
   funct = function(df, rezrObj) updateLeftJoin(df, rezrObj, address, fkey, field)
 
@@ -410,6 +461,7 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
   #Get the source table, source field, source primary key, target field if unspecified
   targetTableInfo = getTargetTableInfo(rezrObj, address, field)
   unpackList(targetTableInfo)
+  field = targetTableInfo[["field"]]
 
   #Create the by-line
   if(length(fkey) != length(df2key)){
@@ -429,7 +481,7 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
 
 getTargetTableInfo = function(rezrObj, address, field){
   if(length(address) == 1){
-    splitAdd = strsplit(address, sep)[[1]]
+    splitAdd = strsplit(address, "/")[[1]]
     df2Add = splitAdd[-length(splitAdd)]
     df2 = listAt(rezrObj, df2Add)
     df2key = names(fieldaccess(df2)[fieldaccess(df2) == "key"])
@@ -441,7 +493,7 @@ getTargetTableInfo = function(rezrObj, address, field){
     #Most common example:
     #address = c("tokenDF/tokenSeq", "chunkDF/refexpr/tokenSeqFirst")
 
-    splitAdds = strsplit(address, sep)
+    splitAdds = strsplit(address, "/")
     df2Adds = lapply(splitAdds, function(x) paste0(x[-length(x)], collapse = "/"))
     df2s = lapply(df2Adds, function(x) listAt(rezrObj, x))
     df2keys = sapply(df2s, function(x) names(fieldaccess(x)[fieldaccess(x) == "key"]))
@@ -459,7 +511,7 @@ getTargetTableInfo = function(rezrObj, address, field){
     df2 = Reduce(rbind, df2s_prejoin[2:length(df2s_prejoin)], df2s_prejoin[[1]])
   }
 
-  return(list(df2key = df2key, df2field = df2field, df2 = df2, field = field))
+  return(list(df2key = df2key, df2field = df2field, df2 = df2, field = field, splitAdd = splitAdd))
 }
 
 #' Update a field using a lowerToHigher operation.
@@ -476,7 +528,7 @@ getTargetTableInfo = function(rezrObj, address, field){
 #' @export
 updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
   if(length(fkeyAddress) > 1){
-    stop("Multiple sources are currently not supported in the updateLowerToHigher function. Sorry!")
+    stop("Multiple sources are currently not supported in the updateLowerToHigher function. Please run this function multiple times. Sorry!")
   } else if(fkeyInDF){
     stop("Foreign keys in the current DF in the lowerToHigher function are not currently supported. Please use the correponding nodeMap.")
   }
@@ -484,6 +536,7 @@ updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field 
   #Get the source table, source field, primary key
   targetTableInfo = getTargetTableInfo(rezrObj, address, field)
   unpackList(targetTableInfo)
+  field = targetTableInfo[["field"]]
   #This operation yields four new variables in the local environment:
   #df2key (source DF key), df2field (source DF info field), df2 (source DF), field (target DF, if not specified at the beginning)
 
@@ -501,8 +554,9 @@ updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field 
   } else {
     #TODO: Placeholder for when I support fkeyInDF = T
   }
-  lowerToHigher(df2, df, complexNodeMap, df2field, field, action, seqName, fkeyField)
+  result = lowerToHigher(df2, df, complexNodeMap, df2field, field, action, seqName, fkeyField)
 
+  result
 }
 
 #' Create an update function based on a lowerToHigher-type action.
@@ -516,11 +570,17 @@ updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field 
 #' @param fkeyInDF
 #' @param seqName
 #'
-#' @return
+#' @return An update function for a lowerToHigher-type foreign field.
 #' @export
 #'
 #' @examples
-createLowerToHigherUpdate = function(df, rezrObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
+createLowerToHigherUpdate = function(address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
+  if(length(fkeyAddress) > 1){
+    stop("Multiple sources are currently not supported in the updateLowerToHigher function. Sorry!")
+  } else if(fkeyInDF){
+    stop("Foreign keys in the current DF in the lowerToHigher function are not currently supported. Please use the correponding nodeMap.")
+  }
+
   #Create the function itself (easy!)
   funct = function(df, rezrObj) updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, field, fkeyInDF, seqName)
 
@@ -528,4 +588,21 @@ createLowerToHigherUpdate = function(df, rezrObj, address, fkeyAddress, action, 
   deps = address
 
   new_updateFunction(funct, deps)
+}
+
+#' Select columns in a rezrDF
+#'
+#' @param df A rezrDF object
+#' @param ... Functions to be passed to dplyr select
+#'
+#' @return The rezrDF object with only the required columns
+#' @export
+#'
+#' @examples
+rez_select = function(df, ...){
+  result = df %>% select(...)
+  fieldaccess(result) = fieldaccess(result)[names(fieldaccess(result)) %in% colnames(result)]
+  updateFunct(result) = updateFunct(result)[names(updateFunct(result)) %in% colnames(result)]
+  inNodeMap(result) = inNodeMap(result)[names(inNodeMap(result)) %in% colnames(result)]
+  result
 }
