@@ -18,7 +18,7 @@ reload = function(x, ...){
 }
 
 addField = function(x, ...){
-  UseMethod("addFieldLocal")
+  UseMethod("addField")
 }
 
 addFieldLocal = function(x, ...){
@@ -27,5 +27,13 @@ addFieldLocal = function(x, ...){
 
 addFieldForeign = function(x, ...){
   UseMethod("addFieldForeign")
+}
+
+changeFieldLocal = function(x, ...){
+  UseMethod("changeFieldLocal")
+}
+
+changeFieldForeign = function(x, ...){
+  UseMethod("changeFieldForeign")
 }
 

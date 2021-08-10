@@ -49,16 +49,16 @@ rez_mutate = function(df, ..., fieldaccess = "flex"){
 #' @param changedFields The fields you want to change.
 #'
 #' @export
-rez_validate_fieldchange = function(df, changedFields){
+rez_validate_fieldchange = function(df, changedFields, changingStatus = F){
   for(entry in changedFields){
     if(entry %in% names(fieldaccess(df))){
       if(fieldaccess(df)[entry] == "key"){
         stop("You cannot change a primary key: " %+% entry)
       } else if(fieldaccess(df)[entry] == "fkey"){
         warning("Note that you are changing a foreign key " %+% entry %+% ". This should only be used for changing association links between tables, and may break thing down the road.")
-      } else if(fieldaccess(df)[entry] == "auto"){
+      } else if(fieldaccess(df)[entry] == "auto" & !changingStatus){
         warning("Note that you are changing a field " %+% entry %+% "that is automatically updated. Your change is likely to be overridden by a future update.")
-      } else if(fieldaccess(df)[entry] == "foreign"){
+      } else if(fieldaccess(df)[entry] == "foreign" & !changingStatus){
         warning("Note that you are changing a field " %+% entry %+% "that depends on another data.frame. Your change is likely to be overridden by a future update on the data.frame that this data.frame depends on.")
       }
     }

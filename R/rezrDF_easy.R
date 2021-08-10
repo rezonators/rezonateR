@@ -3,22 +3,15 @@
 #Table of contents:
 #1) Add a field using local information: addFieldLocal.rezrDF
 #2) Add a field using foreign information: addFieldForeign.rezrDF
-#3) Change a field using local information: changeFieldLocal.rezrDF
-#4) Change a field using foreign information: changeFieldForeign.rezrDF
+#3) A group of functions that may be used in addFieldForeign: concatenateAll, longest, longestLength, shortest, shortestLength
+#5) Change a field using local information: changeFieldLocal.rezrDF
+#6) Change a field using foreign information: changeFieldForeign.rezrDF
 
 addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "flex"){
-  stopifnot("rezrDF" %in% class(rezrDF))
-  stopifnot(is.character(fieldName))
-  stopifnot(is.character(fieldaccess))
-
+  #Validation with differences with changeFieldLocal
+  #(Validation in common with changeFieldLocal is checked in simpleMutate)
   currArgs = c("fieldName", "fieldaccess")
-  for (arg in currArgs){
-    e = environment()
-    if(length(e[[arg]]) > 1){
-      warning("You can only add one field at a time. I am taking the first of the following field: " %+% arg)
-      e[[arg]] = e[[arg]][1]
-    }
-  }
+  checkIfOne(currArgs, "You can only add one field at a time.")
 
   if(fieldName %in% names(rezrDF)) stop("You cannot add a field with the same name as an existing field.")
 
@@ -28,16 +21,11 @@ addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "fl
     stop("addFieldLocal cannot add foreign fields. Please use addFieldForeign instead.")
   }
 
-  rez_validate_fieldchange(fieldName)
-
-  enexpression = enexpr(expression)
-
-  result = suppresswarnings(rez_mutate(rezrDF, !!fieldName := !!enexpression, fieldaccess = fieldaccess))
-  if(fieldaccess == "auto"){
-    updateFunct(result, fieldName) = createUpdateFunction(!!fieldName, !!enexpression, df)
-  }
-
-  result
+  print(rezrDF)
+  print(fieldName)
+  print(fieldaccess)
+  print(enexpr(expression))
+  simpleMutate(rezrDF, fieldName, enexpr(expression), fieldaccess)
 }
 
 
@@ -77,13 +65,7 @@ addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
   }
 
   currArgs = c("targetForeignKeyName", "targetFieldName", "sourceFieldName", "type", "fieldaccess", "complexAction")
-  for (arg in currArgs){
-    e = environment()
-    if(length(e[[arg]]) > 1){
-      warning("Only one of each field is allowed. I am taking the first of the following field: " %+% arg)
-      e[[arg]] = e[[arg]][1]
-    }
-  }
+  checkIfOne(currArgs, "You can only add one field at a time.")
 
   #Perform actions
   if(type == "simple"){
@@ -113,6 +95,7 @@ addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
 }
 
 concatenateAll = function(x){
+  x = sapply(x, function(y) if(is.na(y)) "" else y)
   paste(x, collapse = "")
 }
 
@@ -132,7 +115,6 @@ shortest = function(x){
   x[nchar(x) == max(nchar(x), na.rm = T)]
 }
 
-
 addField.rezrDF = function(rezrDF, ..., foreign = F){
   if(!foreign){
     addFieldLocal(rezrDF, ...)
@@ -141,8 +123,51 @@ addField.rezrDF = function(rezrDF, ..., foreign = F){
   }
 }
 
-changeFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "flex"){
+changeFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = ""){
+  currArgs = c("fieldName", "fieldaccess")
+  checkIfOne(currArgs, "You can only change one field at a time.")
 
+  if(fieldaccess == "key"){
+    warning("Are you sure you want to change a field to a primary key? Compound key fields are currently not well supported.")
+  } else if(fieldaccess == "foreign"){
+    stop("changeFieldLocal cannot turn a field foreign or modify fields using foreign information. Please use changeFieldForeign instead.")
+  }
+
+  #Change field access first
+  fieldaccess(rezrDF, fieldName) = fieldaccess
+  rez_validate_fieldchange(rezrDF, fieldName, changingStatus = T)
+
+  #Then change the actual field
+  simpleMutate(rezrDF, fieldName, enexpr(expression), fieldaccess)
+}
+
+#Purely internal function for commnalities between changeFieldLocal and addFieldLocal
+simpleMutate = function(rezrDF, fieldName, enexpression, fieldaccess){
+  stopifnot("rezrDF" %in% class(rezrDF))
+  stopifnot(is.character(fieldName))
+  stopifnot(is.character(fieldaccess))
+
+  result = suppressWarnings(rez_mutate(rezrDF, !!fieldName := !!enexpression, fieldaccess = fieldaccess))
+  if(fieldaccess == "auto"){
+    updateFunct(result, fieldName) = createUpdateFunction(!!fieldName, !!enexpression, df)
+  }
+  result
+}
+
+
+a = function(field, e){
+  e = enexpr(e)
+  df %>% mutate(!!field := !!e)
+}
+
+checkIfOne = function(args, message){
+  for (arg in args){
+    e = env_parent(environment())
+    if(length(e[[arg]]) > 1){
+      warning(message %+% "I am taking the first of the following field: " %+% arg)
+      e[[arg]] = e[[arg]][1]
+    }
+  }
 }
 
 

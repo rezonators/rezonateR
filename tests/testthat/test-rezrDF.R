@@ -100,6 +100,9 @@ test_that("Simple rezrDF operation commands", {
 
   a = rezEx$tokenDF %>% addFieldLocal("word6", word %+% "!!!", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
   expect(a$word6[1] != "?", failure_message = "Reload failed.")
+  a = rezEx$tokenDF %>% addFieldLocal("word6", word %+% "!!!", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
+  expect(a$word6[1] != "?", failure_message = "Reload failed.")
+
 
   a = rezEx$chunkDF$refexpr %>% rez_rename(mot = word)
   expect("mot" %in% names(updateFunct(a)), "Rename failed.")
