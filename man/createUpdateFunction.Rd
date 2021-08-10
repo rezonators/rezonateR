@@ -4,14 +4,14 @@
 \alias{createUpdateFunction}
 \title{Create an update function.}
 \usage{
-createUpdateFunction(df, field, x)
+createUpdateFunction(field, x, df)
 }
 \arguments{
-\item{df}{The rezrDF for which you want to create an update function.}
-
 \item{field}{The field for which you want to create an update function.}
 
 \item{x}{An R expression. For example, if you want to column2 to be updated to always be three times column3, then x should be column3 * 3.}
+
+\item{df}{The rezrDF for which you want to create an update function.}
 }
 \value{
 An update function with automatically generated dependency information. I will figure out the dependency information for you, so you don't have to define it yourself.

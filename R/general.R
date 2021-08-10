@@ -71,4 +71,6 @@ chompSuffix = function(words, suffix){
   }
 }
 
-find
+last = function(vector){
+  vector[length(vector)]
+}

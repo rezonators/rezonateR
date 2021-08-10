@@ -4,7 +4,15 @@
 \alias{rez_left_join}
 \title{Perform a left join on two rez data.frames and change field access status.}
 \usage{
-rez_left_join(df1, df2, ..., fieldaccess = "foreign")
+rez_left_join(
+  df1,
+  df2 = NULL,
+  ...,
+  fieldaccess = "foreign",
+  df2Address = "",
+  fkey = "",
+  rezrObj = NULL
+)
 }
 \arguments{
 \item{df1}{The left data.frame.}

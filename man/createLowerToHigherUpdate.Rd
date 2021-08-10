@@ -5,8 +5,6 @@
 \title{Create an update function based on a lowerToHigher-type action.}
 \usage{
 createLowerToHigherUpdate(
-  df,
-  rezrObj,
   address,
   fkeyAddress,
   action,
@@ -16,18 +14,18 @@ createLowerToHigherUpdate(
 )
 }
 \arguments{
-\item{df}{The target rezrDF you want to modify.}
-
-\item{rezrObj}{The rezrObj.}
-
 \item{address}{The address to the info field that you want from your source DF.}
 
 \item{fkeyAddress}{The address to the token list in the nodeMap that corresponds to the target rezrDF.}
 
 \item{seqName}{}
+
+\item{df}{The target rezrDF you want to modify.}
+
+\item{rezrObj}{The rezrObj.}
 }
 \value{
-
+An update function for a lowerToHigher-type foreign field.
 }
 \description{
 Create an update function based on a lowerToHigher-type action.

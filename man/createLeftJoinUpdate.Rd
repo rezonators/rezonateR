@@ -4,18 +4,18 @@
 \alias{createLeftJoinUpdate}
 \title{Create a left join update function.}
 \usage{
-createLeftJoinUpdate(df, rezrObj, address, fkey, field = "")
+createLeftJoinUpdate(address, fkey, field = "")
 }
 \arguments{
-\item{df}{The rezrDF to be updated.}
-
-\item{rezrObj}{The full rezrObj.}
-
 \item{address}{The address of the field you want to get data from in the \emph{source} rezrDF. May be a vector if you have more than one source rezrDF. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.}
 
 \item{fkey}{The name of the foreign key in the target rezrDF.}
 
 \item{field}{The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.}
+
+\item{df}{The rezrDF to be updated.}
+
+\item{rezrObj}{The full rezrObj.}
 }
 \value{
 An update function for the left join defined.

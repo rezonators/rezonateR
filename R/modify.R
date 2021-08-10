@@ -170,9 +170,7 @@ rez_mutate = function(df, ..., fieldaccess = "flex"){
 #' @param ... Other functions passed onto left_join, i.e. the columns you will be changing or adding.
 #'
 #' @return resultDF
-rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", address = "", fkey = "", rezrObj = NULL){
-  #TODO: No need to specify df2 if address is provided
-
+rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Address = "", fkey = "", rezrObj = NULL){
   oldNames = colnames(df1)
 
   updateFunction = NA
@@ -192,12 +190,12 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", address 
 
   #Figuring out missing info from other info:
   #a) Figuring out the DF from the address
-  df2Add = strsplit(address, "/")[[1]]
+  df2Add = strsplit(df2Address, "/")[[1]]
   if(is.null(df2)){
-    if(!is.null(rezrObj) & !(all(address == ""))){
+    if(!is.null(rezrObj) & !(all(df2Address == ""))){
       df2 = listAt(rezrObj, df2Add)
     } else{
-      stop("You need to specify either a right data.frame, or an address with a rezrObj.")
+      stop("You need to specify either a right data.frame, or a df2Address with a rezrObj.")
     }
   }
 
@@ -240,13 +238,13 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", address 
   }
 
   #Update function stuff
-  if(all(address == "") | all(fkey == "")){
-    message("You didn't provide an address and/or foreign key, so I won't be adding an update function automatically. Nuh-uh!")
+  if(all(df2Address == "") | all(fkey == "")){
+    message("You didn't provide an df2Address and/or foreign key, so I won't be adding an update function automatically. Nuh-uh!")
   } else {
     for(i in 1:length(newNames)){
         newName = newNames[i]
         rightTblName = rightTblNames[i]
-        updateFunct(result, newName) = createLeftJoinUpdate(address %+% "/" %+% rightTblName, fkey, newName)
+        updateFunct(result, newName) = createLeftJoinUpdate(df2Address %+% "/" %+% rightTblName, fkey, newName)
     }
   }
 
@@ -259,6 +257,7 @@ rez_group_split = function(df, ...){
   for(i in 1:length(split)){
     result[[i]] = new_rezrDF(split[[i]], fieldaccess(df), updateFunct(df), inNodeMap(df))
   }
+  message("rez_group_split is a potentially destructive action. It is NOT recommended to assign it back to a rezrDF inside a rezrObj. If you must do so, be careful to check all addresses to ensure that they are correct.")
   result
 }
 
@@ -286,7 +285,7 @@ reload.rezrDF = function(df, rezrObj, fields = ""){
       faList = fieldaccess(df)
       autoFields = intersect(faList[faList == "auto"], fields)
       foreignFields = intersect(faList[faList == "foreign"], fields)
-      df = reloadForeign(df, fields = foreignFields)
+      df = reloadForeign(df, rezrObj, fields = foreignFields)
       df = reloadLocal(df, fields = autoFields)
     }
   } else {
@@ -438,6 +437,9 @@ getUpdateOrder = function(depsList){
 #' @export
 createLeftJoinUpdate = function(address, fkey, field = ""){
   #Create the function itself (easy!)
+  address = eval(address)
+  fkey = eval(fkey)
+  field = eval(field)
   funct = function(df, rezrObj) updateLeftJoin(df, rezrObj, address, fkey, field)
 
   #Figure out the deps (actually still pretty simple!)
@@ -451,7 +453,7 @@ createLeftJoinUpdate = function(address, fkey, field = ""){
 #'
 #' @param df1 The rezrDF to be updated.
 #' @param rezrObj The full rezrObj.
-#' @param address An address to the field from the original df, from the rezrObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.
+#' @param address An address to the field from the original DF, from the rezrObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'. This may be a multiple-entry vector if you want to merge the source DFs.
 #' @param fkey The foreign key(s). Should match the number of primary keys in the df you're pulling information from (i.e. fieldaccess set as 'key').
 #' @param field The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.
 #'
@@ -471,7 +473,7 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
   for(i in 1:length(fkey)){
     by[[fkey[[i]]]] = df2key[[i]]
   }
-  destField = parse_expr(splitAdd[length(splitAdd)])
+  #destField = parse_expr(splitAdd[length(splitAdd)])
 
   #Perform the join
   newVals = left_join(df1 %>% select(!!fkey), df2 %>% select(!!df2key, !!df2field), by = by) %>% pull(!!df2field)
@@ -483,12 +485,14 @@ getTargetTableInfo = function(rezrObj, address, field){
   if(length(address) == 1){
     splitAdd = strsplit(address, "/")[[1]]
     df2Add = splitAdd[-length(splitAdd)]
-    df2 = listAt(rezrObj, df2Add)
+    df2 = listAt(rezrObj, paste0(df2Add, collapse = "/"))
     df2key = names(fieldaccess(df2)[fieldaccess(df2) == "key"])
     df2field = splitAdd[length(splitAdd)]
     if(field == ""){
       field = df2field
     }
+
+    return(list(df2key = df2key, df2field = df2field, df2 = df2, field = field, splitAdd = splitAdd))
   } else {
     #Most common example:
     #address = c("tokenDF/tokenSeq", "chunkDF/refexpr/tokenSeqFirst")
@@ -509,9 +513,9 @@ getTargetTableInfo = function(rezrObj, address, field){
     df2field = field
     df2s_prejoin = lapply(1:length(df2s), function(x) as.data.frame(df2s[[x]]) %>% select(!!df2key := df2keys[[x]], !!field := df2fields[[x]]))
     df2 = Reduce(rbind, df2s_prejoin[2:length(df2s_prejoin)], df2s_prejoin[[1]])
+    return(list(df2key = df2key, df2field = df2field, df2 = df2, field = field))
   }
 
-  return(list(df2key = df2key, df2field = df2field, df2 = df2, field = field, splitAdd = splitAdd))
 }
 
 #' Update a field using a lowerToHigher operation.
@@ -582,6 +586,12 @@ createLowerToHigherUpdate = function(address, fkeyAddress, action, field = "", f
   }
 
   #Create the function itself (easy!)
+  field = eval(field) #Force evaluation of these so that they don't depend on parent environment
+  address = eval(address)
+  fkeyAddress = eval(fkeyAddress)
+  action = eval(action)
+  fkeyInDF = eval(fkeyInDF)
+  seqName = eval(seqName)
   funct = function(df, rezrObj) updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, field, fkeyInDF, seqName)
 
   #Figure out the deps (actually still pretty simple!)

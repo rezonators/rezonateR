@@ -9,7 +9,8 @@ concatStringFields(
   complexDF,
   complexNodeMap,
   fieldnames,
-  tokenListName = "tokenList"
+  tokenListName = "tokenList",
+  ...
 )
 }
 \arguments{

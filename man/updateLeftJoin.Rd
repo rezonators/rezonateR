@@ -11,7 +11,7 @@ updateLeftJoin(df1, rezrObj, address, fkey, field = "")
 
 \item{rezrObj}{The full rezrObj.}
 
-\item{address}{An address to the field from the original df, from the rezrObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.}
+\item{address}{An address to the field from the original DF, from the rezrObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'. This may be a multiple-entry vector if you want to merge the source DFs.}
 
 \item{fkey}{The foreign key(s). Should match the number of primary keys in the df you're pulling information from (i.e. fieldaccess set as 'key').}
 

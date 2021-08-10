@@ -78,5 +78,28 @@ test_that("rezrDF modification works", {
   rezEx[["unitDF"]]$longestWordLength = -1
   rezEx[["unitDF"]] = reloadForeign(rezEx[["unitDF"]], rezEx)
   expect(rezEx[["unitDF"]]$longestWordLength[1] != -1, failure_message = "Reload failed.")
+
+  #Inherent reload functions from import
+  rezEx[["entryDF"]] = rezEx[["entryDF"]] %>% mutate(word = "hahaha") %>% reload(rezEx)
+  expect(rezEx[["entryDF"]]$word[1] != "hahaha", failure_message = "Reload failed.")
+
+  rezEx[["unitDF"]] = rezEx[["unitDF"]] %>% mutate(discourseTokenSeqLast = -1, word = "hahaha", lit = "hohoho") %>% reload(rezEx)
+  expect(rezEx[["unitDF"]]$discourseTokenSeqLast[1] != -1, failure_message = "Reload failed.")
+  expect(rezEx[["unitDF"]]$word[1] != "hahaha", failure_message = "Reload failed.")
+  expect(rezEx[["unitDF"]]$lit[1] != "hohoho", failure_message = "Reload failed.")
+
+  rezEx[["chunkDF"]][["adv"]] = rezEx[["chunkDF"]][["adv"]] %>% mutate(discourseTokenSeqLast = -1, word = "hahaha", lit = "hohoho") %>% reload(rezEx)
+  expect(rezEx[["chunkDF"]][["adv"]]$discourseTokenSeqLast[1] != -1, failure_message = "Reload failed.")
+  expect(rezEx[["chunkDF"]][["adv"]]$word[1] != "hahaha", failure_message = "Reload failed.")
+  expect(rezEx[["chunkDF"]][["adv"]]$lit[1] != "hohoho", failure_message = "Reload failed.")
+
+  rezEx[["trackDF"]][["refexpr"]] = rezEx[["trackDF"]][["refexpr"]] %>% mutate(tokenSeqLast = -1, word = "hahaha", lit = "hohoho") %>% reload(rezEx)
+  expect(rezEx[["trackDF"]][["refexpr"]]$tokenSeqLast[1] != -1, failure_message = "Reload failed.")
+  expect(rezEx[["trackDF"]][["refexpr"]]$word[1] != "hahaha", failure_message = "Reload failed.")
+  expect(rezEx[["trackDF"]][["refexpr"]]$lit[1] != "hohoho", failure_message = "Reload failed.")
+
+
 })
+
+
 

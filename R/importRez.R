@@ -54,17 +54,19 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
 
 
     #Adding fields to higher-level DFs that depend on lower-level DFs.
-    entryDF = entryDF %>% rez_left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"))
-    unitDF = concatStringFields(entryDF, unitDF, fullNodeMap[["unit"]], concatFields, tokenListName = "entryList")
-    unitDF = getSeqBounds(entryDF, unitDF, fullNodeMap[["unit"]], "discourseTokenSeq", tokenListName = "entryList")
+    entryDF = entryDF %>% rez_left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"), df2Address = "tokenDF", fkey = "token")
 
-    chunkDF = getSeqBounds(tokenDF, chunkDF, fullNodeMap[["chunk"]], c("tokenSeq", "discourseTokenSeq"))
-    chunkDF = concatStringFields(tokenDF, chunkDF, fullNodeMap[["chunk"]], concatFields)
+    unitDF = concatStringFields(entryDF, unitDF, fullNodeMap[["unit"]], concatFields, tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit")
+    unitDF = getSeqBounds(entryDF, unitDF, fullNodeMap[["unit"]], "discourseTokenSeq", tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit")
 
-    trackDF = trackDF %>% rez_left_join(mergeTokenChunk(tokenDF, chunkDF), by = c(token = "id", doc = "doc"))
+    chunkDF = getSeqBounds(tokenDF, chunkDF, fullNodeMap[["chunk"]], c("tokenSeq", "discourseTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
+    chunkDF = concatStringFields(tokenDF, chunkDF, fullNodeMap[["chunk"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
+    fieldaccess(chunkDF, concatFields) = "foreign"
+
+    trackDF = trackDF %>% rez_left_join(mergeTokenChunk(tokenDF, chunkDF), by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token")
 
     #Adding fields to lower-level DFs that depend on higher-level DFs.
-    trackDF = trackDF %>% rez_left_join(trackChainDF, by = c(chain = "id", doc = "doc"))
+    trackDF = trackDF %>% rez_left_join(trackChainDF, by = c(chain = "id", doc = "doc"), df2Address = "trackChainDF", fkey = "token")
 
     #TODO: Rez, Stack, Clique
 
@@ -88,7 +90,7 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
         conds = c(paste0("str_detect(", info[["field"]], ", \'", c(info[["regex"]]), "\')"), "T")
         cwText = paste0(conds, " ~ '", info[["names"]], "'")
         splitLayers = function(x){
-          result = mutate(x, layer = case_when(!!!parse_exprs(cwText))) %>% rez_group_split(layer)
+          result = suppressMessages(mutate(x, layer = case_when(!!!parse_exprs(cwText))) %>% rez_group_split(layer))
           names(result) = sort(info[["names"]])
           result
         }
@@ -106,6 +108,27 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
         } else if(type == "chunk"){
           chunkDF = list("default" = chunkDF)
         }
+      }
+    }
+
+    #Track DFs needs dependencies fixed for two reasons:
+    #1) First, Last mistakenly present in dependencies for tokenDF (not the most elegant solution to solve here, should think about this later)
+    #2) After chunks and trackChainDF got split into layers, need to update addresses
+    for(trackLayer in names(trackDF)){
+      for(i in 1:length(updateFunct(trackDF[[trackLayer]]))){
+        uf = updateFunct(trackDF[[trackLayer]])[[i]]
+        field = names(updateFunct(trackDF[[trackLayer]]))[i]
+        if(any(str_detect(deps(uf), "chunkDF"))){
+        #Grab original dependency data
+          sourceFieldToken = (deps(updateFunct(trackDF[[trackLayer]], field))[1] %>% strsplit("/"))[[1]] %>% last %>% chompSuffix("First|Last")
+          sourceFieldChunk = (deps(updateFunct(trackDF[[trackLayer]], field))[2] %>% strsplit("/"))[[1]] %>% last
+          sourceField = c(sourceFieldToken, rep(sourceFieldChunk, length(chunkDF)))
+          updateFunct(trackDF[[trackLayer]], field) = createLeftJoinUpdate(address = c("tokenDF", paste0("chunkDF/", names(chunkDF))) %+% "/" %+% sourceField, fkey = "token", field =field)
+        } else if(any(str_detect(deps(uf), "trackChainDF"))){
+          sourceField = (deps(updateFunct(trackDF[[trackLayer]], field))[1] %>% strsplit("/"))[[1]] %>% last
+          updateFunct(trackDF[[trackLayer]], field) = createLeftJoinUpdate(address = "trackChainDF/" %+% trackLayer %+% "/" %+% sourceField, fkey = "chain", field = field)
+        }
+        #print(updateFunct(trackDF[[trackLayer]], field))
       }
     }
 
@@ -289,12 +312,31 @@ new_rezrDF = function(df, fieldaccess, updateFunct, inNodeMap){
   structure(df, class = c("rezrDF", "tbl_df", "tbl", "data.frame"), fieldaccess = fieldaccess, updateFunct = updateFunct, inNodeMap = inNodeMap)
 }
 
+#' Combine information from multiple entries in a lower-level source table to a higher-level target table.
+#'
+#' @param simpleDF The DF containing simple information (source table).
+#' @param complexDF The DF to contain complex information from the simple table (target table).
+#' @param complexNodeMap The node map corresponding to the complex (target) table.
+#' @param fieldnames The field names in the simple table whose information is to be extracted.
+#' @param higherFieldnames The field names in the complex table whose information is to be extracted.
+#' @param action The action to be performed on the data from the source table.
+#' @param seqName The name of the sequence field in the source table.
+#' @param tokenListName The name of the list of foreign keys in the target table.
+#' @param simpleDFAddress An address to the simple (source) DF. Only needed if you want an automatic update function.
+#' @param complexNodeMapAddress An address to the complex (target) DF. Only needed if you want an automatic update function.
+#' @param rezrObj A rezrObj object.
+#' @param fieldaccess The field access value of the field. If not set to foreign, no update function will be automatically added.
+#'
+#' @return The modified target table (complexDF).
+#' @export
+#'
+#' @examples
 lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fieldnames, higherFieldnames = "", action, seqName = "discourseTokenSeq", tokenListName = "tokenList", simpleDFAddress = "", complexNodeMapAddress = "", rezrObj = NULL, fieldaccess = "foreign"){
   if(is.null(complexNodeMap)){
     if(!all(complexNodeMapAddress == "") & !is.null(rezrObj)){
       complexNodeMap = listAt(rezrObj, "nodeMap/" %+% complexNodeMapAddress)
     } else {
-      stop("No complex node map and/or rezrObj specified.")
+      stop("No valid complex node map and/or rezrObj specified.")
     }
   }
   if(is.null(simpleDF)){
@@ -368,14 +410,26 @@ lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fiel
 #' @param complexDF The dataframe that you're trying to add the concatenated fields to.
 #' @param complexNodeMap The node map corresponding to the simpleDF.
 #' @param fieldnames The fields to be concatenated.
+#' @param ... Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from [rezonateR::lowerToHigher()]. Only needed if you want automatically generated update functions.
 #'
 #' @return complexDF
-concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, tokenListName = "tokenList"){
-  lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, "", function(x) paste(x, collapse = ""), tokenListName = tokenListName)
+concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, tokenListName = "tokenList", ...){
+  lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, "", function(x) paste(x, collapse = ""), tokenListName = tokenListName, ...)
 }
 
 #Get the max and min of a certain value (typically sequence or time) from a lower object table to a higher object table.
-getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleIsAtom = T, seqName = "", tokenListName = "tokenList"){
+#'
+#'
+#' @param simpleDF The lower-level dataframe, for example the token dataframe for chunks and units, or the unit dataframe for stacks. There should either be an integer field that contains the sequence in question, or two integer fields containing the first and last (see simpleIsAtom).
+#' @param complexDF The dataframe that you're trying to add the concatenated fields to. We will create two integer fields, one for the first and one for the last integer.
+#' @param complexNodeMap The node map corresponding to the simpleDF.
+#' @param simpleIsAtom If set to T, that means the simpleDF only contains single values, not a range. If set to F, that means the simpleDF contains a range, i.e. somethingFirst and somethingLast.
+#' @param fieldnames The fields to be concatenated.
+#' @param ... Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from [rezonateR::lowerToHigher()]. Only needed if you want automatically generated update functions.
+#'
+#' @export
+#' @return complexDF
+getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleIsAtom = T, seqName = "", tokenListName = "tokenList", ...){
   if(seqName == ""){
     if(simpleIsAtom){
       seqName = "discourseTokenSeq"
@@ -385,11 +439,11 @@ getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleI
   }
 
   if(simpleIsAtom){
-    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, paste0(fieldnames, "First"), min, seqName = seqName, tokenListName = tokenListName)
-    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, paste0(fieldnames, "Last"), max, seqName = seqName, tokenListName = tokenListName)
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, paste0(fieldnames, "First"), min, seqName = seqName, tokenListName = tokenListName, ...)
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, paste0(fieldnames, "Last"), max, seqName = seqName, tokenListName = tokenListName, ...)
   } else {
-    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, paste0(fieldnames, "First"), paste0(fieldnames, "First"), min, seqName = seqName, tokenListName = tokenListName)
-    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, paste0(fieldnames, "Last"), paste0(fieldnames, "Last"), max, seqName = seqName, tokenListName = tokenListName)
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, paste0(fieldnames, "First"), paste0(fieldnames, "First"), min, seqName = seqName, tokenListName = tokenListName, ...)
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, paste0(fieldnames, "Last"), paste0(fieldnames, "Last"), max, seqName = seqName, tokenListName = tokenListName, ...)
   }
   complexDF
 }
@@ -418,3 +472,4 @@ new_rezrObj = function(list){
 
   structure(list, class = "rezrObj")
 }
+
