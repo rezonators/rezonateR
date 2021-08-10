@@ -171,9 +171,12 @@ nodeToDF = function(nodeList, fields){
   if("tagMap" %in% names(nodeList[[1]])){
     propList = c(propList, extractTags(nodeList))
   }
+
+  #Rezonator sometimes has an issue where a tag is present only in a subset of nodes of a certain type
+  #These will be treated as NA
   if(any(sapply(propList, is.list))){
     missing = names(propList)[sapply(propList, is.list)]
-    warning("One or more of the fields specified is not present in some of the nodes: ", paste(missing, sep = ", "))
+    message("One or more of the fields specified is present in only some of the nodes in one of the node lists: ", paste(missing, sep = ", "))
     for(prop in missing){
       propList[[prop]] = sapply(propList[[prop]], function(x){
         if(is.null(x)) NA else x
