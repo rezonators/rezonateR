@@ -1,5 +1,8 @@
 #Generic functions defined in this package
-#1) reload (applies to rezrDF, rezrObj)
+#1) Functions that apply to rezrDF, rezrObj:
+#  a) reload
+#  b) addFieldLocal, addFieldForeign
+#  c) changeFieldLocal, changeFieldForeign
 
 #' Functions for reloading auto and foreign fields.
 #'
@@ -12,4 +15,8 @@
 #' @export
 reload = function(x, ...){
   UseMethod("reload")
+}
+
+addLocalField = function(x, ...){
+  UseMethod("addLocalField")
 }

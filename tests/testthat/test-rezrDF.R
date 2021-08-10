@@ -89,9 +89,16 @@ test_that("rezrDF modification works", {
   expect(rezEx[["trackDF"]][["refexpr"]]$tokenSeqLast[1] != -1, failure_message = "Reload failed.")
   expect(rezEx[["trackDF"]][["refexpr"]]$wordWylie[1] != "hahaha", failure_message = "Reload failed.")
   expect(rezEx[["trackDF"]][["refexpr"]]$lit[1] != "hohoho", failure_message = "Reload failed.")
-
-
 })
 
 
+test_that("rezrDF modification works", {
+  discoName = "three-parting-2569_new"
+  path = "C:/Users/User/Documents/GitHub/lhasa-reference-tracking/shanti/3_2_rez_file/" %+% discoName %+% ".rez"
+  rezEx = importRez(path, layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr"))))
+  rezEx[["tokenDF"]] = rezEx[["tokenDF"]] %>% rez_mutate(fieldaccess = "flex", word2 = word %+% ", lol.")
+
+  a = rezEx$tokenDF %>% addLocalField("word6", word %+% "!!!", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
+  expect(a$word6[1] != "?", failure_message = "Reload failed.")
+})
 

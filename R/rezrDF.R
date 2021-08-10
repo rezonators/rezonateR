@@ -15,6 +15,9 @@
 #  a) rez_group_split
 #  b) rez_select
 #  TBA: rez_rename, rez_group_by
+#8) High-level convenience functions for editing
+#  a) addLocalField.rezrDF
+#  b) addForeignField.rezrDF
 
 #' Constructor function for rezrDF
 #'
@@ -402,5 +405,26 @@ rez_select = function(df, ...){
   fieldaccess(result) = fieldaccess(result)[names(fieldaccess(result)) %in% colnames(result)]
   updateFunct(result) = updateFunct(result)[names(updateFunct(result)) %in% colnames(result)]
   inNodeMap(result) = inNodeMap(result)[names(inNodeMap(result)) %in% colnames(result)]
+  result
+}
+
+
+addLocalField.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "flex"){
+  if(fieldName %in% names(rezrDF)) stop("You cannot add a field with the same name as an existing field.")
+
+  if(fieldaccess == "key"){
+    warning("Are you sure you want to add a primary key field to the table? Compound key fields are currently not well supported.")
+  } else if(fieldaccess == "foreign"){
+    stop("addLocalField cannot add foreign fields. Please use addForeignField instead.")
+  }
+
+  enexpression = enexpr(expression)
+
+  result = rez_mutate(rezrDF, !!fieldName := !!enexpression, fieldaccess = fieldaccess)
+  if(fieldaccess == "auto"){
+    updateFunct(result, fieldName) = createUpdateFunction(!!fieldName, !!enexpression, df)
+    print(updateFunct(result, fieldName))
+  }
+
   result
 }
