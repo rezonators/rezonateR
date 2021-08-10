@@ -17,6 +17,15 @@ reload = function(x, ...){
   UseMethod("reload")
 }
 
+addField = function(x, ...){
+  UseMethod("addLocalField")
+}
+
 addLocalField = function(x, ...){
   UseMethod("addLocalField")
 }
+
+addForeignField = function(x, ...){
+  UseMethod("addForeignField")
+}
+

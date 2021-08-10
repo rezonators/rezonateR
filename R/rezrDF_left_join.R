@@ -66,7 +66,11 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
   }
 
   if(!suffixIncl){
-    result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, df2, suffix = c("", "_lower"), ...)
+    if(length(autoBy) == 0){
+      result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, df2, suffix = c("", "_lower"), ...)
+    } else {
+      result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, df2, suffix = c("", "_lower"), ..., by = autoBy)
+    }
 
     #For the update function
     newNames = setdiff(names(result), oldNames)
@@ -75,7 +79,11 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
     #We need to specify oldNames to rez_dfop because the names of fields in df1 may be changed.
     leftSuffix = list(...)[["suffix"]][1]
     oldNames = unique(c(oldNames, paste0(oldNames, leftSuffix)))
-    result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, oldNames = oldNames, df2, ...)
+    if(length(autoBy) == 0){
+      result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, oldNames = oldNames, df2, ...)
+    } else {
+      result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, oldNames = oldNames, df2, by = autoBy)
+    }
 
     #For the update function
     newNames = setdiff(names(result), oldNames)

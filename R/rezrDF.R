@@ -10,14 +10,13 @@
 #6) General functions for rezrDF operations
 #  a) df_op: The main function called by all complex rezrDF operations
 #  b) getSourceTableInfo: Internal function used for unpacking information entered into update functions
-#  NB: See rezrDF_mutate.R, rezrDF_lowerToUpper.R and rezrDF_left_join.R for more complex rezrDF operations with their own R files.
+#  NB: See rezrDF_mutate.R, rezrDF_lowerToUpper.R and rezrDF_left_join.R for more complex rezrDF operations with their own R files, plus rezrDF_easy for ease-of-use versions of these.
 #7) Miscellaneous data.frame operations (without their own files):
 #  a) rez_group_split
 #  b) rez_select
 #  TBA: rez_rename, rez_group_by
-#8) High-level convenience functions for editing
-#  a) addLocalField.rezrDF
-#  b) addForeignField.rezrDF
+#8) Utilities:
+#  a) Get fields of a certain field access type: getFieldsOfType, getKey
 
 #' Constructor function for rezrDF
 #'
@@ -408,23 +407,24 @@ rez_select = function(df, ...){
   result
 }
 
-
-addLocalField.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "flex"){
-  if(fieldName %in% names(rezrDF)) stop("You cannot add a field with the same name as an existing field.")
-
-  if(fieldaccess == "key"){
-    warning("Are you sure you want to add a primary key field to the table? Compound key fields are currently not well supported.")
-  } else if(fieldaccess == "foreign"){
-    stop("addLocalField cannot add foreign fields. Please use addForeignField instead.")
+rez_rename = function(df, ...){
+  oldNames = colnames(df)
+  result = rename(df, ...)
+  newNames = colnames(result)
+  for(i in 1:length(oldNames)){
+    if(oldNames[i] != newNames[i]){
+      names(attr(result, "updateFunct"))[names(attr(result, "updateFunct")) == oldNames[i]] = newNames[i]
+      names(attr(result, "fieldaccess"))[names(attr(result, "fieldaccess")) == oldNames[i]] = newNames[i]
+      names(attr(result, "inNodeMap"))[names(attr(result, "inNodeMap")) == oldNames[i]] = newNames[i]
+    }
   }
-
-  enexpression = enexpr(expression)
-
-  result = rez_mutate(rezrDF, !!fieldName := !!enexpression, fieldaccess = fieldaccess)
-  if(fieldaccess == "auto"){
-    updateFunct(result, fieldName) = createUpdateFunction(!!fieldName, !!enexpression, df)
-    print(updateFunct(result, fieldName))
-  }
-
   result
+}
+
+getFieldsOfType = function(df, type){
+  names(fieldaccess(df))[fieldaccess(df) == type]
+}
+
+getKey = function(df){
+  getFieldsOfType(df, "key")
 }

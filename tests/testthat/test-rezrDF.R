@@ -92,7 +92,7 @@ test_that("rezrDF modification works", {
 })
 
 
-test_that("rezrDF modification works", {
+test_that("Simple rezrDF operation commands", {
   discoName = "three-parting-2569_new"
   path = "C:/Users/User/Documents/GitHub/lhasa-reference-tracking/shanti/3_2_rez_file/" %+% discoName %+% ".rez"
   rezEx = importRez(path, layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr"))))
@@ -100,5 +100,21 @@ test_that("rezrDF modification works", {
 
   a = rezEx$tokenDF %>% addLocalField("word6", word %+% "!!!", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
   expect(a$word6[1] != "?", failure_message = "Reload failed.")
+
+  a = rezEx$chunkDF$refexpr %>% rez_rename(mot = word)
+  expect("mot" %in% names(updateFunct(a)), "Rename failed.")
+  expect("mot" %in% names(fieldaccess(a)), "Rename failed.")
+
+
+  a = rezEx$tokenDF %>% addForeignField(rezEx$unitDF, "unit", "unitWord", "word")
+  a = rezEx$unitDF %>% addForeignField(rezEx$entryDF, "entryList", fieldaccess = "foreign") %>% mutate(word6 = "?") %>% reloadLocal()
+  expect(a$word6[1] != "?", failure_message = "Reload failed.")
+
+  a = rezEx$unitDF %>% addForeignField(rezEx$entryDF, targetForeignKeyName = "entry", targetFieldName = "biggestWord", sourceFieldName = "word", type = "complex", fieldaccess = "foreign", complexAction = longest, targetNodeMap = rezEx$nodeMap$unit)
+  a = rezEx$unitDF %>% addForeignField(rezEx$entryDF, "entryList", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
+  expect(a$word6[1] != "?", failure_message = "Reload failed.")
+
+
+
 })
 

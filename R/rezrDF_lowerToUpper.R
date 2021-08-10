@@ -44,11 +44,12 @@ lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fiel
     stop("Field name vectors do not match in length.")
   }
 
-  if(!all(complexDF$id %in% names(complexNodeMap))){
+  complexKey = getKey(complexDF)
+  if(!all(complexDF[[complexKey]] %in% names(complexNodeMap))){
     stop("Some of the IDs in the complex DF are not found in the complex node map. Action terminated. Check that your complex DF and complex node map match.")
   } else {
     #Reorder the complex node map to match the id column of the complex DF and discard unneeded entries.
-    complexNodeMap = complexNodeMap[complexDF$id]
+    complexNodeMap = complexNodeMap[complexDF[[complexKey]]]
   }
 
   #If there are no higher fieldnames passed, then the higher DF has the same fieldname as the lower DF.
