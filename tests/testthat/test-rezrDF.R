@@ -41,7 +41,7 @@ test_that("rezrDF modification works", {
   expect(rezEx[["entryDF"]]$wordWylie[1] != "hohoho", failure_message = "Reload failed.")
   expect(rezEx[["tokenDF"]]$word[1] != "hahaha", failure_message = "Reload failed.")
 
-  updateFunct(rezEx[["trackDF"]][["refexpr"]], "word") = createLeftJoinUpdate(address = c("tokenDF/tokenSeq", "chunkDF/refexpr/tokenSeqFirst"), fkey = "token", field = "tokenSeqFirst")
+  updateFunct(rezEx[["trackDF"]][["refexpr"]], "word") = createLeftJoinUpdate(address = c("tokenDF/word", "chunkDF/refexpr/word"), fkey = "token", field = "tokenSeqFirst")
   rezEx[["trackDF"]][["refexpr"]] = rezEx[["trackDF"]][["refexpr"]] %>% mutate(tokenSeqFirst = 120)
   rezEx[["trackDF"]][["refexpr"]] = reloadForeign(rezEx[["trackDF"]][["refexpr"]], rezEx)
   expect(rezEx[["trackDF"]][["refexpr"]]$tokenSeqFirst[1] != 120, failure_message = "Reload failed.")
@@ -85,9 +85,9 @@ test_that("rezrDF modification works", {
   expect(rezEx[["chunkDF"]][["adv"]]$word[1] != "hahaha", failure_message = "Reload failed.")
   expect(rezEx[["chunkDF"]][["adv"]]$lit[1] != "hohoho", failure_message = "Reload failed.")
 
-  rezEx[["trackDF"]][["refexpr"]] = rezEx[["trackDF"]][["refexpr"]] %>% mutate(tokenSeqLast = -1, word = "hahaha", lit = "hohoho") %>% reload(rezEx)
+  rezEx[["trackDF"]][["refexpr"]] = rezEx[["trackDF"]][["refexpr"]] %>% mutate(tokenSeqLast = -1, wordWylie = "hahaha", lit = "hohoho") %>% reload(rezEx)
   expect(rezEx[["trackDF"]][["refexpr"]]$tokenSeqLast[1] != -1, failure_message = "Reload failed.")
-  expect(rezEx[["trackDF"]][["refexpr"]]$word[1] != "hahaha", failure_message = "Reload failed.")
+  expect(rezEx[["trackDF"]][["refexpr"]]$wordWylie[1] != "hahaha", failure_message = "Reload failed.")
   expect(rezEx[["trackDF"]][["refexpr"]]$lit[1] != "hohoho", failure_message = "Reload failed.")
 
 
