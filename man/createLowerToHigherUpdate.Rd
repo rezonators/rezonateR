@@ -18,7 +18,13 @@ createLowerToHigherUpdate(
 
 \item{fkeyAddress}{The address to the token list in the nodeMap that corresponds to the target rezrDF.}
 
-\item{seqName}{}
+\item{action}{The action to be performed to combine the fields.}
+
+\item{field}{The target field.}
+
+\item{fkeyInDF}{Whether the foreign key will be in the data frame.}
+
+\item{seqName}{The name of the sequencing in index in the lower DF.}
 
 \item{df}{The target rezrDF you want to modify.}
 
