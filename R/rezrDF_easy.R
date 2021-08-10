@@ -6,16 +6,16 @@
 #3) Change a field using local information: changeFieldLocal.rezrDF
 #4) Change a field using foreign information: changeFieldForeign.rezrDF
 
-addLocalField.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "flex"){
+addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "flex"){
   stopifnot("rezrDF" %in% class(rezrDF))
   stopifnot(is.character(fieldName))
   stopifnot(is.character(fieldaccess))
 
-  currArgs = c("rezrDF", "fieldName", "fieldaccess")
+  currArgs = c("fieldName", "fieldaccess")
   for (arg in currArgs){
     e = environment()
     if(length(e[[arg]]) > 1){
-      warning("Only one complex action is allowed. I am taking the first of the following field: " %+% arg)
+      warning("You can only add one field at a time. I am taking the first of the following field: " %+% arg)
       e[[arg]] = e[[arg]][1]
     }
   }
@@ -25,7 +25,7 @@ addLocalField.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "fl
   if(fieldaccess == "key"){
     warning("Are you sure you want to add a primary key field to the table? Compound key fields are currently not well supported.")
   } else if(fieldaccess == "foreign"){
-    stop("addLocalField cannot add foreign fields. Please use addForeignField instead.")
+    stop("addFieldLocal cannot add foreign fields. Please use addFieldForeign instead.")
   }
 
   rez_validate_fieldchange(fieldName)
@@ -41,7 +41,9 @@ addLocalField.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "fl
 }
 
 
-addForeignField.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL, targetNodeMap = NULL){
+addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL, targetNodeMap = NULL){
+  if(targetFieldName %in% names(targetDF)) stop("You cannot add a field with the same name as an existing field.")
+
   stopifnot("rezrDF" %in% class(targetDF))
   stopifnot("rezrDF" %in% class(sourceDF))
   stopifnot(is.character(targetForeignKeyName))
@@ -54,7 +56,7 @@ addForeignField.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
 
   #Validate input
   if(fieldaccess == "foreign"){
-    warning("If you use addForeignField on a rezrDF, I cannot add an update function for you. Consider using addForeignField on a rezrObj instead.")
+    warning("If you use addFieldForeign on a rezrDF, I cannot add an update function for you. Consider using addFieldForeign on a rezrObj instead.")
   } else if(fieldaccess == "auto"){
     stop("You shouldn't be creating an auto field with foreign data. Do you mean fieldaccess = foreign?")
   }
@@ -98,7 +100,7 @@ addForeignField.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
       } else if(sourceFieldName %in% names(result)){
         result = result %>% rename(!!targetFieldName := !!sourceFieldName)
       } else {
-        stop("Mysterious error. Please contact package manager with the following information: In addForeignField, sourceFieldName and sourceFieldName %+% '_lower' both absent in result table.")
+        stop("Mysterious error. Please contact package manager with the following information: In addFieldForeign, sourceFieldName and sourceFieldName %+% '_lower' both absent in result table.")
       }
     }
   } else if(type == "complex"){
@@ -133,8 +135,21 @@ shortest = function(x){
 
 addField.rezrDF = function(rezrDF, ..., foreign = F){
   if(!foreign){
-    addLocalField(rezrDF, ...)
+    addFieldLocal(rezrDF, ...)
   } else {
-    addForeignField(rezrDF, ...)
+    addFieldForeign(rezrDF, ...)
+  }
+}
+
+changeFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "flex"){
+
+}
+
+
+changeField.rezrDF = function(rezrDF, ..., foreign = F){
+  if(!foreign){
+    changeFieldLocal(rezrDF, ...)
+  } else {
+    changeFieldForeign(rezrDF, ...)
   }
 }
