@@ -100,7 +100,7 @@ test_that("Simple rezrDF operation commands", {
 
   a = rezEx$tokenDF %>% addFieldLocal("word6", word %+% "!!!", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
   expect(a$word6[1] != "?", failure_message = "Reload failed.")
-  a = rezEx$tokenDF %>% addFieldLocal("word6", word %+% "!!!", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
+  a = rezEx$tokenDF %>% changeFieldLocal("word6", word %+% "???", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
   expect(a$word6[1] != "?", failure_message = "Reload failed.")
 
 
@@ -109,15 +109,9 @@ test_that("Simple rezrDF operation commands", {
   expect("mot" %in% names(fieldaccess(a)), "Rename failed.")
 
 
-  a = rezEx$tokenDF %>% addFieldForeign(rezEx$unitDF, "unit", "unitWord", "word")
-  a = rezEx$unitDF %>% addFieldForeign(rezEx$entryDF, "entryList", fieldaccess = "foreign") %>% mutate(word6 = "?") %>% reloadLocal()
-  expect(a$word6[1] != "?", failure_message = "Reload failed.")
+  a = rezEx$tokenDF %>% addFieldForeign(rezEx$unitDF, "unit", "unitWord", "word") %>% changeFieldForeign(rezEx$unitDF, "unit", "unitWord", "word")
 
-  a = rezEx$unitDF %>% addFieldForeign(rezEx$entryDF, targetForeignKeyName = "entry", targetFieldName = "biggestWord", sourceFieldName = "word", type = "complex", fieldaccess = "foreign", complexAction = longest, targetNodeMap = rezEx$nodeMap$unit)
-  a = rezEx$unitDF %>% addFieldForeign(rezEx$entryDF, "entryList", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
-  expect(a$word6[1] != "?", failure_message = "Reload failed.")
-
-  a = rezEx$unitDF %>% addFieldForeign(rezEx$entryDF, targetForeignKeyName = "entryList", targetFieldName = "biggestWord", sourceFieldName = "word", type = "complex", fieldaccess = "flex", complexAction = longest, targetNodeMap = rezEx$nodeMap$unit)
+  a = rezEx$unitDF %>% addFieldForeign(rezEx$entryDF, targetForeignKeyName = "entryList", targetFieldName = "biggestWord", sourceFieldName = "word", type = "complex", fieldaccess = "flex", complexAction = longest, targetNodeMap = rezEx$nodeMap$unit) %>% changeFieldForeign(rezEx$entryDF, targetForeignKeyName = "entryList", targetFieldName = "biggestWord", sourceFieldName = "word", type = "complex", fieldaccess = "flex", complexAction = longest, targetNodeMap = rezEx$nodeMap$unit)
 
 })
 

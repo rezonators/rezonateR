@@ -28,10 +28,8 @@ addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "fl
   simpleMutate(rezrDF, fieldName, enexpr(expression), fieldaccess)
 }
 
-
-addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL, targetNodeMap = NULL){
-  if(targetFieldName %in% names(targetDF)) stop("You cannot add a field with the same name as an existing field.")
-
+#Internal function, for addFieldForeign and changeFieldForeign ONLY
+validateSimpleForeign = function(targetDF, sourceDF, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction, targetNodeMap){
   stopifnot("rezrDF" %in% class(targetDF))
   stopifnot("rezrDF" %in% class(sourceDF))
   stopifnot(is.character(targetForeignKeyName))
@@ -39,10 +37,26 @@ addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
   stopifnot(is.character(sourceFieldName))
   stopifnot(is.character(type))
   stopifnot(is.character(fieldaccess))
-  stopifnot(is.function(complexAction))
-  stopifnot(is.list(targetNodeMap))
+  stopifnot(is.function(complexAction) | is.null(complexAction))
+  stopifnot(is.list(targetNodeMap) | is.null(targetNodeMap))
 
+  if(sourceFieldName == "" & targetFieldName == ""){
+    stop("You must provide either source or target field name.")
+  } else if(sourceFieldName == ""){
+    sourceFieldName = targetFieldName
+  } else if(targetFieldName == ""){
+    targetFieldName = sourceFieldName
+  }
+
+}
+
+
+addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL, targetNodeMap = NULL){
   #Validate input
+  if(targetFieldName %in% names(targetDF)) stop("You cannot add a field with the same name as an existing field.")
+
+  validateSimpleForeign(targetDF, sourceDF, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction, targetNodeMap)
+
   if(fieldaccess == "foreign"){
     warning("If you use addFieldForeign on a rezrDF, I cannot add an update function for you. Consider using addFieldForeign on a rezrObj instead.")
   } else if(fieldaccess == "auto"){
@@ -61,7 +75,9 @@ addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
   if(sourceFieldName == "" & targetFieldName == ""){
     stop("You must provide either source or target field name.")
   } else if(sourceFieldName == ""){
-    stop("You must provide either source or target field name.")
+    sourceFieldName = targetFieldName
+  } else if(targetFieldName == ""){
+    targetFieldName = sourceFieldName
   }
 
   currArgs = c("targetForeignKeyName", "targetFieldName", "sourceFieldName", "type", "fieldaccess", "complexAction")
@@ -86,9 +102,9 @@ addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
       }
     }
   } else if(type == "complex"){
-    result = lowerToHigher(sourceDF, targetDF, complexNodeMap = targetNodeMap, fieldnames = sourceFieldName, higherFieldnames = targetFieldName, action = complexAction, tokenListName = targetForeignKeyName, fieldaccess = fieldaccess)
+    result = suppressMessages(lowerToHigher(sourceDF, targetDF, complexNodeMap = targetNodeMap, fieldnames = sourceFieldName, higherFieldnames = targetFieldName, action = complexAction, tokenListName = targetForeignKeyName, fieldaccess = fieldaccess))
   } else {
-    stop("The only availble types are simple and complex.")
+    stop("The only available types are simple and complex.")
   }
 
   result
@@ -152,6 +168,35 @@ simpleMutate = function(rezrDF, fieldName, enexpression, fieldaccess){
     updateFunct(result, fieldName) = createUpdateFunction(!!fieldName, !!enexpression, df)
   }
   result
+}
+
+changeFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL, targetNodeMap = NULL){
+  #Validate input
+  if(!(targetFieldName %in% names(targetDF))) stop("Target field not found.")
+
+  validateSimpleForeign(targetDF, sourceDF, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction, targetNodeMap)
+
+  if(fieldaccess == "foreign"){
+    warning("If you use changeFieldForeign on a rezrDF, I cannot add an update function for you. Consider using changeFieldForeign on a rezrObj instead.")
+  } else if(fieldaccess == "auto"){
+    stop("You shouldn't be changing an auto field with foreign data. Do you mean fieldaccess = foreign?")
+  }
+
+  if(type == "complex"){
+    if(is.null(complexAction)){
+      stop("Please specify an action for aggregating the source values if you choose type 'complex'.")
+    }
+    if(is.null(targetNodeMap)){
+      stop("Please give me the nodeMap corresponding to the target in the targetNodeMap if you want to add a complex foreign field.")
+    }
+  }
+
+  currArgs = c("targetForeignKeyName", "targetFieldName", "sourceFieldName", "type", "fieldaccess", "complexAction")
+  checkIfOne(currArgs, "You can only change one field at a time.")
+
+  oldNames = names(targetDF)
+  suppressWarnings(targetDF %>% select(-!!targetFieldName) %>% addFieldForeign(sourceDF, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction, targetNodeMap) %>% select(all_of(oldNames)))
+
 }
 
 
