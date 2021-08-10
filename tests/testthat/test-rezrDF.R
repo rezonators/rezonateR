@@ -61,7 +61,7 @@ test_that("rezrDF modification works", {
   expect(rezEx[["chunkDF"]][["refexpr"]]$word3[1] !="hohoho", failure_message = "Reload failed.")
 
   #Automatic adding of update functions from rez_left_join and lowerToHigher
-  rezEx[["tokenDF"]] = rezEx[["tokenDF"]] %>% rez_left_join(rezEx[["unitDF"]] %>% rez_select(id, unitSeq), by = c(unit = "id"), address = "unitDF", fkey = "unit")
+  rezEx[["tokenDF"]] = rezEx[["tokenDF"]] %>% rez_left_join(rezEx[["unitDF"]] %>% rez_select(id, unitSeq), by = c(unit = "id"), df2Address = "unitDF", fkey = "unit")
   rezEx[["tokenDF"]] = rezEx[["tokenDF"]] %>% mutate(unitSeq = 0)
   rezEx[["tokenDF"]] = reload(rezEx[["tokenDF"]], rezEx)
   expect(rezEx[["tokenDF"]]$unitSeq[1] != 0, failure_message = "Reload failed.")
