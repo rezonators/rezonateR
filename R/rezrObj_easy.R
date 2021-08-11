@@ -158,15 +158,12 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
     rezrObj[[targetEntity %+% "DF"]] = result
   }
 
-  print(updateFunct(rezrObj[[targetEntity %+% "DF"]], targetFieldName))
 
 
   rezrObj
 }
 
 validateSimpleForeignObj = function(targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction){
-  print("hi")
-  print(complexAction)
   stopifnot(is.character(targetEntity))
   stopifnot(is.character(targetLayer))
   stopifnot(is.character(sourceEntity))
@@ -189,8 +186,6 @@ validateSimpleForeignObj = function(targetEntity, targetLayer, sourceEntity, sou
 #' @rdame acFieldForeign.rezrObj
 #' @export
 changeFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL){
-  print("ho")
-  print(complexAction)
   #A bunch of input validation
   validateSimpleForeignObj(targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction)
   if(sourceFieldName == "" & targetFieldName == ""){
