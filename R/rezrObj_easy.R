@@ -1,11 +1,11 @@
 #This file is for ease-of-use editing functions for rezrObj
 #They have lots of validation and other ease-of-use features.
 #Table of contents:
-#1) Add a field using local information: adObjieldLocal.rezrObj
-#2) Add a field using foreign information: adObjielObjoreign.rezrObj
-#3) A group of functions that may be used in adObjielObjoreign: concatenateAll, longest, longestLength, shortest, shortestLength
-#5) Change a field using local information: changeFieldLocal.rezrObj
-#6) Change a field using foreign information: changeFielObjoreign.rezrObj
+#1) Add/change a field using local information: addFieldLocal.rezrObj, changeFieldLocal.rezrObj
+#  a) Purely internal functions to support the two: getDFFromNames, setDFFromNames, validateACFieldLocalObj
+#2) Add/change a field using foreign information: addFieldoreign.rezrObj
+#  a) Purely internal functions to support the two: validateSimpleForeignObj
+#3) Shortcut functions: addField.rezrObj, changeField.rezrObj
 
 #' Easily add a field to / change a field in a rezrDF from a rezrObj using only information from that rezrDF
 #'
@@ -48,7 +48,6 @@ changeFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expressio
   rezrObj = setDFFromNames(rezrObj, entity, layer, df)
   rezrObj
 }
-
 
 getDFFromNames = function(rezrObj, entity, layer){
   if(layer == ""){
@@ -163,26 +162,6 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
   rezrObj
 }
 
-validateSimpleForeignObj = function(targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction){
-  stopifnot(is.character(targetEntity))
-  stopifnot(is.character(targetLayer))
-  stopifnot(is.character(sourceEntity))
-  stopifnot(is.character(sourceLayer))
-  stopifnot(is.character(targetForeignKeyName))
-  stopifnot(is.character(targetFieldName))
-  stopifnot(is.character(sourceFieldName))
-  stopifnot(is.character(type))
-  stopifnot(is.character(fieldaccess))
-
-  stopifnot(is.function(complexAction) | is.null(complexAction))
-
-  if(type == "complex"){
-    if(is.null(complexAction)){
-      stop("Please specify an action for aggregating the source values if you choose type 'complex'.")
-    }
-  }
-}
-
 #' @rdame acFieldForeign.rezrObj
 #' @export
 changeFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL){
@@ -221,6 +200,26 @@ changeFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", s
 
   rezrObj = addFieldForeign(rezrObj, targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction)
   rezrObj
+}
+
+validateSimpleForeignObj = function(targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction){
+  stopifnot(is.character(targetEntity))
+  stopifnot(is.character(targetLayer))
+  stopifnot(is.character(sourceEntity))
+  stopifnot(is.character(sourceLayer))
+  stopifnot(is.character(targetForeignKeyName))
+  stopifnot(is.character(targetFieldName))
+  stopifnot(is.character(sourceFieldName))
+  stopifnot(is.character(type))
+  stopifnot(is.character(fieldaccess))
+
+  stopifnot(is.function(complexAction) | is.null(complexAction))
+
+  if(type == "complex"){
+    if(is.null(complexAction)){
+      stop("Please specify an action for aggregating the source values if you choose type 'complex'.")
+    }
+  }
 }
 
 

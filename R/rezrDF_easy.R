@@ -4,9 +4,9 @@
 #1) Add/change a field using local information: addFieldLocal.rezrDF, changeFieldLocal.rezrDF
 #  a) Purely internal functions to support the two: simpleMutate
 #2) Add/change a field using foreign information: addFieldForeign.rezrDF
+#  b) Purely internal functions to support the two: validateSimpleForeign
 #3) A group of functions that may be used in addFieldForeign: concatenateAll, longest, longestLength, shortest, shortestLength
-#5) Change a field using local information:
-#6) Change a field using foreign information: changeFieldForeign.rezrDF
+#4) Shortcut functions: addField.rezrDF, changeField.rezrDF
 
 #' Easily add a field to / change a field in a rezrDF using only information from that rezrDF
 #'

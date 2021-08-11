@@ -1,8 +1,7 @@
 #Generic functions defined in this package
 #1) Functions that apply to rezrDF, rezrObj:
 #  a) reload
-#  b) addFieldLocal, addFieldForeign
-#  c) changeFieldLocal, changeFieldForeign
+#  b) addFieldLocal, changeFieldLocal, addFieldForeign, changeFieldForeign, addField, changeField
 
 #' Functions for reloading auto and foreign fields.
 #'
