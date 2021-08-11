@@ -122,8 +122,15 @@ test_that("Simple rezrDF operation commands", {
 
 
   a = rezEx$tokenDF %>% addFieldForeign(rezEx$unitDF, "unit", "unitWord", "word") %>% changeFieldForeign(rezEx$unitDF, "unit", "unitWord", "word")
+  a = rezEx %>% addFieldForeign("token", "", "unit", "", targetForeignKeyName = "word", targetFieldName = "unitWord", sourceFieldName = "word")
+
+  addFieldForeign.rezrObj = function(rezrObj, sourceEntity, sourceLayer = "", targetEntity, targetLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL)
 
   a = rezEx$unitDF %>% addFieldForeign(rezEx$entryDF, targetForeignKeyName = "entryList", targetFieldName = "biggestWord", sourceFieldName = "word", type = "complex", fieldaccess = "flex", complexAction = longest, targetNodeMap = rezEx$nodeMap$unit) %>% changeFieldForeign(rezEx$entryDF, targetForeignKeyName = "entryList", targetFieldName = "biggestWord", sourceFieldName = "word", type = "complex", fieldaccess = "flex", complexAction = longest, targetNodeMap = rezEx$nodeMap$unit)
 
+  #foreign fields with rezrObjs
+  a = rezEx %>% addFieldForeign("token", "", "unit", "", targetForeignKeyName = "unit", targetFieldName = "unitWord", sourceFieldName = "word", fieldaccess = "foreign")
+  a$tokenDF = a$tokenDF %>% mutate(unitWord = "hahaha") %>% reload(a)
+  expect(a$tokenDF$unitWord[1] != "hahaha", "Reload failed.")
 })
 

@@ -148,7 +148,7 @@ deps = function(updateFunct){
 #' @rdname reload
 #' @export
 reload.rezrDF = function(df, rezrObj, fields = ""){
-  if(length(updateFunct(df)) > 1){
+  if(length(updateFunct(df)) >= 1){
     if(all(fields == "")){
       #When no field is specified, just reload foreign fields first, then reload local fields
       df = reloadForeign(df, rezrObj, fields = "")
@@ -377,7 +377,6 @@ getSourceTableInfo = function(rezrObj, address, field){
 #' @return A list rezrDF objects after the group_split.
 #' @export
 #'
-#' @examples
 rez_group_split = function(df, ...){
   split = df %>% group_split(...)
   result = list()
@@ -418,9 +417,24 @@ rez_rename = function(df, ...){
       names(attr(result, "updateFunct"))[names(attr(result, "updateFunct")) == oldNames[i]] = newNames[i]
       names(attr(result, "fieldaccess"))[names(attr(result, "fieldaccess")) == oldNames[i]] = newNames[i]
       names(attr(result, "inNodeMap"))[names(attr(result, "inNodeMap")) == oldNames[i]] = newNames[i]
+
+      #Updating updateFuncts to reflect new names
+      for(f in attr(result, "updateFunct")){
+        for(var in ls(environment(f))){
+          if(var %in% c("address", "fkey", "field", "fkeyAddress", "seqName")){
+            if(environment(f)[[var]] == oldNames[i]){
+              environment(f)[[var]] = newNames[i]
+            }
+          }
+        }
+      }
     }
   }
   result
+}
+
+for(var in list(environment(updateFunct(a$tokenDF)$unitWord))){
+  print(var)
 }
 
 getFieldsOfType = function(df, type){

@@ -90,9 +90,9 @@ addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
     #Rename if sourceFieldName != targetFieldName
     if(sourceFieldName != targetFieldName){
       if((sourceFieldName %+% "_lower") %in% names(result)){
-        result = result %>% rename(!!targetFieldName := !!expr(sourceFieldName %+% "_lower"))
+        result = result %>% rez_rename(!!targetFieldName := !!expr(sourceFieldName %+% "_lower"))
       } else if(sourceFieldName %in% names(result)){
-        result = result %>% rename(!!targetFieldName := !!sourceFieldName)
+        result = result %>% rez_rename(!!targetFieldName := !!sourceFieldName)
       } else {
         stop("Mysterious error. Please contact package manager with the following information: In addFieldForeign, sourceFieldName and sourceFieldName %+% '_lower' both absent in result table.")
       }
@@ -153,7 +153,7 @@ changeFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = 
   simpleMutate(rezrDF, fieldName, enexpr(expression), fieldaccess)
 }
 
-#Purely internal function for commnalities between changeFieldLocal and addFieldLocal
+#Purely internal function for commonalities between changeFieldLocal and addFieldLocal
 simpleMutate = function(rezrDF, fieldName, enexpression, fieldaccess){
   stopifnot("rezrDF" %in% class(rezrDF))
   stopifnot(is.character(fieldName))
