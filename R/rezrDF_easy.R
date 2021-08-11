@@ -20,12 +20,8 @@ addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "fl
   } else if(fieldaccess == "foreign"){
     stop("addFieldLocal cannot add foreign fields. Please use addFieldForeign instead.")
   }
-
-  print(rezrDF)
-  print(fieldName)
-  print(fieldaccess)
-  print(enexpr(expression))
-  simpleMutate(rezrDF, fieldName, enexpr(expression), fieldaccess)
+  expression = enexpr(expression)
+  simpleMutate(rezrDF, fieldName, expression, fieldaccess)
 }
 
 #Internal function, for addFieldForeign and changeFieldForeign ONLY
@@ -164,9 +160,11 @@ simpleMutate = function(rezrDF, fieldName, enexpression, fieldaccess){
   stopifnot(is.character(fieldaccess))
 
   result = suppressWarnings(rez_mutate(rezrDF, !!fieldName := !!enexpression, fieldaccess = fieldaccess))
+
   if(fieldaccess == "auto"){
     updateFunct(result, fieldName) = createUpdateFunction(!!fieldName, !!enexpression, df)
   }
+
   result
 }
 
@@ -203,16 +201,6 @@ changeFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, t
 a = function(field, e){
   e = enexpr(e)
   df %>% mutate(!!field := !!e)
-}
-
-checkIfOne = function(args, message){
-  for (arg in args){
-    e = env_parent(environment())
-    if(length(e[[arg]]) > 1){
-      warning(message %+% "I am taking the first of the following field: " %+% arg)
-      e[[arg]] = e[[arg]][1]
-    }
-  }
 }
 
 

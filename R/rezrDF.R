@@ -303,10 +303,12 @@ rez_dfop = function(df, .f, ..., fieldaccess = "flex", updateFunct = NA, oldName
   addedNames = setdiff(newNames, oldNames) #Find which columns (if any) are new
 
   #Setting DF properties of new columns
-  fieldaccess(resultDF, addedNames) = fieldaccess
-  inNodeMap(resultDF, addedNames) = "no"
-  if(!is.na(updateFunct)){
-    updateFunct(resultDF) = c(updateFunct(resultDF), updateFunct)
+  if(length(addedNames) >= 1){
+    fieldaccess(resultDF, addedNames) = fieldaccess
+    inNodeMap(resultDF, addedNames) = "no"
+    if(!is.na(updateFunct)){
+      updateFunct(resultDF) = c(updateFunct(resultDF), updateFunct)
+    }
   }
 
   resultDF

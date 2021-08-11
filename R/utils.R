@@ -74,3 +74,15 @@ chompSuffix = function(words, suffix){
 last = function(vector){
   vector[length(vector)]
 }
+
+
+checkIfOne = function(args, message = ""){
+  for (arg in args){
+    e = env_parent(environment())
+    if(length(e[[arg]]) > 1){
+      warning(message %+% "I am taking the first of the following field: " %+% arg)
+      e[[arg]] = e[[arg]][1]
+    }
+  }
+}
+

@@ -99,9 +99,21 @@ test_that("Simple rezrDF operation commands", {
   rezEx[["tokenDF"]] = rezEx[["tokenDF"]] %>% rez_mutate(fieldaccess = "flex", word2 = word %+% ", lol.")
 
   a = rezEx$tokenDF %>% addFieldLocal("word6", word %+% "!!!", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
+  updateFunct(a, "word6")(a) %>% pull(word6)
   expect(a$word6[1] != "?", failure_message = "Reload failed.")
   a = rezEx$tokenDF %>% changeFieldLocal("word6", word %+% "???", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
   expect(a$word6[1] != "?", failure_message = "Reload failed.")
+
+  a = rezEx %>% addFieldLocal(entity = "token", layer = "", fieldName = "word6", expression = word %+% "!!!", fieldaccess = "auto")
+  a$tokenDF = a$tokenDF %>% mutate(word6 = "?") %>% reloadLocal()
+  expect(a$tokenDF$word6[1] != "?", failure_message = "Reload failed.")
+
+  a = a %>% changeFieldLocal(entity = "token", layer = "", fieldName = "word6", expression = word %+% "???", fieldaccess = "auto")
+  a$tokenDF = a$tokenDF %>% mutate(word6 = "?") %>% reloadLocal()
+  updateFunct(a$tokenDF, "word6")(a$tokenDF) %>% pull(word6)
+  a$tokenDF %>% pull(word6)
+  expect(a$tokenDF$word6[1] != "?", failure_message = "Reload failed.")
+
 
 
   a = rezEx$chunkDF$refexpr %>% rez_rename(mot = word)

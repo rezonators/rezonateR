@@ -15,7 +15,6 @@
 #'
 #' @return resultDF
 rez_mutate = function(df, ..., fieldaccess = "flex"){
-
   #Validation
   #If it's dynamic, list should throw an error
   if("try-error" %in% class(try(list(...), silent=TRUE))){
@@ -35,7 +34,6 @@ rez_mutate = function(df, ..., fieldaccess = "flex"){
   rez_validate_fieldchange(df, changedFields)
 
   #TODO: Automatically create update function for the user if 'auto' is specified.
-
   rez_dfop(df, mutate, fieldaccess = fieldaccess, ...)
 }
 
