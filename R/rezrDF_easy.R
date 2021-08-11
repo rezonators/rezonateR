@@ -18,9 +18,9 @@
 #'
 #' @return A rezrDF with the new or changed field.
 #' @export
-addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "flex"){
+addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, type = "simple", fieldaccess = "flex", groupField = ""){
   #Validation with differences with changeFieldLocal
-  #(Validation in common with changeFieldLocal is checked in simpleMutate)
+  #(Validation in common with changeFieldLocal is checked in simpleMutate / complexMutate)
   currArgs = c("fieldName", "fieldaccess")
   checkIfOne(currArgs, "You can only add one field at a time.")
 
@@ -32,12 +32,12 @@ addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = "fl
     stop("addFieldLocal cannot add foreign fields. Please use addFieldForeign instead.")
   }
   expression = enexpr(expression)
-  simpleMutate(rezrDF, fieldName, expression, fieldaccess)
+  localMutate(rezrDF, fieldName, expression, type, fieldaccess, groupField)
 }
 
 #' @rdname acFieldLocal.rezrDF
 #' @export
-changeFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = ""){
+changeFieldLocal.rezrDF = function(rezrDF, fieldName, expression, type = "simple", fieldaccess = "", groupField =""){
   currArgs = c("fieldName", "fieldaccess")
   checkIfOne(currArgs, "You can only change one field at a time.")
 
@@ -52,19 +52,38 @@ changeFieldLocal.rezrDF = function(rezrDF, fieldName, expression, fieldaccess = 
   rez_validate_fieldchange(rezrDF, fieldName, changingStatus = T)
 
   #Then change the actual field
-  simpleMutate(rezrDF, fieldName, enexpr(expression), fieldaccess)
+  localMutate(rezrDF, fieldName, enexpr(expression), type, fieldaccess, groupField)
 }
 
 #Purely internal function for commonalities between changeFieldLocal and addFieldLocal
-simpleMutate = function(rezrDF, fieldName, enexpression, fieldaccess){
+localMutate = function(rezrDF, fieldName, enexpression, type, fieldaccess, groupField){
   stopifnot("rezrDF" %in% class(rezrDF))
   stopifnot(is.character(fieldName))
   stopifnot(is.character(fieldaccess))
+  stopifnot(is.character(groupField))
+  stopifnot(is.character(type))
+  if(type == "complex" & groupField == ""){
+    stop("Please specify a groupField if you chose type = 'complex'.")
+  }
 
-  result = suppressWarnings(rez_mutate(rezrDF, !!fieldName := !!enexpression, fieldaccess = fieldaccess))
+
+  if(type == "simple"){
+    result = suppressWarnings(rez_mutate(rezrDF, !!fieldName := !!enexpression, fieldaccess = fieldaccess))
+  } else if(type == "complex"){
+    #result = (rezrDF %>% rez_group_by(!!groupField) %>% rez_mutate(!!fieldName := !!enexpression, fieldaccess = fieldaccess) %>% rez_ungroup)
+    result = rezrDF %>% rez_group_by(!!parse_expr(groupField))
+    result = result %>% rez_mutate(!!fieldName := !!enexpression, fieldaccess = fieldaccess)
+    result = result %>% rez_ungroup
+  } else {
+    stop("Only type options are 'simple' and 'complex'.")
+  }
 
   if(fieldaccess == "auto"){
-    updateFunct(result, fieldName) = createUpdateFunction(!!fieldName, !!enexpression, df)
+    if(type == "simple"){
+      updateFunct(result, fieldName) = createUpdateFunction(!!fieldName, !!enexpression, df)
+    } else {
+      updateFunct(result, fieldName) = createUpdateFunction(!!fieldName, !!enexpression, df, groupField)
+    }
   }
 
   result

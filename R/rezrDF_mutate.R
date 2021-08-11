@@ -74,11 +74,16 @@ rez_validate_fieldchange = function(df, changedFields, changingStatus = F){
 #'
 #' @return An update function with automatically generated dependency information. I will figure out the dependency information for you, so you don't have to define it yourself.
 #' @export
-createUpdateFunction = function(field, x, df){
+createUpdateFunction = function(field, x, df, groupField = ""){
   #Create the function itself
   field = enexpr(field)
   x = enexpr(x)
-  funct = eval(expr(function(df) updateMutate(df, field, x)))
+
+  if(groupField == ""){
+    funct = eval(expr(function(df) updateMutate(df, field, x)))
+  } else {
+    funct = eval(expr(function(df) updateGroupByMutate(df, field, x, groupField)))
+  }
 
   #Figure out dependencies
   deps = character(0)
@@ -95,4 +100,8 @@ createUpdateFunction = function(field, x, df){
 #Internal function. It serves as a wrapper around mutate. This is to create an environment whose field variable can be changed later. Otherwise, the !! will evaluate the field and expression, preventing us from changing them dynamically.
 updateMutate = function(df, field, expr){
   mutate(df, !!field := !!expr)
+}
+
+updateGroupByMutate = function(df, field, expr, groupField){
+  df = df %>% rez_group_by(!!parse_expr(groupField)) %>% rez_mutate(!!field := !!expr) %>% rez_ungroup(!!parse_expr(groupField))
 }

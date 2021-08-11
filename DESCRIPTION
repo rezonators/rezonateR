@@ -24,8 +24,7 @@ Config/testthat/edition: 3
 Imports: 
     xml2,
     rjson,
-    stats,
-    df
+    stats
 Depends:
     dplyr,
     readr,

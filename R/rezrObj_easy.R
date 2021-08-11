@@ -17,34 +17,34 @@
 #'
 #' @return A rezrObj with the changed rezrDF.
 #' @export
-addFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, fieldaccess = "flex"){
+addFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, type = "simple", fieldaccess = "flex", groupField = ""){
   entity = chompSuffix(entity, "DF")
 
-  validateACFieldLocalObj(rezrObj, entity, layer, fieldName, expression, fieldaccess)
-  oneArgs = c("entity", "layer", "fieldName", "fieldaccess")
+  validateACFieldLocalObj(rezrObj, entity, layer, fieldName, expression, type, fieldaccess, groupField)
+  oneArgs = c("entity", "layer", "fieldName", "fieldaccess", "type")
   checkIfOne(oneArgs, "You can only add one field at a time with addFieldLocal.")
 
   df = getDFFromNames(rezrObj, entity, layer)
   if(fieldName %in% names(df)) stop("You cannot add a field with the same name as an existing field.")
 
-  df = addFieldLocal(df, fieldName, !!enexpr(expression), fieldaccess)
+  df = addFieldLocal(df, fieldName, !!enexpr(expression), type, fieldaccess, groupField)
   rezrObj = setDFFromNames(rezrObj, entity, layer, df)
   rezrObj
 }
 
 #' @rdname acFieldLocal.rezrObj
 #' @export
-changeFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, fieldaccess = "flex"){
+changeFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, type = "simple", fieldaccess = "flex", groupField = ""){
   entity = chompSuffix(entity, "DF")
 
-  validateACFieldLocalObj(rezrObj, entity, layer, fieldName, expression, fieldaccess)
-  oneArgs = c("entity", "layer", "fieldName", "fieldaccess")
+  validateACFieldLocalObj(rezrObj, entity, layer, fieldName, expression, type, fieldaccess, groupField)
+  oneArgs = c("entity", "layer", "fieldName", "fieldaccess", "type")
   checkIfOne(oneArgs, "You can only change one field at a time with changeFieldLocal.")
 
   df = getDFFromNames(rezrObj, entity, layer)
   if(!(fieldName %in% names(df))) stop("Field does not exist.")
 
-  df = changeFieldLocal(df, fieldName, !!enexpr(expression), fieldaccess)
+  df = changeFieldLocal(df, fieldName, !!enexpr(expression), type, fieldaccess, groupField)
   rezrObj = setDFFromNames(rezrObj, entity, layer, df)
   rezrObj
 }
@@ -67,12 +67,14 @@ setDFFromNames = function(rezrObj, entity, layer, df){
   rezrObj
 }
 
-validateACFieldLocalObj = function(rezrObj, entity, layer, fieldName, expression, fieldaccess){
+validateACFieldLocalObj = function(rezrObj, entity, layer, fieldName, expression, type, fieldaccess, groupField){
   stopifnot("rezrObj" %in% class(rezrObj))
   stopifnot(is.character(entity))
   stopifnot(is.character(layer))
   stopifnot(is.character(fieldName))
+  stopifnot(is.character(type))
   stopifnot(is.character(fieldaccess))
+  stopifnot(is.character(groupField))
 }
 
 #' Easily add a field to / change a field in a rezrDF using information from another rezrDF

@@ -82,10 +82,11 @@ inNodeMap = function(df, fields = "") getRezrDFAttr(df, "inNodeMap", fields)
 #' @rdname getRezrDFAttr
 #' @export
 setRezrDFAttr = function(df, attr, fields = "", value){
+  print("inSet")
   if(all(fields == "")){
     if(!setequal(colnames(df), names(value))){
       if(attr != "updateFunct" | length(setdiff(names(value), colnames(df))) != 0)
-        warning("The data.frame does not have the same field as the value vector that you are giving me. Please check that the value vector is correct, or specifiy the fields you want to set. " %+% "Data frame column names: " %+% paste(colnames(df), collapse = ", ") %+% "; value vector names: " %+% paste(colnames(df), collapse = ", ") %+% ".")
+        warning("The data.frame does not have the same field as the value vector that you are giving me. Please check that the value vector is correct, or specifiy the fields you want to set. " %+% "Data frame column only: " %+% paste(setdiff(colnames(df), names(value)), collapse = ", ") %+% "; value vector names only: " %+% paste(setdiff(names(value), colnames(df)), collapse = ", ") %+% ".")
     }
     attr(df, attr) = value
   } else {
@@ -291,12 +292,28 @@ reloadForeign = function(df, rezrObj, fields = ""){
 #' @return The DF after the operation.
 #' @export
 rez_dfop = function(df, .f, ..., fieldaccess = "flex", updateFunct = NA, oldNames = ""){
+
+  oldFieldAccess = fieldaccess(df)
+  oldUpdateFunct = updateFunct(df)
+  oldInNodeMap = inNodeMap(df)
+
   #oldNames = Names of the original columns after the operation. If they won't be changed in the operation, then oldNames can just be left blank since we'll just take the original names.
   if(all(oldNames == "")){
     oldNames = colnames(df)
   }
 
   resultDF = .f(df, ...)
+
+  suppressWarnings(
+  if("grouped_df" %in% class(resultDF)){
+    fieldaccess(resultDF) = oldFieldAccess
+    updateFunct(resultDF) = oldUpdateFunct
+    inNodeMap(resultDF) = oldInNodeMap
+  }
+  )
+
+  print("bibibi")
+  print(fieldaccess(resultDF))
 
 
   newNames = colnames(resultDF)
@@ -447,3 +464,22 @@ getFieldsOfType = function(df, type){
 getKey = function(df){
   getFieldsOfType(df, "key")
 }
+
+rez_group_by = function(df, ...){
+  result = group_by(df, ...)
+  updateFunct(result) = updateFunct(df)
+  fieldaccess(result) = fieldaccess(df)
+  inNodeMap(result) = inNodeMap(df)
+  class(result) = c("rezrDF", class(result))
+  result
+}
+
+rez_ungroup = function(df, ...){
+  result = ungroup(df, ...)
+  updateFunct(result) = updateFunct(df)
+  fieldaccess(result) = fieldaccess(df)
+  inNodeMap(result) = inNodeMap(df)
+  class(result) = c("rezrDF", class(result))
+  result
+}
+

@@ -89,6 +89,15 @@ test_that("rezrDF modification works", {
   expect(rezEx[["trackDF"]][["refexpr"]]$tokenSeqLast[1] != -1, failure_message = "Reload failed.")
   expect(rezEx[["trackDF"]][["refexpr"]]$wordWylie[1] != "hahaha", failure_message = "Reload failed.")
   expect(rezEx[["trackDF"]][["refexpr"]]$lit[1] != "hohoho", failure_message = "Reload failed.")
+
+  rezEx$tokenDF = rezEx$tokenDF %>% rez_group_by(unit)
+  expect(fieldaccess(rezEx$tokenDF, 'unit') == "core", failure_message = "group_by problem")
+  expect(!is.null(updateFunct(rezEx$tokenDF)), failure_message = "group_by problem")
+  rezEx$tokenDF = rezEx$tokenDF %>% rez_ungroup
+  expect(!is.null(updateFunct(rezEx$tokenDF)), failure_message = "group_by problem")
+  expect(fieldaccess(rezEx$tokenDF, 'unit') == "core", failure_message = "group_by problem")
+
+
 })
 
 
@@ -104,17 +113,29 @@ test_that("Simple rezrDF operation commands", {
   a = rezEx$tokenDF %>% changeFieldLocal("word6", word %+% "???", fieldaccess = "auto") %>% mutate(word6 = "?") %>% reloadLocal()
   expect(a$word6[1] != "?", failure_message = "Reload failed.")
 
+
   a = rezEx %>% addFieldLocal(entity = "token", layer = "", fieldName = "word6", expression = word %+% "!!!", fieldaccess = "auto")
   a$tokenDF = a$tokenDF %>% mutate(word6 = "?") %>% reloadLocal()
   expect(a$tokenDF$word6[1] != "?", failure_message = "Reload failed.")
+
+  a = rezEx$tokenDF %>% addFieldLocal(fieldName = "unitSize", expression = length(id), type = "complex", fieldaccess = "auto", groupField = "unit")
+  a = a %>% mutate(unitSize = "?") %>% reloadLocal()
+  expect(a$unitSize[1] != "?", failure_message = "Reload failed.")
+
+  a = rezEx %>% addFieldLocal(entity = "token", layer = "", fieldName = "unitSize", expression = length(id), type = "complex", fieldaccess = "auto", groupField = "unit")
+  f = a$tokenDF$unitSize[1]
+  a$tokenDF = a$tokenDF %>% mutate(unitSize = "?") %>% reloadLocal()
+  expect(a$tokenDF$unitSize[1] != "?", failure_message = "Reload failed.")
+  a = a %>% changeFieldLocal(entity = "token", layer = "", fieldName = "unitSize", expression = length(id) - 1, type = "complex", fieldaccess = "auto", groupField = "unit")
+  a$tokenDF = a$tokenDF %>% mutate(unitSize = "?") %>% reloadLocal()
+  expect(a$tokenDF$unitSize[1] == f - 1, failure_message = "Reload failed.")
+
 
   a = a %>% changeFieldLocal(entity = "token", layer = "", fieldName = "word6", expression = word %+% "???", fieldaccess = "auto")
   a$tokenDF = a$tokenDF %>% mutate(word6 = "?") %>% reloadLocal()
   updateFunct(a$tokenDF, "word6")(a$tokenDF) %>% pull(word6)
   a$tokenDF %>% pull(word6)
   expect(a$tokenDF$word6[1] != "?", failure_message = "Reload failed.")
-
-
 
   a = rezEx$chunkDF$refexpr %>% rez_rename(mot = word)
   expect("mot" %in% names(updateFunct(a)), "Rename failed.")
@@ -150,5 +171,8 @@ test_that("Simple rezrDF operation commands", {
   a = a %>% changeFieldForeign("unit", "", "entry", "", targetForeignKeyName = "entryList", targetFieldName = "maxWordLength", sourceFieldName = "word", type = "complex", fieldaccess = "foreign", complexAction = shortest)
   a$unitDF = a$unitDF %>% mutate(maxWordLength = 0) %>% reload(a)
   expect(a$unitDF$maxWordLength %>% is.list, "Reload failed.")
+})
+
+test_that("Simple rezrDF operation commands", {
 })
 
