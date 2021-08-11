@@ -141,7 +141,6 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
   df1
 }
 
-
 #' Create a left join update function.
 #'
 #' A function factory that allows the user to create an update function based on a left join.

@@ -383,7 +383,7 @@ rez_group_split = function(df, ...){
   for(i in 1:length(split)){
     result[[i]] = new_rezrDF(split[[i]], fieldaccess(df), updateFunct(df), inNodeMap(df))
   }
-  message("rez_group_split is a potentially destructive action. It is NOT recommended to assign it back to a rezrDF inside a rezrObj. If you must do so, be careful to check all addresses to ensure that they are correct.")
+  message("Tip: rez_group_split is a potentially destructive action. It is NOT recommended to assign it back to a rezrDF inside a rezrObj. If you must do so, be careful to check all addresses to ensure that they are correct.")
   result
 }
 
@@ -409,6 +409,8 @@ rez_select = function(df, ...){
 }
 
 rez_rename = function(df, ...){
+  message("Tip: When performed on a rezrDF inside a rezrObj, rez_rename is a potentially destructive action. It is NOT recommended to assign it back to a rezrDF inside a rezrObj. If you must do so, be careful to update all addresses from other DFs to this DF.")
+
   oldNames = colnames(df)
   result = rename(df, ...)
   newNames = colnames(result)
@@ -425,6 +427,11 @@ rez_rename = function(df, ...){
             if(environment(f)[[var]] == oldNames[i]){
               environment(f)[[var]] = newNames[i]
             }
+          } else if(var == oldNames[i]){
+            environment(f)[[newNames[i]]] = environment(f)[[var]]
+            rm(var, envir = environment)
+          } else if(is.call(environment(f)[[var]])){
+            environment(f)[[var]] = replace_expr_element(environment(f)[[var]], oldNames[i], newNames[i])
           }
         }
       }

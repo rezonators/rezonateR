@@ -119,6 +119,15 @@ test_that("Simple rezrDF operation commands", {
   a = rezEx$chunkDF$refexpr %>% rez_rename(mot = word)
   expect("mot" %in% names(updateFunct(a)), "Rename failed.")
   expect("mot" %in% names(fieldaccess(a)), "Rename failed.")
+  expect(environment(updateFunct(a, "mot"))[["field"]] == "mot", "Rename failed.")
+
+  a = rezEx %>% addFieldLocal(entity = "token", layer = "", fieldName = "word6", expression = word %+% "!!!", fieldaccess = "auto")
+  a$tokenDF = a$tokenDF %>% rez_rename(word5 = word6)
+  a$tokenDF = a$tokenDF %>% mutate(word5 = "?") %>% reloadLocal()
+  expect(a$tokenDF$word5[1] != "?", failure_message = "Rename/reload failed.")
+  a$tokenDF = a$tokenDF %>% rez_rename(mot = word)
+  a$tokenDF = a$tokenDF %>% mutate(word5 = "?") %>% reloadLocal()
+  expect(a$tokenDF$word5[1] != "?", failure_message = "Rename/reload failed.")
 
 
   a = rezEx$tokenDF %>% addFieldForeign(rezEx$unitDF, "unit", "unitWord", "word") %>% changeFieldForeign(rezEx$unitDF, "unit", "unitWord", "word")
@@ -132,5 +141,9 @@ test_that("Simple rezrDF operation commands", {
   a = rezEx %>% addFieldForeign("token", "", "unit", "", targetForeignKeyName = "unit", targetFieldName = "unitWord", sourceFieldName = "word", fieldaccess = "foreign")
   a$tokenDF = a$tokenDF %>% mutate(unitWord = "hahaha") %>% reload(a)
   expect(a$tokenDF$unitWord[1] != "hahaha", "Reload failed.")
+
+  a = rezEx %>% addFieldForeign("unit", "", "entry", "", targetForeignKeyName = "entryList", targetFieldName = "maxWordLength", sourceFieldName = "word", type = "complex", fieldaccess = "foreign", complexAction = longestLength)
+  a$unitDF = a$unitDF %>% mutate(maxWordLength = 0) %>% reload(a)
+  expect(a$unitDF$maxWordLength[1] != 0, "Reload failed.")
 })
 

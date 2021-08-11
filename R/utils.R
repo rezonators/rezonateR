@@ -37,6 +37,28 @@ flatten_expr = function(x, includeFunct = T){
   result
 }
 
+#x: The expression
+#old, new: Symbols to replace, as strings
+replace_expr_element = function(x, old, new){
+  x_list = as.list(x)
+  old_expr = parse_expr(old)
+  new_expr = parse_expr(new)
+  result = character(0)
+
+  for(i in 1:length(x_list)){
+    item = x[[i]]
+    if(length(as.list(item)) == 1){
+      #print("bottom")
+      if(item == old_expr) x[[i]] = new_expr
+    } else {
+      #print("Not bottom")
+      x[[i]] = replace_expr_element(x[[i]], old, new)
+    }
+  }
+  x
+}
+
+
 listAt = function(list, address, sep = "/"){
   locations = strsplit(address, sep)[[1]]
   currLoc = list

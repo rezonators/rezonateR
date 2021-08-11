@@ -102,11 +102,12 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
         stop("Mysterious error. Please contact package manager with the following information: In addFieldForeign, sourceFieldName and sourceFieldName %+% '_lower' both absent in result table.")
       }
     }
-    print(updateFunct(result, targetFieldName))
-  } else if(type == "complex"){
-    targetNodeMap = rezObj[["nodeMap"]][[targetEntity]]
 
-    result = suppressMessages(lowerToHigher(sourceDF, targetDF, complexNodeMap = targetNodeMap, fieldnames = sourceFieldName, higherFieldnames = targetFieldName, action = complexAction, tokenListName = targetForeignKeyName, fieldaccess = fieldaccess))
+  } else if(type == "complex"){
+    targetNodeMap = rezrObj[["nodeMap"]][[targetEntity]]
+    targetNodeMapAddress = targetEntity
+
+    result = suppressMessages(lowerToHigher(sourceDF, targetDF, complexNodeMap = targetNodeMap, fieldnames = sourceFieldName, higherFieldnames = targetFieldName, action = complexAction, tokenListName = targetForeignKeyName, fieldaccess = fieldaccess, complexNodeMapAddress = targetEntity, simpleDFAddress = sourceDFAddress))
 
   } else {
     stop("The only available types are simple and complex.")
@@ -118,7 +119,7 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
     rezrObj[[targetEntity %+% "DF"]] = result
   }
 
-  print(updateFunct(rezrObj[[targetEntity %+% "DF"]]))
+  print(updateFunct(rezrObj[[targetEntity %+% "DF"]], targetFieldName))
 
 
   rezrObj

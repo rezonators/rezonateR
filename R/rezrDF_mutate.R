@@ -78,7 +78,7 @@ createUpdateFunction = function(field, x, df){
   #Create the function itself
   field = enexpr(field)
   x = enexpr(x)
-  funct = eval(expr(function(df) mutate(df, !!field := !!x)))
+  funct = eval(expr(function(df) updateMutate(df, field, x)))
 
   #Figure out dependencies
   deps = character(0)
@@ -92,3 +92,9 @@ createUpdateFunction = function(field, x, df){
   new_updateFunction(funct, deps)
 }
 
+#Internal function. It serves as a wrapper around mutate. This is to create an environment whose field variable can be changed later. Otherwise, the !! will evaluate the field and expression, preventing us from changing them dynamically.
+updateMutate = function(df, field, expr){
+  print(field)
+  print(expr)
+  mutate(df, !!field := !!expr)
+}
