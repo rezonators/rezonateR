@@ -440,6 +440,7 @@ rez_rename = function(df, ...){
   result
 }
 
+getFieldsOfType = function(df, type){
   names(fieldaccess(df))[fieldaccess(df) == type]
 }
 
