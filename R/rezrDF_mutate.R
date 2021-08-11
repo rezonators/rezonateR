@@ -94,7 +94,5 @@ createUpdateFunction = function(field, x, df){
 
 #Internal function. It serves as a wrapper around mutate. This is to create an environment whose field variable can be changed later. Otherwise, the !! will evaluate the field and expression, preventing us from changing them dynamically.
 updateMutate = function(df, field, expr){
-  print(field)
-  print(expr)
   mutate(df, !!field := !!expr)
 }

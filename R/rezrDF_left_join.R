@@ -120,8 +120,6 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
   sourceTableInfo = getSourceTableInfo(rezrObj, address, field)
   unpackList(sourceTableInfo)
   field = sourceTableInfo[["field"]]
-  print(df2field)
-  print(df2key)
 
   #Create the by-line
   if(length(fkey) != length(df2key)){
@@ -135,8 +133,6 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
   #Perform the join
   newVals = left_join(df1 %>% select(!!fkey), df2 %>% select(!!df2key, !!df2field), by = by) %>% pull(!!df2field)
   #print(newVals)
-  print(field)
-  print(df1[[field]])
   df1 = df1 %>% mutate(!!field := newVals)
   df1
 }
