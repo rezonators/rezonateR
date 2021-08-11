@@ -440,10 +440,6 @@ rez_rename = function(df, ...){
   result
 }
 
-for(var in list(environment(updateFunct(a$tokenDF)$unitWord))){
-  print(var)
-}
-
 getFieldsOfType = function(df, type){
   names(fieldaccess(df))[fieldaccess(df) == type]
 }

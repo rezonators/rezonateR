@@ -17,23 +17,45 @@ reload = function(x, ...){
   UseMethod("reload")
 }
 
-addField = function(x, ...){
-  UseMethod("addField")
-}
-
+#' Generic functions for easy editing
+#'
+#' @rdname easygeneric
+#' @param x The object to be modified.
+#' @param ... Argumnts to be passed to the specific functions.
+#'
+#' @return
+#' @note For details of these functions, see [rezonateR::addFieldLocal.rezrDF] / [rezonateR::addFieldForeign.rezrDF] for rezrDFs and [rezonateR::addFieldLocal.rezrObj] / [rezonateR::addFieldForeign.rezrObj] for rezrObjs.
+#' @export
 addFieldLocal = function(x, ...){
   UseMethod("addFieldLocal")
 }
 
-addFieldForeign = function(x, ...){
-  UseMethod("addFieldForeign")
-}
-
+#' @rdname easygeneric
+#' @export
 changeFieldLocal = function(x, ...){
   UseMethod("changeFieldLocal")
 }
 
+#' @rdname easygeneric
+#' @export
+addFieldForeign = function(x, ...){
+  UseMethod("addFieldForeign")
+}
+
+#' @rdname easygeneric
+#' @export
 changeFieldForeign = function(x, ...){
   UseMethod("changeFieldForeign")
 }
 
+#' @rdname acField
+#' @export
+addField = function(rezrObj, ..., foreign = F){
+  UseMethod("addField")
+}
+
+#' @rdname acField
+#' @export
+changeField = function(rezrObj, ..., foreign = F){
+  UseMethod("changeField")
+}

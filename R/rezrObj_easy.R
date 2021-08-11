@@ -1,12 +1,22 @@
-#This file is for ease-of-use editing functions for rezrDF
+#This file is for ease-of-use editing functions for rezrObj
 #They have lots of validation and other ease-of-use features.
 #Table of contents:
-#1) Add a field using local information: addFieldLocal.rezrDF
-#2) Add a field using foreign information: addFieldForeign.rezrDF
-#3) A group of functions that may be used in addFieldForeign: concatenateAll, longest, longestLength, shortest, shortestLength
-#5) Change a field using local information: changeFieldLocal.rezrDF
-#6) Change a field using foreign information: changeFieldForeign.rezrDF
+#1) Add a field using local information: adObjieldLocal.rezrObj
+#2) Add a field using foreign information: adObjielObjoreign.rezrObj
+#3) A group of functions that may be used in adObjielObjoreign: concatenateAll, longest, longestLength, shortest, shortestLength
+#5) Change a field using local information: changeFieldLocal.rezrObj
+#6) Change a field using foreign information: changeFielObjoreign.rezrObj
 
+#' Easily add a field to / change a field in a rezrDF from a rezrObj using only information from that rezrDF
+#'
+#' @rdname acFieldLocal.rezrObj
+#' @param rezrObj The rezrObj that you will be changing.
+#' @param entity The name of the Rezonator entity that you will be changing - track, rez, chunk, token, unit, stack, etc.
+#' @param layer The name of the layer of the Rezonator entity that you wil be changing. Leave blank for entities without layers (i.e. token, entry and unit). If you don't have layers for other entities, type 'default'.
+#' @inheritParams addFieldLocal.rezrDF
+#'
+#' @return A rezrObj with the changed rezrDF.
+#' @export
 addFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, fieldaccess = "flex"){
   entity = chompSuffix(entity, "DF")
 
@@ -22,6 +32,8 @@ addFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, 
   rezrObj
 }
 
+#' @rdname acFieldLocal.rezrObj
+#' @export
 changeFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, fieldaccess = "flex"){
   entity = chompSuffix(entity, "DF")
 
@@ -64,6 +76,18 @@ validateACFieldLocalObj = function(rezrObj, entity, layer, fieldName, expression
   stopifnot(is.character(fieldaccess))
 }
 
+#' Easily add a field to / change a field in a rezrDF using information from another rezrDF
+#'
+#' @rdname acFieldForeign.rezrObj
+#' @param rezrObj The Rezonator object that you will be changing.
+#' @param targetEntity The Rezontor entity that you will be changing (e.g. token, unit, entry ...)
+#' @param targetLayer The layer of the Rezonator entity that you will be changing from. Leave blank for entities without layers (i.e. token, entry and unit). If you don't have layers for other entities, type 'default'.
+#' @param sourceEntity The Rezonator entity that you will be getting your information from.
+#' @param sourceLayer The layer of the Rezonator entity that you will be getting your information from. Leave blank for entities without layers (i.e. token, entry and unit). If you don't have layers for other entities, type 'default'.
+#' @inheritParams addFieldForeign.rezrDF
+#'
+#' @return
+#' @export
 addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL){
 
   #A bunch of validation
@@ -162,8 +186,8 @@ validateSimpleForeignObj = function(targetEntity, targetLayer, sourceEntity, sou
   }
 }
 
-
-
+#' @rdame acFieldForeign.rezrObj
+#' @export
 changeFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL){
   print("ho")
   print(complexAction)
@@ -202,4 +226,25 @@ changeFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", s
 
   rezrObj = addFieldForeign(rezrObj, targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction)
   rezrObj
+}
+
+
+#' @rdname acField
+#' @export
+addField.rezrObj = function(rezrObj, ..., foreign = F){
+  if(!foreign){
+    addFieldLocal(rezrObj, ...)
+  } else {
+    addFieldForeign(rezrObj, ...)
+  }
+}
+
+#' @rdname acField
+#' @export
+changeField.rezrObj = function(rezrObj, ..., foreign = F){
+  if(!foreign){
+    changeFieldLocal(rezrObj, ...)
+  } else {
+    changeFieldForeign(rezrObj, ...)
+  }
 }
