@@ -15,6 +15,8 @@ addFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, 
   checkIfOne(oneArgs, "You can only add one field at a time with addFieldLocal.")
 
   df = getDFFromNames(rezrObj, entity, layer)
+  if(fieldName %in% names(df)) stop("You cannot add a field with the same name as an existing field.")
+
   df = addFieldLocal(df, fieldName, !!enexpr(expression), fieldaccess)
   rezrObj = setDFFromNames(rezrObj, entity, layer, df)
   rezrObj
@@ -25,9 +27,11 @@ changeFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expressio
 
   validateACFieldLocalObj(rezrObj, entity, layer, fieldName, expression, fieldaccess)
   oneArgs = c("entity", "layer", "fieldName", "fieldaccess")
-  checkIfOne(oneArgs, "You can only change one field at a time with addFieldLocal.")
+  checkIfOne(oneArgs, "You can only change one field at a time with changeFieldLocal.")
 
   df = getDFFromNames(rezrObj, entity, layer)
+  if(!(fieldName %in% names(df))) stop("Field does not exist.")
+
   df = changeFieldLocal(df, fieldName, !!enexpr(expression), fieldaccess)
   rezrObj = setDFFromNames(rezrObj, entity, layer, df)
   rezrObj
@@ -62,9 +66,21 @@ validateACFieldLocalObj = function(rezrObj, entity, layer, fieldName, expression
 
 addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL){
 
+  #A bunch of validation
+  validateSimpleForeignObj(targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction)
+  if(sourceFieldName == "" & targetFieldName == ""){
+    stop("You must provide either source or target field name.")
+  } else if(sourceFieldName == ""){
+    sourceFieldName = targetFieldName
+  } else if(targetFieldName == ""){
+    targetFieldName = sourceFieldName
+  }
+  oneArgs = c("sourceEntity", "sourceLayer", "targetEntity", "targetLayer", "targetFieldName", "sourceFieldName", "type", "fieldaccess", "complexAction")
+  checkIfOne(oneArgs, "You can only add one field at a time with addFieldForeign.")
+
+  #Getting info from the data
   sourceEntity = chompSuffix(sourceEntity, "DF")
   targetEntity = chompSuffix(targetEntity, "DF")
-
   if(sourceLayer != ""){
     sourceDFAddress = sourceEntity %+% "DF/" %+% sourceLayer
     sourceDF = rezrObj[[sourceEntity %+% "DF"]][[sourceLayer]]
@@ -72,7 +88,6 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
     sourceDFAddress = sourceEntity %+% "DF"
     sourceDF = rezrObj[[sourceEntity %+% "DF"]]
   }
-
   if(targetLayer != ""){
     targetDFAddress = targetEntity %+% "DF/" %+% targetLayer
     targetDF = rezrObj[[targetEntity %+% "DF"]][[targetLayer]]
@@ -80,11 +95,10 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
     targetDFAddress = targetEntity %+% "DF"
     targetDF = rezrObj[[targetEntity %+% "DF"]]
   }
+  if(targetFieldName %in% names(targetDF)) stop("You cannot add a field with the same name as an existing field.")
 
-  oneArgs = c("sourceEntity", "sourceLayer", "targetEntity", "targetLayer", "targetFieldName", "sourceFieldName", "type", "fieldaccess", "complexAction")
-  checkIfOne(oneArgs, "You can only add one field at a time with addFieldLocal.")
 
-  #... blahblahblah
+  #Performing the actual actions
   if(type == "simple"){
     sourceKey = getKey(sourceDF)
     sourceDF = sourceDF %>% select(c(all_of(sourceKey), all_of(sourceFieldName)))
@@ -113,6 +127,7 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
     stop("The only available types are simple and complex.")
   }
 
+  #Putting the new DF in the rezrObj
   if(targetLayer != ""){
     rezrObj[[targetEntity %+% "DF"]][[targetLayer]] = result
   } else {
@@ -122,5 +137,69 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
   print(updateFunct(rezrObj[[targetEntity %+% "DF"]], targetFieldName))
 
 
+  rezrObj
+}
+
+validateSimpleForeignObj = function(targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction){
+  print("hi")
+  print(complexAction)
+  stopifnot(is.character(targetEntity))
+  stopifnot(is.character(targetLayer))
+  stopifnot(is.character(sourceEntity))
+  stopifnot(is.character(sourceLayer))
+  stopifnot(is.character(targetForeignKeyName))
+  stopifnot(is.character(targetFieldName))
+  stopifnot(is.character(sourceFieldName))
+  stopifnot(is.character(type))
+  stopifnot(is.character(fieldaccess))
+
+  stopifnot(is.function(complexAction) | is.null(complexAction))
+
+  if(type == "complex"){
+    if(is.null(complexAction)){
+      stop("Please specify an action for aggregating the source values if you choose type 'complex'.")
+    }
+  }
+}
+
+
+
+changeFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL){
+  print("ho")
+  print(complexAction)
+  #A bunch of input validation
+  validateSimpleForeignObj(targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction)
+  if(sourceFieldName == "" & targetFieldName == ""){
+    stop("You must provide either source or target field name.")
+  } else if(sourceFieldName == ""){
+    sourceFieldName = targetFieldName
+  } else if(targetFieldName == ""){
+    targetFieldName = sourceFieldName
+  }
+  oneArgs = c("sourceEntity", "sourceLayer", "targetEntity", "targetLayer", "targetFieldName", "sourceFieldName", "type", "fieldaccess", "complexAction")
+  checkIfOne(oneArgs, "You can only add one field at a time with changeFieldForeign.")
+
+  #Getting data from the input
+  sourceEntity = chompSuffix(sourceEntity, "DF")
+  targetEntity = chompSuffix(targetEntity, "DF")
+  if(sourceLayer != ""){
+    sourceDFAddress = sourceEntity %+% "DF/" %+% sourceLayer
+    sourceDF = rezrObj[[sourceEntity %+% "DF"]][[sourceLayer]]
+  } else {
+    sourceDFAddress = sourceEntity %+% "DF"
+    sourceDF = rezrObj[[sourceEntity %+% "DF"]]
+  }
+  if(targetLayer != ""){
+    targetDFAddress = targetEntity %+% "DF/" %+% targetLayer
+    targetDF = rezrObj[[targetEntity %+% "DF"]][[targetLayer]]
+    rezrObj[[targetEntity %+% "DF"]][[targetLayer]] = targetDF %>% rez_select(-targetFieldName)
+  } else {
+    targetDFAddress = targetEntity %+% "DF"
+    targetDF = rezrObj[[targetEntity %+% "DF"]]
+    rezrObj[[targetEntity %+% "DF"]] = targetDF %>% rez_select(-targetFieldName)
+  }
+  if(!(targetFieldName %in% names(targetDF))) stop("The field does not exist.")
+
+  rezrObj = addFieldForeign(rezrObj, targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction)
   rezrObj
 }

@@ -36,12 +36,13 @@ validateSimpleForeign = function(targetDF, sourceDF, targetForeignKeyName, targe
   stopifnot(is.function(complexAction) | is.null(complexAction))
   stopifnot(is.list(targetNodeMap) | is.null(targetNodeMap))
 
-  if(sourceFieldName == "" & targetFieldName == ""){
-    stop("You must provide either source or target field name.")
-  } else if(sourceFieldName == ""){
-    sourceFieldName = targetFieldName
-  } else if(targetFieldName == ""){
-    targetFieldName = sourceFieldName
+  if(type == "complex"){
+    if(is.null(complexAction)){
+      stop("Please specify an action for aggregating the source values if you choose type 'complex'.")
+    }
+    if(is.null(targetNodeMap)){
+      stop("Please give me the nodeMap corresponding to the target in the targetNodeMap if you want to add a complex foreign field.")
+    }
   }
 
 }
@@ -51,21 +52,20 @@ addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
   #Validate input
   if(targetFieldName %in% names(targetDF)) stop("You cannot add a field with the same name as an existing field.")
 
+  if(sourceFieldName == "" & targetFieldName == ""){
+    stop("You must provide either source or target field name.")
+  } else if(sourceFieldName == ""){
+    sourceFieldName = targetFieldName
+  } else if(targetFieldName == ""){
+    targetFieldName = sourceFieldName
+  }
+
   validateSimpleForeign(targetDF, sourceDF, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction, targetNodeMap)
 
   if(fieldaccess == "foreign"){
     warning("If you use addFieldForeign on a rezrDF, I cannot add an update function for you. Consider using addFieldForeign on a rezrObj instead.")
   } else if(fieldaccess == "auto"){
     stop("You shouldn't be creating an auto field with foreign data. Do you mean fieldaccess = foreign?")
-  }
-
-  if(type == "complex"){
-    if(is.null(complexAction)){
-      stop("Please specify an action for aggregating the source values if you choose type 'complex'.")
-    }
-    if(is.null(targetNodeMap)){
-     stop("Please give me the nodeMap corresponding to the target in the targetNodeMap if you want to add a complex foreign field.")
-    }
   }
 
   if(sourceFieldName == "" & targetFieldName == ""){
@@ -172,6 +172,14 @@ changeFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, t
   #Validate input
   if(!(targetFieldName %in% names(targetDF))) stop("Target field not found.")
 
+  if(sourceFieldName == "" & targetFieldName == ""){
+    stop("You must provide either source or target field name.")
+  } else if(sourceFieldName == ""){
+    sourceFieldName = targetFieldName
+  } else if(targetFieldName == ""){
+    targetFieldName = sourceFieldName
+  }
+
   validateSimpleForeign(targetDF, sourceDF, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction, targetNodeMap)
 
   if(fieldaccess == "foreign"){
@@ -180,21 +188,11 @@ changeFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, t
     stop("You shouldn't be changing an auto field with foreign data. Do you mean fieldaccess = foreign?")
   }
 
-  if(type == "complex"){
-    if(is.null(complexAction)){
-      stop("Please specify an action for aggregating the source values if you choose type 'complex'.")
-    }
-    if(is.null(targetNodeMap)){
-      stop("Please give me the nodeMap corresponding to the target in the targetNodeMap if you want to add a complex foreign field.")
-    }
-  }
-
   currArgs = c("targetForeignKeyName", "targetFieldName", "sourceFieldName", "type", "fieldaccess", "complexAction")
   checkIfOne(currArgs, "You can only change one field at a time.")
 
   oldNames = names(targetDF)
-  suppressWarnings(targetDF %>% select(-!!targetFieldName) %>% addFieldForeign(sourceDF, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction, targetNodeMap) %>% select(all_of(oldNames)))
-
+  suppressWarnings(targetDF %>% rez_select(-!!targetFieldName) %>% addFieldForeign(sourceDF, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction, targetNodeMap) %>% select(all_of(oldNames)))
 }
 
 
