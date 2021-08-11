@@ -27,5 +27,5 @@ changeFieldForeign(x, ...)
 Generic functions for easy editing
 }
 \note{
-For details of these functions, see \link{addFieldLocal.rezrDF} / \link{addFieldForeign.rezrDF} for rezrDFs and \link{addFieldLocal.rezrObj} / \link{addField.rezrObjForeign} for rezrObjs.
+For details of these functions, see \link{addFieldLocal.rezrDF} / \link{addFieldForeign.rezrDF} for rezrDFs and \link{addFieldLocal.rezrObj} / \link{addFieldForeign.rezrObj} for rezrObjs.
 }

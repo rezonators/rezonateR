@@ -9,9 +9,9 @@
 \alias{changeField.rezrObj}
 \title{Shortcut functions for functions beginning with addField and changeField}
 \usage{
-addField(rezrObj, ..., foreign = F)
+addField(x, ..., foreign = F)
 
-changeField(rezrObj, ..., foreign = F)
+changeField(x, ..., foreign = F)
 
 \method{addField}{rezrDF}(rezrDF, ..., foreign = F)
 
@@ -22,9 +22,9 @@ changeField(rezrObj, ..., foreign = F)
 \method{changeField}{rezrObj}(rezrObj, ..., foreign = F)
 }
 \arguments{
-\item{...}{Arguments to be passed to functions such as those in see \link{addFieldLocal.rezrDF}, \link{addFieldForeign.rezrDF}, \link{addFieldLocal.rezrObj} and \link{addField.rezrObjForeign}.}
+\item{...}{Arguments to be passed to functions such as those in see \link{addFieldLocal.rezrDF}, \link{addFieldForeign.rezrDF}, \link{addFieldLocal.rezrObj} and \link{addFieldForeign.rezrObj}.}
 
-\item{foreign}{Whether you are adding a foreign field.}
+\item{foreign}{If TRUE, you are adding a foreign field.}
 
 \item{rezrDF}{The rezrDF to be modified.}
 }

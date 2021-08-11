@@ -50,12 +50,12 @@ changeFieldForeign = function(x, ...){
 
 #' @rdname acField
 #' @export
-addField = function(rezrObj, ..., foreign = F){
+addField = function(x, ..., foreign = F){
   UseMethod("addField")
 }
 
 #' @rdname acField
 #' @export
-changeField = function(rezrObj, ..., foreign = F){
+changeField = function(x, ..., foreign = F){
   UseMethod("changeField")
 }
