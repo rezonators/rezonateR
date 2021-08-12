@@ -96,7 +96,7 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
         conds = c(paste0("str_detect(", info[["field"]], ", \'", c(info[["regex"]]), "\')"), "T")
         cwText = paste0(conds, " ~ '", info[["names"]], "'")
         splitLayers = function(x){
-          result = suppressMessages(mutate(x, layer = case_when(!!!parse_exprs(cwText))) %>% rez_group_split(layer))
+          result = suppressMessages(rez_mutate(x, layer = case_when(!!!parse_exprs(cwText))) %>% rez_group_split(layer))
           names(result) = sort(info[["names"]])
           result
         }

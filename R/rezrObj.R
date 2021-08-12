@@ -17,3 +17,22 @@ new_rezrObj = function(list){
   structure(list, class = "rezrObj")
 }
 
+combineChunks = function(rezrObj, ...){
+  combineLayers(rezrObj, "chunk", ...)
+}
+
+combineLayers = function(rezrObj, entity, type = "intersect"){
+  layers = names(rezrObj[[entity %+% "DF"]])
+  toRun = parse_expr("rez_rbind(" %+% paste0("rezrObj$" %+% entity %+% "DF$", layers, collapse = ", ") %+% ", type = \"" %+% type %+% "\")")
+  eval(toRun)
+}
+
+combineTokenChunk = function(rezrObj, type = "intersect"){
+  chunkDF = combineLayers(rezrObj, "chunk", type)
+
+  tokenDF = tokenDF %>% rez_mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
+
+  rez_rbind(tokenDF, chunkDF)
+}
+
+

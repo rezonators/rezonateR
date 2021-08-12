@@ -82,7 +82,6 @@ inNodeMap = function(df, fields = "") getRezrDFAttr(df, "inNodeMap", fields)
 #' @rdname getRezrDFAttr
 #' @export
 setRezrDFAttr = function(df, attr, fields = "", value){
-  print("inSet")
   if(all(fields == "")){
     if(!setequal(colnames(df), names(value))){
       if(attr != "updateFunct" | length(setdiff(names(value), colnames(df))) != 0)
@@ -312,9 +311,6 @@ rez_dfop = function(df, .f, ..., fieldaccess = "flex", updateFunct = NA, oldName
   }
   )
 
-  print("bibibi")
-  print(fieldaccess(resultDF))
-
 
   newNames = colnames(resultDF)
   addedNames = setdiff(newNames, oldNames) #Find which columns (if any) are new
@@ -483,3 +479,45 @@ rez_ungroup = function(df, ...){
   result
 }
 
+
+rez_rbind = function(..., type = "intersect"){
+  args = list(...)
+  if(!is.null(names(args))){
+    dfs = args[names(args) != c("deparse.level", "make.row.names", "stringsAsFactors", "factor.exclude")]
+  } else {
+    dfs = args
+  }
+  df1 = dfs[[1]]
+  print("Hi")
+  print(names(fieldaccess(df1)))
+  print("layer" %in% names(fieldaccess(df1)))
+  if(type == "intersect"){
+    intersectCols = multi_intersect(lapply(dfs, names))
+    print(intersectCols)
+    dfs_new = lapply(dfs, function(x) rez_select(x, all_of(intersectCols)))
+  } else if (type == "union"){
+    #TODO
+    stop("Not implemented yet")
+  }
+
+  result = rbind_list(dfs_new)
+  print("Result columns:")
+  print(names((result)))
+  print(names(fieldaccess(df1)))
+  updateFunct(result) = updateFunct(df1)[names(updateFunct(df1)) %in% intersectCols]
+  fieldaccess(result) = fieldaccess(df1)[names(fieldaccess(df1)) %in% intersectCols]
+  inNodeMap(result) = inNodeMap(df1)[names(inNodeMap(df1)) %in% intersectCols]
+  class(result) = c("rezrDF", class(result))
+  result
+
+  #TODO: Cater for differing field names
+}
+
+killIfPresent = function(df, colnames){
+  for(colname in colnames){
+    if(colname %in% names(df)){
+      df = df %>% rez_select(-!!parse_expr(colname))
+    }
+    }
+  df
+}

@@ -108,3 +108,18 @@ checkIfOne = function(args, message = ""){
   }
 }
 
+multi_intersect = function(vecs){
+  if(length(vecs) == 1){
+    vecs[[1]]
+  } else {
+    Reduce(intersect, vecs[2:length(vecs)], vecs[[1]])
+  }
+}
+
+rbind_list = function(dfs){
+  if(length(dfs) == 1){
+    dfs
+  } else {
+    dfs = Reduce(rbind, dfs[2:length(dfs)], dfs[[1]])
+  }
+}
