@@ -93,6 +93,7 @@ lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fiel
     }
   }
 
+
   complexDF
 }
 

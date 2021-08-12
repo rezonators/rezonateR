@@ -22,11 +22,10 @@ rez_mutate = function(df, ..., fieldaccess = "flex"){
 
   #TODO: Automatically create update function for the user if 'auto' is specified.
   result = rez_dfop(df, mutate, fieldaccess = fieldaccess, ...)
+  affected_fields = intersect(names(ops), colnames(result))
   fieldaccess(result, affected_fields) = fieldaccess
 
-
   if(!("grouped_df" %in% class(df))){
-    print(fieldaccess(result, affected_fields))
     for(field in affected_fields){
       if(fieldaccess(result, field) == "auto"){
         updateFunct(result, field) = createUpdateFunction(!!parse_expr(field), !!ops[[field]], result)
