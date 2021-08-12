@@ -84,8 +84,6 @@ createUpdateFunction = function(field, x, df, groupField = ""){
   #Create the function itself
   field = enexpr(field)
   x = enexpr(x)
-  print("hi")
-  print(is.call(x))
 
   if(groupField == ""){
     funct = eval(expr(function(df) updateMutate(df, field, x)))
@@ -96,9 +94,6 @@ createUpdateFunction = function(field, x, df, groupField = ""){
   #Figure out dependencies
   deps = character(0)
   x_flat = flatten_expr(x)
-  print("l")
-  print(x_flat)
-  print(class(x_flat))
   for(item in x_flat){
     if(item %in% colnames(df)){
       deps = c(deps, item)

@@ -8,8 +8,6 @@
 #'
 #' @return The rezrObj object with unit sequences in the entity desired, plus all levels below. For example, if your entity is 'track', you will see unitSeq information on token and chunk too, but not rez.
 #' @export
-#'
-#' @examples
 addUnitSeq = function(rezrObj, entity, layers = ""){
   #If no layers are specified, just grab them all
   if(layers == ""){
@@ -29,8 +27,10 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
   } else if(entity %in% c("track", "rez")){
     chunkLayers =  names(rezrObj$chunkDF)
     for(layer in chunkLayers){
-      rezrObj$chunkDF$layer = killIfPresent(rezrObj$chunkDF$layer, c("unitSeqFirst", "unitSeqLast"))
-      rezrObj = rezrObj %>% addUnitSeq("chunk", layer)
+      if(!("unitSeqFirst" %in% names(rezrObj$chunkDF[[layer]])) | !("unitSeqLast" %in% names(rezrObj$chunkDF[[layer]]))){
+        rezrObj$chunkDF$layer = killIfPresent(rezrObj$chunkDF[[layer]], c("unitSeqFirst", "unitSeqLast"))
+        rezrObj = rezrObj %>% addUnitSeq("chunk", layer)
+      }
     }
 
     sourceAddress = c("track", "chunk/" %+% chunkLayers)
@@ -39,4 +39,18 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
     }
   }
   rezrObj
+}
+
+lastAppearance = function(unitSeq = NULL, chain = NULL){
+  #Get the default column names from the rezrDF environment
+  if(is.null(unitSeq)) unitSeq = parent(environment())[["unitSeq"]]
+  if(is.null(chain)) chain = parent(environment())[["chain"]]
+
+  for(i in 1:length(unitSeq)){
+
+  }
+}
+
+lastAppearanceEntry = function(unitSeq, chain){
+
 }

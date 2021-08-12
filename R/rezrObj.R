@@ -1,6 +1,7 @@
 #This is a series of functions for rezrObj objects!
 #Table of contents:
 #1) The constructor function: new_rezrObj
+#2) Combine different tables in the rezrObj: combineLayers, combineChunks, combineTokenChunk
 
 
 #' Constructor function for rezrObj.
@@ -44,7 +45,7 @@ combineChunks = function(rezrObj, ...){
 combineTokenChunk = function(rezrObj, type = "intersect"){
   chunkDF = combineLayers(rezrObj, "chunk", type)
 
-  tokenDF = tokenDF %>% rez_mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
+  tokenDF = rezrObj$tokenDF %>% rez_mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
   if("unitSeq" %in% names(tokenDF) & "unitSeqFirst" %in% names(chunkDF) & "unitSeqLast" %in% names(chunkDF)){
     tokenDF = tokenDF %>% rez_mutate(unitSeqFirst = unitSeq, unitSeqLast = unitSeq)
 

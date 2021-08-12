@@ -122,7 +122,6 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
   }
   if(targetFieldName %in% names(targetDF)) stop("You cannot add a field with the same name as an existing field.")
 
-
   #Performing the actual actions
   if(type == "simple"){
     sourceKey = getKey(sourceDF)

@@ -517,12 +517,9 @@ rez_bind_rows = function(..., type = "intersect"){
     dfs = args
   }
   df1 = dfs[[1]]
-  print("Hi")
-  print(names(fieldaccess(df1)))
-  print("layer" %in% names(fieldaccess(df1)))
+
   if(type == "intersect"){
     intersectCols = multi_intersect(lapply(dfs, names))
-    print(intersectCols)
     dfs_new = lapply(dfs, function(x) rez_select(x, all_of(intersectCols)))
   } else {
     dfs_new = dfs
@@ -530,9 +527,7 @@ rez_bind_rows = function(..., type = "intersect"){
 
 
   result = bind_rows(dfs_new)
-  print("Result columns:")
-  print(names((result)))
-  print(names(fieldaccess(df1)))
+
   updateFunct(result) = updateFunct(df1)[names(updateFunct(df1)) %in% intersectCols]
   fieldaccess(result) = fieldaccess(df1)[names(fieldaccess(df1)) %in% intersectCols]
   inNodeMap(result) = inNodeMap(df1)[names(inNodeMap(df1)) %in% intersectCols]
