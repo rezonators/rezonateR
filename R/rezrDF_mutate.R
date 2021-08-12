@@ -16,25 +16,32 @@
 #' @return resultDF
 rez_mutate = function(df, ..., fieldaccess = "flex"){
   #Validation
-  #If it's dynamic, list should throw an error
-  if("try-error" %in% class(try(list(...), silent=TRUE))){
-    if("try-error" %in% class(try(expr(...), silent=TRUE))){
-      #TODO: Validate these cases
-      changedFields = character()
-      message("Could not figure out a way to validate the current mutate. Please ensure you're not touching any fields you shouldn't touch ...")
-    } else if(any(str_detect(as.character(expr(...)), ":="))){
-      #For dynamically specified field
-      quoted_field = str_extract(as.character(expr(...)), "\\\".+\\\"")
-      changedFields = substr(quoted_field, 2, nchar(quoted_field) - 1)
-    }
-  } else {
-    #For statically specified fields
-    changedFields = names(list(...))
-  }
-  rez_validate_fieldchange(df, changedFields)
+  ops = enexprs(...)
+  affected_fields = intersect(names(ops), colnames(df))
+  rez_validate_fieldchange(df, affected_fields)
 
   #TODO: Automatically create update function for the user if 'auto' is specified.
-  rez_dfop(df, mutate, fieldaccess = fieldaccess, ...)
+  result = rez_dfop(df, mutate, fieldaccess = fieldaccess, ...)
+  fieldaccess(result, affected_fields) = fieldaccess
+
+
+  if(!("grouped_df" %in% class(df))){
+    print(fieldaccess(result, affected_fields))
+    for(field in affected_fields){
+      if(fieldaccess(result, field) == "auto"){
+        print(ops)
+        print(ops[["word"]])
+        updateFunct(result, field) = createUpdateFunction(!!parse_expr(field), !!ops[[field]], result)
+      }
+    }
+  } else {
+    for(field in affected_fields){
+      if(fieldaccess(result) == "auto"){
+        updateFunct(result, field) = createUpdateFunction(!!parse_expr(field), !!ops[[field]], result, group_vars(df))
+      }
+    }
+  }
+  result
 }
 
 
@@ -53,7 +60,9 @@ rez_validate_fieldchange = function(df, changedFields, changingStatus = F){
       if(fieldaccess(df)[entry] == "key"){
         stop("You cannot change a primary key: " %+% entry)
       } else if(fieldaccess(df)[entry] == "fkey"){
-        warning("Note that you are changing a foreign key " %+% entry %+% ". This should only be used for changing association links between tables, and may break thing down the road.")
+        warning("Note that you are changing a foreign key " %+% entry %+% ". This should only be used for changing association links between tables, and may break things down the road.")
+      } else if(fieldaccess(df)[entry] == "core"){
+        warning("Note that you are changing a core field " %+% entry %+% ". This may break things down the road.")
       } else if(fieldaccess(df)[entry] == "auto" & !changingStatus){
         warning("Note that you are changing a field " %+% entry %+% "that is automatically updated. Your change is likely to be overridden by a future update.")
       } else if(fieldaccess(df)[entry] == "foreign" & !changingStatus){
@@ -78,6 +87,8 @@ createUpdateFunction = function(field, x, df, groupField = ""){
   #Create the function itself
   field = enexpr(field)
   x = enexpr(x)
+  print("hi")
+  print(is.call(x))
 
   if(groupField == ""){
     funct = eval(expr(function(df) updateMutate(df, field, x)))
@@ -87,7 +98,10 @@ createUpdateFunction = function(field, x, df, groupField = ""){
 
   #Figure out dependencies
   deps = character(0)
-  x_flat = flatten_expr(x, includeFunct = F)
+  x_flat = flatten_expr(x)
+  print("l")
+  print(x_flat)
+  print(class(x_flat))
   for(item in x_flat){
     if(item %in% colnames(df)){
       deps = c(deps, item)

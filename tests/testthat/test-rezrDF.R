@@ -171,6 +171,11 @@ test_that("Simple rezrDF operation commands", {
   a = a %>% changeFieldForeign("unit", "", "entry", "", targetForeignKeyName = "entryList", targetFieldName = "maxWordLength", sourceFieldName = "word", type = "complex", fieldaccess = "foreign", complexAction = shortest)
   a$unitDF = a$unitDF %>% mutate(maxWordLength = 0) %>% reload(a)
   expect(a$unitDF$maxWordLength %>% is.list, "Reload failed.")
+
+  a = rez_mutate(rezEx$tokenDF, wordWylie = "wow", word = id, fieldaccess = "auto")
+  a = a %>% mutate(wordWylie = "hahaha") %>% reload
+  expect(a$wordWylie[1] != "hahaha", "Reload failed.")
+
 })
 
 test_that("Simple rezrDF operation commands", {

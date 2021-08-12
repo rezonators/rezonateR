@@ -14,27 +14,35 @@
 }
 
 flatten_expr = function(x, includeFunct = T){
-  x_list = as.list(x)
-  result = character(0)
+  if(is.symbol(x) | is_syntactic_literal(x)){
+    deparse(x)
+  } else if(is.call(x)){
+    x_list = as.list(x)
+    result = character(0)
 
-  if(!includeFunct){
-    start = 2
-  } else {
-    start = 1
-  }
-  for(i in start:length(x_list)){
-    item = x[[i]]
-    if(length(as.list(item)) > 1){
-      #print("Still some ways to pgo!")
-      #print(item)p
-      result = c(result, flatten_expr(item))
+    if(!includeFunct){
+      start = 2
     } else {
-      #print("Reached a bottom!")
-      #print(item)
-      result = c(result, deparse(item))
+      start = 1
     }
-  }
-  result
+    if(length(x_list) >= start){
+        for(i in start:length(x_list)){
+          item = x[[i]]
+          if(length(as.list(item)) > 1){
+            #print("Still some ways to pgo!")
+            #print(item)p
+            result = c(result, flatten_expr(item))
+          } else {
+            #print("Reached a bottom!")
+            #print(item)
+            result = c(result, deparse(item))
+          }
+        }
+    } else {
+      result = x_list[[1]]
+    }
+    result
+  } else stop("flatten_expr only handles expressions.")
 }
 
 #x: The expression
