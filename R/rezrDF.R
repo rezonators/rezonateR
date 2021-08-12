@@ -509,7 +509,7 @@ rez_ungroup = function(df, ...){
 #'
 #' @return The bound rezrDF
 #' @export
-rez_rbind = function(..., type = "intersect"){
+rez_bind_rows = function(..., type = "intersect"){
   args = list(...)
   if(!is.null(names(args))){
     dfs = args[names(args) != c("deparse.level", "make.row.names", "stringsAsFactors", "factor.exclude")]
@@ -524,12 +524,12 @@ rez_rbind = function(..., type = "intersect"){
     intersectCols = multi_intersect(lapply(dfs, names))
     print(intersectCols)
     dfs_new = lapply(dfs, function(x) rez_select(x, all_of(intersectCols)))
-  } else if (type == "union"){
-    #TODO
-    stop("Not implemented yet")
+  } else {
+    dfs_new = dfs
   }
 
-  result = rbind_list(dfs_new)
+
+  result = bind_rows(dfs_new)
   print("Result columns:")
   print(names((result)))
   print(names(fieldaccess(df1)))

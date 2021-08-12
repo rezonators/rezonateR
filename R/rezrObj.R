@@ -29,7 +29,7 @@ new_rezrObj = function(list){
 #' @export
 combineLayers = function(rezrObj, entity, type = "intersect"){
   layers = names(rezrObj[[entity %+% "DF"]])
-  toRun = parse_expr("rez_rbind(" %+% paste0("rezrObj$" %+% entity %+% "DF$", layers, collapse = ", ") %+% ", type = \"" %+% type %+% "\")")
+  toRun = parse_expr("rez_bind_rows(" %+% paste0("rezrObj$" %+% entity %+% "DF$", layers, collapse = ", ") %+% ", type = \"" %+% type %+% "\")")
   eval(toRun)
 }
 
@@ -50,7 +50,7 @@ combineTokenChunk = function(rezrObj, type = "intersect"){
 
   }
 
-  rez_rbind(tokenDF, chunkDF)
+  rez_bind_rows(tokenDF, chunkDF)
 }
 
 

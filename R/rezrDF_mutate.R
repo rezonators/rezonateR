@@ -29,8 +29,6 @@ rez_mutate = function(df, ..., fieldaccess = "flex"){
     print(fieldaccess(result, affected_fields))
     for(field in affected_fields){
       if(fieldaccess(result, field) == "auto"){
-        print(ops)
-        print(ops[["word"]])
         updateFunct(result, field) = createUpdateFunction(!!parse_expr(field), !!ops[[field]], result)
       }
     }
