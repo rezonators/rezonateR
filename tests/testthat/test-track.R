@@ -14,19 +14,20 @@ test_that("Track functions work", {
   expect("unitSeqLast" %in% (a$trackDF$refexpr %>% names), "addUnitSeq fail.")
 
   #lastMention
-  b = a$trackDF$refexpr
-  unitSeq = c(1, 1, 2, 3, 4, 4, 5)
+  unitSeq = c(5, 4, 4, 3, 2, 1, 1)
   chain = c("a", "b", "a", "b", "a", "c", "a")
-  expect(lastMention(unitSeq, chain) == c(4, 3, 2, NA, 1, NA, NA), "lastMention fail")
-  #lastAppearance
-  chain = b$chain
-  unitSeq = b$unitSeqLast
-  lastMention(unitSeq, chain)
+  expect(all(lastMention(unitSeq, chain) == c(4, 3, 2, NA, 1, NA, NA)), "lastMention fail")
+  expect(all(lastMention(unitSeq, chain) == c(1, 1, 2, NA, 1, NA, NA)), "lastMention fail")
 
-  b = b %>% rez_mutate(lastMention = lastMention(unitSeq, chain))
+  b = a$trackDF$refexpr
+  b = b %>% rez_mutate(lastMention = lastMention(unitSeq, chain), distToLastMention = distToLastMention(unitSeq, chain))
   prev_result = b$lastMention
-  b = b %>% rez_mutate(lastMention = lastMention())
+  prev_result_2 = b$distToLastMention
+  b = b %>% rez_mutate(lastMention = lastMention(), distToLastMention = distToLastMention())
   expect(all(prev_result == b$lastMention, na.rm = T), "Failed finding colnames in DF environment")
+  expect(all(prev_result_2 == b$distToLastMention, na.rm = T), "Failed finding colnames in DF environment")
+
+
 
 
 
