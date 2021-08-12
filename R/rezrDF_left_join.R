@@ -13,6 +13,9 @@
 #' @param df2 The right data.frame.
 #' @param fieldaccess The field access status of the field you're addding, either a single character (to apply to all of the new fields) or a vector of characters for each new field. Note that if you are both modifying and adding fields, only the added fields will have access values changed. So if you're specifying an entire vector of field access values, the best practice in using this function is to separate new-field and added-field mutates, otherwise the code will be difficult to read.
 #' @param ... Other functions passed onto left_join, i.e. the columns you will be changing or adding.
+#' @param df2Address The address to the source rezrDF.
+#' @param fkey The foreign key to the df2. If not present, I'll guess with the by-line.
+#' @param rezrObj The rezrObj object.
 #'
 #' @return resultDF
 rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Address = "", fkey = "", rezrObj = NULL){

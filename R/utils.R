@@ -118,8 +118,9 @@ multi_intersect = function(vecs){
 
 rbind_list = function(dfs){
   if(length(dfs) == 1){
-    dfs
+    dfs[[1]]
   } else {
     dfs = Reduce(rbind, dfs[2:length(dfs)], dfs[[1]])
   }
+  dfs
 }

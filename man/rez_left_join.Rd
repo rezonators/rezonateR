@@ -22,6 +22,12 @@ rez_left_join(
 \item{...}{Other functions passed onto left_join, i.e. the columns you will be changing or adding.}
 
 \item{fieldaccess}{The field access status of the field you're addding, either a single character (to apply to all of the new fields) or a vector of characters for each new field. Note that if you are both modifying and adding fields, only the added fields will have access values changed. So if you're specifying an entire vector of field access values, the best practice in using this function is to separate new-field and added-field mutates, otherwise the code will be difficult to read.}
+
+\item{df2Address}{The address to the source rezrDF.}
+
+\item{fkey}{The foreign key to the df2. If not present, I'll guess with the by-line.}
+
+\item{rezrObj}{The rezrObj object.}
 }
 \value{
 resultDF
