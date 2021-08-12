@@ -11,7 +11,9 @@
   layer,
   fieldName,
   expression,
-  fieldaccess = "flex"
+  type = "simple",
+  fieldaccess = "flex",
+  groupField = ""
 )
 
 \method{changeFieldLocal}{rezrObj}(
@@ -20,7 +22,9 @@
   layer,
   fieldName,
   expression,
-  fieldaccess = "flex"
+  type = "simple",
+  fieldaccess = "flex",
+  groupField = ""
 )
 }
 \arguments{

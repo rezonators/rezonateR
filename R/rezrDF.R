@@ -421,6 +421,17 @@ rez_select = function(df, ...){
   result
 }
 
+#' Rename rezrDF columns.
+#'
+#' @inheritParams rez_mutate
+#' @param ... Functions to be passed to rename. New column names are argument names; old column names are argument values.
+#'
+#'
+#' @return A rezrDF object.
+#' @note This function does not update foreign references to the field that you're renaming. So be sure to update the updateFunctions of those fields; otherwise, you will break your rezrObj.
+#' @export
+#'
+#' @examples
 rez_rename = function(df, ...){
   message("Tip: When performed on a rezrDF inside a rezrObj, rez_rename is a potentially destructive action. It is NOT recommended to assign it back to a rezrDF inside a rezrObj. If you must do so, be careful to update all addresses from other DFs to this DF.")
 
@@ -461,6 +472,17 @@ getKey = function(df){
   getFieldsOfType(df, "key")
 }
 
+#' Group rezrDFs together.
+#'
+#' A replacement for dplyr group_by.
+#'
+#' @inheritparams rez_mutate
+#' @param ... Arguments to be passed to group_by, including the field(s) on which you're grouping.
+#'
+#' @return
+#' @export
+#'
+#' @examples
 rez_group_by = function(df, ...){
   result = group_by(df, ...)
   updateFunct(result) = updateFunct(df)
@@ -480,6 +502,13 @@ rez_ungroup = function(df, ...){
 }
 
 
+#' Bind together related rezrDF objects.
+#'
+#' @param ... The rezrDF objects to be combined
+#' @param type The type of combination. If 'intersect', I will take the intersection of the columns in the rezrDFs. If 'union', I will take the union of the columns, populating missing fields with NAs.
+#'
+#' @return The bound rezrDF
+#' @export
 rez_rbind = function(..., type = "intersect"){
   args = list(...)
   if(!is.null(names(args))){

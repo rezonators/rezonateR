@@ -164,7 +164,7 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
   rezrObj
 }
 
-#' @rdame acFieldForeign.rezrObj
+#' @rdname acFieldForeign.rezrObj
 #' @export
 changeFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL){
   #A bunch of input validation

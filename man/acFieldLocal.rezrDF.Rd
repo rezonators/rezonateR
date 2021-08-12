@@ -5,9 +5,23 @@
 \alias{changeFieldLocal.rezrDF}
 \title{Easily add a field to / change a field in a rezrDF using only information from that rezrDF}
 \usage{
-\method{addFieldLocal}{rezrDF}(rezrDF, fieldName, expression, fieldaccess = "flex")
+\method{addFieldLocal}{rezrDF}(
+  rezrDF,
+  fieldName,
+  expression,
+  type = "simple",
+  fieldaccess = "flex",
+  groupField = ""
+)
 
-\method{changeFieldLocal}{rezrDF}(rezrDF, fieldName, expression, fieldaccess = "")
+\method{changeFieldLocal}{rezrDF}(
+  rezrDF,
+  fieldName,
+  expression,
+  type = "simple",
+  fieldaccess = "",
+  groupField = ""
+)
 }
 \arguments{
 \item{rezrDF}{The rezrDF object you would like to change.}

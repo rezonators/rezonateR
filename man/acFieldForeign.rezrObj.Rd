@@ -2,9 +2,24 @@
 % Please edit documentation in R/rezrObj_easy.R
 \name{addFieldForeign.rezrObj}
 \alias{addFieldForeign.rezrObj}
+\alias{changeFieldForeign.rezrObj}
 \title{Easily add a field to / change a field in a rezrDF using information from another rezrDF}
 \usage{
 \method{addFieldForeign}{rezrObj}(
+  rezrObj,
+  targetEntity,
+  targetLayer = "",
+  sourceEntity,
+  sourceLayer = "",
+  targetForeignKeyName,
+  targetFieldName = "",
+  sourceFieldName = "",
+  type = "simple",
+  fieldaccess = "flex",
+  complexAction = NULL
+)
+
+\method{changeFieldForeign}{rezrObj}(
   rezrObj,
   targetEntity,
   targetLayer = "",

@@ -4,7 +4,7 @@
 \alias{createUpdateFunction}
 \title{Create an update function.}
 \usage{
-createUpdateFunction(field, x, df)
+createUpdateFunction(field, x, df, groupField = "")
 }
 \arguments{
 \item{field}{The field for which you want to create an update function.}
