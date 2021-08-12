@@ -28,7 +28,7 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
     chunkLayers =  names(rezrObj$chunkDF)
     for(layer in chunkLayers){
       if(!("unitSeqFirst" %in% names(rezrObj$chunkDF[[layer]])) | !("unitSeqLast" %in% names(rezrObj$chunkDF[[layer]]))){
-        rezrObj$chunkDF$layer = killIfPresent(rezrObj$chunkDF[[layer]], c("unitSeqFirst", "unitSeqLast"))
+        rezrObj$chunkDF[[layer]] = killIfPresent(rezrObj$chunkDF[[layer]], c("unitSeqFirst", "unitSeqLast"))
         rezrObj = rezrObj %>% addUnitSeq("chunk", layer)
       }
     }

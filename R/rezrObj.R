@@ -43,10 +43,12 @@ combineChunks = function(rezrObj, ...){
 #' @rdname combineLayer
 #' @export
 combineTokenChunk = function(rezrObj, type = "intersect"){
-  chunkDF = combineLayers(rezrObj, "chunk", type)
+  chunkDF = combineChunks(rezrObj, type)
 
   tokenDF = rezrObj$tokenDF %>% rez_mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
+
   if("unitSeq" %in% names(tokenDF) & "unitSeqFirst" %in% names(chunkDF) & "unitSeqLast" %in% names(chunkDF)){
+    print("woohoo")
     tokenDF = tokenDF %>% rez_mutate(unitSeqFirst = unitSeq, unitSeqLast = unitSeq)
 
   }
