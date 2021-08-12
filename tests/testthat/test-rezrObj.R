@@ -4,8 +4,5 @@ test_that("Track functions work", {
   rezEx = importRez(path, layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr"))))
 
   getCombinedChunks(rezEx)
-
-
-
 })
 

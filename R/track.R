@@ -41,16 +41,24 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
   rezrObj
 }
 
-lastAppearance = function(unitSeq = NULL, chain = NULL){
+#' Functions related to previous context in track chains.
+#'
+#' @rdname trackPrevContext
+#' @param unitSeq The vector of units where the mentions appeared.
+#' @param chain The chain that each mention belongs to.
+#' @export
+lastMention = function(unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
-  if(is.null(unitSeq)) unitSeq = parent(environment())[["unitSeq"]]
-  if(is.null(chain)) chain = parent(environment())[["chain"]]
+  df_env = env_parent(caller_env())
+  if(is.null(unitSeq)) unitSeq = df_env[["unitSeqLast"]]
+  if(is.null(chain)) chain = df_env[["chain"]]
 
-  for(i in 1:length(unitSeq)){
-
+  result = numeric(length(unitSeq))
+  for(currChain in unique(chain)){
+    chainUnits = unitSeq[chain == currChain] #Grab all the PRE's units
+    unitsOrdered = sort(chainUnits) #Put them in the right order
+    unitsOrderedLagged = lag(unitsOrdered) #Get the previous unit
+    result[chain == currChain] = unitsOrderedLagged[rank(chainUnits)] #Put it back in the wrong order
   }
-}
-
-lastAppearanceEntry = function(unitSeq, chain){
-
+  result
 }
