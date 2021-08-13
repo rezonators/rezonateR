@@ -59,15 +59,7 @@ changeField = function(x, ..., foreign = F){
   UseMethod("changeField")
 }
 
-#' Title
-#'
-#' @param x A rezrDF or rezrObj object
-#' @param ... The wordhood condition
-#'
-#' @return A rezrDF or rezrObj with the isWord field implemented.
-#' @export
-#'
-#' @examples
+#' @rdname addIsWordField
 addIsWordField = function(x, ...){
   UseMethod("addIsWordField")
 }

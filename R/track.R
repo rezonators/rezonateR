@@ -1,8 +1,8 @@
 #A group of functions for dealing with issues like coreference resolution, reference production, referentiality, and more!
 #1) Important, purely internal function: If a certain argument isn't specified, grab it from the DF with the default column name
 #2) Functions related to previous context:
-#  a) (Distance to) last mention: lastMention, distToLastMention
-#
+#  a) (Distance to) last mention: lastMentionUnit, distToLastMention
+# (complete this tmr I want to focus on showing Jack)
 
 grabFromDF = function(...){
   funct_env = caller_env()
@@ -77,13 +77,13 @@ tokensToLastMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "li
     stopifnot(!is.null(unitSeq))
     stopifnot(!is.null(unitDF))
 
-    prevUnit = unitSeq - lastMentionUnit(unitSeq, chain) #Prev units
+    prevUnit = lastMentionUnit(unitSeq, chain) #Prev units
     prevToken = sapply(prevUnit, function(x){
       if(!is.na(x)){
         (unitDF %>% filter(unitSeq == x) %>% pull(discourseTokenSeqLast))[1]
       } else NA
     })
-    result = tokenSeq - prevUnit
+    result = tokenSeq - prevToken
 
   }
   result
@@ -94,13 +94,15 @@ tokensToLastMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "li
 noPrevMentions = function(windowSize, unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqLast", chain = "chain")
-
   sapply(1:length(unitSeq), function(i){
     window = unitSeq[chain == chain[i] & unitSeq < unitSeq[i] & unitSeq >= unitSeq[i] - windowSize]
     length(window)
   })
 }
 
+#' @rdname trackPrevContext
+#' @param cond For if functions, the condition that the previous / next mention must satisfy. It cannot refer to the current mention.
+#' @export
 noPrevMentionsIf = function(windowSize, cond, unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqLast", chain = "chain")
@@ -114,6 +116,9 @@ noPrevMentionsIf = function(windowSize, cond, unitSeq = NULL, chain = NULL){
 
 }
 
+#' @rdname trackPrevContext
+#' @param field The field whose value you want to match or extract.
+#' @export
 noPrevMentionsMatch = function(windowSize, field, unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqLast", chain = "chain")
@@ -125,6 +130,9 @@ noPrevMentionsMatch = function(windowSize, field, unitSeq = NULL, chain = NULL){
 
 }
 
+#' @rdname trackPrevContext
+#' @param field The field whose value you want to match or extract.
+#' @export
 getPrevMentionField = function(field, tokenSeq = NULL, chain = NULL){
   grabFromDF(tokenSeq = "discourseTokenSeqLast", chain = "chain")
   lastMentionPos = lastMentionToken(tokenSeq = tokenSeq, chain = chain)
@@ -132,61 +140,141 @@ getPrevMentionField = function(field, tokenSeq = NULL, chain = NULL){
 }
 
 
-addIsWordField.rezrDF = function(x, cond, addWordSeq = T){
-  if("isWord" %in% x) message("This action overrides the original isWord field in your tokenDF.")
-  cond = enexpr(cond)
-  result = rez_mutate(x, isWord = !!cond, fieldaccess = "auto")
-  if(addWordSeq){
-    wordSeq = numeric(nrow(result))
-    print("wordSeq" %in% names(result))
-    result = rez_mutate(result, wordSeq = getWordSeq(isWord, unit, tokenSeq), fieldaccess = "auto")
-    result = rez_mutate(result, discourseWordSeq = getDiscourseWordSeq(isWord, discourseTokenSeq), fieldaccess = "auto")
+
+#' @rdname trackPrevContext
+#' @export
+nextMentionUnit = function(unitSeq = NULL, chain = NULL){
+  #Get the default column names from the rezrDF environment
+  grabFromDF(unitSeq = "unitSeqFirst", chain = "chain")
+
+  result = numeric(length(unitSeq))
+  for(currChain in unique(chain)){
+    chainUnits = unitSeq[chain == currChain] #Grab all the PRE's units
+    unitsOrdered = sort(chainUnits) #Put them in the right order
+    unitsOrderedLagged = lag(unitsOrdered) #Get the nextious unit
+    result[chain == currChain] = unitsOrderedLagged[rank(chainUnits)] #Put it back in the wrong order
   }
   result
 }
 
-addIsWordField.rezrObj = function(x, cond, addWordSeq = T){
-  x$tokenDF = addIsWordField(x$tokenDF, !!enexpr(cond), addWordSeq)
-  if(addWordSeq){
-    #Chunk and dependencies
-    for(layer in names(x$chunkDF)){
-      x$chunkDF[[layer]] = getSeqBounds(x$tokenDF, x$chunkDF[[layer]], x$nodeMap$chunk, c("wordSeq", "discourseWordSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
-    }
+#' @rdname trackPrevContext
+#' @param unitSeq The vector of units where the mentions appeared.
+#' @export
+unitsToNextMention = function(unitSeq = NULL, chain = NULL){
+  #Get the default column names from the rezrDF environment
+  grabFromDF(unitSeq = "unitSeqFirst", chain = "chain")
 
-    for(layer in names(x$trackDF)){
-      x$trackDF[[layer]] = suppressMessages(x$trackDF[[layer]] %>% rez_left_join(combineTokenChunk(x) %>% rez_select(id, wordSeqFirst, wordSeqLast, discourseWordSeqFirst, discourseWordSeqLast), df2Address = "trackDF", rezrObj = x, fkey = "token"))
-    }
-
-
-    #Entry and dependencies
-    x$entryDF = x$entryDF %>% rez_left_join(x$tokenDF %>% select(id, wordSeq, discourseWordSeq), by = c(token = "id"), df2Address = "token", fkey = "token", rezrObj = x)
-    x$unitDF = getSeqBounds(x$entryDF, x$unitDF, x$nodeMap$unit, "discourseWordSeq", tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit")
-
-  }
-  x
+  nextMentionUnit(unitSeq, chain) - unitSeq
 }
 
-getWordSeq = function(isWord, unit, tokenSeq){
-  result = numeric(length(isWord))
-  for(currUnit in unique(unit)){
-    isWordSubset = isWord[unit == currUnit]
-    tokenSeqSubset = tokenSeq[unit == currUnit]
+#' @rdname trackPrevContext
+#' @param unitSeq The vector of tokenSeq values where the mentions appeared. You can choose tokenSeqFirst, tokenSeqFirst, or maybe an average of the two. By default it's tokenSeqFirst.
+#' @export
+nextMentionToken = function(tokenSeq = NULL, chain = NULL){
+  #Get the default column names from the rezrDF environment
+  grabFromDF(tokenSeq = "tokenSeqFirst", chain = "chain")
 
-    noWord = length(isWordSubset[isWordSubset])
-    isWordSubsetOrdered = sapply(1:length(isWordSubset), function(i) isWordSubset[which(rank(tokenSeqSubset) == i)])
-
-    resultSubsetOrdered = numeric(length(isWordSubset))
-    resultSubsetOrdered[isWordSubsetOrdered] = 1:noWord
-    result[unit == currUnit] = resultSubsetOrdered[rank(tokenSeqSubset)]
+  result = numeric(length(tokenSeq))
+  for(currChain in unique(chain)){
+    chainTokens = tokenSeq[chain == currChain] #Grab all the PRE's units
+    tokensOrdered = sort(chainTokens) #Put them in the right order
+    tokensOrderedLagged = lag(tokensOrdered) #Get the nextious unit
+    result[chain == currChain] = tokensOrderedLagged[rank(chainTokens)] #Put it back in the wrong order
   }
   result
 }
 
-getDiscourseWordSeq = function(isWord, discourseTokenSeq){
-  noWord = length(isWord[isWord])
-  isWordOrdered = sapply(1:length(isWord), function(i) isWord[which(rank(discourseTokenSeq) == i)])
-  resultOrdered = numeric(length(isWord))
-  resultOrdered[isWordOrdered] = 1:noWord
-  resultOrdered[rank(discourseTokenSeq)]
+#' @rdname trackPrevContext
+#' @export
+tokensToNextMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "literal", zeroCond = NULL, unitSeq = NULL, unitDF = NULL){
+  #Get the default column names from the rezrDF environment if unspecified
+  grabFromDF(tokenSeq = "discourseTokenSeqFirst", chain = "chain")
+
+  if(zeroProtocol == "literal"){
+    result = nextMentionToken(tokenSeq, chain) - tokenSeq
+  } else if(zeroProtocol == "unitFirst"){
+    #Validation
+    stopifnot(!is.null(zeroCond))
+    grabFromDF(unitSeq = "unitSeqFirst")
+    stopifnot(!is.null(unitSeq))
+    stopifnot(!is.null(unitDF))
+
+    nextUnit = nextMentionUnit(unitSeq, chain) #Next units
+    nextToken = sapply(nextUnit, function(x){
+      if(!is.na(x)){
+        (unitDF %>% filter(unitSeq == x) %>% pull(discourseTokenSeqFirst))[1]
+      } else NA
+    })
+    result = nextToken - tokenSeq
+
+  }
+  result
 }
 
+#' @rdname trackPrevContext
+#' @export
+noNextMentions = function(windowSize, unitSeq = NULL, chain = NULL){
+  #Get the default column names from the rezrDF environment
+  grabFromDF(unitSeq = "unitSeqFirst", chain = "chain")
+
+  sapply(1:length(unitSeq), function(i){
+    window = unitSeq[chain == chain[i] & unitSeq > unitSeq[i] & unitSeq <= unitSeq[i] + windowSize]
+    length(window)
+  })
+}
+
+#' @rdname trackPrevContext
+#' @export
+noNextMentionsIf = function(windowSize, cond, unitSeq = NULL, chain = NULL){
+  #Get the default column names from the rezrDF environment
+  grabFromDF(unitSeq = "unitSeqFirst", chain = "chain")
+
+  condition = eval_bare(enexpr(cond), env = env_parent(caller_env()))
+
+  sapply(1:length(unitSeq), function(i){
+    window = unitSeq[chain == chain[i] & unitSeq > unitSeq[i] & unitSeq <= unitSeq[i] + windowSize & condition]
+    length(window)
+  })
+
+}
+
+#' @rdname trackPrevContext
+#' @export
+noNextMentionsMatch = function(windowSize, field, unitSeq = NULL, chain = NULL){
+  #Get the default column names from the rezrDF environment
+  grabFromDF(unitSeq = "unitSeqFirst", chain = "chain")
+
+  sapply(1:length(unitSeq), function(i){
+    window = unitSeq[chain == chain[i] & unitSeq > unitSeq[i] & unitSeq <= unitSeq[i] + windowSize & field == field[i]]
+    length(window)
+  })
+}
+
+#' @rdname trackPrevContext
+#' @export
+getNextMentionField = function(field, tokenSeq = NULL, chain = NULL){
+  grabFromDF(tokenSeq = "discourseTokenSeqFirst", chain = "chain")
+  prevMentionPos = lastMentionToken(tokenSeq = tokenSeq, chain = chain)
+  sapply(1:length(field), function(i) field[which(tokenSeq == prevMentionPos[i])]) %>% zeroEntryToNA
+}
+
+#' Count the number of competitors intervening between the previous mention and the current mention
+#'
+#' @param cond The condition under which something counts as a competitor. Leave blank if anything goes.
+#' @inheritParams lastMentionToken
+#' @return
+#' @export
+noCompetitors = function(cond = NULL, tokenSeq = NULL, chain = NULL){
+  grabFromDF(tokenSeq = "discourseTokenSeqLast", chain = "chain")
+  lastMentionPos = lastMentionToken(tokenSeq, chain)
+  if(is.null(cond)){
+    condition = T
+  } else {
+    condition = eval_bare(enexpr(cond), env = env_parent(caller_env()))
+  }
+
+  sapply(1:length(tokenSeq), function(x){
+    sum(tokenSeq < tokenSeq[x] & tokenSeq > lastMentionPos[x] & condition)
+  })
+
+}

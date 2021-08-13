@@ -12,6 +12,7 @@ getSeqBounds(
   simpleIsAtom = T,
   seqName = "",
   tokenListName = "tokenList",
+  exclude0 = T,
   ...
 )
 }
