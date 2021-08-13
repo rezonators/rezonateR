@@ -123,7 +123,7 @@ concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, t
 #'
 #' @return A complex DF.
 #' @export
-getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleIsAtom = T, seqName = "", tokenListName = "tokenList", ...){
+getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleIsAtom = T, seqName = "", tokenListName = "tokenList", exclude0 =  T, ...){
   if(seqName == ""){
     if(simpleIsAtom){
       seqName = "discourseTokenSeq"
@@ -132,12 +132,16 @@ getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleI
     }
   }
 
+  if(exclude0) fmin = min_no0 else fmin = min
+  if(exclude0) fmax = max_no0 else fmax = max
+
   if(simpleIsAtom){
-    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, paste0(fieldnames, "First"), min, seqName = seqName, tokenListName = tokenListName, ...)
-    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, paste0(fieldnames, "Last"), max, seqName = seqName, tokenListName = tokenListName, ...)
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, paste0(fieldnames, "First"), fmin, seqName = seqName, tokenListName = tokenListName, ...)
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, paste0(fieldnames, "Last"), fmax, seqName = seqName, tokenListName = tokenListName, ...)
   } else {
-    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, paste0(fieldnames, "First"), paste0(fieldnames, "First"), min, seqName = seqName, tokenListName = tokenListName, ...)
-    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, paste0(fieldnames, "Last"), paste0(fieldnames, "Last"), max, seqName = seqName, tokenListName = tokenListName, ...)
+    #Untested
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, paste0(fieldnames, "First"), paste0(fieldnames, "First"), fmin, seqName = seqName, tokenListName = tokenListName, ...)
+    complexDF = lowerToHigher(simpleDF, complexDF, complexNodeMap, paste0(fieldnames, "Last"), paste0(fieldnames, "Last"), fmax, seqName = seqName, tokenListName = tokenListName, ...)
   }
   complexDF
 }

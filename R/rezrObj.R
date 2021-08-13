@@ -48,10 +48,14 @@ combineTokenChunk = function(rezrObj, type = "intersect"){
 
   tokenDF = rezrObj$tokenDF %>% rez_mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
 
-  if("unitSeq" %in% names(tokenDF) & "unitSeqFirst" %in% names(chunkDF) & "unitSeqLast" %in% names(chunkDF)){
-    print("woohoo")
-    tokenDF = tokenDF %>% rez_mutate(unitSeqFirst = unitSeq, unitSeqLast = unitSeq)
-
+  otherSeqHeaders = c("word", "discourseWord", "unit")
+  for(header in otherSeqHeaders){
+    seq = header %+% "Seq"
+    last = header %+% "SeqLast"
+    first = header %+% "SeqFirst"
+    if((seq %in% names(tokenDF)) & (last %in% names(chunkDF)) & (first %in% names(chunkDF))){
+      tokenDF = tokenDF %>% rez_mutate(!!last := !!parse_expr(seq), !!first := !!parse_expr(seq))
+    }
   }
 
   rez_bind_rows(tokenDF, chunkDF)

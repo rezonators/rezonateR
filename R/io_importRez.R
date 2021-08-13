@@ -204,7 +204,7 @@ nodeToDF = function(nodeList, fields){
 #This is mostly for handling chains, which may refer to a mix of tokens and chunks in Rezonator. (Single-token chain entries are not automatically stored as chunks in Rezonator.)
 mergeTokenChunk = function(tokenDF, chunkDF){
   #This is because chunk have begins/end; tokens do not.
-  tokenDF = tokenDF %>% mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
+  tokenDF = tokenDF %>% mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discourseTokenSeqLast = discourseTokenSeq)
 
   commonFields = intersect(colnames(tokenDF), colnames(chunkDF))
   (tokenDF %>% select(all_of(commonFields))) %>% rbind(chunkDF %>% select(commonFields))

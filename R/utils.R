@@ -132,3 +132,21 @@ rbind_list = function(dfs){
   }
   dfs
 }
+
+min_no0 = function(x){
+  min(x[x != 0], na.rm = T)
+}
+
+
+max_no0 = function(x){
+  max(x[x != 0], na.rm = T)
+}
+
+ViewReturn = function(x){
+  View(x)
+  x
+}
+
+zeroEntryToNA = function(x){
+  sapply(x, function(i) if(length(i) == 0) NA else i[[1]])
+}
