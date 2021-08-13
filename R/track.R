@@ -125,6 +125,11 @@ noPrevMentionsMatch = function(windowSize, field, unitSeq = NULL, chain = NULL){
 
 }
 
+getPrevMentionField = function(field, tokenSeq = NULL, chain = NULL){
+  grabFromDF(tokenSeq = "discourseTokenSeqLast", chain = "chain")
+  lastMentionPos = lastMentionToken(tokenSeq = tokenSeq, chain = chain)
+  sapply(1:length(field), function(i) field[which(tokenSeq == lastMentionPos[i])]) %>% zeroEntryToNA
+}
 
 
 addIsWordField.rezrDF = function(x, cond, addWordSeq = T){

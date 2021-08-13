@@ -48,6 +48,7 @@ test_that("Track functions work", {
   #noPrevMention
   b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(noPrevMentionsIn3 = noPrevMentions(3))
   b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(noPrevZerosIn5 = noZeroMentionsIf(5, word == "<0>"))
+  b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(prevMentionWylie = getPrevMentionField(wordWylie))
 
 })
 
