@@ -133,9 +133,9 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
     #Rename if sourceFieldName != targetFieldName
     if(sourceFieldName != targetFieldName){
       if((sourceFieldName %+% "_lower") %in% names(result)){
-        result = result %>% rez_rename(!!targetFieldName := !!expr(sourceFieldName %+% "_lower"))
+        result = suppressMessages(result %>% rez_rename(!!targetFieldName := !!expr(sourceFieldName %+% "_lower")))
       } else if(sourceFieldName %in% names(result)){
-        result = result %>% rez_rename(!!targetFieldName := !!sourceFieldName)
+        result = suppressMessages(result %>% rez_rename(!!targetFieldName := !!sourceFieldName))
       } else {
         stop("Mysterious error. Please contact package manager with the following information: In addFieldForeign, sourceFieldName and sourceFieldName %+% '_lower' both absent in result table.")
       }

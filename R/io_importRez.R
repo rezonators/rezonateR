@@ -10,7 +10,7 @@
 #'
 #' Import a Rez file. This returns an object containing, among other things, a nodeMap object containing raw information, and data frames for tokens, units, chunks, track chain entries, track chains, containing only key information likely to be useful for the user.
 #'
-#' @param path A character vector of paths to the files to be imported. For Windows users, please use / instead of \.
+#' @param paths A character vector of paths to the files to be imported. For Windows users, please use / instead of \.
 #' @param docnames A character vector of the document names. If left blank, a docname will be generated according to the filenames of files you import. For example, the document foo/bar.rez will be named 'bar'.
 #' @param concatFields A string of names of token-level fields, for example word or transcription, that should be concatenated to form chunk- or entry-level fields. For example, if your word field is called 'word' and you have an IPA transcription field called 'ipa', then concatFields should be c("word", "ipa").
 #' @param layerRegex A list, each of which is a component (just track or chunk for now; stack and rez to be added later). In each list entry, there are three components: 'field' is the field on which the splitting is based; 'regex' is a vector of regular expressions; 'names' is a vector of layer names. 'regex' should have one fewer entry than 'names', as the last of the 'names' should be the default case.
@@ -26,8 +26,8 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
     }
     if(docnames == ""){
       #Detecting document names
-      lastSlashLocs = str_locate_all(path, "/")
-      lastRezLocs = str_locate_all(path, "\\.rez")
+      lastSlashLocs = str_locate_all(paths, "/")
+      lastRezLocs = str_locate_all(paths, "\\.rez")
       docnames_start = sapply(1:length(paths), function(x) lastSlashLocs[[x]][nrow(lastSlashLocs[[x]]),1] + 1)
       docnames_end = sapply(1:length(paths), function(x) lastRezLocs[[x]][nrow(lastRezLocs[[x]]),1] - 1)
       docnames = sapply(1:length(paths), function(x) substr(paths[x], docnames_start, docnames_end))
@@ -36,7 +36,7 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
     nodeMapSep = list()
     for(x in 1:length(paths)){
       path = paths[x]
-      rezJSON = rjson::fromJSON(file = path) #Importing the file
+      rezJSON = rjson::fromJSON(file = paths) #Importing the file
       nodeMapSep[[x]] = nodeMap(rezJSON[["ROOT"]][[1]][["nodeMap"]], docnames[x]) #Getting an individual node map
     }
 

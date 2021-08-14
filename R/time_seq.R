@@ -58,7 +58,6 @@ addIsWordField.rezrDF = function(x, cond, addWordSeq = T){
   result = rez_mutate(x, isWord = !!cond, fieldaccess = "auto")
   if(addWordSeq){
     wordSeq = numeric(nrow(result))
-    print("wordSeq" %in% names(result))
     result = rez_mutate(result, wordSeq = getWordSeq(isWord, unit, tokenSeq), fieldaccess = "auto")
     result = rez_mutate(result, discourseWordSeq = getDiscourseWordSeq(isWord, discourseTokenSeq), fieldaccess = "auto")
   }
