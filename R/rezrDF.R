@@ -29,7 +29,7 @@
 #' @export
 new_rezrDF = function(df, fieldaccess, updateFunct, inNodeMap){
   #Validate all components of the DF
-  stopifnot(is_tibble(df))
+  stopifnot("tbl_df" %in% class(df))
   stopifnot(is.vector(fieldaccess))
   stopifnot(!is.null(names(fieldaccess)))
   stopifnot(is.list(updateFunct))

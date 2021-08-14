@@ -12,13 +12,13 @@ importRez(
 )
 }
 \arguments{
+\item{paths}{A character vector of paths to the files to be imported. For Windows users, please use / instead of \.}
+
 \item{docnames}{A character vector of the document names. If left blank, a docname will be generated according to the filenames of files you import. For example, the document foo/bar.rez will be named 'bar'.}
 
 \item{concatFields}{A string of names of token-level fields, for example word or transcription, that should be concatenated to form chunk- or entry-level fields. For example, if your word field is called 'word' and you have an IPA transcription field called 'ipa', then concatFields should be c("word", "ipa").}
 
 \item{layerRegex}{A list, each of which is a component (just track or chunk for now; stack and rez to be added later). In each list entry, there are three components: 'field' is the field on which the splitting is based; 'regex' is a vector of regular expressions; 'names' is a vector of layer names. 'regex' should have one fewer entry than 'names', as the last of the 'names' should be the default case.}
-
-\item{path}{A character vector of paths to the files to be imported. For Windows users, please use / instead of \.}
 }
 \value{
 rezRObject

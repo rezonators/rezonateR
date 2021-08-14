@@ -1,5 +1,6 @@
 library(testthat)
-library(tidyverse)
+library(dplyr)
+library(readr)
 library(devtools)
 library(rjson)
 library(xml2)

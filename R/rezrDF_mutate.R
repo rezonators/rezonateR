@@ -14,6 +14,7 @@
 #' @param ... Other functions passed onto mutate, i.e. the columns you will be changing or adding.
 #'
 #' @return resultDF
+#' @export
 rez_mutate = function(df, ..., fieldaccess = "flex"){
   #Validation
   ops = enexprs(...)

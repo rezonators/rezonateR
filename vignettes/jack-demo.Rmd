@@ -59,7 +59,7 @@ names(myRez$nodeMap)
 Each element of the sub-category is a node:
 
 ```{r}
-View(myRez$nodeMap$token) #Need to delete in the real vignette
+myRez$nodeMap$token[1:3] #Need to delete in the real vignette
 ``` 
 
 # Introduction to rezrDFs
@@ -90,7 +90,7 @@ fieldaccess(myRez$unitDF)
 ```
 
 ```{r}
-myRez$tokenDF = myRez$tokenDF %>% rez_mutate(id = "wrong data")
+#myRez$tokenDF = myRez$tokenDF %>% rez_mutate(id = "wrong data")
 #Trying to damage an ID field is not possible
 ```
 
@@ -102,7 +102,7 @@ updateFunct(myRez$unitDF)
 ```
 
 ```{r}
-View(myRez$unitDF %>% filter(str_detect(word, "<0>")) %>% rez_select(id, word, wordWylie)) 
+myRez$unitDF %>% filter(str_detect(word, "<0>")) %>% rez_select(id, word, wordWylie) 
 
 #Change something in the token rezrDF that is significant for the unit rezrDF
 myRez$tokenDF = myRez$tokenDF %>% rez_mutate(
@@ -110,7 +110,7 @@ myRez$tokenDF = myRez$tokenDF %>% rez_mutate(
 myRez$entryDF = myRez$entryDF %>% reload(myRez)
 myRez$unitDF = myRez$unitDF %>% reload(myRez)
 
-View(myRez$unitDF %>% filter(str_detect(word, "<0>")) %>% rez_select(id, word, wordWylie)) 
+myRez$unitDF %>% filter(str_detect(word, "<0>")) %>% rez_select(id, word, wordWylie)
 ```
 
 Perk 3: rezrDFs correspond to nodeMap elements
@@ -138,7 +138,7 @@ myRez = addField(myRez, entity = "token", layer = "",
                  fieldName = "orthoLength",
                  expression = nchar(word),
                  fieldaccess = "auto")
-View(viewCorePlus(myRez$tokenDF, c("word", "orthoLength")))
+viewCorePlus(myRez$tokenDF, c("word", "orthoLength"))
 ```
 
 Adding a complex new field:
@@ -150,7 +150,7 @@ myRez = addField(myRez, entity = "token", layer = "",
                  type = "complex",
                  groupField = "unit",
                  fieldaccess = "auto")
-View(viewCorePlus(myRez$tokenDF %>% arrange(unit, discourseTokenSeq), c("word", "longestWordInUnit")))
+viewCorePlus(myRez$tokenDF %>% arrange(unit, discourseTokenSeq), c("word", "longestWordInUnit"))
 ```
 
 
@@ -163,7 +163,7 @@ myRez = addFieldForeign(myRez,
                 targetForeignKeyName = "unit",
                 targetFieldName = "unitWord", sourceFieldName = "word",
                 fieldaccess = "foreign")
-View(viewCorePlus(myRez$tokenDF %>% arrange(unit, discourseTokenSeq), c("word", "unitWord")))
+viewCorePlus(myRez$tokenDF %>% arrange(unit, discourseTokenSeq), c("word", "unitWord"))
 ```
 
 Adding a complex foreign field:
@@ -178,7 +178,7 @@ myRez = addFieldForeign(myRez,
                 type = "complex",
                 complexAction = shortestLength,
                 fieldaccess = "foreign")
-View(viewCorePlus(myRez$unitDF %>% arrange(unitSeq), c("word", "shortestWordLength")))
+viewCorePlus(myRez$unitDF %>% arrange(unitSeq), c("word", "shortestWordLength"))
 ```
 
 ## TidyRez
@@ -218,7 +218,7 @@ wordSeq, discourseWordSeq: Consider only words
 
 ```{r}
 myRez = addIsWordField(myRez, !str_detect(wordWylie, "/"))
-View(myRez$trackDF$refexpr)
+myRez$trackDF$refexpr
 ```
 
 Also: add unitSeq info (not added by default):
@@ -234,7 +234,7 @@ Units first:
 ```{r}
 myRez$trackDF$refexpr = myRez$trackDF$refexpr %>%
   rez_mutate(unitsToLastMention = unitsToLastMention(unitSeqLast))
-View(myRez$trackDF$refexpr)
+myRez$trackDF$refexpr
 ```
 
 Then tokens:
@@ -246,7 +246,7 @@ myRez$trackDF$refexpr =  myRez$trackDF$refexpr %>%
                              zeroProtocol = "unitLast", #How to treat zeroes
                              zeroCond = (word == "<0>"),
                              unitDF = myRez$unitDF)) #Additional argument for unitLast protocol
-View(myRez$trackDF$refexpr)
+myRez$trackDF$refexpr
 ```
 
 
@@ -256,21 +256,21 @@ Number of previous tokens in the last 5 units:
 
 ```{r}
 myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% rez_mutate(noPrevMentionsIn5 = noPrevMentions(5))
-View(myRez$trackDF$refexpr)
+myRez$trackDF$refexpr
 ```
 
 Number of zero mentions in any succeeding context:
 
 ```{r}
 myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% rez_mutate(noComingZeroes = noNextMentionsIf(Inf, word == "<0>"))
-View(myRez$trackDF$refexpr)
+myRez$trackDF$refexpr
 ```
 
 Case 3: Competitors
 
 ```{r}
 myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% rez_mutate(noCompetitors = noCompetitors())
-View(myRez$trackDF$refexpr)
+myRez$trackDF$refexpr
 ```
 
 Note: These functions have more complex forms for people who have changed the default column names.
