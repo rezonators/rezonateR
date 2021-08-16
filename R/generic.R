@@ -60,6 +60,7 @@ changeField = function(x, ..., foreign = F){
 }
 
 #' @rdname addIsWordField
+#' @export
 addIsWordField = function(x, ...){
   UseMethod("addIsWordField")
 }

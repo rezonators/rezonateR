@@ -77,7 +77,7 @@ listAt = function(list, address, sep = "/"){
 }
 
 unpackList = function(list){
-  parentEnv = env_parent(current_env())
+  parentEnv = caller_env(n = 1)
   for(name in names(list)){
     parentEnv[[name]] = list[[name]]
   }
