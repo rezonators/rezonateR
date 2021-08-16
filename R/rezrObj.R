@@ -61,3 +61,24 @@ combineTokenChunk = function(rezrObj, type = "intersect"){
   rez_bind_rows(tokenDF, chunkDF)
 }
 
+#' Save and load rezrObj and rezrDF objects.
+#'
+#' @rdname saveload
+#' @param obj The object you would like to save.
+#' @param filename The filename, ending in .Rdata, you would like to save to.
+#'
+#' @return For rez_load, the saved rezrObj or rezrDF.
+#' @export
+rez_save = function(obj, filename){
+  stopifnot("rezrObj" %in% class(obj) | "rezrDF" %in% class(obj))
+  if("rezrObj" %in% class(obj)) message("Saving rezrObj ...") else message("Saving rezrDF ...")
+  save(obj, file = filename, eval.promises = F)
+}
+
+#' @rdname saveload
+#' @export
+rez_load = function(filename){
+  load("inst/extdata/rezEx.Rdata")
+  if("rezrObj" %in% class(obj)) message("Loading rezrObj ...") else message("Loading rezrDF ...")
+  obj
+}

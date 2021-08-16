@@ -38,3 +38,6 @@ A rezrDF with the new or changed field.
 \description{
 Easily add a field to / change a field in a rezrDF using only information from that rezrDF
 }
+\note{
+changeFieldLocal and changeFieldForeign will set the field access status of the changed fields to 'flex' by default, even if they are originally auto or foreign. Please specify fieldaccess = 'auto' or 'foreign' if you want the changed fields to change to or maintain these statuses. (This is to ensure you are aware of the fact that you are changing the update function in these cases.) changeField does not support changing an auto or foreign field's value without changing its field access status or update function, as this is generally a mistake; if you must do it, use rez_mutate.')
+}

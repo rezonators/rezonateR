@@ -4,7 +4,12 @@
 \alias{rez_validate_fieldchange}
 \title{Validate a field change.}
 \usage{
-rez_validate_fieldchange(df, changedFields, changingStatus = F)
+rez_validate_fieldchange(
+  df,
+  changedFields,
+  changingStatus = F,
+  fieldaccess = ""
+)
 }
 \arguments{
 \item{df}{The rezrDF you are planning to change.}

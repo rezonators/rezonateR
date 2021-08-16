@@ -7,6 +7,8 @@
 rez_group_by(df, ...)
 }
 \arguments{
+\item{df}{The data frame to be modified.}
+
 \item{...}{Arguments to be passed to group_by, including the field(s) on which you're grouping.}
 }
 \value{

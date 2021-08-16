@@ -4,7 +4,7 @@
 \alias{rez_mutate}
 \title{Mutate a Rez data.frame and change field access status.}
 \usage{
-rez_mutate(df, ..., fieldaccess = "flex")
+rez_mutate(df, ..., fieldaccess = "")
 }
 \arguments{
 \item{df}{The data frame to be modified.}
@@ -19,4 +19,7 @@ resultDF
 \description{
 This is a wrapper for performing mutations on Rez data.frames, including validation to ensure you do not change anything you shouldn't change. It \emph{only} changes the data frame, such as by changing field access data, at the moment. If your desired fieldaccess value is flex, this may serve as a drop-in replacement for mutate. Note that apart from the data.frame to be modified, all arguments of mutate must be named.
 Currently does not work with across, so you will have to stick to mutate for that. You may validate the fields beforehand using rez_validate_fieldchange.
+}
+\note{
+If fieldaccess is not set, it will be set to flex for NEW fields. Old fields will remain unchanged. \emph{Note that this is different behaviour from changeField, which changes field access status to 'flex' by default if field access is not given.}
 }

@@ -6,3 +6,14 @@ test_that("Track functions work", {
   getCombinedChunks(rezEx)
 })
 
+test_that("rezrObj save/load", {
+  discoName = "three-parting-2569_new"
+  path = "C:/Users/User/Documents/GitHub/lhasa-reference-tracking/shanti/3_2_rez_file/" %+% discoName %+% ".rez"
+  rezEx = importRez(path, layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr"))))
+
+  a = rezEx
+  rez_save(a, "inst/extdata/rezEx.Rdata")
+  rm(a)
+  a = rez_load("inst/extdata/rezEx.Rdata")
+  expect_s3_class(a, "rezrObj")
+})

@@ -409,8 +409,6 @@ rez_group_split = function(df, ...){
 #'
 #' @return The rezrDF object with only the required columns
 #' @export
-#'
-#' @examples
 rez_select = function(df, ...){
   result = df %>% select(...)
 
@@ -430,8 +428,6 @@ rez_select = function(df, ...){
 #' @return A rezrDF object.
 #' @note This function does not update foreign references to the field that you're renaming. So be sure to update the updateFunctions of those fields; otherwise, you will break your rezrObj.
 #' @export
-#'
-#' @examples
 rez_rename = function(df, ...){
   message("Tip: When performed on a rezrDF inside a rezrObj, rez_rename is a potentially destructive action. It is NOT recommended to assign it back to a rezrDF inside a rezrObj. If you must do so, be careful to update all addresses from other DFs to this DF.")
 
@@ -476,13 +472,11 @@ getKey = function(df){
 #'
 #' A replacement for dplyr group_by.
 #'
-#' @inheritparams rez_mutate
+#' @inheritParams rez_mutate
 #' @param ... Arguments to be passed to group_by, including the field(s) on which you're grouping.
 #'
 #' @return
 #' @export
-#'
-#' @examples
 rez_group_by = function(df, ...){
   result = group_by(df, ...)
   updateFunct(result) = updateFunct(df)
