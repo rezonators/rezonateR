@@ -14,18 +14,30 @@
 #' @param ... Other functions passed onto mutate, i.e. the columns you will be changing or adding.
 #'
 #' @return resultDF
+#' @note If fieldaccess is not set, it will be set to flex for NEW fields. Old fields will remain unchanged. *Note that this is different behaviour from changeField, which changes field access status to 'flex' by default if field access is not given.*
 #' @export
-rez_mutate = function(df, ..., fieldaccess = "flex"){
+rez_mutate = function(df, ..., fieldaccess = ""){
   #Validation
   ops = enexprs(...)
-  affected_fields = intersect(names(ops), colnames(df))
-  rez_validate_fieldchange(df, affected_fields)
+  changedFields = intersect(names(ops), colnames(df))
+  rez_validate_fieldchange(df, changedFields, fieldaccess != "", fieldaccess)
+
+  #newFieldaccess = fieldaccess for new fields only
+  #fieldaccess
+  if(fieldaccess == ""){
+    newFieldaccess = "flex"
+  } else {
+    newFieldaccess = fieldaccess
+  }
 
   #TODO: Automatically create update function for the user if 'auto' is specified.
-  result = rez_dfop(df, mutate, fieldaccess = fieldaccess, ...)
-  affected_fields = intersect(names(ops), colnames(result))
-  fieldaccess(result, affected_fields) = fieldaccess
+  result = rez_dfop(df, mutate, fieldaccess = newFieldaccess, ...)
+  if(length(changedFields) > 1){
+    #Note: rez_dfop only changes fieldaccess for new columns
+    fieldaccess(result, changedFields) = fieldaccess #So we change them for changed old columns here
+  }
 
+  affected_fields = intersect(names(ops), colnames(result))  #incl BOTH new and changed fields
   if(!("grouped_df" %in% class(df))){
     for(field in affected_fields){
       if(fieldaccess(result, field) == "auto"){
@@ -34,11 +46,12 @@ rez_mutate = function(df, ..., fieldaccess = "flex"){
     }
   } else {
     for(field in affected_fields){
-      if(fieldaccess(result) == "auto"){
+      if(fieldaccess(result, field) == "auto"){
         updateFunct(result, field) = createUpdateFunction(!!parse_expr(field), !!ops[[field]], result, group_vars(df))
       }
     }
   }
+
   result
 }
 
@@ -52,19 +65,34 @@ rez_mutate = function(df, ..., fieldaccess = "flex"){
 #' @param changedFields The fields you want to change.
 #'
 #' @export
-rez_validate_fieldchange = function(df, changedFields, changingStatus = F){
+
+rez_validate_fieldchange = function(df, changedFields, changingStatus = F, fieldaccess = ""){
   for(entry in changedFields){
     if(entry %in% names(fieldaccess(df))){
       if(fieldaccess(df)[entry] == "key"){
         stop("You cannot change a primary key: " %+% entry)
-      } else if(fieldaccess(df)[entry] == "fkey"){
-        warning("Note that you are changing a foreign key " %+% entry %+% ". This should only be used for changing association links between tables, and may break things down the road.")
       } else if(fieldaccess(df)[entry] == "core"){
-        warning("Note that you are changing a core field " %+% entry %+% ". This may break things down the road.")
-      } else if(fieldaccess(df)[entry] == "auto" & !changingStatus){
-        warning("Note that you are changing a field " %+% entry %+% "that is automatically updated. Your change is likely to be overridden by a future update.")
-      } else if(fieldaccess(df)[entry] == "foreign" & !changingStatus){
-        warning("Note that you are changing a field " %+% entry %+% "that depends on another data.frame. Your change is likely to be overridden by a future update on the data.frame that this data.frame depends on.")
+        if(changingStatus){
+        warning("Note that you are changing the field access status and value of a core field " %+% entry %+% ". This may break things down the road.")
+        } else {
+        warning("Note that you are changing the value of a core field " %+% entry %+% ". This may break things down the road.")
+        }
+      } else if(fieldaccess(df)[entry] == "auto"){
+        if(!changingStatus){
+          warning("Note that you are changing a field " %+% entry %+% "that is automatically updated. Your change is likely to be overridden by a future update.")
+        } else if(fieldaccess == "foreign"){
+          message("Note that you are changing a field " %+% entry %+% "from auto to foreign. This will change reload behaviour.")
+        } else if(fieldaccess == "flex"){
+          message("Note that you are changing a field " %+% entry %+% "from auto to flex. This field will no longer reload.")
+        }
+      } else if(fieldaccess(df)[entry] == "foreign"){
+        if(!changingStatus){
+          warning("Note that you are changing a field " %+% entry %+% "that depends on another data.frame. Your change is likely to be overridden by a future update on the data.frame that this data.frame depends on.")
+        } else if(fieldaccess == "auto"){
+          message("Note that you are changing a field " %+% entry %+% "from foreign to auto This will change reload behaviour.")
+        } else if(fieldaccess == "flex"){
+          message("Note that you are changing a field " %+% entry %+% "from auto to flex This field will no longer reload.")
+        }
       }
     }
   }

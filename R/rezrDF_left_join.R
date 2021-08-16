@@ -126,7 +126,7 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
 
   #Create the by-line
   if(length(fkey) != length(df2key)){
-    stop("Number of foreign keys does not match the number of primary keys in df1.")
+    stop("Number of foreign keys (" %+% paste(fkey, collapse = ", ") %+% " does not match the number of primary keys in df1 (" %+% paste(fkey, collapse = ", ") %+% ").")
   }
   by = character()
   for(i in 1:length(fkey)){

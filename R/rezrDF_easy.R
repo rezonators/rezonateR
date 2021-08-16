@@ -17,6 +17,7 @@
 #' @param fieldaccess The access value that you would like to assign to the new or changed field.
 #'
 #' @return A rezrDF with the new or changed field.
+#' @note changeFieldLocal and changeFieldForeign will set the field access status of the changed fields to 'flex' by default, even if they are originally auto or foreign. Please specify fieldaccess = 'auto' or 'foreign' if you want the changed fields to change to or maintain these statuses. (This is to ensure you are aware of the fact that you are changing the update function in these cases.) changeField does not support changing an auto or foreign field's value without changing its field access status or update function, as this is generally a mistake; if you must do it, use rez_mutate.')
 #' @export
 addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, type = "simple", fieldaccess = "flex", groupField = ""){
   #Validation with differences with changeFieldLocal
@@ -42,14 +43,14 @@ changeFieldLocal.rezrDF = function(rezrDF, fieldName, expression, type = "simple
   checkIfOne(currArgs, "You can only change one field at a time.")
 
   if(fieldaccess == "key"){
-    warning("Are you sure you want to change a field to a primary key? Compound key fields are currently not well supported.")
+    stop("You cannot change a field to a primary key.")
   } else if(fieldaccess == "foreign"){
     stop("changeFieldLocal cannot turn a field foreign or modify fields using foreign information. Please use changeFieldForeign instead.")
   }
 
   #Change field access first
+  rez_validate_fieldchange(rezrDF, fieldName, changingStatus = T, fieldaccess = fieldaccess)
   fieldaccess(rezrDF, fieldName) = fieldaccess
-  rez_validate_fieldchange(rezrDF, fieldName, changingStatus = T)
 
   #Then change the actual field
   localMutate(rezrDF, fieldName, enexpr(expression), type, fieldaccess, groupField)
@@ -68,7 +69,7 @@ localMutate = function(rezrDF, fieldName, enexpression, type, fieldaccess, group
 
 
   if(type == "simple"){
-    result = suppressWarnings(rez_mutate(rezrDF, !!fieldName := !!enexpression, fieldaccess = fieldaccess))
+    result = rez_mutate(rezrDF, !!fieldName := !!enexpression, fieldaccess = fieldaccess)
   } else if(type == "complex"){
     #result = (rezrDF %>% rez_group_by(!!groupField) %>% rez_mutate(!!fieldName := !!enexpression, fieldaccess = fieldaccess) %>% rez_ungroup)
     result = rezrDF %>% rez_group_by(!!parse_expr(groupField))

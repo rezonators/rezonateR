@@ -158,8 +158,6 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
     rezrObj[[targetEntity %+% "DF"]] = result
   }
 
-
-
   rezrObj
 }
 

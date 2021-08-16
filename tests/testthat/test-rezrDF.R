@@ -119,20 +119,20 @@ test_that("Simple rezrDF operation commands", {
   expect(a$tokenDF$word6[1] != "?", failure_message = "Reload failed.")
 
   a = rezEx$tokenDF %>% addFieldLocal(fieldName = "unitSize", expression = length(id), type = "complex", fieldaccess = "auto", groupField = "unit")
-  a = a %>% mutate(unitSize = "?") %>% reloadLocal()
+  a = suppressWarnings(a %>% mutate(unitSize = "?") %>% reloadLocal())
   expect(a$unitSize[1] != "?", failure_message = "Reload failed.")
 
   a = rezEx %>% addFieldLocal(entity = "token", layer = "", fieldName = "unitSize", expression = length(id), type = "complex", fieldaccess = "auto", groupField = "unit")
   f = a$tokenDF$unitSize[1]
-  a$tokenDF = a$tokenDF %>% mutate(unitSize = "?") %>% reloadLocal()
+  a$tokenDF = suppressWarnings(a$tokenDF %>% mutate(unitSize = "?") %>% reloadLocal())
   expect(a$tokenDF$unitSize[1] != "?", failure_message = "Reload failed.")
   a = a %>% changeFieldLocal(entity = "token", layer = "", fieldName = "unitSize", expression = length(id) - 1, type = "complex", fieldaccess = "auto", groupField = "unit")
-  a$tokenDF = a$tokenDF %>% mutate(unitSize = "?") %>% reloadLocal()
+  a$tokenDF = suppressWarnings(a$tokenDF %>% mutate(unitSize = "?") %>% reloadLocal())
   expect(a$tokenDF$unitSize[1] == f - 1, failure_message = "Reload failed.")
 
-
+  a$tokenDF = a$tokenDF %>% addFieldLocal("word6", word %+% "!!!", fieldaccess = "auto")
   a = a %>% changeFieldLocal(entity = "token", layer = "", fieldName = "word6", expression = word %+% "???", fieldaccess = "auto")
-  a$tokenDF = a$tokenDF %>% mutate(word6 = "?") %>% reloadLocal()
+  a$tokenDF = suppressWarnings(a$tokenDF %>% mutate(word6 = "?") %>% reloadLocal())
   updateFunct(a$tokenDF, "word6")(a$tokenDF) %>% pull(word6)
   a$tokenDF %>% pull(word6)
   expect(a$tokenDF$word6[1] != "?", failure_message = "Reload failed.")
@@ -173,11 +173,31 @@ test_that("Simple rezrDF operation commands", {
   expect(a$unitDF$maxWordLength %>% is.list, "Reload failed.")
 
   a = rez_mutate(rezEx$tokenDF, wordWylie = "wow", word = id, fieldaccess = "auto")
-  a = a %>% mutate(wordWylie = "hahaha") %>% reload
+  a = a %>% mutate(wordWylie = "hahaha") %>% reload(a)
   expect(a$wordWylie[1] != "hahaha", "Reload failed.")
-
 })
 
+test_that("Field validation", {
+  discoName = "three-parting-2569_new"
+  path = "C:/Users/User/Documents/GitHub/lhasa-reference-tracking/shanti/3_2_rez_file/" %+% discoName %+% ".rez"
+  rezEx = importRez(path, layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr"))))
+
+  a = rezEx$tokenDF %>% rez_mutate(unit = "har", lit = "heh", word2 = "woo")
+  expect_warning(rezEx$tokenDF %>% rez_mutate(unit = "har"), "value of a core field unit")
+  expect_warning(rezEx$tokenDF %>% rez_mutate(unit = "har", fieldaccess = "flex"), "status and value of a core field unit")
+  expect_warning(rezEx$unitDF %>% rez_mutate(discourseTokenSeqFirst = "har"), "Your change is likely to be overridden by a future update")
+  expect_message(rezEx$unitDF %>% rez_mutate(discourseTokenSeqFirst = "har", fieldaccess = "auto"), "This will change reload behaviour.")
+  expect_message(rezEx$unitDF %>% rez_mutate(discourseTokenSeqFirst = "har", fieldaccess = "flex"), "no longer reload")
+
+  a = rezEx$tokenDF %>% rez_mutate(fieldaccess = "auto", word3 = wordWylie %+% ", lol.")
+  expect_warning(a %>% rez_mutate(word3 = "har"), "Your change is likely to be overridden by a future update")
+  expect_message(a %>% rez_mutate(word3 = "har", fieldaccess = "foreign"), "This will change reload behaviour.")
+  expect_message(a %>% rez_mutate(word3 = "har", fieldaccess = "flex"), "no longer reload")
+  expect_message(a %>% changeFieldLocal(fieldName = "word3", expression = "har", fieldaccess = "flex"), "no longer reload")
+})
+
+
 test_that("Simple rezrDF operation commands", {
+
 })
 

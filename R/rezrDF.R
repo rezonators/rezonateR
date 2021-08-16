@@ -265,6 +265,7 @@ reloadForeign = function(df, rezrObj, fields = ""){
   }
 
   for(field in fields){
+    print(fields)
     if(!(field %in% names(updateFunct(df)))){
       #This will really only happen when the user specifies fields and they don't have update functions. It's an error instead of a warning since it's clearly not intended behaviour
       stop("The field " %+% field %+% " does not have an update function defined.")
@@ -311,11 +312,10 @@ rez_dfop = function(df, .f, ..., fieldaccess = "flex", updateFunct = NA, oldName
   }
   )
 
-
   newNames = colnames(resultDF)
   addedNames = setdiff(newNames, oldNames) #Find which columns (if any) are new
 
-  #Setting DF properties of new columns
+  #Setting DF properties of new columns ONLY
   if(length(addedNames) >= 1){
     fieldaccess(resultDF, addedNames) = fieldaccess
     inNodeMap(resultDF, addedNames) = "no"
