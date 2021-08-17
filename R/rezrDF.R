@@ -7,8 +7,9 @@
 #  a) Constructor function: new_updateFunction
 #  b) Getting and setting 'deps' attribute: deps, deps<-
 #5) Reloading functions: reload.rzrdf, reloadLocal, reloadForeign
-#8) Utilities:
+#7) Utilities:
 #  a) Get fields of a certain field access type: getFieldsOfType, getKey
+#  b) killIfPresent: Remove a column if it's present in a rezrDF.
 
 #' Constructor function for rezrDF
 #'
@@ -267,6 +268,28 @@ reloadForeign = function(df, rezrObj, fields = ""){
   df
 }
 
+stringToFactor = function(df, colsToChange = NULL, levels = list()){
+  result = df
+  if(is.null(colsToChange)) colsToChange = colnames(df)
+  for(col in colsToChange){
+    if(!is.character(col) | !(col %in% colsToChange)) next
+    if(col %in% names(levels)){
+      result[[col]] = factor(result[[col]], levels[[col]])
+    } else {
+      result[[col]] = factor(result[[col]], levels[[col]])
+    }
+    if(col %in% names(updateFunct(df))){
+      result[[col]] = factor(result[[col]], labels[[col]])
+      if(col %in% names(levels)){
+        updatefunct(df, col) = function(x, df) factor(updateFunct(x, df), labels[[col]])
+      } else {
+        updatefunct(df, col) = function(x, df) factor(updateFunct(x, df))
+      }
+    }
+  }
+}
+
+
 getFieldsOfType = function(df, type){
   names(fieldaccess(df))[fieldaccess(df) == type]
 }
@@ -280,6 +303,6 @@ killIfPresent = function(df, colnames){
     if(colname %in% names(df)){
       df = df %>% rez_select(-!!parse_expr(colname))
     }
-    }
+  }
   df
 }
