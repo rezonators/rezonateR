@@ -21,7 +21,7 @@ rez_write_csv = function(df, path, inclCols = character(0), exclCols = character
     inclCols = setdiff(colnames(df), exclCols)
   }
 
-  write_csv(df %>% select(all_of(inclCols)), path, ...)
+  write_excel_csv(df %>% select(all_of(inclCols)), path, ...)
 }
 
 
