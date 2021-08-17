@@ -24,6 +24,8 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
       docnames = ""
       warning("Number of input paths does not match the number of document names. I will name your documents automatically, according to your filenames.")
     }
+
+    message("Import starting - please be patient ...")
     if(docnames == ""){
       #Detecting document names
       lastSlashLocs = str_locate_all(paths, "/")
@@ -32,6 +34,9 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
       docnames_end = sapply(1:length(paths), function(x) lastRezLocs[[x]][nrow(lastRezLocs[[x]]),1] - 1)
       docnames = sapply(1:length(paths), function(x) substr(paths[x], docnames_start, docnames_end))
     }
+
+
+    message("Creating node maps ...")
 
     nodeMapSep = list()
     for(x in 1:length(paths)){
@@ -47,6 +52,9 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
       fullNodeMap = nodeMapSep[[1]]
     }
 
+    message("Creating rezrDFs ...")
+
+
     #DF representation
     #TODO: Conditional on these things actually existing
     unitDF = nodeToDF(fullNodeMap[["unit"]], unitDFFields)
@@ -58,6 +66,7 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
     linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
     docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
 
+    message("Adding foreign fields to rezrDFs ...")
 
     #Adding fields to higher-level DFs that depend on lower-level DFs.
     entryDF = entryDF %>% rez_left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"), df2Address = "tokenDF", fkey = "token")
@@ -75,6 +84,8 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
     trackDF = trackDF %>% rez_left_join(trackChainDF, by = c(chain = "id", doc = "doc"), df2Address = "trackChainDF", fkey = "token")
 
     #TODO: Rez, Stack, Clique
+
+    message("Splitting rezrDFs into layers ...")
 
     #Split DFs by layer
     #layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
@@ -97,7 +108,7 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
         cwText = paste0(conds, " ~ '", info[["names"]], "'")
         splitLayers = function(x){
           result = suppressMessages(rez_mutate(x, layer = case_when(!!!parse_exprs(cwText))) %>% rez_group_split(layer))
-          names(result) = sort(info[["names"]])
+          names(result) = sapply(result, function(x) x$layer[1])
           result
         }
 
@@ -138,7 +149,9 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
       }
     }
 
+
     returnObj = new_rezrObj(list(nodeMap = fullNodeMap, entryDF = entryDF, unitDF = unitDF, tokenDF = tokenDF, chunkDF = chunkDF, trackDF = trackDF, trackChainDF = trackChainDF, linkDF = linkDF, docDF = docDF))
+    message("Done!")
     return(returnObj)
 }
 

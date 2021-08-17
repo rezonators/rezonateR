@@ -282,3 +282,36 @@ changeField.rezrDF = function(rezrDF, ..., foreign = F){
     changeFieldForeign(rezrDF, ...)
   }
 }
+
+#' Merging and renaming categories
+#'
+#' @rdname mergecat
+#' @param x A column or vector whose categories are to be merged or renamed.
+#' @param ... The name of each argument is a new category, and the value of each argument is a vector of names of old categories (as character values, even if the original column/vector contains factors).
+#' @param asFactor Do you want the result to be a factor?
+#' @param levels If asFactor = T, you an use this to set the levels of the factor.
+#'
+#' @return A column or vector with the desired
+#' @export
+#'
+#' @examples
+mergeCats = function(x, ..., asFactor = F, levels = NULL){
+  x = as.character(x)
+  cats = unique(x)
+  mappings = list(...)
+  oldCats = unlist(mappings)
+  if(length(oldCats) > length(unique(oldCats))){
+    stop("Each old category can only correspond to one new category.")
+  }
+  newCats = rep(names(mappings), sapply(mappings, length))
+  result = "case_when(" %+% paste0("x == '", oldCats, "' ~ '", newCats, collapse = "', ") %+% "', T ~ x)" %>% parse_expr() %>% eval_tidy()
+  if(is.null(levels)) levels = unique(result)
+  if(asFactor) result = factor(result, levels = levels)
+  result
+}
+
+#' @rdname mergecat
+#' @export
+renameCats = function(x, ..., asFactor = F, levels = NULL){
+  mergeCats(x, ..., asFactor, levels)
+}

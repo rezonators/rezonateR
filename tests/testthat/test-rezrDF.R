@@ -216,3 +216,8 @@ test_that("stringToFactor", {
   expect_s3_class(a$word, "factor")
 })
 
+test_that("mergeCats", {
+  rezEx = rez_load("data/parting.rda")
+  rezEx$trackDF$refexpr = rezEx$trackDF$refexpr %>% rez_mutate(clauseRole = mergeCats(roleType, A = c("A", "ABEN"), nonclausal = c("FREE", "VOC"), P = c("PBEN", "BEN")), fieldaccess = "auto")
+  expect("nonclausal" %in% rezEx$trackDF$refexpr$clauseRole, "Category merge failed.")
+})
