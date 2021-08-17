@@ -31,5 +31,6 @@ Depends:
     dplyr,
     readr,
     stringr,
-    rlang
+    rlang,
+    R (>= 2.10)
 VignetteBuilder: knitr

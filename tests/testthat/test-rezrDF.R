@@ -201,3 +201,18 @@ test_that("Simple rezrDF operation commands", {
 
 })
 
+test_that("stringToFactor", {
+  rezEx = rez_load("data/parting.rda")
+  a = stringToFactor(rezEx$tokenDF, "unit")
+  expect_s3_class(a$unit, "factor")
+
+  lvl = levels(a$unit)
+  lvl = lvl[-length(lvl)]
+  a = stringToFactor(rezEx$tokenDF, "unit", levels = list(unit = lvl))
+  expect(any(is.na(a$unit)), "Factor assignment failed.")
+
+  a = stringToFactor(rezEx$entryDF, "word") %>% mutate(word = 1) %>% reload(rezEx)
+  expect(any(a$word != 1), "Reload failed.")
+  expect_s3_class(a$word, "factor")
+})
+

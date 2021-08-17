@@ -258,7 +258,6 @@ reloadForeign = function(df, rezrObj, fields = ""){
   }
 
   for(field in fields){
-    print(fields)
     if(!(field %in% names(updateFunct(df)))){
       #This will really only happen when the user specifies fields and they don't have update functions. It's an error instead of a warning since it's clearly not intended behaviour
       stop("The field " %+% field %+% " does not have an update function defined.")
@@ -276,17 +275,20 @@ stringToFactor = function(df, colsToChange = NULL, levels = list()){
     if(col %in% names(levels)){
       result[[col]] = factor(result[[col]], levels[[col]])
     } else {
-      result[[col]] = factor(result[[col]], levels[[col]])
+      result[[col]] = factor(result[[col]])
     }
     if(col %in% names(updateFunct(df))){
-      result[[col]] = factor(result[[col]], labels[[col]])
+      oldFunct = updateFunct(df, col)
       if(col %in% names(levels)){
-        updatefunct(df, col) = function(x, df) factor(updateFunct(x, df), labels[[col]])
+        updateFunct(result, col) = function(...) oldFunct(...) %>%
+          mutate(!!parse_expr(col) := factor(!!parse_expr(col), levels[[col]]))
       } else {
-        updatefunct(df, col) = function(x, df) factor(updateFunct(x, df))
+        updateFunct(result, col) = function(...) oldFunct(...) %>%
+          mutate(!!parse_expr(col) := factor(!!parse_expr(col)))
       }
     }
   }
+  result
 }
 
 

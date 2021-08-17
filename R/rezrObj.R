@@ -78,7 +78,7 @@ rez_save = function(obj, filename){
 #' @rdname saveload
 #' @export
 rez_load = function(filename){
-  load("inst/extdata/rezEx.Rdata")
+  rezEx = load("inst/extdata/rezEx.Rdata")
   if("rezrObj" %in% class(obj)) message("Loading rezrObj ...") else message("Loading rezrDF ...")
   obj
 }
