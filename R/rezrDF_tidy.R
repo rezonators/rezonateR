@@ -259,6 +259,14 @@ rez_bind_rows = function(..., type = "intersect"){
   #TODO: Cater for differing field names
 }
 
+#' Add new rows to a rezrDF.
+#'
+#' @param df The rezrDF to be updated.
+#' @param ... Argument names are column names, and argument values are vectors of values of the rows you are adding. If a primary key is not supplied, I will generate one for you. Auto fields are automatically updated and do not need to be supplied; foreign fields are updated if a rezrObj is supplied.
+#' @param rezrObj A rezrObj, if you want to ensure that the primary key doesn't overlap with any other node in the nodeMap, and/or want to update foreign fields.
+#'
+#' @return The rezrDF with the new row(s).
+#' @export
 rez_add_row = function(df, ..., rezrObj = NULL){
   args = list(...)
   args[[".data"]] = df
