@@ -25,17 +25,24 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
       rezrObj = rezrObj %>% addFieldForeign("chunk", layer, "token", "", "tokenList", "unitSeqLast", "unitSeq", type = "complex", fieldaccess = "foreign", complexAction = max) #add unitSeq column to tokenDF
     }
   } else if(entity %in% c("track", "rez")){
-    chunkLayers =  names(rezrObj$chunkDF)
-    for(layer in chunkLayers){
-      if(!("unitSeqFirst" %in% names(rezrObj$chunkDF[[layer]])) | !("unitSeqLast" %in% names(rezrObj$chunkDF[[layer]]))){
-        rezrObj$chunkDF[[layer]] = killIfPresent(rezrObj$chunkDF[[layer]], c("unitSeqFirst", "unitSeqLast"))
-        rezrObj = rezrObj %>% addUnitSeq("chunk", layer)
+    if("chunkDF" %in% rezrObj){
+      chunkLayers =  names(rezrObj$chunkDF)
+      for(layer in chunkLayers){
+        if(!("unitSeqFirst" %in% names(rezrObj$chunkDF[[layer]])) | !("unitSeqLast" %in% names(rezrObj$chunkDF[[layer]]))){
+          rezrObj$chunkDF[[layer]] = killIfPresent(rezrObj$chunkDF[[layer]], c("unitSeqFirst", "unitSeqLast"))
+          rezrObj = rezrObj %>% addUnitSeq("chunk", layer)
+        }
       }
-    }
 
-    sourceAddress = c("track", "chunk/" %+% chunkLayers)
-    for(layer in layers){
-      rezrObj[[entity %+% "DF"]][[layer]] = suppressMessages(rezrObj[[entity %+% "DF"]][[layer]] %>% rez_left_join(combineTokenChunk(rezrObj) %>% rez_select(id, unitSeqFirst, unitSeqLast), df2Address = sourceAddress, rezrObj = rezrObj, fkey = "token"))
+      sourceAddress = c("track", "chunk/" %+% chunkLayers)
+      for(layer in layers){
+        rezrObj[[entity %+% "DF"]][[layer]] = suppressMessages(rezrObj[[entity %+% "DF"]][[layer]] %>% rez_left_join(combineTokenChunk(rezrObj) %>% rez_select(id, unitSeqFirst, unitSeqLast), df2Address = sourceAddress, rezrObj = rezrObj, fkey = "token"))
+      }
+    } else {
+      if(!("unitSeq" %in% names(rezrObj$tokenDF))){
+        rezrObj = rezrObj %>% addUnitSeq("token")
+      }
+      rezrObj[[entity %+% "DF"]][[layer]] = suppressMessages(rezrObj[[entity %+% "DF"]][[layer]] %>% rez_left_join(rezrObj$tokenDF %>% rez_select(id, unitSeqFirst, unitSeqLast), df2Address = sourceAddress, rezrObj = rezrObj, fkey = "token"))
     }
   }
   rezrObj
@@ -70,8 +77,10 @@ addIsWordField.rezrObj = function(x, cond, addWordSeq = T){
   x$tokenDF = addIsWordField(x$tokenDF, !!enexpr(cond), addWordSeq)
   if(addWordSeq){
     #Chunk and dependencies
-    for(layer in names(x$chunkDF)){
-      x$chunkDF[[layer]] = getSeqBounds(x$tokenDF, x$chunkDF[[layer]], x$nodeMap$chunk, c("wordSeq", "discourseWordSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
+    if("chunkDF" %in% rezrObj){
+      for(layer in names(x$chunkDF)){
+        x$chunkDF[[layer]] = getSeqBounds(x$tokenDF, x$chunkDF[[layer]], x$nodeMap$chunk, c("wordSeq", "discourseWordSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
+      }
     }
 
     for(layer in names(x$trackDF)){

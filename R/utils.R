@@ -150,3 +150,24 @@ ViewReturn = function(x){
 zeroEntryToNA = function(x){
   sapply(x, function(i) if(length(i) == 0) NA else i[[1]])
 }
+
+#' Create a Rezonator ID.
+#'
+#' @param n The number of Rezonator IDs you want.
+#' @param existing Existing IDs, to avoid overlap.
+#'
+#' @return A vector of Rezonator IDs.
+#' @export
+#'
+#' @examples createRezId(3)
+createRezId = function(n = 1, existing = character(0)){
+  chars = strsplit(c("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"), "")[[1]]
+  sapply(1:n, function(i){
+    done = F
+    while(!done){
+      cand = paste0(sample(chars, 13), collapse = "")
+      if(!(cand %in% existing)) done = T
+    }
+    cand
+  })
+}

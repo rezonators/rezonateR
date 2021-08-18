@@ -108,3 +108,11 @@ extractTags = function(nodeList){
   }
   return(tags)
 }
+
+getIDs = function(nodeMap){
+  result = character(0)
+  for(nodeList in names(nodeMap)){
+    result = c(result, names(nodeList))
+  }
+  result
+}

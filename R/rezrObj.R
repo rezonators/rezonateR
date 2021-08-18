@@ -44,21 +44,25 @@ combineChunks = function(rezrObj, ...){
 #' @rdname combineLayer
 #' @export
 combineTokenChunk = function(rezrObj, type = "intersect"){
-  chunkDF = combineChunks(rezrObj, type)
+  if("chunkDF" %in% names(rezrObj)){
+      chunkDF = combineChunks(rezrObj, type)
 
-  tokenDF = rezrObj$tokenDF %>% rez_mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
+      tokenDF = rezrObj$tokenDF %>% rez_mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
 
-  otherSeqHeaders = c("word", "discourseWord", "unit")
-  for(header in otherSeqHeaders){
-    seq = header %+% "Seq"
-    last = header %+% "SeqLast"
-    first = header %+% "SeqFirst"
-    if((seq %in% names(tokenDF)) & (last %in% names(chunkDF)) & (first %in% names(chunkDF))){
-      tokenDF = tokenDF %>% rez_mutate(!!last := !!parse_expr(seq), !!first := !!parse_expr(seq))
-    }
+      otherSeqHeaders = c("word", "discourseWord", "unit")
+      for(header in otherSeqHeaders){
+        seq = header %+% "Seq"
+        last = header %+% "SeqLast"
+        first = header %+% "SeqFirst"
+        if((seq %in% names(tokenDF)) & (last %in% names(chunkDF)) & (first %in% names(chunkDF))){
+          tokenDF = tokenDF %>% rez_mutate(!!last := !!parse_expr(seq), !!first := !!parse_expr(seq))
+        }
+      }
+
+      rez_bind_rows(tokenDF, chunkDF)
+  } else {
+    rezrObj$tokenDF
   }
-
-  rez_bind_rows(tokenDF, chunkDF)
 }
 
 #' Save and load rezrObj and rezrDF objects.

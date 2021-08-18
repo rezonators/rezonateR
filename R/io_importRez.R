@@ -13,13 +13,14 @@
 #' @param paths A character vector of paths to the files to be imported. For Windows users, please use / instead of \.
 #' @param docnames A character vector of the document names. If left blank, a docname will be generated according to the filenames of files you import. For example, the document foo/bar.rez will be named 'bar'.
 #' @param concatFields A string of names of token-level fields, for example word or transcription, that should be concatenated to form chunk- or entry-level fields. For example, if your word field is called 'word' and you have an IPA transcription field called 'ipa', then concatFields should be c("word", "ipa").
+#' @param separator The character you wish to use to separate words in concatenated columns, generally the empty string in languages like Tibetan and Chinese, and a single space in languages like Spanish and English.
 #' @param layerRegex A list, each of which is a component (just track or chunk for now; stack and rez to be added later). In each list entry, there are three components: 'field' is the field on which the splitting is based; 'regex' is a vector of regular expressions; 'names' is a vector of layer names. 'regex' should have one fewer entry than 'names', as the last of the 'names' should be the default case.
 #'
 #' @return rezRObject
 #' @import stringr
 #' @import rlang
 #' @export
-importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie", "lit"), layerRegex){
+importRez = function(paths, docnames = "", concatFields, layerRegex, separator = " "){
     if(length(paths) != length(docnames) & docnames != ""){
       docnames = ""
       warning("Number of input paths does not match the number of document names. I will name your documents automatically, according to your filenames.")
@@ -56,32 +57,53 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
 
 
     #DF representation
-    #TODO: Conditional on these things actually existing
     unitDF = nodeToDF(fullNodeMap[["unit"]], unitDFFields)
     tokenDF = nodeToDF(fullNodeMap[["token"]], tokenDFFields)
     entryDF = nodeToDF(fullNodeMap[["entry"]], entryDFFields)
-    chunkDF = nodeToDF(fullNodeMap[["chunk"]], chunkDFFields)
-    trackDF = nodeToDF(fullNodeMap[["track"]], trackDFFields)
-    trackChainDF = nodeToDF(fullNodeMap[["trackChain"]], trackChainDFFields)
-    linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
+
+    if("chunk" %in% names(fullNodeMap)){
+      chunkDF = nodeToDF(fullNodeMap[["chunk"]], chunkDFFields)
+    }
+    if("track" %in% names(fullNodeMap)){
+      trackDF = nodeToDF(fullNodeMap[["track"]], trackDFFields)
+      trackChainDF = nodeToDF(fullNodeMap[["trackChain"]], trackChainDFFields)
+    }
+    if("link" %in% names(fullNodeMap)){
+      linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
+    }
+
     docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
 
-    message("Adding foreign fields to rezrDFs ...")
+    message("Adding foreign fields to rezrDFs and sorting (this is the slowest step) ...")
+    tokenDF = tokenDF %>% arrange(discourseTokenSeq)
 
+    message(">Adding to unit entry DF ...")
     #Adding fields to higher-level DFs that depend on lower-level DFs.
     entryDF = entryDF %>% rez_left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"), df2Address = "tokenDF", fkey = "token")
+    entryDF = entryDF %>% arrange(discourseTokenSeq)
 
-    unitDF = concatStringFields(entryDF, unitDF, fullNodeMap[["unit"]], concatFields, tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit")
+    message(">Adding to unit DF ...")
+    unitDF = concatStringFields(entryDF, unitDF, fullNodeMap[["unit"]], concatFields, tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit", separator = separator)
     unitDF = getSeqBounds(entryDF, unitDF, fullNodeMap[["unit"]], "discourseTokenSeq", tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit")
+    unitDF = unitDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
 
-    chunkDF = getSeqBounds(tokenDF, chunkDF, fullNodeMap[["chunk"]], c("tokenSeq", "discourseTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
-    chunkDF = concatStringFields(tokenDF, chunkDF, fullNodeMap[["chunk"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
-    fieldaccess(chunkDF, concatFields) = "foreign"
+    if("chunk" %in% names(fullNodeMap)){
+      message(">Adding to chunk DF ...")
+      chunkDF = getSeqBounds(tokenDF, chunkDF, fullNodeMap[["chunk"]], c("tokenSeq", "discourseTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
+      chunkDF = concatStringFields(tokenDF, chunkDF, fullNodeMap[["chunk"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk", separator = separator)
+      fieldaccess(chunkDF, concatFields) = "foreign"
+      chunkDF = chunkDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
+      mergedDF = mergeTokenChunk(tokenDF, chunkDF)
+    }
 
-    trackDF = trackDF %>% rez_left_join(mergeTokenChunk(tokenDF, chunkDF), by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token")
-
-    #Adding fields to lower-level DFs that depend on higher-level DFs.
-    trackDF = trackDF %>% rez_left_join(trackChainDF, by = c(chain = "id", doc = "doc"), df2Address = "trackChainDF", fkey = "token")
+    if("track" %in% names(fullNodeMap)){
+      message(">Adding to track DF ...")
+      #mergedDF from the previous condition
+      trackDF = trackDF %>% rez_left_join(mergedDF, by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token")
+      #Adding fields to lower-level DFs that depend on higher-level DFs.
+      trackDF = trackDF %>% rez_left_join(trackChainDF, by = c(chain = "id", doc = "doc"), df2Address = "trackChainDF", fkey = "token")
+      trackDF = trackDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
+    }
 
     #TODO: Rez, Stack, Clique
 
@@ -89,7 +111,7 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
 
     #Split DFs by layer
     #layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
-    layeredTypes = c("track", "chunk")
+    layeredTypes = c("track", "chunk") %>% intersect(names(fullNodeMap))
     for(type in layeredTypes){
       if(type %in% names(layerRegex)){
         info = layerRegex[[type]]
@@ -128,29 +150,35 @@ importRez = function(paths, docnames = "", concatFields = c("word", "wordWylie",
       }
     }
 
+    message("A few finishing touches ...")
     #Track DFs needs dependencies fixed for two reasons:
     #1) First, Last mistakenly present in dependencies for tokenDF (not the most elegant solution to solve here, should think about this later)
     #2) After chunks and trackChainDF got split into layers, need to update addresses
-    for(trackLayer in names(trackDF)){
-      for(i in 1:length(updateFunct(trackDF[[trackLayer]]))){
-        uf = updateFunct(trackDF[[trackLayer]])[[i]]
-        field = names(updateFunct(trackDF[[trackLayer]]))[i]
-        if(any(str_detect(deps(uf), "chunkDF"))){
-        #Grab original dependency data
-          sourceFieldToken = (deps(updateFunct(trackDF[[trackLayer]], field))[1] %>% strsplit("/"))[[1]] %>% last %>% chompSuffix("First|Last")
-          sourceFieldChunk = (deps(updateFunct(trackDF[[trackLayer]], field))[2] %>% strsplit("/"))[[1]] %>% last
-          sourceField = c(sourceFieldToken, rep(sourceFieldChunk, length(chunkDF)))
-          updateFunct(trackDF[[trackLayer]], field) = createLeftJoinUpdate(address = c("tokenDF", paste0("chunkDF/", names(chunkDF))) %+% "/" %+% sourceField, fkey = "token", field =field)
-        } else if(any(str_detect(deps(uf), "trackChainDF"))){
-          sourceField = (deps(updateFunct(trackDF[[trackLayer]], field))[1] %>% strsplit("/"))[[1]] %>% last
-          updateFunct(trackDF[[trackLayer]], field) = createLeftJoinUpdate(address = "trackChainDF/" %+% trackLayer %+% "/" %+% sourceField, fkey = "chain", field = field)
+    if("track" %in% names(fullNodeMap)){
+      for(trackLayer in names(trackDF)){
+        for(i in 1:length(updateFunct(trackDF[[trackLayer]]))){
+          uf = updateFunct(trackDF[[trackLayer]])[[i]]
+          field = names(updateFunct(trackDF[[trackLayer]]))[i]
+          if(any(str_detect(deps(uf), "chunkDF"))){
+          #Grab original dependency data
+            sourceFieldToken = (deps(updateFunct(trackDF[[trackLayer]], field))[1] %>% strsplit("/"))[[1]] %>% last %>% chompSuffix("First|Last")
+            sourceFieldChunk = (deps(updateFunct(trackDF[[trackLayer]], field))[2] %>% strsplit("/"))[[1]] %>% last
+            sourceField = c(sourceFieldToken, rep(sourceFieldChunk, length(chunkDF)))
+            updateFunct(trackDF[[trackLayer]], field) = createLeftJoinUpdate(address = c("tokenDF", paste0("chunkDF/", names(chunkDF))) %+% "/" %+% sourceField, fkey = "token", field =field)
+          } else if(any(str_detect(deps(uf), "trackChainDF"))){
+            sourceField = (deps(updateFunct(trackDF[[trackLayer]], field))[1] %>% strsplit("/"))[[1]] %>% last
+            updateFunct(trackDF[[trackLayer]], field) = createLeftJoinUpdate(address = "trackChainDF/" %+% trackLayer %+% "/" %+% sourceField, fkey = "chain", field = field)
+          }
+          #print(updateFunct(trackDF[[trackLayer]], field))
         }
-        #print(updateFunct(trackDF[[trackLayer]], field))
       }
     }
 
+    objList = list(nodeMap = fullNodeMap)
+    dfNames = ls(environment())[str_ends(ls(environment()), "DF")]
+    for(name in dfNames) objList[[name]] = environment()[[name]]
 
-    returnObj = new_rezrObj(list(nodeMap = fullNodeMap, entryDF = entryDF, unitDF = unitDF, tokenDF = tokenDF, chunkDF = chunkDF, trackDF = trackDF, trackChainDF = trackChainDF, linkDF = linkDF, docDF = docDF))
+    returnObj = new_rezrObj(objList)
     message("Done!")
     return(returnObj)
 }

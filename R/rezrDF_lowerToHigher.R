@@ -108,8 +108,8 @@ lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fiel
 #' @param ... Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from [rezonateR::lowerToHigher()]. Only needed if you want automatically generated update functions.
 #'
 #' @return complexDF
-concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, tokenListName = "tokenList", ...){
-  lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, "", function(x) paste(x, collapse = ""), tokenListName = tokenListName, ...)
+concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, tokenListName = "tokenList", separator = "", ...){
+  lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, "", function(x) paste(x, collapse = separator), tokenListName = tokenListName, ...)
 }
 
 #' Get the max and min of a certain value (typically sequence or time) from a lower object table to a higher object table.
