@@ -156,7 +156,7 @@ rez_rename = function(df, ...){
       for(f in attr(result, "updateFunct")){
         for(var in ls(environment(f))){
           if(var %in% c("address", "fkey", "field", "fkeyAddress", "seqName")){
-            if(environment(f)[[var]] == oldNames[i]){
+            if(all(environment(f)[[var]] == oldNames[i])){
               environment(f)[[var]] = newNames[i]
             }
           } else if(var == oldNames[i]){

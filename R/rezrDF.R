@@ -293,7 +293,7 @@ stringToFactor = function(df, colsToChange = NULL, levels = list()){
 
 
 getFieldsOfType = function(df, type){
-  names(fieldaccess(df))[fieldaccess(df) == type]
+  names(fieldaccess(df))[fieldaccess(df) %in% type]
 }
 
 getKey = function(df){

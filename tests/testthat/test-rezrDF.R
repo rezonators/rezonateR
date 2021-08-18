@@ -221,3 +221,19 @@ test_that("mergeCats", {
   rezEx$trackDF$refexpr = rezEx$trackDF$refexpr %>% rez_mutate(clauseRole = mergeCats(roleType, A = c("A", "ABEN"), nonclausal = c("FREE", "VOC"), P = c("PBEN", "BEN")), fieldaccess = "auto")
   expect("nonclausal" %in% rezEx$trackDF$refexpr$clauseRole, "Category merge failed.")
 })
+
+test_that("", {
+  rezEx = rez_load("data/parting.rda")
+
+  #addCol, delRow
+  changeDF = rez_read_csv("inst/extData/pre.csv", origDF = rezEx$trackDF$refexpr)
+  a = rezEx$trackDF$refexpr %>% updateFromDF(changeDF, changeCols = c('roleType', 'case', 'person', 'pronType', 'definite', 'identifiable', 'referential'), delRows = T, addCols = T)
+  expect_equal(a %>% filter(id == "51B0F2753A16") %>% pull(case), "གི")
+  expect(!any(is.na(a$roleType)), "Deletion failed.")
+
+  #renameCols
+  a = rezEx$trackDF$refexpr %>% updateFromDF(changeDF, changeCols = c('roleType', 'case', 'person', 'pronType', 'definite', 'identifiable', 'referential', 'overallTokenSeqFirst', 'overallTokenSeqLast'), colCorr = list(overallTokenSeqFirst = "discourseTokenSeqFirst", overallTokenSeqLast = "discourseTokenSeqLast"), addRows = T, renameCols = T, delRows = T)
+  expect(nrow(a) == 53, "addRow / delRow failed.")
+  expect(!any(is.na(a$roleType)), "delRow failed.")
+
+})
