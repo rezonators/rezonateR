@@ -36,10 +36,17 @@ test_that("Tree node map", {
   expect("treeEntry" %in% names(a), "Tree import failed.")
   expect("tree" %in% names(a), "Tree import failed.")
 
-  discoName = "parting_0.20"
+  discoName = "parting_0.20.1"
   path = "inst/extdata/" %+% discoName %+% ".rez"
   layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
   rezEx = importRez(path, layerRegex = layerRegex, concatFields = c("word", "wordWylie", "lit"))
   expect("treeEntryDF" %in% names(rezEx), "Tree import failed.")
   expect("treeDF" %in% names(rezEx), "Tree import failed.")
+})
+
+test_that("Tree node map", {
+  discoName = "parting_0.20.1"
+  path = "inst/extdata/" %+% discoName %+% ".rez"
+  layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
+  rezEx = importRez(path, layerRegex = layerRegex, concatFields = c("word", "wordWylie", "lit"))
 })
