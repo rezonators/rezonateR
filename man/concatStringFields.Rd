@@ -10,6 +10,7 @@ concatStringFields(
   complexNodeMap,
   fieldnames,
   tokenListName = "tokenList",
+  separator = "",
   ...
 )
 }
@@ -21,6 +22,8 @@ concatStringFields(
 \item{complexNodeMap}{The node map corresponding to the simpleDF.}
 
 \item{fieldnames}{The fields to be concatenated.}
+
+\item{separator}{The character by which words will be separated.}
 
 \item{...}{Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from \code{\link[=lowerToHigher]{lowerToHigher()}}. Only needed if you want automatically generated update functions.}
 }

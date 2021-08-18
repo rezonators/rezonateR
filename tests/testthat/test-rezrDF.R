@@ -237,3 +237,19 @@ test_that("", {
   expect(!any(is.na(a$roleType)), "delRow failed.")
 
 })
+
+test_that("rez_add_row", {
+  rezEx = rez_load("data/parting.rda")
+  expect_message(rez_add_row(rezEx$tokenDF, word = c("bkra shis bde legs", "thugs rje che")), "The following core and flex fields and not present")
+  expect_error(rez_add_row(rezEx$tokenDF, id = "2623788F4A49D", word = "bkra shis bde legs"), "The following IDs already exist and cannot be added")
+  a = rezEx$tokenDF
+  a  = a %>% rez_mutate(word2 = word %+% "!!!", fieldaccess = "auto")
+  a = suppressMessages(rez_add_row(a, word = c("bkra shis bde legs", "thugs rje che")))
+  expect_equal(a$word2[nrow(a)], "thugs rje che" %+% "!!!")
+
+  expect_error(rez_add_row(rezEx$tokenDF, id = "36B3C4BF6B23D", word = "bkra shis bde legs", rezrObj = rezEx), "The following IDs already exist and cannot be added")
+
+  expect_message(rez_add_row(rezEx$tokenDF, word = c("bkra shs bde legs", "thugs rje che")), "The following core and flex fields and not present")
+  suppressMessages(expect_message(rez_add_row(rezEx$entryDF, word = c("bkra shs bde legs", "thugs rje che")), "You did not supply a rezrObj, so foreign fields will not be updated."))
+})
+

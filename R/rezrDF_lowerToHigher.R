@@ -105,6 +105,7 @@ lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fiel
 #' @param complexDF The dataframe that you're trying to add the concatenated fields to.
 #' @param complexNodeMap The node map corresponding to the simpleDF.
 #' @param fieldnames The fields to be concatenated.
+#' @param separator The character by which words will be separated.
 #' @param ... Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from [rezonateR::lowerToHigher()]. Only needed if you want automatically generated update functions.
 #'
 #' @return complexDF

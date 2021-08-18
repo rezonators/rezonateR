@@ -258,3 +258,43 @@ rez_bind_rows = function(..., type = "intersect"){
 
   #TODO: Cater for differing field names
 }
+
+rez_add_row = function(df, ..., rezrObj = NULL){
+  args = list(...)
+  args[[".data"]] = df
+  newVals = args[-which(names(args) %in% c(".data", ".before", ".after"))]
+
+  numNewRows = length(newVals[[1]])
+  idCol = getKey(df)
+  if(!is.null(rezrObj)){
+    existingIDs = getIDs(rezrObj$nodeMap)
+  } else {
+    existingIDs = df[[idCol]]
+  }
+  if(!(idCol %in% names(newVals))){
+    args[[idCol]] = createRezId(numNewRows, existingIDs)
+  } else {
+    overlaps = intersect(newVals[[idCol]], existingIDs)
+    if(length(overlaps) > 0){
+      stop("The following IDs already exist and cannot be added: " %+% paste0(overlaps, collapse = ", "))
+    }
+  }
+
+  missingFields = setdiff(getFieldsOfType(df, c("flex", "core")), names(newVals))
+  if(length(missingFields) > 0){
+    message("The following core and flex fields and not present and will have to be supplied later: " %+% paste0(missingFields, collapse = ", "))
+  }
+
+  result = exec("add_row", !!!args)
+  if(!is.null(rezrObj)){
+    result = reload(result, rezrObj)
+  } else {
+    result = reloadLocal(result)
+    if(length(getFieldsOfType(df, "foreign")) > 0){
+      message("You did not supply a rezrObj, so foreign fields will not be updated.")
+    }
+  }
+
+  #TODO: Push to node map
+  result
+}
