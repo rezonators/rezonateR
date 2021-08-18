@@ -58,7 +58,6 @@ rez_read_csv = function(path, origDF = NULL, lubridate = F, inclCols = character
       }
       result
     })
-
   } else {
     colTypes = sapply(inclCols, function(x) col_guess())
   }

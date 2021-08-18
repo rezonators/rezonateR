@@ -29,3 +29,17 @@ test_that("importRez works on unannotated doc", {
   expect_s3_class(rezEx[["tokenDF"]], "data.frame")
   expect_type(rezEx[["nodeMap"]], "list")
 })
+
+test_that("Tree node map", {
+  importNodeMap = rjson::fromJSON(file = path)[["ROOT"]][[1]][["nodeMap"]]
+  a = nodeMap(importNodeMap, "three-parting-2569")
+  expect("treeEntry" %in% names(a), "Tree import failed.")
+  expect("tree" %in% names(a), "Tree import failed.")
+
+  discoName = "parting_0.20"
+  path = "inst/extdata/" %+% discoName %+% ".rez"
+  layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
+  rezEx = importRez(path, layerRegex = layerRegex, concatFields = c("word", "wordWylie", "lit"))
+  expect("treeEntryDF" %in% names(rezEx), "Tree import failed.")
+  expect("treeDF" %in% names(rezEx), "Tree import failed.")
+})

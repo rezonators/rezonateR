@@ -22,7 +22,7 @@ new_nodeMap = function(organisedNodeMap, idLists, smallMaps){
 
 
 nodeMap = function(importNodeMap, docname){
-  #As of Rezonator 16.0.0.0
+  #Grab name lists
   nameLists = list()
   nameListNames = names(importNodeMap)[str_detect(names(importNodeMap), "List")]
   for(nameListName in nameListNames){
@@ -32,16 +32,21 @@ nodeMap = function(importNodeMap, docname){
     }
   }
 
-  #As of Rezonator 16.0.0.0
+  #Grab small maps
   maps = list()
+  treeMap = NULL
   mapNames = names(importNodeMap)[str_detect(names(importNodeMap), "Map")]
   for(mapName in mapNames){
-    if(mapName %in% names(importNodeMap)){
+    if(mapName != "treeMap"){
       maps[[mapName]] = importNodeMap[[mapName]]
+      importNodeMap[[mapName]] = NULL
+    } else {
+      treeMap = importNodeMap[[mapName]]
       importNodeMap[[mapName]] = NULL
     }
   }
 
+  #Grab main nodes
   rawNodeMap = list()
   for(nodeName in names(importNodeMap)){
     node = importNodeMap[[nodeName]]
@@ -58,6 +63,34 @@ nodeMap = function(importNodeMap, docname){
       }
       rawNodeMap[[node$type]][[nodeName]] = node
       rawNodeMap[[node$type]][[nodeName]][["doc"]] = docname
+    }
+  }
+
+  #Grab tree nodes
+  if(!is.null(treeMap)){
+
+    for(nodeName in names(treeMap)){
+      if(nodeName == "type") next
+      node = treeMap[[nodeName]]
+      if(is.null(node$type)){
+        warning("Node skipped with no type specification.")
+        print(node)
+        next
+      }
+      if(length(node) > 1){
+        if(node$type == "entry"){
+          rawNodeMap[["treeEntry"]][[nodeName]] = node
+          rawNodeMap[["treeEntry"]][[nodeName]][["doc"]] = docname
+        } else if(node$type == "tree"){
+          rawNodeMap[["tree"]][[nodeName]] = node
+          rawNodeMap[["tree"]][[nodeName]][["doc"]] = docname
+        } else if(node$type == "link"){
+          rawNodeMap[["treeLink"]][[nodeName]] = node
+          rawNodeMap[["treeLink"]][[nodeName]][["doc"]] = docname
+        } else {
+          warning("Unknown tree node encountered.")
+        }
+      }
     }
   }
 

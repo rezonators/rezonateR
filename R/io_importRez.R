@@ -71,6 +71,10 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
     if("link" %in% names(fullNodeMap)){
       linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
     }
+    if("tree" %in% names(fullNodeMap)){
+      treeDF = nodeToDF(fullNodeMap[["tree"]], linkDFFields)
+      treeEntryDF = nodeToDF(fullNodeMap[["treeEntry"]], linkDFFields)
+    }
 
     docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
 
@@ -97,13 +101,26 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
     }
 
     if("track" %in% names(fullNodeMap)){
-      message(">Adding to track DF ...")
+      message(">Adding to track DFs ...")
       #mergedDF from the previous condition
       trackDF = trackDF %>% rez_left_join(mergedDF, by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token")
       #Adding fields to lower-level DFs that depend on higher-level DFs.
       trackDF = trackDF %>% rez_left_join(trackChainDF, by = c(chain = "id", doc = "doc"), df2Address = "trackChainDF", fkey = "token")
       trackDF = trackDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
     }
+
+    if("track" %in% names(fullNodeMap)){
+      message(">Adding to tree DFs ...")
+      treeEntryDF = getSeqBounds(tokenDF, treeEntryDF, fullNodeMap[["treeEntry"]], c("tokenSeq", "discourseTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "treeEntry")
+      treeEntryDF = concatStringFields(tokenDF, treeEntryDF, fullNodeMap[["treeEntry"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "treeEntry", separator = separator)
+      fieldaccess(treeEntryDF, concatFields) = "foreign"
+      treeEntryDF = treeEntryDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
+
+      treeDF = getSeqBounds(tokenDF, treeDF, fullNodeMap[["tree"]], c("tokenSeq", "discourseTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree")
+      treeDF = concatStringFields(tokenDF, treeDF, fullNodeMap[["tree"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree", separator = separator)
+      fieldaccess(treeDF, concatFields) = "foreign"
+      treeDF = treeDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
+      }
 
     #TODO: Rez, Stack, Clique
 
