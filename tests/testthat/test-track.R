@@ -47,15 +47,15 @@ test_that("Track functions work", {
 
   b$trackDF$refexpr = b$trackDF$refexpr %>% arrange(chain, discourseTokenSeqLast)
 
-  #noPrevMention
-  b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(noPrevMentionsIn3 = noPrevMentions(3))
-  b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(noPrevZerosIn5 = noPrevMentionsIf(5, word == "<0>"))
+  #countPrevMention
+  b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(countPrevMentionsIn3 = countPrevMentions(3))
+  b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(countPrevZerosIn5 = countPrevMentionsIf(5, word == "<0>"))
   b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(prevMentionWylie = getPrevMentionField(wordWylie))
 
   b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(nextMentionToken = prevMentionToken(discourseTokenSeqFirst, chain), tokensToNextMention = tokensToLastMention(discourseTokenSeqLast, chain))
-  b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(noNextZeros = noNextMentionsIf(Inf, word == "<0>"))
+  b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(countNextZeros = countNextMentionsIf(Inf, word == "<0>"))
   b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(sizeDiff = nchar(getNextMentionField(word)) - nchar(word))
-  b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(noCompetitors = noCompetitors())
+  b$trackDF$refexpr = b$trackDF$refexpr %>% rez_mutate(countCompetitors = countCompetitors())
 
 })
 

@@ -91,7 +91,7 @@ tokensToLastMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "li
 
 #' @rdname trackPrevContext
 #' @export
-noPrevMentions = function(windowSize, unitSeq = NULL, chain = NULL){
+countPrevMentions = function(windowSize, unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqLast", chain = "chain")
   sapply(1:length(unitSeq), function(i){
@@ -103,7 +103,7 @@ noPrevMentions = function(windowSize, unitSeq = NULL, chain = NULL){
 #' @rdname trackPrevContext
 #' @param cond For if functions, the condition that the previous / next mention must satisfy. It cannot refer to the current mention.
 #' @export
-noPrevMentionsIf = function(windowSize, cond, unitSeq = NULL, chain = NULL){
+countPrevMentionsIf = function(windowSize, cond, unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqLast", chain = "chain")
 
@@ -119,7 +119,7 @@ noPrevMentionsIf = function(windowSize, cond, unitSeq = NULL, chain = NULL){
 #' @rdname trackPrevContext
 #' @param field The field whose value you want to match or extract.
 #' @export
-noPrevMentionsMatch = function(windowSize, field, unitSeq = NULL, chain = NULL){
+countPrevMentionsMatch = function(windowSize, field, unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqLast", chain = "chain")
 
@@ -213,7 +213,7 @@ tokensToNextMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "li
 
 #' @rdname trackPrevContext
 #' @export
-noNextMentions = function(windowSize, unitSeq = NULL, chain = NULL){
+countNextMentions = function(windowSize, unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqFirst", chain = "chain")
 
@@ -225,7 +225,7 @@ noNextMentions = function(windowSize, unitSeq = NULL, chain = NULL){
 
 #' @rdname trackPrevContext
 #' @export
-noNextMentionsIf = function(windowSize, cond, unitSeq = NULL, chain = NULL){
+countNextMentionsIf = function(windowSize, cond, unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqFirst", chain = "chain")
 
@@ -240,7 +240,7 @@ noNextMentionsIf = function(windowSize, cond, unitSeq = NULL, chain = NULL){
 
 #' @rdname trackPrevContext
 #' @export
-noNextMentionsMatch = function(windowSize, field, unitSeq = NULL, chain = NULL){
+countNextMentionsMatch = function(windowSize, field, unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqFirst", chain = "chain")
 
@@ -264,7 +264,7 @@ getNextMentionField = function(field, tokenSeq = NULL, chain = NULL){
 #' @inheritParams lastMentionToken
 #' @return
 #' @export
-noCompetitors = function(cond = NULL, tokenSeq = NULL, chain = NULL){
+countCompetitors = function(cond = NULL, tokenSeq = NULL, chain = NULL){
   grabFromDF(tokenSeq = "discourseTokenSeqLast", chain = "chain")
   lastMentionPos = lastMentionToken(tokenSeq, chain)
   if(is.null(cond)){
