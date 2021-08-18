@@ -264,7 +264,7 @@ getNextMentionField = function(field, tokenSeq = NULL, chain = NULL){
 #' @inheritParams lastMentionToken
 #' @return
 #' @export
-countCompetitors = function(cond = NULL, tokenSeq = NULL, chain = NULL){
+countCompetitors = function(cond = NULL, window = Inf, tokenSeq = NULL, chain = NULL){
   grabFromDF(tokenSeq = "discourseTokenSeqLast", chain = "chain")
   lastMentionPos = lastMentionToken(tokenSeq, chain)
   if(is.null(cond)){
@@ -274,7 +274,7 @@ countCompetitors = function(cond = NULL, tokenSeq = NULL, chain = NULL){
   }
 
   sapply(1:length(tokenSeq), function(x){
-    sum(tokenSeq < tokenSeq[x] & tokenSeq > lastMentionPos[x] & condition)
+    sum(tokenSeq < tokenSeq[x] & tokenSeq > lastMentionPos[x] & condition & tokenSeq > tokenSeq[x] - window)
   })
 
 }

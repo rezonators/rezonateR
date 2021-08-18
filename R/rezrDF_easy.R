@@ -293,8 +293,6 @@ changeField.rezrDF = function(rezrDF, ..., foreign = F){
 #'
 #' @return A column or vector with the desired
 #' @export
-#'
-#' @examples
 mergeCats = function(x, ..., asFactor = F, levels = NULL){
   x = as.character(x)
   cats = unique(x)

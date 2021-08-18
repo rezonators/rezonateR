@@ -2,9 +2,19 @@
 % Please edit documentation in R/io_csv.R
 \name{rez_write_csv}
 \alias{rez_write_csv}
+\alias{rez_read_csv}
 \title{Read and write rezrDFs as CSV files}
 \usage{
 rez_write_csv(df, path, inclCols = character(0), exclCols = character(0), ...)
+
+rez_read_csv(
+  path,
+  origDF = NULL,
+  lubridate = F,
+  inclCols = character(0),
+  exclCols = character(0),
+  ...
+)
 }
 \arguments{
 \item{df}{The rezrDF to be exported.}
@@ -17,9 +27,9 @@ rez_write_csv(df, path, inclCols = character(0), exclCols = character(0), ...)
 
 \item{...}{Arguments passed onto read_csv and write_csv.}
 
-\item{lubridate}{Are you using the lubridate package?}
-
 \item{origDF}{The rezrDF that originally produced this CSV, used to identify data types of the columns.}
+
+\item{lubridate}{Are you using the lubridate package?}
 }
 \value{
 For rez_read_csv, the CSV being imported.

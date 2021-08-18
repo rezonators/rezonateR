@@ -5,17 +5,17 @@
 \alias{unitsToLastMention}
 \alias{lastMentionToken}
 \alias{tokensToLastMention}
-\alias{noPrevMentions}
-\alias{noPrevMentionsIf}
-\alias{noPrevMentionsMatch}
+\alias{countPrevMentions}
+\alias{countPrevMentionsIf}
+\alias{countPrevMentionsMatch}
 \alias{getPrevMentionField}
 \alias{nextMentionUnit}
 \alias{unitsToNextMention}
 \alias{nextMentionToken}
 \alias{tokensToNextMention}
-\alias{noNextMentions}
-\alias{noNextMentionsIf}
-\alias{noNextMentionsMatch}
+\alias{countNextMentions}
+\alias{countNextMentionsIf}
+\alias{countNextMentionsMatch}
 \alias{getNextMentionField}
 \title{Functions related to previous context in track chains.}
 \usage{
@@ -34,11 +34,11 @@ tokensToLastMention(
   unitDF = NULL
 )
 
-noPrevMentions(windowSize, unitSeq = NULL, chain = NULL)
+countPrevMentions(windowSize, unitSeq = NULL, chain = NULL)
 
-noPrevMentionsIf(windowSize, cond, unitSeq = NULL, chain = NULL)
+countPrevMentionsIf(windowSize, cond, unitSeq = NULL, chain = NULL)
 
-noPrevMentionsMatch(windowSize, field, unitSeq = NULL, chain = NULL)
+countPrevMentionsMatch(windowSize, field, unitSeq = NULL, chain = NULL)
 
 getPrevMentionField(field, tokenSeq = NULL, chain = NULL)
 
@@ -57,11 +57,11 @@ tokensToNextMention(
   unitDF = NULL
 )
 
-noNextMentions(windowSize, unitSeq = NULL, chain = NULL)
+countNextMentions(windowSize, unitSeq = NULL, chain = NULL)
 
-noNextMentionsIf(windowSize, cond, unitSeq = NULL, chain = NULL)
+countNextMentionsIf(windowSize, cond, unitSeq = NULL, chain = NULL)
 
-noNextMentionsMatch(windowSize, field, unitSeq = NULL, chain = NULL)
+countNextMentionsMatch(windowSize, field, unitSeq = NULL, chain = NULL)
 
 getNextMentionField(field, tokenSeq = NULL, chain = NULL)
 }
