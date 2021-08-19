@@ -5,5 +5,6 @@ test_that("getAllTreeCorrespondences", {
   rezEx = importRez(path, layerRegex = layerRegex, concatFields = c("word", "wordWylie"))
 
   a = getAllTreeCorrespondences(rezEx, entity = "track")
+  a = mergeChunksWithTree(a)
   expect("treeEntry" %in% names(a$trackDF[[1]]), "Tree correspondence failed.")
 })

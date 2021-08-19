@@ -2,7 +2,7 @@
 
 #' Add unit sequence information to different levels of rezrObj.
 #'
-#' @param rezrObj The rezrObj objec
+#' @param rezrObj The rezrObj object
 #' @inheritParams addFieldLocal.rezrObj
 #' @param layers The layers to which unit sequence information is to be added.
 #'

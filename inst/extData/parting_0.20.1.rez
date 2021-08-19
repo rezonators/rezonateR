@@ -25,7 +25,7 @@
 			"linkFieldList": [
 				"Dep"
 			],
-			"sessionLength": 2374090,
+			"sessionLength": 3937274,
 			"functionChainList_focusedUnitIndex": 0,
 			"version": "Version 0.20.1",
 			"nodeMap": {
@@ -54,7 +54,7 @@
 					"unitEnd": "17.476202885520586",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -409,
+					"pixelY": 667,
 					"filter": 0,
 					"active": 1
 				},
@@ -65,7 +65,7 @@
 					"discourseTokenSeq": 209,
 					"inChunkList": [],
 					"displayCol": 3,
-					"pixelX": 591,
+					"pixelX": 524,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -131,8 +131,8 @@
 				"213D192F19982": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 83,
-					"x2": 432,
+					"y2": 2669,
+					"x2": 365,
 					"tokenList": [
 						"15646893B79BC"
 					],
@@ -143,8 +143,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 29,
-					"x1": 334,
+					"y1": 2615,
+					"x1": 267,
 					"type": "chunk",
 					"name": "Chunk 68"
 				},
@@ -164,7 +164,7 @@
 					"discourseTokenSeq": 169,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -180,8 +180,8 @@
 				"13569D1491D0E": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -97,
-					"x2": 785,
+					"y2": 2489,
+					"x2": 718,
 					"tokenList": [
 						"2EA0155177B3C",
 						"24415ADA9817D"
@@ -193,8 +193,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -151,
-					"x1": 650,
+					"y1": 2435,
+					"x1": 583,
 					"type": "chunk",
 					"name": "Chunk 52"
 				},
@@ -210,7 +210,7 @@
 					"discourseTokenSeq": 133,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -232,7 +232,7 @@
 						"2E3E48169B4FA"
 					],
 					"displayCol": 2,
-					"pixelX": 485,
+					"pixelX": 418,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -292,8 +292,8 @@
 					"inChainsList": [
 						"175E6C368A006"
 					],
-					"y2": -372,
-					"x2": 521,
+					"y2": 874,
+					"x2": 535,
 					"tokenList": [
 						"1559520DE63F7",
 						"2F6EEDCB74AFE"
@@ -304,7 +304,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -426,
+					"y1": 820,
 					"x1": 396,
 					"type": "chunk",
 					"name": "Chunk 6"
@@ -314,8 +314,8 @@
 					"inChainsList": [
 						"30B775B21CCC2"
 					],
-					"y2": -370,
-					"x2": 706,
+					"y2": 1114,
+					"x2": 702,
 					"tokenList": [
 						"350E9E94D9204"
 					],
@@ -325,8 +325,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -424,
-					"x1": 629,
+					"y1": 1060,
+					"x1": 625,
 					"type": "chunk",
 					"name": "Chunk 18"
 				},
@@ -354,7 +354,7 @@
 						"35871CF25BD28"
 					],
 					"displayCol": 12,
-					"pixelX": 1191,
+					"pixelX": 1124,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -370,8 +370,8 @@
 				"AFFC39B6D9A": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 743,
-					"x2": 626,
+					"y2": 3329,
+					"x2": 559,
 					"tokenList": [
 						"A7610ADE0AD3"
 					],
@@ -382,16 +382,16 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 689,
-					"x1": 574,
+					"y1": 3275,
+					"x1": 507,
 					"type": "chunk",
 					"name": "Chunk 58"
 				},
 				"5BBCECCD35AF": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 923,
-					"x2": 653,
+					"y2": 3509,
+					"x2": 586,
 					"tokenList": [
 						"33C1D64394B03",
 						"16ADE80711AD2"
@@ -403,16 +403,16 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 869,
-					"x1": 542,
+					"y1": 3455,
+					"x1": 475,
 					"type": "chunk",
 					"name": "Chunk 62"
 				},
 				"C6E53029C046": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -397,
-					"x2": 364,
+					"y2": 634,
+					"x2": 432,
 					"tokenList": [
 						"33EF68A940B52"
 					],
@@ -423,7 +423,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -451,
+					"y1": 580,
 					"x1": 334,
 					"type": "chunk",
 					"name": "Chunk 64"
@@ -537,7 +537,7 @@
 					"unitEnd": "10.410677854225566",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -432,
+					"pixelY": 127,
 					"filter": 0,
 					"active": 1
 				},
@@ -546,7 +546,9 @@
 					"searched": 0,
 					"inChainsList": [],
 					"discourseTokenSeq": 56,
-					"inChunkList": [],
+					"inChunkList": [
+						"8108CBEB3DE8"
+					],
 					"displayCol": 1,
 					"pixelX": 421,
 					"tagMap": {
@@ -573,7 +575,7 @@
 					"discourseTokenSeq": 140,
 					"inChunkList": [],
 					"displayCol": 6,
-					"pixelX": 820,
+					"pixelX": 753,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -596,7 +598,7 @@
 						"1353C24528460"
 					],
 					"displayCol": 5,
-					"pixelX": 708,
+					"pixelX": 641,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -640,7 +642,7 @@
 						"4C9B4826209A"
 					],
 					"displayCol": 1,
-					"pixelX": 426,
+					"pixelX": 359,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -658,8 +660,8 @@
 					"inChainsList": [
 						"3F1549410A25"
 					],
-					"y2": 568,
-					"x2": 1076,
+					"y2": 3154,
+					"x2": 1009,
 					"tokenList": [
 						"2AA6EB8DD5B96",
 						"282AE497508DF",
@@ -679,8 +681,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 504,
-					"x1": 332,
+					"y1": 3090,
+					"x1": 264,
 					"type": "chunk",
 					"name": "Chunk 31"
 				},
@@ -712,7 +714,7 @@
 						"E49FAFAF0333"
 					],
 					"displayCol": 5,
-					"pixelX": 715,
+					"pixelX": 648,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -777,7 +779,7 @@
 					"discourseTokenSeq": 105,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -814,7 +816,8 @@
 					"2965AE468FF84",
 					"27B48919E6B07",
 					"2C93ACC9BD19E",
-					"2662466278897"
+					"2662466278897",
+					"25248685755A1"
 				],
 				"2B1EA527591D3": {
 					"unit": "2B2C2E3729B7C",
@@ -839,8 +842,8 @@
 				"2CDC7D990E5A6": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -392,
-					"x2": 632,
+					"y2": 94,
+					"x2": 655,
 					"tokenList": [
 						"2FB5E3EE3EA6",
 						"8CE53CB8587E",
@@ -853,7 +856,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -446,
+					"y1": 40,
 					"x1": 429,
 					"type": "chunk",
 					"name": "Chunk 37"
@@ -861,8 +864,8 @@
 				"3229A1B8A0C8": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 743,
-					"x2": 554,
+					"y2": 3329,
+					"x2": 487,
 					"tokenList": [
 						"31F0A97612033",
 						"33520A5D3407A"
@@ -874,8 +877,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 689,
-					"x1": 411,
+					"y1": 3275,
+					"x1": 344,
 					"type": "chunk",
 					"name": "Chunk 72"
 				},
@@ -939,7 +942,7 @@
 				"334421E30535F": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -405,
+					"y2": 154,
 					"x2": 758,
 					"tokenList": [
 						"2A7B9C50CD30C",
@@ -953,7 +956,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -459,
+					"y1": 100,
 					"x1": 546,
 					"type": "chunk",
 					"name": "Chunk 38"
@@ -1007,8 +1010,8 @@
 					"inChainsList": [
 						"12B2935C42E45"
 					],
-					"y2": 443,
-					"x2": 450,
+					"y2": 3029,
+					"x2": 383,
 					"tokenList": [
 						"13FA5720298DC",
 						"186258A41BADE"
@@ -1019,8 +1022,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 389,
-					"x1": 337,
+					"y1": 2975,
+					"x1": 269,
 					"type": "chunk",
 					"name": "Chunk 26"
 				},
@@ -1033,7 +1036,7 @@
 						"13569D1491D0E"
 					],
 					"displayCol": 5,
-					"pixelX": 749,
+					"pixelX": 682,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -1173,7 +1176,7 @@
 					"unitEnd": "24.92812958176518",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -397,
+					"pixelY": 1147,
 					"filter": 0,
 					"active": 1
 				},
@@ -1223,8 +1226,8 @@
 				"126C1388BF6F1": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -337,
-					"x2": 692,
+					"y2": 2249,
+					"x2": 625,
 					"tokenList": [
 						"447E83D6FB1",
 						"2E93F749FADB9"
@@ -1236,8 +1239,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -391,
-					"x1": 579,
+					"y1": 2195,
+					"x1": 512,
 					"type": "chunk",
 					"name": "Chunk 50"
 				},
@@ -1251,8 +1254,8 @@
 					"inChainsList": [
 						"7AE710AA141E"
 					],
-					"y2": 808,
-					"x2": 813,
+					"y2": 3394,
+					"x2": 746,
 					"tokenList": [
 						"2FD60861F45F7",
 						"272421E12A384",
@@ -1268,8 +1271,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 744,
-					"x1": 391,
+					"y1": 3330,
+					"x1": 324,
 					"type": "chunk",
 					"name": "Chunk 35"
 				},
@@ -1333,7 +1336,7 @@
 					"unitEnd": "39.20023593142735",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -64,
+					"pixelY": 2522,
 					"filter": 0,
 					"active": 1
 				},
@@ -1370,8 +1373,8 @@
 					"inChainsList": [
 						"4083A8D35AB7"
 					],
-					"y2": -37,
-					"x2": 462,
+					"y2": 2549,
+					"x2": 395,
 					"tokenList": [
 						"E1B5DB553455",
 						"6AEB22F0AA8C"
@@ -1382,16 +1385,16 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -91,
-					"x1": 334,
+					"y1": 2495,
+					"x1": 267,
 					"type": "chunk",
 					"name": "Chunk 24"
 				},
 				"311FFF41AA981": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 503,
-					"x2": 546,
+					"y2": 3089,
+					"x2": 479,
 					"tokenList": [
 						"12B3EC700898C",
 						"1C38350AE3406"
@@ -1403,8 +1406,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 449,
-					"x1": 420,
+					"y1": 3035,
+					"x1": 353,
 					"type": "chunk",
 					"name": "Chunk 56"
 				},
@@ -1448,7 +1451,7 @@
 					"unitEnd": "26.309628607999333",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -392,
+					"pixelY": 1267,
 					"filter": 0,
 					"active": 1
 				},
@@ -1462,8 +1465,8 @@
 					"inChainsList": [
 						"38D0F1E8F4F79"
 					],
-					"y2": 23,
-					"x2": 519,
+					"y2": 2609,
+					"x2": 452,
 					"tokenList": [
 						"1B2E072EA99C3",
 						"21F2549D17DC6"
@@ -1474,8 +1477,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -31,
-					"x1": 411,
+					"y1": 2555,
+					"x1": 344,
 					"type": "chunk",
 					"name": "Chunk 25"
 				},
@@ -1484,8 +1487,8 @@
 					"inChainsList": [
 						"33BF2CA4DC98F"
 					],
-					"y2": 563,
-					"x2": 581,
+					"y2": 3149,
+					"x2": 514,
 					"tokenList": [
 						"9F555978F261",
 						"150CDE2F5C22"
@@ -1496,16 +1499,16 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 509,
-					"x1": 457,
+					"y1": 3095,
+					"x1": 390,
 					"type": "chunk",
 					"name": "Chunk 28"
 				},
 				"224C5240A4FBC": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -370,
-					"x2": 852,
+					"y2": 1114,
+					"x2": 848,
 					"tokenList": [
 						"9D95790D49F5",
 						"1D6639F0DDB8C"
@@ -1517,8 +1520,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -424,
-					"x1": 726,
+					"y1": 1060,
+					"x1": 722,
 					"type": "chunk",
 					"name": "Chunk 44"
 				},
@@ -1536,7 +1539,7 @@
 						"3229A1B8A0C8"
 					],
 					"displayCol": 2,
-					"pixelX": 515,
+					"pixelX": 448,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -1599,7 +1602,7 @@
 					"unitEnd": "28.46831471564788",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -389,
+					"pixelY": 1447,
 					"filter": 0,
 					"active": 1
 				},
@@ -1613,7 +1616,7 @@
 						"2FBFD5B4B572"
 					],
 					"displayCol": 1,
-					"pixelX": 408,
+					"pixelX": 341,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -1688,7 +1691,7 @@
 					"discourseTokenSeq": 114,
 					"inChunkList": [],
 					"displayCol": 3,
-					"pixelX": 579,
+					"pixelX": 512,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -1710,7 +1713,7 @@
 						"98ED71C9776B"
 					],
 					"displayCol": 1,
-					"pixelX": 411,
+					"pixelX": 344,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -1733,7 +1736,7 @@
 						"2FBFD5B4B572"
 					],
 					"displayCol": 3,
-					"pixelX": 544,
+					"pixelX": 477,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -1749,8 +1752,8 @@
 				"142FFB93AD7D0": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 143,
-					"x2": 429,
+					"y2": 2729,
+					"x2": 362,
 					"tokenList": [
 						"45998E94A6B"
 					],
@@ -1761,8 +1764,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 89,
-					"x1": 334,
+					"y1": 2675,
+					"x1": 267,
 					"type": "chunk",
 					"name": "Chunk 69"
 				},
@@ -1780,7 +1783,7 @@
 					"discourseTokenSeq": 149,
 					"inChunkList": [],
 					"displayCol": 4,
-					"pixelX": 631,
+					"pixelX": 564,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -2199,8 +2202,8 @@
 					"inChainsList": [
 						"175E6C368A006"
 					],
-					"y2": -391,
-					"x2": 610,
+					"y2": 814,
+					"x2": 643,
 					"tokenList": [
 						"1A5F4DF822AAC",
 						"348951F36A39D"
@@ -2211,7 +2214,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -445,
+					"y1": 760,
 					"x1": 504,
 					"type": "chunk",
 					"name": "Chunk 5"
@@ -2221,7 +2224,7 @@
 					"inChainsList": [
 						"3DBF2594F550"
 					],
-					"y2": -353,
+					"y2": 399,
 					"x2": 719,
 					"tokenList": [
 						"7989B43AFC59",
@@ -2236,7 +2239,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -417,
+					"y1": 335,
 					"x1": 329,
 					"type": "chunk",
 					"name": "Chunk 12"
@@ -2244,8 +2247,8 @@
 				"17BCCF50A4D90": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -370,
-					"x2": 1082,
+					"y2": 1114,
+					"x2": 1078,
 					"tokenList": [
 						"29F2817081EFC",
 						"20E84F27B42B1"
@@ -2257,8 +2260,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -424,
-					"x1": 957,
+					"y1": 1060,
+					"x1": 953,
 					"type": "chunk",
 					"name": "Chunk 46"
 				},
@@ -2288,7 +2291,7 @@
 					"unitEnd": "29.51771762270123",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -379,
+					"pixelY": 2042,
 					"filter": 0,
 					"active": 1
 				},
@@ -2302,8 +2305,8 @@
 					"inChainsList": [
 						"23C8423BF4C72"
 					],
-					"y2": -370,
-					"x2": 532,
+					"y2": 1114,
+					"x2": 528,
 					"tokenList": [
 						"9EB19049618A",
 						"1DCE71A0D2853"
@@ -2314,8 +2317,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -424,
-					"x1": 400,
+					"y1": 1060,
+					"x1": 396,
 					"type": "chunk",
 					"name": "Chunk 16"
 				},
@@ -2343,7 +2346,7 @@
 					"unitEnd": "22.07280624136332",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -408,
+					"pixelY": 967,
 					"filter": 0,
 					"active": 1
 				},
@@ -2377,7 +2380,7 @@
 					"unitEnd": "7.854932911010391",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -417,
+					"pixelY": 7,
 					"filter": 0,
 					"active": 1
 				},
@@ -2550,7 +2553,7 @@
 						"24F69AE67E35B"
 					],
 					"displayCol": 1,
-					"pixelX": 413,
+					"pixelX": 346,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -2573,7 +2576,7 @@
 						"DCE1E506C06C"
 					],
 					"displayCol": 7,
-					"pixelX": 893,
+					"pixelX": 826,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -2595,7 +2598,7 @@
 					"discourseTokenSeq": 145,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -2697,6 +2700,22 @@
 					"type": "track",
 					"stretch": 0
 				},
+				"2005E46E218D5": {
+					"chain": "215626AF53B49",
+					"clickTime": 2505.2789999999999963620211929083,
+					"tagMap": {
+						"gapWords": "N\/A",
+						"charCount": 12,
+						"tokenCount": 2,
+						"gapUnits": "N\/A"
+					},
+					"sourceLink": "",
+					"token": "8108CBEB3DE8",
+					"goalLinkList": [],
+					"alignEntry": 0,
+					"type": "track",
+					"stretch": 0
+				},
 				"2B00597E67A69": {
 					"unit": "1CC18002782F7",
 					"token": "34426ACB983C7",
@@ -2734,7 +2753,7 @@
 					"inChainsList": [
 						"372768C1C10B2"
 					],
-					"y2": -355,
+					"y2": 1059,
 					"x2": 689,
 					"tokenList": [
 						"2D9BD7C90D27D",
@@ -2749,7 +2768,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -419,
+					"y1": 995,
 					"x1": 329,
 					"type": "chunk",
 					"name": "Chunk 15"
@@ -2774,8 +2793,8 @@
 					"inChainsList": [
 						"175E6C368A006"
 					],
-					"y2": -277,
-					"x2": 484,
+					"y2": 2309,
+					"x2": 417,
 					"tokenList": [
 						"4022991F01FF",
 						"23EB5412DDAC4"
@@ -2786,15 +2805,15 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -331,
-					"x1": 334,
+					"y1": 2255,
+					"x1": 267,
 					"type": "chunk",
 					"name": "Chunk 7"
 				},
 				"934A44A99438": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -337,
+					"y2": 574,
 					"x2": 638,
 					"tokenList": [
 						"21EF6C34376C6",
@@ -2807,7 +2826,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -391,
+					"y1": 520,
 					"x1": 493,
 					"type": "chunk",
 					"name": "Chunk 65"
@@ -2837,7 +2856,7 @@
 					"unitEnd": "18.59187523940298",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -413,
+					"pixelY": 727,
 					"filter": 0,
 					"active": 1
 				},
@@ -2872,7 +2891,7 @@
 					"unitEnd": "53.86970500853211",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 896,
+					"pixelY": 3482,
 					"filter": 0,
 					"active": 1
 				},
@@ -2881,8 +2900,8 @@
 					"inChainsList": [
 						"35C83EAB969B4"
 					],
-					"y2": -358,
-					"x2": 459,
+					"y2": 394,
+					"x2": 473,
 					"tokenList": [
 						"7989B43AFC59",
 						"1E5A22F208922"
@@ -2893,7 +2912,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -412,
+					"y1": 340,
 					"x1": 334,
 					"type": "chunk",
 					"name": "Chunk 1"
@@ -2903,8 +2922,8 @@
 					"inChainsList": [
 						"33BF2CA4DC98F"
 					],
-					"y2": 803,
-					"x2": 597,
+					"y2": 3389,
+					"x2": 530,
 					"tokenList": [
 						"272421E12A384",
 						"1CFAB0E371057"
@@ -2915,8 +2934,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 749,
-					"x1": 473,
+					"y1": 3335,
+					"x1": 406,
 					"type": "chunk",
 					"name": "Chunk 29"
 				},
@@ -2978,7 +2997,7 @@
 					"unitEnd": "49.92489211775086",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 656,
+					"pixelY": 3242,
 					"filter": 0,
 					"active": 1
 				},
@@ -3012,7 +3031,7 @@
 					"unitEnd": "13.398601501470743",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -385,
+					"pixelY": 367,
 					"filter": 0,
 					"active": 1
 				},
@@ -3021,8 +3040,8 @@
 					"inChainsList": [
 						"175E6C368A006"
 					],
-					"y2": 563,
-					"x2": 858,
+					"y2": 3149,
+					"x2": 791,
 					"tokenList": [
 						"3A5E38068DB5",
 						"76C659BDCBE0"
@@ -3033,16 +3052,16 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 509,
-					"x1": 719,
+					"y1": 3095,
+					"x1": 652,
 					"type": "chunk",
 					"name": "Chunk 10"
 				},
 				"150817BF1D11B": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -382,
-					"x2": 589,
+					"y2": 454,
+					"x2": 619,
 					"tokenList": [
 						"22C3C85167DF",
 						"2B050EC047849",
@@ -3055,7 +3074,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -436,
+					"y1": 400,
 					"x1": 411,
 					"type": "chunk",
 					"name": "Chunk 40"
@@ -4296,6 +4315,20 @@
 						"level": -1,
 						"entryX2": -1
 					},
+					"1D88F52CBC923": {
+						"entryY1": -1,
+						"entryX1": -1,
+						"order": 1,
+						"tokenList": [
+							"31D41B35E403A"
+						],
+						"sourceLink": "",
+						"entryY2": -1,
+						"goalLinkList": 1625,
+						"type": "entry",
+						"level": -1,
+						"entryX2": -1
+					},
 					"2F41D70627B3E": {
 						"entryY1": 108.37777625189886521184234879911,
 						"entryX1": 1013,
@@ -4762,6 +4795,17 @@
 						],
 						"type": "tree",
 						"name": "Tree 16"
+					},
+					"25248685755A1": {
+						"linkIDList": [],
+						"maxLevel": 0,
+						"tokenList": [],
+						"setIDList": [
+							"53F77279923D",
+							"1D88F52CBC923"
+						],
+						"type": "tree",
+						"name": "Tree 25"
 					},
 					"236020D47E94D": {
 						"entryY1": 123.77777777777777146184234879911,
@@ -5602,6 +5646,23 @@
 						"level": -1,
 						"entryX2": -1
 					},
+					"53F77279923D": {
+						"entryY1": 84.777777777777771461842348799109,
+						"entryX1": 1013,
+						"order": 0,
+						"tokenList": [
+							"3435E88F21502",
+							"336EF72DF387",
+							"1A5F4DF822AAC",
+							"348951F36A39D"
+						],
+						"sourceLink": "",
+						"entryY2": 109.22222222222222853815765120089,
+						"goalLinkList": 1617,
+						"type": "entry",
+						"level": 0,
+						"entryX2": 1190
+					},
 					"385954A628B8F": {
 						"linkIDList": [
 							"1E81F1632BA22",
@@ -5768,7 +5829,7 @@
 					"unitEnd": "43.230109138155576",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 176,
+					"pixelY": 2762,
 					"filter": 0,
 					"active": 1
 				},
@@ -5837,7 +5898,7 @@
 					"unitEnd": "19.34075120296788",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -418,
+					"pixelY": 787,
 					"filter": 0,
 					"active": 1
 				},
@@ -5872,7 +5933,7 @@
 					"unitEnd": "44.86979321654186",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 356,
+					"pixelY": 2942,
 					"filter": 0,
 					"active": 1
 				},
@@ -5885,7 +5946,7 @@
 						"115FF7C4A11C3"
 					],
 					"displayCol": 0,
-					"pixelX": 352,
+					"pixelX": 284,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6025,8 +6086,8 @@
 				"4A73199FF426": {
 					"nest": 3,
 					"inChainsList": [],
-					"y2": -360,
-					"x2": 912,
+					"y2": 1124,
+					"x2": 943,
 					"tokenList": [
 						"1E0F4D3D0EE09",
 						"9EB19049618A",
@@ -6044,7 +6105,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -434,
+					"y1": 1050,
 					"x1": 324,
 					"type": "chunk",
 					"name": "Chunk 75"
@@ -6058,7 +6119,7 @@
 						"17BCCF50A4D90"
 					],
 					"displayCol": 9,
-					"pixelX": 1045,
+					"pixelX": 1041,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6078,7 +6139,7 @@
 					"discourseTokenSeq": 131,
 					"inChunkList": [],
 					"displayCol": 5,
-					"pixelX": 741,
+					"pixelX": 674,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6173,7 +6234,7 @@
 						"E1BD9AD97C7A"
 					],
 					"displayCol": 3,
-					"pixelX": 571,
+					"pixelX": 504,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6224,7 +6285,7 @@
 						"2E3E48169B4FA"
 					],
 					"displayCol": 1,
-					"pixelX": 421,
+					"pixelX": 354,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6321,15 +6382,15 @@
 					"unitEnd": "46.56622652176029",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 476,
+					"pixelY": 3062,
 					"filter": 0,
 					"active": 1
 				},
 				"12BFD71723D83": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 803,
-					"x2": 1024,
+					"y2": 3389,
+					"x2": 957,
 					"tokenList": [
 						"2F880D9D28E4C",
 						"176D82AFAF8C4",
@@ -6342,8 +6403,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 749,
-					"x1": 828,
+					"y1": 3335,
+					"x1": 761,
 					"type": "chunk",
 					"name": "Chunk 59"
 				},
@@ -6354,7 +6415,7 @@
 					"discourseTokenSeq": 188,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 352,
+					"pixelX": 284,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6370,8 +6431,8 @@
 				"4C9B4826209A": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 863,
-					"x2": 487,
+					"y2": 3449,
+					"x2": 420,
 					"tokenList": [
 						"32B7B2DBCDB72"
 					],
@@ -6382,8 +6443,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 809,
-					"x1": 411,
+					"y1": 3395,
+					"x1": 344,
 					"type": "chunk",
 					"name": "Chunk 71"
 				},
@@ -6423,8 +6484,8 @@
 				"37BA6D690AB6F": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -370,
-					"x2": 937,
+					"y2": 1114,
+					"x2": 933,
 					"tokenList": [
 						"1497633DFD702"
 					],
@@ -6435,8 +6496,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -424,
-					"x1": 872,
+					"y1": 1060,
+					"x1": 868,
 					"type": "chunk",
 					"name": "Chunk 45"
 				},
@@ -6470,7 +6531,7 @@
 					"unitEnd": "44.164261925411154",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 296,
+					"pixelY": 2882,
 					"filter": 0,
 					"active": 1
 				},
@@ -6513,7 +6574,7 @@
 						"EDD2A0EAB1BD"
 					],
 					"displayCol": 3,
-					"pixelX": 554,
+					"pixelX": 487,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6542,7 +6603,7 @@
 						"4A73199FF426"
 					],
 					"displayCol": 6,
-					"pixelX": 813,
+					"pixelX": 809,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6567,7 +6628,7 @@
 					"discourseTokenSeq": 216,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 352,
+					"pixelX": 284,
 					"tagMap": {
 						"lit": "།",
 						"chunkLayer": "",
@@ -6641,7 +6702,7 @@
 					"unitEnd": "36.38124186234893",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -184,
+					"pixelY": 2402,
 					"filter": 0,
 					"active": 1
 				},
@@ -6654,7 +6715,7 @@
 						"213D192F19982"
 					],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6711,7 +6772,7 @@
 						"4A73199FF426"
 					],
 					"displayCol": 4,
-					"pixelX": 644,
+					"pixelX": 640,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6733,7 +6794,7 @@
 						"126C1388BF6F1"
 					],
 					"displayCol": 3,
-					"pixelX": 594,
+					"pixelX": 527,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6838,15 +6899,15 @@
 					"unitEnd": "53.120829044967216",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 836,
+					"pixelY": 3422,
 					"filter": 0,
 					"active": 1
 				},
 				"2866031470AEA": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -384,
-					"x2": 602,
+					"y2": 934,
+					"x2": 623,
 					"tokenList": [
 						"23C7AD68E97D8",
 						"30C0DD32B94F0"
@@ -6858,7 +6919,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -438,
+					"y1": 880,
 					"x1": 488,
 					"type": "chunk",
 					"name": "Chunk 43"
@@ -6900,7 +6961,7 @@
 						"262D74B52442E"
 					],
 					"displayCol": 2,
-					"pixelX": 488,
+					"pixelX": 421,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6922,7 +6983,7 @@
 					"discourseTokenSeq": 190,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 352,
+					"pixelX": 284,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6949,7 +7010,7 @@
 						"BA83851BF0FD"
 					],
 					"displayCol": 1,
-					"pixelX": 413,
+					"pixelX": 346,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6971,7 +7032,7 @@
 					"discourseTokenSeq": 134,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -6999,7 +7060,7 @@
 						"EDD2A0EAB1BD"
 					],
 					"displayCol": 2,
-					"pixelX": 490,
+					"pixelX": 423,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -7741,7 +7802,10 @@
 					"1CF18A7930319",
 					"2466EA753054C",
 					"2CD384152BF03",
-					"4A73199FF426"
+					"4A73199FF426",
+					"8108CBEB3DE8",
+					"215626AF53B49",
+					"2005E46E218D5"
 				],
 				"2F29CBE52F601": {
 					"unit": "34D6967B9081",
@@ -7777,7 +7841,7 @@
 					"unitEnd": "20.75406900450487",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -399,
+					"pixelY": 847,
 					"filter": 0,
 					"active": 1
 				},
@@ -7791,7 +7855,7 @@
 						"2FBFD5B4B572"
 					],
 					"displayCol": 6,
-					"pixelX": 829,
+					"pixelX": 762,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -7816,7 +7880,7 @@
 					"discourseTokenSeq": 107,
 					"inChunkList": [],
 					"displayCol": 2,
-					"pixelX": 495,
+					"pixelX": 428,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -7832,8 +7896,8 @@
 				"35871CF25BD28": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 23,
-					"x2": 1314,
+					"y2": 2609,
+					"x2": 1247,
 					"tokenList": [
 						"12CF918CC8990",
 						"CB981069DF26"
@@ -7845,8 +7909,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -31,
-					"x1": 1176,
+					"y1": 2555,
+					"x1": 1109,
 					"type": "chunk",
 					"name": "Chunk 55"
 				},
@@ -7909,7 +7973,7 @@
 						"E49FAFAF0333"
 					],
 					"displayCol": 6,
-					"pixelX": 787,
+					"pixelX": 720,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -8029,7 +8093,7 @@
 					"unitEnd": "25.270372168766414",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -392,
+					"pixelY": 1207,
 					"filter": 0,
 					"active": 1
 				},
@@ -8068,7 +8132,7 @@
 					"unitEnd": "31.97154433038358",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -360,
+					"pixelY": 2162,
 					"filter": 0,
 					"active": 1
 				},
@@ -8133,7 +8197,7 @@
 					"discourseTokenSeq": 166,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -8203,7 +8267,7 @@
 					"unitEnd": "48.86910005741029",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 596,
+					"pixelY": 3182,
 					"filter": 0,
 					"active": 1
 				},
@@ -8308,7 +8372,7 @@
 					"unitEnd": "24.13916700360893",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -397,
+					"pixelY": 1087,
 					"filter": 0,
 					"active": 1
 				},
@@ -8319,7 +8383,7 @@
 					"discourseTokenSeq": 168,
 					"inChunkList": [],
 					"displayCol": 1,
-					"pixelX": 444,
+					"pixelX": 377,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -8355,13 +8419,36 @@
 					"goal": "362B4E75A7A20",
 					"type": "link"
 				},
+				"8108CBEB3DE8": {
+					"nest": 1,
+					"inChainsList": [
+						"215626AF53B49"
+					],
+					"y2": 814,
+					"x2": 484,
+					"tokenList": [
+						"3435E88F21502",
+						"336EF72DF387"
+					],
+					"tagMap": {
+						"lit": "",
+						"chunkLayer": "",
+						"wordWylie": "",
+						"tokenID": "",
+						"word": ""
+					},
+					"y1": 760,
+					"x1": 334,
+					"type": "chunk",
+					"name": "Chunk 76"
+				},
 				"156CD74F3EB62": {
 					"nest": 1,
 					"inChainsList": [
 						"23C8423BF4C72"
 					],
-					"y2": -370,
-					"x2": 452,
+					"y2": 1174,
+					"x2": 466,
 					"tokenList": [
 						"A9ADF3C7E1C4",
 						"2425FF2B37EE8"
@@ -8372,7 +8459,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -424,
+					"y1": 1120,
 					"x1": 334,
 					"type": "chunk",
 					"name": "Chunk 17"
@@ -8406,7 +8493,7 @@
 						"95759B829A99"
 					],
 					"displayCol": 2,
-					"pixelX": 473,
+					"pixelX": 406,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -8424,8 +8511,8 @@
 					"inChainsList": [
 						"758C9409880E"
 					],
-					"y2": -357,
-					"x2": 518,
+					"y2": 2014,
+					"x2": 451,
 					"tokenList": [
 						"10806B1E5C5F7",
 						"30596A3AA41CF",
@@ -8438,8 +8525,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -421,
-					"x1": 329,
+					"y1": 1950,
+					"x1": 262,
 					"type": "chunk",
 					"name": "Chunk 33"
 				},
@@ -8494,7 +8581,7 @@
 					"discourseTokenSeq": 205,
 					"inChunkList": [],
 					"displayCol": 10,
-					"pixelX": 1059,
+					"pixelX": 992,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -8546,7 +8633,9 @@
 					"searched": 0,
 					"inChainsList": [],
 					"discourseTokenSeq": 55,
-					"inChunkList": [],
+					"inChunkList": [
+						"8108CBEB3DE8"
+					],
 					"displayCol": 0,
 					"pixelX": 349,
 					"tagMap": {
@@ -8556,7 +8645,7 @@
 						"tokenID": "52",
 						"word": "འོང་"
 					},
-					"border": "",
+					"border": "track",
 					"unit": "A695E84F3D97",
 					"tokenSeq": 1,
 					"type": "token"
@@ -8568,7 +8657,7 @@
 					"discourseTokenSeq": 164,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -8590,7 +8679,7 @@
 						"311FFF41AA981"
 					],
 					"displayCol": 1,
-					"pixelX": 435,
+					"pixelX": 368,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -8626,7 +8715,8 @@
 					"308032F7FD927",
 					"758C9409880E",
 					"1AB2BCA45EFCE",
-					"7AE710AA141E"
+					"7AE710AA141E",
+					"215626AF53B49"
 				],
 				"68E043C07181": {
 					"unit": "116C6A313BB5C",
@@ -8642,7 +8732,7 @@
 						"E1BD9AD97C7A"
 					],
 					"displayCol": 2,
-					"pixelX": 497,
+					"pixelX": 430,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -8681,8 +8771,8 @@
 					"inChainsList": [
 						"4083A8D35AB7"
 					],
-					"y2": -345,
-					"x2": 428,
+					"y2": 2129,
+					"x2": 392,
 					"tokenList": [
 						"82C5B82DCFEE",
 						"3787DE881FB80"
@@ -8693,8 +8783,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -399,
-					"x1": 334,
+					"y1": 2075,
+					"x1": 267,
 					"type": "chunk",
 					"name": "Chunk 22"
 				},
@@ -8966,8 +9056,8 @@
 				"DCE1E506C06C": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 563,
-					"x2": 1017,
+					"y2": 3149,
+					"x2": 950,
 					"tokenList": [
 						"304C73473A829",
 						"1EE74AEBC464D"
@@ -8979,8 +9069,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 509,
-					"x1": 878,
+					"y1": 3095,
+					"x1": 811,
 					"type": "chunk",
 					"name": "Chunk 57"
 				},
@@ -9012,8 +9102,8 @@
 				"9AE5F3645002": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -337,
-					"x2": 441,
+					"y2": 2249,
+					"x2": 418,
 					"tokenList": [
 						"2DE482D1C06DB"
 					],
@@ -9024,8 +9114,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -391,
-					"x1": 411,
+					"y1": 2195,
+					"x1": 344,
 					"type": "chunk",
 					"name": "Chunk 66"
 				},
@@ -9093,7 +9183,7 @@
 					"unitEnd": "12.32026125747902",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -364,
+					"pixelY": 307,
 					"filter": 0,
 					"active": 1
 				},
@@ -9129,7 +9219,7 @@
 						"2DAF7E5AD472E"
 					],
 					"displayCol": 6,
-					"pixelX": 780,
+					"pixelX": 713,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9169,7 +9259,7 @@
 					"discourseTokenSeq": 165,
 					"inChunkList": [],
 					"displayCol": 1,
-					"pixelX": 415,
+					"pixelX": 348,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9207,8 +9297,8 @@
 					"inChainsList": [
 						"35C83EAB969B4"
 					],
-					"y2": 563,
-					"x2": 437,
+					"y2": 3149,
+					"x2": 370,
 					"tokenList": [
 						"2AA6EB8DD5B96",
 						"282AE497508DF"
@@ -9219,8 +9309,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 509,
-					"x1": 337,
+					"y1": 3095,
+					"x1": 269,
 					"type": "chunk",
 					"name": "Chunk 3"
 				},
@@ -9252,8 +9342,8 @@
 				"1B51ABDE0BD5": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 23,
-					"x2": 893,
+					"y2": 2609,
+					"x2": 826,
 					"tokenList": [
 						"4D28E879F5C4",
 						"1E466D056EBFE"
@@ -9265,8 +9355,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -31,
-					"x1": 779,
+					"y1": 2555,
+					"x1": 712,
 					"type": "chunk",
 					"name": "Chunk 66"
 				},
@@ -9299,7 +9389,7 @@
 					"unitEnd": "14.967632628140557",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -424,
+					"pixelY": 487,
 					"filter": 0,
 					"active": 1
 				},
@@ -9312,7 +9402,7 @@
 						"9AE5F3645002"
 					],
 					"displayCol": 1,
-					"pixelX": 426,
+					"pixelX": 359,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9358,8 +9448,8 @@
 					"inChainsList": [
 						"13AF6CEEE5EDA"
 					],
-					"y2": -360,
-					"x2": 487,
+					"y2": 1054,
+					"x2": 500,
 					"tokenList": [
 						"2D9BD7C90D27D",
 						"13F7925877F42",
@@ -9371,7 +9461,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -414,
+					"y1": 1000,
 					"x1": 334,
 					"type": "chunk",
 					"name": "Chunk 11"
@@ -9400,7 +9490,7 @@
 						"5BBCECCD35AF"
 					],
 					"displayCol": 3,
-					"pixelX": 557,
+					"pixelX": 490,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9461,7 +9551,7 @@
 					"unitEnd": "35.97435885744006",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -244,
+					"pixelY": 2342,
 					"filter": 0,
 					"active": 1
 				},
@@ -9474,7 +9564,7 @@
 						"2A647D4CABE51"
 					],
 					"displayCol": 2,
-					"pixelX": 503,
+					"pixelX": 436,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9508,8 +9598,8 @@
 				"38C31ED020DA9": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -37,
-					"x2": 610,
+					"y2": 2549,
+					"x2": 543,
 					"tokenList": [
 						"2F3FA698D5C08",
 						"2963874D34980"
@@ -9521,8 +9611,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -91,
-					"x1": 482,
+					"y1": 2495,
+					"x1": 415,
 					"type": "chunk",
 					"name": "Chunk 53"
 				},
@@ -9540,7 +9630,7 @@
 						"17BCCF50A4D90"
 					],
 					"displayCol": 8,
-					"pixelX": 972,
+					"pixelX": 968,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9606,7 +9696,7 @@
 					"discourseTokenSeq": 206,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 352,
+					"pixelX": 284,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9665,7 +9755,7 @@
 					"unitEnd": "9.002852249912122",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -419,
+					"pixelY": 67,
 					"filter": 0,
 					"active": 1
 				},
@@ -9725,8 +9815,8 @@
 					"inChainsList": [
 						"4083A8D35AB7"
 					],
-					"y2": -333,
-					"x2": 428,
+					"y2": 2189,
+					"x2": 395,
 					"tokenList": [
 						"26756D1382EA7",
 						"292EFD4E7CC04"
@@ -9737,8 +9827,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -387,
-					"x1": 334,
+					"y1": 2135,
+					"x1": 267,
 					"type": "chunk",
 					"name": "Chunk 23"
 				},
@@ -9771,7 +9861,7 @@
 						"35871CF25BD28"
 					],
 					"displayCol": 13,
-					"pixelX": 1277,
+					"pixelX": 1210,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9796,7 +9886,7 @@
 					"discourseTokenSeq": 189,
 					"inChunkList": [],
 					"displayCol": 1,
-					"pixelX": 415,
+					"pixelX": 348,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9818,7 +9908,7 @@
 						"2FBFD5B4B572"
 					],
 					"displayCol": 9,
-					"pixelX": 1052,
+					"pixelX": 985,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9852,7 +9942,7 @@
 					"discourseTokenSeq": 87,
 					"inChunkList": [],
 					"displayCol": 10,
-					"pixelX": 1117,
+					"pixelX": 1113,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9946,7 +10036,7 @@
 					"discourseTokenSeq": 210,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 352,
+					"pixelX": 284,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -9983,7 +10073,7 @@
 						"5BBCECCD35AF"
 					],
 					"displayCol": 4,
-					"pixelX": 629,
+					"pixelX": 562,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -10054,7 +10144,7 @@
 						"17237E1ED3C22"
 					],
 					"displayCol": 4,
-					"pixelX": 616,
+					"pixelX": 549,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -10095,7 +10185,7 @@
 					"unitEnd": "50.475086703227106",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 716,
+					"pixelY": 3302,
 					"filter": 0,
 					"active": 1
 				},
@@ -10109,7 +10199,7 @@
 						"2DAF7E5AD472E"
 					],
 					"displayCol": 4,
-					"pixelX": 632,
+					"pixelX": 565,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -10369,7 +10459,7 @@
 						"262D74B52442E"
 					],
 					"displayCol": 1,
-					"pixelX": 411,
+					"pixelX": 344,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -10427,7 +10517,7 @@
 					"unitEnd": "32.74334506834332",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -364,
+					"pixelY": 2222,
 					"filter": 0,
 					"active": 1
 				},
@@ -10524,8 +10614,8 @@
 					"inChainsList": [
 						"1AB2BCA45EFCE"
 					],
-					"y2": 28,
-					"x2": 764,
+					"y2": 2614,
+					"x2": 697,
 					"tokenList": [
 						"1B2E072EA99C3",
 						"21F2549D17DC6",
@@ -10539,8 +10629,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -36,
-					"x1": 406,
+					"y1": 2550,
+					"x1": 339,
 					"type": "chunk",
 					"name": "Chunk 34"
 				},
@@ -10573,7 +10663,7 @@
 					"unitEnd": "14.025212001596474",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -409,
+					"pixelY": 427,
 					"filter": 0,
 					"active": 1
 				},
@@ -10705,7 +10795,7 @@
 						"EDD2A0EAB1BD"
 					],
 					"displayCol": 1,
-					"pixelX": 426,
+					"pixelX": 359,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -10752,7 +10842,7 @@
 						"4A73199FF426"
 					],
 					"displayCol": 5,
-					"pixelX": 741,
+					"pixelX": 737,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -10785,7 +10875,7 @@
 						"810DEBB8283C"
 					],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -10817,7 +10907,7 @@
 					"discourseTokenSeq": 137,
 					"inChunkList": [],
 					"displayCol": 3,
-					"pixelX": 566,
+					"pixelX": 499,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -10900,7 +10990,7 @@
 						"3453940CF1EDA"
 					],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -10922,7 +11012,7 @@
 						"38C31ED020DA9"
 					],
 					"displayCol": 3,
-					"pixelX": 561,
+					"pixelX": 494,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -10962,7 +11052,7 @@
 					"unitEnd": "7.291802669285015",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -447,
+					"pixelY": -53,
 					"filter": 0,
 					"active": 1
 				},
@@ -11043,7 +11133,7 @@
 					"discourseTokenSeq": 132,
 					"inChunkList": [],
 					"displayCol": 6,
-					"pixelX": 824,
+					"pixelX": 757,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -11065,7 +11155,7 @@
 						"2E3E48169B4FA"
 					],
 					"displayCol": 3,
-					"pixelX": 595,
+					"pixelX": 528,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -11101,7 +11191,7 @@
 					"inChainsList": [
 						"86B753CADA75"
 					],
-					"y2": -367,
+					"y2": 879,
 					"x2": 743,
 					"tokenList": [
 						"23FED81ABB59A",
@@ -11114,7 +11204,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -431,
+					"y1": 815,
 					"x1": 550,
 					"type": "chunk",
 					"name": "Chunk 14"
@@ -11207,8 +11297,8 @@
 					"inChainsList": [
 						"35C83EAB969B4"
 					],
-					"y2": -397,
-					"x2": 423,
+					"y2": 514,
+					"x2": 436,
 					"tokenList": [
 						"4ACA16228AB1",
 						"167F0A8ED5084"
@@ -11219,7 +11309,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -451,
+					"y1": 460,
 					"x1": 334,
 					"type": "chunk",
 					"name": "Chunk 2"
@@ -11227,8 +11317,8 @@
 				"8E94BAD96862": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 863,
-					"x2": 556,
+					"y2": 3449,
+					"x2": 489,
 					"tokenList": [
 						"21A4AAE3C8E6D"
 					],
@@ -11239,8 +11329,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 809,
-					"x1": 507,
+					"y1": 3395,
+					"x1": 440,
 					"type": "chunk",
 					"name": "Chunk 61"
 				},
@@ -11256,7 +11346,7 @@
 						"4A73199FF426"
 					],
 					"displayCol": 3,
-					"pixelX": 567,
+					"pixelX": 563,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -11354,7 +11444,7 @@
 					"unitEnd": "30.044987433782637",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -372,
+					"pixelY": 2102,
 					"filter": 0,
 					"active": 1
 				},
@@ -11407,7 +11497,7 @@
 					"unitEnd": "41.65694410620887",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 56,
+					"pixelY": 2642,
 					"filter": 0,
 					"active": 1
 				},
@@ -11482,7 +11572,7 @@
 					"discourseTokenSeq": 120,
 					"inChunkList": [],
 					"displayCol": 2,
-					"pixelX": 520,
+					"pixelX": 453,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -11510,8 +11600,8 @@
 					"inChainsList": [
 						"4083A8D35AB7"
 					],
-					"y2": -366,
-					"x2": 586,
+					"y2": 1949,
+					"x2": 541,
 					"tokenList": [
 						"1485EDB984382",
 						"1B920E7B42F9D",
@@ -11524,8 +11614,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -420,
-					"x1": 334,
+					"y1": 1895,
+					"x1": 267,
 					"type": "chunk",
 					"name": "Chunk 20"
 				},
@@ -11592,7 +11682,7 @@
 					"unitEnd": "34.78101815073044",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -304,
+					"pixelY": 2282,
 					"filter": 0,
 					"active": 1
 				},
@@ -11625,8 +11715,8 @@
 				"AC5208249962": {
 					"nest": 2,
 					"inChainsList": [],
-					"y2": -365,
-					"x2": 857,
+					"y2": 1119,
+					"x2": 853,
 					"tokenList": [
 						"769F1C5A21AD",
 						"350E9E94D9204",
@@ -11640,8 +11730,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -429,
-					"x1": 547,
+					"y1": 1055,
+					"x1": 543,
 					"type": "chunk",
 					"name": "Chunk 74"
 				},
@@ -11654,7 +11744,7 @@
 						"E49FAFAF0333"
 					],
 					"displayCol": 4,
-					"pixelX": 651,
+					"pixelX": 584,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -11676,7 +11766,7 @@
 						"13569D1491D0E"
 					],
 					"displayCol": 4,
-					"pixelX": 665,
+					"pixelX": 598,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -11740,7 +11830,7 @@
 						"98ED71C9776B"
 					],
 					"displayCol": 2,
-					"pixelX": 497,
+					"pixelX": 430,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -11823,7 +11913,7 @@
 					"unitEnd": "40.33883305970459",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -4,
+					"pixelY": 2582,
 					"filter": 0,
 					"active": 1
 				},
@@ -11834,7 +11924,7 @@
 					"discourseTokenSeq": 161,
 					"inChunkList": [],
 					"displayCol": 2,
-					"pixelX": 550,
+					"pixelX": 483,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -11877,7 +11967,7 @@
 					"unitEnd": "22.84460697932306",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -387,
+					"pixelY": 1027,
 					"filter": 0,
 					"active": 1
 				},
@@ -11948,7 +12038,7 @@
 					"inChainsList": [
 						"3DBF2594F550"
 					],
-					"y2": -392,
+					"y2": 519,
 					"x2": 607,
 					"tokenList": [
 						"4ACA16228AB1",
@@ -11962,7 +12052,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -456,
+					"y1": 455,
 					"x1": 329,
 					"type": "chunk",
 					"name": "Chunk 13"
@@ -12057,7 +12147,7 @@
 					"unitEnd": "43.835673492418394",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 236,
+					"pixelY": 2822,
 					"filter": 0,
 					"active": 1
 				},
@@ -12071,7 +12161,7 @@
 						"2FBFD5B4B572"
 					],
 					"displayCol": 5,
-					"pixelX": 734,
+					"pixelX": 667,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12083,6 +12173,29 @@
 					"unit": "1CC9A4ED198AE",
 					"tokenSeq": 6,
 					"type": "token"
+				},
+				"215626AF53B49": {
+					"linkIDList": [],
+					"customSetIDList": [],
+					"chainSeq": 1,
+					"vizSetIDList": [
+						"2005E46E218D5"
+					],
+					"author": "",
+					"focused": "",
+					"alignChain": 0,
+					"selected": 0,
+					"tagMap": {
+						"chainSize": 1
+					},
+					"chainColor": 16711680,
+					"visible": 1,
+					"setIDList": [
+						"2005E46E218D5"
+					],
+					"type": "trackChain",
+					"filter": 0,
+					"name": "Trail 24"
 				},
 				"4083A8D35AB7": {
 					"linkIDList": [
@@ -12141,7 +12254,7 @@
 						"1BE09C4CC2E8F"
 					],
 					"displayCol": 10,
-					"pixelX": 1050,
+					"pixelX": 983,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12215,7 +12328,7 @@
 				"13C550F105A0F": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -337,
+					"y2": 574,
 					"x2": 792,
 					"tokenList": [
 						"34DA04F9A0F54",
@@ -12228,7 +12341,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -391,
+					"y1": 520,
 					"x1": 658,
 					"type": "chunk",
 					"name": "Chunk 41"
@@ -12270,7 +12383,7 @@
 						"18A2D95618606"
 					],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12339,7 +12452,7 @@
 					"unitEnd": "37.9919886325315",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -124,
+					"pixelY": 2462,
 					"filter": 0,
 					"active": 1
 				},
@@ -12396,7 +12509,7 @@
 					"discourseTokenSeq": 167,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12443,7 +12556,7 @@
 					"unitEnd": "51.973714477790956",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 776,
+					"pixelY": 3362,
 					"filter": 0,
 					"active": 1
 				},
@@ -12461,7 +12574,7 @@
 						"126C1388BF6F1"
 					],
 					"displayCol": 4,
-					"pixelX": 658,
+					"pixelX": 591,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12483,7 +12596,7 @@
 						"98ED71C9776B"
 					],
 					"displayCol": 4,
-					"pixelX": 666,
+					"pixelX": 599,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12520,7 +12633,7 @@
 					"discourseTokenSeq": 195,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 352,
+					"pixelX": 284,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12547,7 +12660,7 @@
 						"3229A1B8A0C8"
 					],
 					"displayCol": 1,
-					"pixelX": 426,
+					"pixelX": 359,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12613,7 +12726,7 @@
 						"24F69AE67E35B"
 					],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12655,7 +12768,7 @@
 					"unitEnd": "45.93197443016962",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 416,
+					"pixelY": 3002,
 					"filter": 0,
 					"active": 1
 				},
@@ -12664,8 +12777,8 @@
 					"inChainsList": [
 						"4083A8D35AB7"
 					],
-					"y2": -365,
-					"x2": 438,
+					"y2": 1294,
+					"x2": 482,
 					"tokenList": [
 						"1D21F3CD240C3",
 						"29E6E40B41851"
@@ -12676,7 +12789,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -419,
+					"y1": 1240,
 					"x1": 334,
 					"type": "chunk",
 					"name": "Chunk 19"
@@ -12700,7 +12813,7 @@
 						"56FCFBFB02D3"
 					],
 					"displayCol": 2,
-					"pixelX": 497,
+					"pixelX": 430,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12758,7 +12871,7 @@
 				"1227014F0F11E": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -420,
+					"y2": -26,
 					"x2": 525,
 					"tokenList": [
 						"312E07422F41",
@@ -12771,7 +12884,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -474,
+					"y1": -80,
 					"x1": 411,
 					"type": "chunk",
 					"name": "Chunk 36"
@@ -12801,7 +12914,7 @@
 				"1153C67E7E00F": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -337,
+					"y2": 334,
 					"x2": 556,
 					"tokenList": [
 						"5FE875D8632F"
@@ -12813,7 +12926,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -391,
+					"y1": 280,
 					"x1": 507,
 					"type": "chunk",
 					"name": "Chunk 39"
@@ -12878,7 +12991,7 @@
 						"262D74B52442E"
 					],
 					"displayCol": 3,
-					"pixelX": 560,
+					"pixelX": 493,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -12899,8 +13012,8 @@
 				"17237E1ED3C22": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 563,
-					"x2": 699,
+					"y2": 3149,
+					"x2": 632,
 					"tokenList": [
 						"1D515867FDC97"
 					],
@@ -12911,8 +13024,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 509,
-					"x1": 601,
+					"y1": 3095,
+					"x1": 534,
 					"type": "chunk",
 					"name": "Chunk 70"
 				},
@@ -12921,7 +13034,7 @@
 					"inChainsList": [
 						"175E6C368A006"
 					],
-					"y2": -337,
+					"y2": 574,
 					"x2": 473,
 					"tokenList": [
 						"1E2A6FFB5FEA5",
@@ -12933,7 +13046,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -391,
+					"y1": 520,
 					"x1": 334,
 					"type": "chunk",
 					"name": "Chunk 4"
@@ -12946,8 +13059,8 @@
 				"98ED71C9776B": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -217,
-					"x2": 706,
+					"y2": 2369,
+					"x2": 639,
 					"tokenList": [
 						"195605CA27FB0",
 						"2F72817C56D9C",
@@ -12961,8 +13074,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -271,
-					"x1": 396,
+					"y1": 2315,
+					"x1": 329,
 					"type": "chunk",
 					"name": "Chunk 51"
 				},
@@ -13023,7 +13136,7 @@
 					"unitEnd": "48.255267863858975",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 536,
+					"pixelY": 3122,
 					"filter": 0,
 					"active": 1
 				},
@@ -13054,7 +13167,7 @@
 					"discourseTokenSeq": 118,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13076,7 +13189,7 @@
 						"810DEBB8283C"
 					],
 					"displayCol": 2,
-					"pixelX": 494,
+					"pixelX": 427,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13098,7 +13211,7 @@
 						"311FFF41AA981"
 					],
 					"displayCol": 2,
-					"pixelX": 509,
+					"pixelX": 442,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13118,7 +13231,7 @@
 					"discourseTokenSeq": 215,
 					"inChunkList": [],
 					"displayCol": 5,
-					"pixelX": 688,
+					"pixelX": 621,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13198,7 +13311,7 @@
 					"discourseTokenSeq": 187,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 352,
+					"pixelX": 284,
 					"tagMap": {
 						"lit": "།",
 						"chunkLayer": "",
@@ -13293,8 +13406,8 @@
 					"inChainsList": [
 						"A5496BC0AF1A"
 					],
-					"y2": 448,
-					"x2": 629,
+					"y2": 3034,
+					"x2": 562,
 					"tokenList": [
 						"13FA5720298DC",
 						"186258A41BADE",
@@ -13307,8 +13420,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 384,
-					"x1": 332,
+					"y1": 2970,
+					"x1": 264,
 					"type": "chunk",
 					"name": "Chunk 27"
 				},
@@ -13343,8 +13456,8 @@
 					"inChainsList": [
 						"22C4EDAB78051"
 					],
-					"y2": 923,
-					"x2": 522,
+					"y2": 3509,
+					"x2": 455,
 					"tokenList": [
 						"2F9A6A6C2A86B",
 						"2FC893CD870BD"
@@ -13355,8 +13468,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 869,
-					"x1": 396,
+					"y1": 3455,
+					"x1": 329,
 					"type": "chunk",
 					"name": "Chunk 30"
 				},
@@ -13449,7 +13562,7 @@
 					"discourseTokenSeq": 126,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13472,7 +13585,7 @@
 						"4A73199FF426"
 					],
 					"displayCol": 1,
-					"pixelX": 415,
+					"pixelX": 411,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13499,7 +13612,7 @@
 						"3453940CF1EDA"
 					],
 					"displayCol": 1,
-					"pixelX": 413,
+					"pixelX": 346,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13521,7 +13634,7 @@
 						"AFFC39B6D9A"
 					],
 					"displayCol": 3,
-					"pixelX": 589,
+					"pixelX": 522,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13588,7 +13701,7 @@
 						"1B51ABDE0BD5"
 					],
 					"displayCol": 7,
-					"pixelX": 867,
+					"pixelX": 800,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13640,8 +13753,8 @@
 				"E49FAFAF0333": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -333,
-					"x2": 816,
+					"y2": 2189,
+					"x2": 749,
 					"tokenList": [
 						"20CBC9E899DFA",
 						"FBEAB73F765C",
@@ -13654,8 +13767,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -387,
-					"x1": 636,
+					"y1": 2135,
+					"x1": 569,
 					"type": "chunk",
 					"name": "Chunk 49"
 				},
@@ -13693,7 +13806,7 @@
 						"95759B829A99"
 					],
 					"displayCol": 1,
-					"pixelX": 411,
+					"pixelX": 344,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13795,7 +13908,7 @@
 					"unitEnd": "27.60293622284215",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -393,
+					"pixelY": 1387,
 					"filter": 0,
 					"active": 1
 				},
@@ -13819,7 +13932,7 @@
 						"810DEBB8283C"
 					],
 					"displayCol": 1,
-					"pixelX": 413,
+					"pixelX": 346,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13847,7 +13960,7 @@
 						"2FBFD5B4B572"
 					],
 					"displayCol": 2,
-					"pixelX": 472,
+					"pixelX": 405,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13898,7 +14011,7 @@
 						"2DAF7E5AD472E"
 					],
 					"displayCol": 5,
-					"pixelX": 696,
+					"pixelX": 629,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -13973,8 +14086,8 @@
 					"inChainsList": [
 						"308032F7FD927"
 					],
-					"y2": -400,
-					"x2": 813,
+					"y2": 159,
+					"x2": 817,
 					"tokenList": [
 						"19C3CFD38B3FC",
 						"35893D64F90B9",
@@ -13991,7 +14104,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -464,
+					"y1": 95,
 					"x1": 329,
 					"type": "chunk",
 					"name": "Chunk 32"
@@ -13999,8 +14112,8 @@
 				"56FCFBFB02D3": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -333,
-					"x2": 544,
+					"y2": 2189,
+					"x2": 477,
 					"tokenList": [
 						"383841BBCD7AF"
 					],
@@ -14011,8 +14124,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -387,
-					"x1": 482,
+					"y1": 2135,
+					"x1": 415,
 					"type": "chunk",
 					"name": "Chunk 48"
 				},
@@ -14074,7 +14187,7 @@
 					"unitEnd": "16.79773030279634",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -424,
+					"pixelY": 607,
 					"filter": 0,
 					"active": 1
 				},
@@ -14088,7 +14201,7 @@
 						"2FBFD5B4B572"
 					],
 					"displayCol": 0,
-					"pixelX": 352,
+					"pixelX": 284,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14108,7 +14221,7 @@
 					"discourseTokenSeq": 123,
 					"inChunkList": [],
 					"displayCol": 5,
-					"pixelX": 727,
+					"pixelX": 660,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14163,7 +14276,7 @@
 					"discourseTokenSeq": 156,
 					"inChunkList": [],
 					"displayCol": 11,
-					"pixelX": 1114,
+					"pixelX": 1047,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14210,7 +14323,7 @@
 					"unitEnd": "26.813973644685895",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -383,
+					"pixelY": 1327,
 					"filter": 0,
 					"active": 1
 				},
@@ -14268,7 +14381,7 @@
 					"unitEnd": "6.815307849363541",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -442,
+					"pixelY": -113,
 					"filter": 0,
 					"active": 1
 				},
@@ -14334,8 +14447,8 @@
 				"2A23E9604ED12": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -352,
-					"x2": 441,
+					"y2": 2069,
+					"x2": 393,
 					"tokenList": [
 						"22D28D55D8B04"
 					],
@@ -14346,16 +14459,16 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -406,
-					"x1": 411,
+					"y1": 2015,
+					"x1": 344,
 					"type": "chunk",
 					"name": "Chunk 47"
 				},
 				"47F7045C0AF1": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -337,
-					"x2": 441,
+					"y2": 334,
+					"x2": 487,
 					"tokenList": [
 						"C768A5233377"
 					],
@@ -14366,7 +14479,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -391,
+					"y1": 280,
 					"x1": 411,
 					"type": "chunk",
 					"name": "Chunk 63"
@@ -14428,7 +14541,7 @@
 						"98ED71C9776B"
 					],
 					"displayCol": 3,
-					"pixelX": 583,
+					"pixelX": 516,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14455,7 +14568,7 @@
 						"E1BD9AD97C7A"
 					],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14477,7 +14590,7 @@
 						"18A2D95618606"
 					],
 					"displayCol": 1,
-					"pixelX": 444,
+					"pixelX": 377,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14550,7 +14663,7 @@
 					"unitEnd": "16.21321203692707",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -364,
+					"pixelY": 547,
 					"filter": 0,
 					"active": 1
 				},
@@ -14564,7 +14677,7 @@
 						"4A73199FF426"
 					],
 					"displayCol": 2,
-					"pixelX": 503,
+					"pixelX": 499,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14592,7 +14705,7 @@
 						"4A73199FF426"
 					],
 					"displayCol": 7,
-					"pixelX": 887,
+					"pixelX": 883,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14614,7 +14727,7 @@
 						"38C31ED020DA9"
 					],
 					"displayCol": 2,
-					"pixelX": 497,
+					"pixelX": 430,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14639,7 +14752,7 @@
 					"discourseTokenSeq": 194,
 					"inChunkList": [],
 					"displayCol": 4,
-					"pixelX": 661,
+					"pixelX": 594,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14690,7 +14803,7 @@
 					"unitEnd": "21.271441947376346",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -411,
+					"pixelY": 907,
 					"filter": 0,
 					"active": 1
 				},
@@ -14718,14 +14831,14 @@
 					"unitEnd": "54.74084643553617",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 956,
+					"pixelY": 3542,
 					"filter": 0,
 					"active": 1
 				},
 				"10AA5C153D7B": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": -372,
+					"y2": 874,
 					"x2": 738,
 					"tokenList": [
 						"26DC519FFF4EA",
@@ -14738,7 +14851,7 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -426,
+					"y1": 820,
 					"x1": 629,
 					"type": "chunk",
 					"name": "Chunk 42"
@@ -14750,7 +14863,7 @@
 					"discourseTokenSeq": 110,
 					"inChunkList": [],
 					"displayCol": 2,
-					"pixelX": 494,
+					"pixelX": 427,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14771,8 +14884,8 @@
 				"1353C24528460": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 23,
-					"x2": 759,
+					"y2": 2609,
+					"x2": 692,
 					"tokenList": [
 						"173A24176DACD"
 					],
@@ -14783,8 +14896,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -31,
-					"x1": 693,
+					"y1": 2555,
+					"x1": 626,
 					"type": "chunk",
 					"name": "Chunk 67"
 				},
@@ -14876,7 +14989,7 @@
 						"E1BD9AD97C7A"
 					],
 					"displayCol": 1,
-					"pixelX": 413,
+					"pixelX": 346,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14898,7 +15011,7 @@
 						"2A647D4CABE51"
 					],
 					"displayCol": 1,
-					"pixelX": 444,
+					"pixelX": 377,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14918,7 +15031,7 @@
 					"discourseTokenSeq": 153,
 					"inChunkList": [],
 					"displayCol": 8,
-					"pixelX": 928,
+					"pixelX": 861,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -14975,8 +15088,8 @@
 					"inChainsList": [
 						"4083A8D35AB7"
 					],
-					"y2": -362,
-					"x2": 428,
+					"y2": 2009,
+					"x2": 392,
 					"tokenList": [
 						"10806B1E5C5F7",
 						"30596A3AA41CF"
@@ -14987,8 +15100,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -416,
-					"x1": 334,
+					"y1": 1955,
+					"x1": 267,
 					"type": "chunk",
 					"name": "Chunk 21"
 				},
@@ -15029,7 +15142,7 @@
 						"12BFD71723D83"
 					],
 					"displayCol": 8,
-					"pixelX": 926,
+					"pixelX": 859,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -15056,7 +15169,7 @@
 					"discourseTokenSeq": 97,
 					"inChunkList": [],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -15101,8 +15214,8 @@
 					"inChainsList": [
 						"175E6C368A006"
 					],
-					"y2": 23,
-					"x2": 1079,
+					"y2": 2609,
+					"x2": 1012,
 					"tokenList": [
 						"1B023E78E6817",
 						"1ACF220FA0F32"
@@ -15113,8 +15226,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -31,
-					"x1": 976,
+					"y1": 2555,
+					"x1": 909,
 					"type": "chunk",
 					"name": "Chunk 9"
 				},
@@ -15148,7 +15261,7 @@
 					"unitEnd": "42.04666527092121",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": 116,
+					"pixelY": 2702,
 					"filter": 0,
 					"active": 1
 				},
@@ -15162,7 +15275,7 @@
 						"2E3E48169B4FA"
 					],
 					"displayCol": 0,
-					"pixelX": 352,
+					"pixelX": 284,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -15261,7 +15374,7 @@
 						"1BE09C4CC2E8F"
 					],
 					"displayCol": 9,
-					"pixelX": 991,
+					"pixelX": 924,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -15624,7 +15737,7 @@
 						"2A23E9604ED12"
 					],
 					"displayCol": 1,
-					"pixelX": 426,
+					"pixelX": 359,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -15649,7 +15762,7 @@
 					"discourseTokenSeq": 160,
 					"inChunkList": [],
 					"displayCol": 1,
-					"pixelX": 467,
+					"pixelX": 400,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -15675,8 +15788,8 @@
 				"2DAF7E5AD472E": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 803,
-					"x2": 808,
+					"y2": 3389,
+					"x2": 741,
 					"tokenList": [
 						"19AA1A01985BD",
 						"118CFF7389A52",
@@ -15689,8 +15802,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 749,
-					"x1": 617,
+					"y1": 3335,
+					"x1": 550,
 					"type": "chunk",
 					"name": "Chunk 60"
 				},
@@ -15708,7 +15821,7 @@
 						"8E94BAD96862"
 					],
 					"displayCol": 2,
-					"pixelX": 522,
+					"pixelX": 455,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -15845,7 +15958,7 @@
 						"12BFD71723D83"
 					],
 					"displayCol": 9,
-					"pixelX": 1000,
+					"pixelX": 933,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -15899,7 +16012,7 @@
 					"unitEnd": "11.319212775570842",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -424,
+					"pixelY": 247,
 					"filter": 0,
 					"active": 1
 				},
@@ -15934,8 +16047,8 @@
 				"115FF7C4A11C3": {
 					"nest": 1,
 					"inChainsList": [],
-					"y2": 503,
-					"x2": 403,
+					"y2": 3089,
+					"x2": 335,
 					"tokenList": [
 						"2420DCC377AB0"
 					],
@@ -15946,8 +16059,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": 449,
-					"x1": 337,
+					"y1": 3035,
+					"x1": 269,
 					"type": "chunk",
 					"name": "Chunk 73"
 				},
@@ -15993,7 +16106,7 @@
 					"unitEnd": "10.982982751113132",
 					"doc": "24F4311838A44",
 					"type": "unit",
-					"pixelY": -415,
+					"pixelY": 187,
 					"filter": 0,
 					"active": 1
 				},
@@ -16026,7 +16139,7 @@
 						"142FFB93AD7D0"
 					],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -16056,7 +16169,7 @@
 					"discourseTokenSeq": 163,
 					"inChunkList": [],
 					"displayCol": 1,
-					"pixelX": 464,
+					"pixelX": 397,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -16079,7 +16192,7 @@
 						"DCE1E506C06C"
 					],
 					"displayCol": 8,
-					"pixelX": 979,
+					"pixelX": 912,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -16101,7 +16214,7 @@
 						"12BFD71723D83"
 					],
 					"displayCol": 7,
-					"pixelX": 843,
+					"pixelX": 776,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -16119,8 +16232,8 @@
 					"inChainsList": [
 						"175E6C368A006"
 					],
-					"y2": -97,
-					"x2": 531,
+					"y2": 2489,
+					"x2": 464,
 					"tokenList": [
 						"20A6E65C3D6FB",
 						"15BDF32EAD942"
@@ -16131,8 +16244,8 @@
 						"tokenID": "",
 						"word": ""
 					},
-					"y1": -151,
-					"x1": 429,
+					"y1": 2435,
+					"x1": 362,
 					"type": "chunk",
 					"name": "Chunk 8"
 				},
@@ -16178,7 +16291,7 @@
 						"BA83851BF0FD"
 					],
 					"displayCol": 0,
-					"pixelX": 349,
+					"pixelX": 282,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",
@@ -16266,7 +16379,8 @@
 					"3229A1B8A0C8",
 					"115FF7C4A11C3",
 					"AC5208249962",
-					"4A73199FF426"
+					"4A73199FF426",
+					"8108CBEB3DE8"
 				],
 				"2524A0D8C71CE": {
 					"void": 1,
@@ -16299,7 +16413,7 @@
 						"1B51ABDE0BD5"
 					],
 					"displayCol": 6,
-					"pixelX": 794,
+					"pixelX": 727,
 					"tagMap": {
 						"lit": "",
 						"chunkLayer": "",

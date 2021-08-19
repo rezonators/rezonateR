@@ -101,6 +101,23 @@ chompSuffix = function(words, suffix){
   }
 }
 
+chompPrefix = function(words, prefix){
+  if(prefix != ""){
+    sapply(words, function(x){
+      newWord = x
+      if(str_starts(x, prefix)){
+        locs = str_locate_all(x, prefix)[[1]]
+        suffixEnd = locs[1,2]
+        newWord = substr(x, suffixEnd + 1, nchar(x))
+      }
+      newWord
+    })
+  } else {
+    words
+  }
+}
+
+
 last = function(vector){
   vector[length(vector)]
 }

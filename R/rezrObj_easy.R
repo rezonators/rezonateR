@@ -241,3 +241,40 @@ changeField.rezrObj = function(rezrObj, ..., foreign = F){
     changeFieldForeign(rezrObj, ...)
   }
 }
+
+addRow.rezrDF = function(rezrDF, ...){
+  rez_add_row(rezrDF, ...)
+}
+
+#' Add rows to a certain data.frame
+#'
+#' @rdname addRow
+#' @inheritParams addUnitSeq
+#' @param layer The layer you would like to edit.
+#' @param nodeMapArgs A list of fields to be added to the nodeMap only, not the DF.
+#' @param ... Arguments to be passed on to [rezonateR::rez_add_row]
+#'
+#' @return A rezrObj with both the rezrDF and the associated nodeMap updated.
+#' @export
+addRow.rezrObj = function(rezrObj, entity, layer, nodeMapArgs = list(), ...){
+  args = list(...)
+  if(any(names(args) %in% c("df", ".data", ".before", ".after"))){
+    args = args[-which(names(args) %in% c("df", ".data", ".before", ".after"))]
+  }
+  noNewRows = length(args[[1]])
+  if(layer == ""){
+    df = rezrObj[[entity %+% "DF"]]
+    oldNRow = nrow(df)
+    rezrObj[[entity %+% "DF"]] = rez_add_row(df, ..., layer = layer)
+    rezrObj$nodeMap[[entity]] = rezrObj$nodeMap[[entity]] %>% c(assembleNodeFromDF(rezrObj[[entity %+% "DF"]], (oldNRow + 1):(oldNRow + noNewRows), addInfo = nodeMapArgs))
+    rezrObj[[entity %+% "DF"]] = reload(rezrObj[[entity %+% "DF"]], rezrObj)
+  } else {
+    df = rezrObj[[entity %+% "DF"]][[layer]]
+    oldNRow = nrow(df)
+    rezrObj[[entity %+% "DF"]][[layer]] = rez_add_row(df, ..., layer = layer)
+    rezrObj$nodeMap[[entity]] = rezrObj$nodeMap[[entity]] %>% c(assembleNodeFromDF(rezrObj[[entity %+% "DF"]][[layer]], (oldNRow + 1):(oldNRow + noNewRows), addInfo = nodeMapArgs))
+    rezrObj[[entity %+% "DF"]][[layer]] = reload(rezrObj[[entity %+% "DF"]][[layer]], rezrObj)
+  }
+
+  rezrObj
+}

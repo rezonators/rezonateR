@@ -7,7 +7,7 @@
 addUnitSeq(rezrObj, entity, layers = "")
 }
 \arguments{
-\item{rezrObj}{The rezrObj objec}
+\item{rezrObj}{The rezrObj object}
 
 \item{entity}{The name of the Rezonator entity that you will be changing - track, rez, chunk, token, unit, stack, etc.}
 

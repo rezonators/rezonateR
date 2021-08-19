@@ -64,3 +64,10 @@ changeField = function(x, ..., foreign = F){
 addIsWordField = function(x, ...){
   UseMethod("addIsWordField")
 }
+
+#' @rdname addRow
+#' @export
+addRow = function(x, ...){
+  UseMethod("addRow")
+}
+

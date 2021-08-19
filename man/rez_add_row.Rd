@@ -11,11 +11,14 @@ rez_add_row(df, ..., rezrObj = NULL)
 
 \item{...}{Argument names are column names, and argument values are vectors of values of the rows you are adding. If a primary key is not supplied, I will generate one for you. Auto fields are automatically updated and do not need to be supplied; foreign fields are updated if a rezrObj is supplied.}
 
-\item{rezrObj}{A rezrObj, if you want to ensure that the primary key doesn't overlap with any other node in the nodeMap, and/or want to update foreign fields.}
+\item{rezrObj}{A rezrObj, if you want to ensure that the primary key doesn't overlap with any other node in the nodeMap.}
 }
 \value{
 The rezrDF with the new row(s).
 }
 \description{
 Add new rows to a rezrDF.
+}
+\note{
+Does not update foreign fields, since the node map is unchanged. If you want to update foreign fields, use \link{addRow.rezrDF}.
 }

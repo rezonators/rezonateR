@@ -263,16 +263,17 @@ rez_bind_rows = function(..., type = "intersect"){
 #'
 #' @param df The rezrDF to be updated.
 #' @param ... Argument names are column names, and argument values are vectors of values of the rows you are adding. If a primary key is not supplied, I will generate one for you. Auto fields are automatically updated and do not need to be supplied; foreign fields are updated if a rezrObj is supplied.
-#' @param rezrObj A rezrObj, if you want to ensure that the primary key doesn't overlap with any other node in the nodeMap, and/or want to update foreign fields.
+#' @param rezrObj A rezrObj, if you want to ensure that the primary key doesn't overlap with any other node in the nodeMap.
+#'
 #'
 #' @return The rezrDF with the new row(s).
+#' @note Does not update foreign fields, since the node map is unchanged. If you want to update foreign fields, use [rezonateR::addRow.rezrDF].
 #' @export
 rez_add_row = function(df, ..., rezrObj = NULL){
   args = list(...)
   args[[".data"]] = df
   newVals = args[-which(names(args) %in% c(".data", ".before", ".after"))]
 
-  numNewRows = length(newVals[[1]])
   idCol = getKey(df)
   if(!is.null(rezrObj)){
     existingIDs = getIDs(rezrObj$nodeMap)
@@ -294,15 +295,6 @@ rez_add_row = function(df, ..., rezrObj = NULL){
   }
 
   result = exec("add_row", !!!args)
-  if(!is.null(rezrObj)){
-    result = reload(result, rezrObj)
-  } else {
-    result = reloadLocal(result)
-    if(length(getFieldsOfType(df, "foreign")) > 0){
-      message("You did not supply a rezrObj, so foreign fields will not be updated.")
-    }
-  }
 
-  #TODO: Push to node map
-  result
+  result = reloadLocal(result)
 }

@@ -74,6 +74,12 @@ getTreeEntryForToken = function(tokenDF, tokenNodeMap, treeEntryDF, treeEntryNod
 
 }
 
+#' Relate table rows to tree entries covering the same tokens.
+#'
+#' @inheritParams addUnitSeq
+#'
+#' @return The rezrObj with table rows added to tree entries.
+#' @export
 getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
   #TODO: Tree into layers
   if(entity == "chunk"){
@@ -93,4 +99,99 @@ getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
     }
   }
   rezrObj
+}
+#' Relate table rows to tree entries covering the same tokens.
+#'
+#' @inheritParams addUnitSeq
+#' @param treeEntryDF A treeEntry data.frame, possibly filtered.
+#' @param addToTrack Do you want to add the chunks to the trackDF as well?
+#' @param selectCond The condition for selecting which chunk provides the field values.
+#'
+#' @return The rezrObj with additional rows for merged chunks. Original chunks stay behind.
+#' @export
+mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, selectCond = NULL){
+  if(is.null(treeEntryDF)){
+    #treeEntryDF = combineLayers(rezrObj, "treeEntry")
+    treeEntryDF = rezrObj$treeEntryDF
+  }
+  tcDF = combineTokenChunk(rezrObj)
+  chunkDF = combineChunks(rezrObj)
+  allGoodEntries = treeEntryDF %>% filter(level != -1) %>% pull(id)
+  missingEntries = setdiff(allGoodEntries, tcDF$treeEntry)
+
+  #What number shall we start at?
+  currNewChunkNames = chunkDF$name[str_detect(chunkDF$name, "New Chunk ")]
+  currNewChunkMax = suppressWarnings(max(max(as.numeric(chompPrefix(currNewChunkNames, "New Chunk ")), na.rm = T), 0))
+  i = currNewChunkMax + 1
+
+  #Adding a combinedDF column to the chunkDFs
+  for(chunkLayer in names(rezrObj$chunkDF)){
+    if(!("combinedChunk" %in% rezrObj$chunkDF[[chunkLayer]])){
+      rezrObj$chunkDF[[chunkLayer]] = rezrObj$chunkDF[[chunkLayer]] %>% rez_mutate(combinedChunk = "")
+    }
+  }
+
+  for(entry in missingEntries){
+    currRow = treeEntryDF %>% filter(id == entry)
+    currDTSF = currRow %>% pull(discourseTokenSeqFirst)
+    currDTSL = currRow %>% pull(discourseTokenSeqLast)
+    currDoc = currRow %>% pull(doc)
+
+    done = F
+    chunksCombined = getNextChunks(chunkDF, currDoc, currDTSF, currDTSL)
+    if(all(!is.na(chunksCombined))){
+      #Which chunk's annotations represents the whole thing?
+      infoSource = NULL
+      selectCond = enexpr(selectCond)
+      if(!is.null(selectCond)){
+        infoSourceCands = chunkDF %>% filter(id %in% chunksCombined & selectCond)
+        if(nrow(infoSourceCands) > 1) infoSource = infoSourceCands %>% slice(1)
+      }
+      if(is.null(infoSource)){
+        infoSource = chunkDF %>% filter(id %in% chunksCombined) %>% arrange(tokenSeqFirst) %>% slice(1)
+        newRow = infoSource
+        newRow[fieldaccess(chunkDF) %in% c("foreign", "auto")] = NA
+        newRow$name = "New Chunk " %+% i
+        i = i + 1
+        newRow$id = createRezId(1, getIDs(rezrObj))
+        newRow = as.list(newRow)
+        newRow$combinedChunk = "combined"
+        args = newRow
+        args[["entity"]] = "chunk"
+        args[["layer"]] = newRow$layer
+        args[["rezrObj"]] = rezrObj
+        args = args[c(length(args), 1:(length(args) - 1))]
+        args[["nodeMapArgs"]] = list()
+        args$nodeMapArgs[["type"]] = list("chunk")
+        args$nodeMapArgs[["tokenList"]] = list(lapply(rezrObj$nodeMap$chunk[chunksCombined], function(x) x$tokenList) %>% unlist)
+        #args[["x"]] = rezrObj
+        rezrObj = exec("addRow", !!!args)
+        rezrObj$chunkDF[[newRow$layer]] = rezrObj$chunkDF[[newRow$layer]] %>% mutate(combinedChunk = case_when(id %in% chunksCombined ~ combinedChunk %+% "|member-" %+% entry, T ~ combinedChunk))
+      }
+    }
+  }
+  rezrObj
+}
+
+getNextChunks = function(chunkDF, currDoc, p, currDTSL, currVec = character(0)){
+  candChunks = chunkDF %>% filter(doc == currDoc, discourseTokenSeqFirst == p, discourseTokenSeqLast <= currDTSL) %>% pull(id)
+  if(length(candChunks) > 0){
+    for(cand in candChunks){
+      p = chunkDF %>% filter(id == cand) %>% pull(discourseTokenSeqLast) + 1
+      if(p - 1 == currDTSL){
+        result = c(currVec, cand)
+        #print("Victory")
+        #print(result)
+      } else if(p - 1 < currDTSL){
+        result = getNextChunks(chunkDF, currDoc, p, currDTSL, c(currVec, cand))
+        if(all(!is.na(result))) break
+        #print(c(currVec, cand))
+      } else {
+        result = NA
+      }
+    }
+  } else {
+    result = NA
+  }
+  result
 }

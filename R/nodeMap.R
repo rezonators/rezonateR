@@ -148,3 +148,21 @@ getIDs = function(nodeMap){
   }
   result
 }
+
+assembleNodeFromDF = function(df, rows, addInfo = NULL){
+  idField = getKey(df)
+  primaryFields = names(df)[inNodeMap(df) == "primary"]
+  tagMapFields = names(df)[inNodeMap(df) == "tagmap"]
+  i = 1
+  result = list()
+  for(row in rows){
+    rowInfo = df %>% slice(row) %>% as.list
+    result[[i]] = rowInfo[primaryFields]
+    result[[i]]$tagMap = rowInfo[tagMapFields]
+    if(!is.null(addInfo)) result[[i]] = c(result[[i]], lapply(addInfo, function(x) x[[i]]))
+    i = i + 1
+  }
+  names(result) = df %>% slice(rows) %>% pull(!!parse_expr(idField))
+  result
+}
+
