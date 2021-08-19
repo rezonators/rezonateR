@@ -68,7 +68,6 @@ nodeMap = function(importNodeMap, docname){
 
   #Grab tree nodes
   if(!is.null(treeMap)){
-
     for(nodeName in names(treeMap)){
       if(nodeName == "type") next
       node = treeMap[[nodeName]]

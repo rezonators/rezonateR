@@ -74,6 +74,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
     if("tree" %in% names(fullNodeMap)){
       treeDF = nodeToDF(fullNodeMap[["tree"]], treeDFFields)
       treeEntryDF = nodeToDF(fullNodeMap[["treeEntry"]], treeEntryDFFields)
+      treeLinkDF = nodeToDF(fullNodeMap[["treeLink"]], linkDFFields)
     }
 
     docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
@@ -115,6 +116,8 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
       treeEntryDF = concatStringFields(tokenDF, treeEntryDF, fullNodeMap[["treeEntry"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "treeEntry", separator = separator)
       fieldaccess(treeEntryDF, concatFields) = "foreign"
       treeEntryDF = treeEntryDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
+      treeEntryDF = treeEntryDF %>% getTreeOfEntry(treeLinkDF, fullNodeMap$tree)
+      treeEntryDF = treeEntryDF %>% rez_left_join(treeLinkDF %>% select(-goal, -doc, -type), df2Address = "treeLink", fkey = "sourceLink", by = c("sourceLink" = "id")) %>% rename(parent = source)
 
       treeDF = getSeqBounds(tokenDF, treeDF, fullNodeMap[["tree"]], c("tokenSeq", "discourseTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree")
       treeDF = concatStringFields(tokenDF, treeDF, fullNodeMap[["tree"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree", separator = separator)

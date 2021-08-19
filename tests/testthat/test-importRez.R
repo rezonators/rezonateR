@@ -48,5 +48,5 @@ test_that("Tree node map", {
   discoName = "parting_0.20.1"
   path = "inst/extdata/" %+% discoName %+% ".rez"
   layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
-  rezEx = importRez(path, layerRegex = layerRegex, concatFields = c("word", "wordWylie", "lit"))
+  rezEx = importRez(path, layerRegex = layerRegex, concatFields = c("word", "wordWylie"))
 })
