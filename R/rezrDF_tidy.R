@@ -103,7 +103,7 @@ getSourceTableInfo = function(rezrObj, address, field){
 
     df2key = df2keys[[1]]#Arbitrarily pick the key field name of the first source table as the name of the key field in the temp table
     df2field = field #Choose the name of the target field as the name of the other field in the temp table
-    df2s_prejoin = lapply(1:length(df2s), function(x) as.data.frame(df2s[[x]]) %>% select(!!df2key := df2keys[[x]], !!field := df2fields[[x]])) #Create the bits of the df2...
+    df2s_prejoin = lapply(1:length(df2s), function(x) as.data.frame(df2s[[x]]) %>% select(!!parse_expr(df2key) := df2keys[[x]], !!parse_expr(field) := df2fields[[x]])) #Create the bits of the df2...
     df2 = Reduce(rbind, df2s_prejoin[2:length(df2s_prejoin)], df2s_prejoin[[1]]) #And put them together
 
     return(list(df2key = df2key, df2field = df2field, df2 = df2, field = field))

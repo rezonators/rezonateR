@@ -71,11 +71,9 @@ updateFromDF = function(targetDF, changeDF, changeCols = NULL, changeType = "fle
   if(length(colCorr) > 1){
     if(renameCols){
       argList = c(list(df = targetDF), colCorr)
-      print(argList)
       targetDF = exec("rez_rename", !!!argList)
     } else {
       argList = c(list(df = changeDF), colCorr)
-      print(argList)
       changeDF = exec("rez_rename", !!!argList)
     }
   }

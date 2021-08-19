@@ -120,6 +120,7 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
 #' @export
 updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
   #Get the source table, source field, source primary key, target field if unspecified
+  print(address)
   sourceTableInfo = getSourceTableInfo(rezrObj, address, field)
   unpackList(sourceTableInfo)
   field = sourceTableInfo[["field"]]

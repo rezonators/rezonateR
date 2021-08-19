@@ -89,12 +89,13 @@ getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
   } else if(entity == "token"){
     rezrObj$tokenDF = rezrObj$tokenDF %>% getTreeEntryForToken(rezrObj$nodeMap$token, rezrObj$treeEntryDF, rezrObj$nodeMap$treeEntry)
   } else if(entity == "track"){
-    if(!("treeEntry" %in% rezrObj$tokenDF)) rezrObj = getAllTreeCorrespondences(rezrObj, entity = "token")
-    if(!any(sapply(rezrObj$chunkEntry, function(x) "treeEntry" %in% x))) rezrObj = getAllTreeCorrespondences(rezrObj, entity = "chunk")
+    if(!("treeEntry" %in% names(rezrObj$tokenDF))) rezrObj = getAllTreeCorrespondences(rezrObj, entity = "token")
+    if(!any(sapply(rezrObj$chunkEntry, function(x) "treeEntry" %in% names(x)))) rezrObj = getAllTreeCorrespondences(rezrObj, entity = "chunk")
 
     joinDF = combineTokenChunk(rezrObj) %>% select(id, treeEntry)
-    df2Address = c("chunk/" %+% names(rezrObj$chunkDF), "token")
+    df2Address = c("chunkDF/" %+% names(rezrObj$chunkDF), "tokenDF")
     for(trackLayer in names(rezrObj$trackDF)){
+      if(!("treeEntry" %in% names(rezrObj$trackDF[[trackLayer]])))
       rezrObj$trackDF[[trackLayer]] = rezrObj$trackDF[[trackLayer]] %>% rez_left_join(joinDF, df2Address = df2Address, fkey = "token", by = c(token = "id"))
     }
   }
@@ -158,6 +159,7 @@ mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, sele
         newRow$combinedChunk = "combined"
         args = newRow
         args[["entity"]] = "chunk"
+        args[["treeEntry"]] = entry
         args[["layer"]] = newRow$layer
         args[["rezrObj"]] = rezrObj
         args = args[c(length(args), 1:(length(args) - 1))]
@@ -166,7 +168,7 @@ mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, sele
         args$nodeMapArgs[["tokenList"]] = list(lapply(rezrObj$nodeMap$chunk[chunksCombined], function(x) x$tokenList) %>% unlist)
         #args[["x"]] = rezrObj
         rezrObj = exec("addRow", !!!args)
-        rezrObj$chunkDF[[newRow$layer]] = rezrObj$chunkDF[[newRow$layer]] %>% mutate(combinedChunk = case_when(id %in% chunksCombined ~ combinedChunk %+% "|member-" %+% entry, T ~ combinedChunk))
+        rezrObj$chunkDF[[newRow$layer]] = rezrObj$chunkDF[[newRow$layer]] %>% mutate(combinedChunk = case_when(id == infoSource$id ~ combinedChunk %+% "|infomember-" %+% newRow$id, id %in% chunksCombined ~ combinedChunk %+% "|member-" %+% newRow$id, T ~ combinedChunk))
       }
     }
   }
@@ -194,4 +196,45 @@ getNextChunks = function(chunkDF, currDoc, p, currDTSL, currVec = character(0)){
     result = NA
   }
   result
+}
+
+mergedChunksToTrack = function(rezrObj, trackLayers = NULL){
+  chunkDF = combineChunks(rezrObj)
+  mergedChunks = chunkDF %>% filter(combinedChunk == "combined") %>% pull(id)
+  members = list()
+  for(mergedChunk in mergedChunks){
+    members[[mergedChunk]] = chunkDF %>% filter(str_detect(combinedChunk, "member-" %+% mergedChunk)) %>% pull(id)
+  }
+
+  if(is.null(trackLayers)) trackLayers = names(rezrObj$trackDF)
+
+  for(trackLayer in trackLayers){
+    if(!("combinedChunk" %in% names(rezrObj$trackDF[[trackLayer]]))){
+      rezrObj$trackDF[[trackLayer]] = rezrObj$trackDF[[trackLayer]] %>% rez_mutate(combinedChunk = "")
+    }
+    currTrackDF = rezrObj$trackDF[[trackLayer]]
+    for(mergedChunk in mergedChunks){
+      if(all(members[[mergedChunk]] %in% currTrackDF$token)){
+        print("Hello")
+
+        #Preparing for row-adding
+        args = list(rezrObj = rezrObj, entity = "track", layer = trackLayer)
+        chunkInfoSource = chunkDF %>% filter(str_detect(combinedChunk, "infomember-" %+% mergedChunk)) %>% pull(id)
+        trackInfo = currTrackDF %>% filter(token == chunkInfoSource) %>% as.list()
+        trackInfo[fieldaccess(currTrackDF) %in% c("foreign", "auto")] = NA
+        trackInfo[["layer"]] = NULL
+        args = c(args, trackInfo)
+        args$id = createRezId(1, getIDs(rezrObj))
+        args$token = mergedChunk
+        args$treeEntry = chunkDF %>% filter(id == mergedChunk) %>% pull(treeEntry)
+        args$combinedChunk = "combined"
+        #TODO: goalList
+        rezrObj = exec("addRow", !!!args)
+
+        #After row-adding
+        rezrObj$trackDF[[trackLayer]] = rezrObj$trackDF[[trackLayer]] %>% mutate(combinedChunk = case_when(id == trackInfo$id ~ "|infomember-" %+% mergedChunk, token %in% members[[mergedChunk]] ~ "|member-" %+% mergedChunk, T ~ combinedChunk))
+      }
+    }
+  }
+  rezrObj
 }
