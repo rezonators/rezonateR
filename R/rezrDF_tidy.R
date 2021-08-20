@@ -64,13 +64,14 @@ rez_dfop = function(df, .f, ..., fieldaccess = "flex", updateFunct = NA, oldName
 #rezrObj: The rezrObj object where we want to extract target table info
 #address: An address to a field name in the source rezrDF
 #field: The field name in the TARGET rezrDF in case we need to figure it out
-getSourceTableInfo = function(rezrObj, address, field){
+#df2key: Key field in the source table, if empty then we take the primary key
+getSourceTableInfo = function(rezrObj, address, df2key, field){
   if(length(address) == 1){
     #When there's only one address ...
     splitAdd = strsplit(address, "/")[[1]] #Split the address up
     df2Add = splitAdd[-length(splitAdd)] #df2Add is the address without the field name
     df2 = listAt(rezrObj, paste0(df2Add, collapse = "/")) #Extract the source table
-    df2key = names(fieldaccess(df2)[fieldaccess(df2) == "key"]) #Extract the key field of the source table
+    if(any(df2key == "")) df2key = names(fieldaccess(df2)[fieldaccess(df2) == "key"]) #Extract the key field of the source table
     df2field = splitAdd[length(splitAdd)] #Extract the source table field
     if(field == ""){ #If target table field isn't specified ...
       field = df2field #Use the SOURCE table field
@@ -87,7 +88,7 @@ getSourceTableInfo = function(rezrObj, address, field){
     splitAdds = strsplit(address, "/")
     df2Adds = lapply(splitAdds, function(x) paste0(x[-length(x)], collapse = "/"))
     df2s = lapply(df2Adds, function(x) listAt(rezrObj, x))
-    df2keys = sapply(df2s, function(x) names(fieldaccess(x)[fieldaccess(x) == "key"]))
+    if(all(df2key == "")) df2keys = sapply(df2s, function(x) names(fieldaccess(x)[fieldaccess(x) == "key"]))
     df2fields = sapply(splitAdds, function(x) x[length(x)])
 
     #If target field isn't specified, we can only guess what it is if there's all the source fields have the same name!

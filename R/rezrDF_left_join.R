@@ -18,7 +18,7 @@
 #' @param rezrObj The rezrObj object.
 #'
 #' @return resultDF
-rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Address = "", fkey = "", rezrObj = NULL){
+rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Address = "", df2key = "", fkey = "", rezrObj = NULL){
   oldNames = colnames(df1)
 
   updateFunction = NA
@@ -100,7 +100,7 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
     for(i in 1:length(newNames)){
       newName = newNames[i]
       rightTblName = rightTblNames[i]
-      updateFunct(result, newName) = createLeftJoinUpdate(df2Address %+% "/" %+% rightTblName, fkey, newName)
+      updateFunct(result, newName) = createLeftJoinUpdate(df2Address %+% "/" %+% rightTblName, fkey, df2key, newName)
     }
   }
 
@@ -115,13 +115,13 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
 #' @param address An address to the field from the original DF, from the rezrObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'. This may be a multiple-entry vector if you want to merge the source DFs.
 #' @param fkey The foreign key(s). Should match the number of primary keys in the df you're pulling information from (i.e. fieldaccess set as 'key').
 #' @param field The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.
+#' @param df2key The name of the candidate key in the source table that corresponds to the foreign key of the target table. If left unspecified, I will use the primary key.
 #'
 #' @return The updated data frame.
 #' @export
-updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
+updateLeftJoin = function(df1, rezrObj, address, fkey, df2key = "", field = ""){
   #Get the source table, source field, source primary key, target field if unspecified
-  print(address)
-  sourceTableInfo = getSourceTableInfo(rezrObj, address, field)
+  sourceTableInfo = getSourceTableInfo(rezrObj, address, df2key, field)
   unpackList(sourceTableInfo)
   field = sourceTableInfo[["field"]]
 
@@ -153,12 +153,13 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, field = ""){
 #'
 #' @return An update function for the left join defined.
 #' @export
-createLeftJoinUpdate = function(address, fkey, field = ""){
+createLeftJoinUpdate = function(address, fkey, df2key = "", field = ""){
   #Create the function itself (easy!)
   address = eval(address)
   fkey = eval(fkey)
+  df2key = eval(df2key)
   field = eval(field)
-  funct = function(df, rezrObj) updateLeftJoin(df, rezrObj, address, fkey, field)
+  funct = function(df, rezrObj) updateLeftJoin(df, rezrObj, address, fkey, df2key, field)
 
   #Figure out the deps (actually still pretty simple!)
   deps = address

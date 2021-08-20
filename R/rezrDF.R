@@ -267,15 +267,12 @@ reloadForeign = function(df, rezrObj, fields = ""){
       #This will really only happen when the user specifies fields and they don't have update functions. It's an error instead of a warning since it's clearly not intended behaviour
       stop("The field " %+% field %+% " does not have an update function defined.")
     }
-    print("hey guys")
     dfTry = try(df %>% updateFunct(df)[[field]](rezrObj)) #Perform the update function
     if("try-error" %in% class(dfTry)){
-      print("Bonjour")
       warning("Error in updating the following field: " %+% field %+% ". Field skipped.")
     } else {
       df = dfTry
     }
-    print("done")
   }
   df
 }

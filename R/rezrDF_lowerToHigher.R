@@ -167,7 +167,7 @@ updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field 
   }
 
   #Get the source table, source field, primary key
-  sourceTableInfo = getSourceTableInfo(rezrObj, address, field)
+  sourceTableInfo = getSourceTableInfo(rezrObj, address, "", field)
   unpackList(sourceTableInfo)
   field = sourceTableInfo[["field"]]
   #This operation yields four new variables in the local environment:

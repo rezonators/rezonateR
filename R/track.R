@@ -70,7 +70,7 @@ tokensToLastMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "li
 
   if(zeroProtocol == "literal"){
     result = tokenSeq - lastMentionToken(tokenSeq, chain)
-  } else if(zeroProtocol == "unitLast"){
+  } else if(zeroProtocol == "unitFinal"){
     #Validation
     stopifnot(!is.null(zeroCond))
     grabFromDF(unitSeq = "unitSeqLast")
@@ -80,10 +80,24 @@ tokensToLastMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "li
     prevUnit = lastMentionUnit(unitSeq, chain) #Prev units
     prevToken = sapply(prevUnit, function(x){
       if(!is.na(x)){
-        (unitDF %>% filter(unitSeq == x) %>% pull(discourseTokenSeqLast))[1]
+        unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(discourseTokenSeqLast)
       } else NA
     })
-    result = tokenSeq - prevToken
+    result = sapply(tokenSeq - prevToken, function(x) max(x, 0))
+  } else if(zeroProtocol == "unitInitial"){
+    #Validation
+    stopifnot(!is.null(zeroCond))
+    grabFromDF(unitSeq = "unitSeqFirst")
+    stopifnot(!is.null(unitSeq))
+    stopifnot(!is.null(unitDF))
+
+    prevUnit = lastMentionUnit(unitSeq, chain) #Prev units
+    prevToken = sapply(prevUnit, function(x){
+      if(!is.na(x)){
+        unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(discourseTokenSeqFirst)
+      } else NA
+    })
+    result = sapply(tokenSeq - prevToken, function(x) max(x, 0))
 
   }
   result
@@ -192,7 +206,22 @@ tokensToNextMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "li
 
   if(zeroProtocol == "literal"){
     result = nextMentionToken(tokenSeq, chain) - tokenSeq
-  } else if(zeroProtocol == "unitFirst"){
+  } else if(zeroProtocol == "unitFinal"){
+    #Validation
+    stopifnot(!is.null(zeroCond))
+    grabFromDF(unitSeq = "unitSeqLast")
+    stopifnot(!is.null(unitSeq))
+    stopifnot(!is.null(unitDF))
+
+    nextUnit = nextMentionUnit(unitSeq, chain) #Next units
+    nextToken = sapply(nextUnit, function(x){
+      if(!is.na(x)){
+        unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(discourseTokenSeqLast)
+      } else NA
+    })
+    result = nextToken - tokenSeq
+
+  } else if(zeroProtocol == "unitInitial"){
     #Validation
     stopifnot(!is.null(zeroCond))
     grabFromDF(unitSeq = "unitSeqFirst")
@@ -202,7 +231,7 @@ tokensToNextMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "li
     nextUnit = nextMentionUnit(unitSeq, chain) #Next units
     nextToken = sapply(nextUnit, function(x){
       if(!is.na(x)){
-        (unitDF %>% filter(unitSeq == x) %>% pull(discourseTokenSeqFirst))[1]
+        unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(discourseTokenSeqFirst)
       } else NA
     })
     result = nextToken - tokenSeq

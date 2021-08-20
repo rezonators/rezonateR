@@ -215,8 +215,6 @@ mergedChunksToTrack = function(rezrObj, trackLayers = NULL){
     currTrackDF = rezrObj$trackDF[[trackLayer]]
     for(mergedChunk in mergedChunks){
       if(all(members[[mergedChunk]] %in% currTrackDF$token)){
-        print("Hello")
-
         #Preparing for row-adding
         args = list(rezrObj = rezrObj, entity = "track", layer = trackLayer)
         chunkInfoSource = chunkDF %>% filter(str_detect(combinedChunk, "infomember-" %+% mergedChunk)) %>% pull(id)
