@@ -36,6 +36,7 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
       }
 
       for(layer in layers){
+        print("HOOOOOOOOO")
         rezrObj[[entity %+% "DF"]][[layer]] = suppressMessages(rezrObj[[entity %+% "DF"]][[layer]] %>% rez_left_join(combineTokenChunk(rezrObj) %>% rez_select(id, unitSeqFirst, unitSeqLast), df2Address = "tokenChunkDF", rezrObj = rezrObj, fkey = "token"))
       }
     } else {

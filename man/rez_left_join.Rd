@@ -10,6 +10,7 @@ rez_left_join(
   ...,
   fieldaccess = "foreign",
   df2Address = "",
+  df2key = "",
   fkey = "",
   rezrObj = NULL
 )

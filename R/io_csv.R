@@ -66,7 +66,25 @@ rez_read_csv = function(path, origDF = NULL, lubridate = F, inclCols = character
   newDF
 }
 
-updateFromDF = function(targetDF, changeDF, changeCols = NULL, changeType = "flex", renameCols = F, colCorr = list(), delRows = F, addRows = F, addCols = F, reloadAfterCorr = T){
+#' Update a rezrDF using data from another data frame
+#'
+#' @param targetDF The target rezrDF.
+#' @param changeDF A data frame, not necessarily a rezrDF, from which changes will be pulled.
+#' @param changeCols Columns to be changed.
+#' @param changeType Which types of columns (in field access terms) will you change?
+#' @param renameCols Will you rename columns according to the new data frame?
+#' @param colCorr If renameCols = T, then a list where names are the new names and values are the old names. If renameCols = F, then the opposite.
+#' @param delRows Will you delete rows from targetDF if not present in changeDF?
+#' @param addRows Will you add rows to targetDF if not present in targetDF?
+#' @param addCols Will you add columns present in the changeDF but not in the targetDF?
+#' @param reloadAfterCorr Would you like to do a local reload on the rezrDF afterwards (if a rezrObj is not supplied) or a full reload (if a rezrObj is supplied)?
+#' @param rezrObj The rezrObj, if you would like to do a full reload.
+#'
+#' @return
+#' @export
+#'
+#' @note Most often used for updating a rezrDF using data from a CSV used for manual annotation.
+updateFromDF = function(targetDF, changeDF, changeCols = NULL, changeType = "flex", renameCols = F, colCorr = list(), delRows = F, addRows = F, addCols = F, reloadAfterCorr = T, rezrObj = NULL){
   #TODO: Test column name changes
   if(length(colCorr) > 1){
     if(renameCols){
@@ -101,5 +119,8 @@ updateFromDF = function(targetDF, changeDF, changeCols = NULL, changeType = "fle
 
   result = targetDF
   for(col in changeCols) result = result %>% mutate(!!parse_expr(col) := joinDF[[col]])
+  if(reloadAfterCorr)
+    if(is.null(rezrObj)) result = reloadLocal(result) else result = reload(result, rezrObj)
   result
+
 }

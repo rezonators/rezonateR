@@ -18,6 +18,7 @@
 #' @param rezrObj The rezrObj object.
 #'
 #' @return resultDF
+#' @export
 rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Address = "", df2key = "", fkey = "", rezrObj = NULL){
   oldNames = colnames(df1)
 
@@ -95,23 +96,26 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
 
   #Update function stuff
   if(all(df2Address == "") | all(fkey == "")){
-    if(df2Address == "tokenChunkDF"){
-      if(str_ends(rightTblName, "First|Last")){
-        updateAddress =
-          c("tokenDF" %+% "/" %+% chompSuffix(rightTblName, "First|Last"),
-            "chunkDF" %+% "/" %+% names(rezrObj$chunkDF) %+% "/" %+% rightTblName)
-      }
-      updateAddress =
-        c("tokenDF" %+% "/" %+% rightTblName,
-          "chunkDF" %+% "/" %+% names(rezrObj$chunkDF) %+% "/" %+% rightTblName)
-    } else {
-      updateAddress = df2Address %+% "/" %+% rightTblName
-    }
     message("You didn't provide an df2Address and/or foreign key, so I won't be adding an update function automatically. Nuh-uh!")
   } else {
     for(i in 1:length(newNames)){
       newName = newNames[i]
       rightTblName = rightTblNames[i]
+      if(df2Address == "tokenChunkDF"){
+        if(str_ends(rightTblName, "First|Last")){
+          print("HEY1")
+          updateAddress =
+            c("tokenDF" %+% "/" %+% chompSuffix(rightTblName, "First|Last"),
+              "chunkDF" %+% "/" %+% names(rezrObj$chunkDF) %+% "/" %+% rightTblName)
+        } else {
+          print("WRONG")
+          updateAddress =
+          c("tokenDF" %+% "/" %+% rightTblName,
+            "chunkDF" %+% "/" %+% names(rezrObj$chunkDF) %+% "/" %+% rightTblName)
+        }
+      } else {
+        updateAddress = df2Address %+% "/" %+% rightTblName
+      }
       updateFunct(result, newName) = createLeftJoinUpdate(updateAddress, fkey, df2key, newName)
     }
   }

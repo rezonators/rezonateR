@@ -4,7 +4,7 @@
 \alias{createLeftJoinUpdate}
 \title{Create a left join update function.}
 \usage{
-createLeftJoinUpdate(address, fkey, field = "")
+createLeftJoinUpdate(address, fkey, df2key = "", field = "")
 }
 \arguments{
 \item{address}{The address of the field you want to get data from in the \emph{source} rezrDF. May be a vector if you have more than one source rezrDF. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'.}

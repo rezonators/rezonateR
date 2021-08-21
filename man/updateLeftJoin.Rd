@@ -4,7 +4,7 @@
 \alias{updateLeftJoin}
 \title{Update a field using a left join.}
 \usage{
-updateLeftJoin(df1, rezrObj, address, fkey, field = "")
+updateLeftJoin(df1, rezrObj, address, fkey, df2key = "", field = "")
 }
 \arguments{
 \item{df1}{The rezrDF to be updated.}
@@ -14,6 +14,8 @@ updateLeftJoin(df1, rezrObj, address, fkey, field = "")
 \item{address}{An address to the field from the original DF, from the rezrObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'. This may be a multiple-entry vector if you want to merge the source DFs.}
 
 \item{fkey}{The foreign key(s). Should match the number of primary keys in the df you're pulling information from (i.e. fieldaccess set as 'key').}
+
+\item{df2key}{The name of the candidate key in the source table that corresponds to the foreign key of the target table. If left unspecified, I will use the primary key.}
 
 \item{field}{The name of the field in the target rezrDF to be updated. If the field names in the source DFs are all the same and also the same as the name in the target DF, you may leave this unspecified.}
 }

@@ -66,7 +66,7 @@ The other mysterious field in the importRez function is concatFields. These are 
 The result of the import is an object called rezrObj, which we will discuss below. When you import a more substantial file, say around 30 minutes, the import speed can be rather slow. Please be patient! The good news is that rezonateR contains functionality for saving and loading rezrObj objects, so you don't have to import each time you work on a file in R.
 
 ```{r}
-savePath = system.file("extdata", "myRez.Rdata", package = "rezonateR")
+savePath = "myRez.Rdata"
 rez_save(myRez, savePath)
 myRez = rez_load(savePath)
 ```
