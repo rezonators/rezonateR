@@ -86,3 +86,12 @@ rez_load = function(filename){
   if("rezrObj" %in% class(obj)) message("Loading rezrObj ...") else message("Loading rezrDF ...")
   obj
 }
+
+getChunkAddresses = function(rezrObj){
+  "chunkDF/" %+% names(rezrObj$chunkDF)
+}
+
+
+getTokenChunkAddresses = function(rezrObj){
+  c("tokenDF", getChunkAddresses(rezrObj))
+}

@@ -66,7 +66,7 @@ The other mysterious field in the importRez function is concatFields. These are 
 The result of the import is an object called rezrObj, which we will discuss below. When you import a more substantial file, say around 30 minutes, the import speed can be rather slow. Please be patient! The good news is that rezonateR contains functionality for saving and loading rezrObj objects, so you don't have to import each time you work on a file in R.
 
 ```{r}
-savePath = system.file("extdata", "rezEx.Rdata", package = "rezonateR")
+savePath = system.file("extdata", "myRez.Rdata", package = "rezonateR")
 rez_save(myRez, savePath)
 myRez = rez_load(savePath)
 ```
@@ -339,10 +339,10 @@ The next step is to write the CSV file. rez_write_csv allows us to do this easil
 rez_write_csv(myRez$trackDF$refexpr, "refexpr.csv", c("id", "name", "unitLastWord", "unitSeqLast", "word", "discourseTokenSeqLast", "entityType", "roleType", "person"))
 ```
 
-After editing the CSV in a spreadsheet program, let's import it back using rez_read_csv. The origDF argument tells rezonateR to look in the original rezrDF that produced the CSV, and determine the data types accordingly:
+After editing the CSV in a spreadsheet program, let's import it back using rez_read_csv. (I've renamed the edited CSV - in general, I recommend doing this to avoid accidentally overwriting your edited file by running the export code again.) The origDF argument tells rezonateR to look in the original rezrDF that produced the CSV, and determine the data types accordingly:
 
 ```{r}
-changeDF = rez_read_csv("refexpr.csv", origDF = myRez$trackDF$refexpr)
+changeDF = rez_read_csv("refexpr_edited.csv", origDF = myRez$trackDF$refexpr)
 ```
 
 Finally, the updateFromDF function allows us to update the original rezrDF using information from the new rezrDF. There are many fancy option you can choose from, such as deciding whether to delete rows, add rows, add columns, etc. We will only use the most vanilla options, and update the 'person' column:
@@ -420,7 +420,7 @@ The best thing that trees do for us is connecting verb information, stored in ch
 
 ```{r}
 myRez = myRez %>% addFieldForeign.rezrObj("track", "refexpr", "treeEntry", "", "treeEntry", "treeParent", "parent", fieldaccess = "foreign")
-myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% rez_left_join(myRez$chunkDF$verb %>% select(id, word, treeEntry), by = c(treeParent = "treeEntry"), suffix = c("", "_verb")) %>% rename(verbID = id_verb, verbWord = word_verb)#This step will be doable with addFieldForeign verb soon.
+myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% rez_left_join(myRez$chunkDF$verb %>% select(id, word, treeEntry), by = c(treeParent = "treeEntry"), suffix = c("", "_verb"), df2Address = "chunkDF/verb", fkey = "treeParent", df2key = "treeEntry", rezrObj = myRez) %>% rename(verbID = id_verb, verbWord = word_verb)
 myRez$trackDF$refexpr %>% select(id, treeParent, verbID, verbWord) %>% slice(10:16)
 ```
 
@@ -437,4 +437,10 @@ mergeChunksWithTree is very easy to use. After you call this command, the merged
 ```{r}
 myRez = mergeChunksWithTree(myRez)
 myRez$chunkDF$refexpr %>% filter(combinedChunk != "") %>% select(id,name,  word, combinedChunk) #Showing only combined chunks and their members
+```
+
+```{r}
+#myRez = 
+  mergedChunksToTrack(myRez, "refexpr")
+
 ```

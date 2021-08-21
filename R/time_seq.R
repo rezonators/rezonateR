@@ -35,9 +35,8 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
         }
       }
 
-      sourceAddress = c("track", "chunk/" %+% chunkLayers)
       for(layer in layers){
-        rezrObj[[entity %+% "DF"]][[layer]] = suppressMessages(rezrObj[[entity %+% "DF"]][[layer]] %>% rez_left_join(combineTokenChunk(rezrObj) %>% rez_select(id, unitSeqFirst, unitSeqLast), df2Address = sourceAddress, rezrObj = rezrObj, fkey = "token"))
+        rezrObj[[entity %+% "DF"]][[layer]] = suppressMessages(rezrObj[[entity %+% "DF"]][[layer]] %>% rez_left_join(combineTokenChunk(rezrObj) %>% rez_select(id, unitSeqFirst, unitSeqLast), df2Address = "tokenChunkDF", rezrObj = rezrObj, fkey = "token"))
       }
     } else {
       if(!("unitSeq" %in% names(rezrObj$tokenDF))){
@@ -86,8 +85,9 @@ addIsWordField.rezrObj = function(x, cond, addWordSeq = T){
       }
     }
 
+
     for(layer in names(x$trackDF)){
-      x$trackDF[[layer]] = suppressMessages(x$trackDF[[layer]] %>% rez_left_join(combineTokenChunk(x) %>% rez_select(id, wordSeqFirst, wordSeqLast, discourseWordSeqFirst, discourseWordSeqLast), df2Address = "trackDF", rezrObj = x, fkey = "token"))
+      x$trackDF[[layer]] = suppressMessages(x$trackDF[[layer]] %>% rez_left_join(combineTokenChunk(x) %>% rez_select(id, wordSeqFirst, wordSeqLast, discourseWordSeqFirst, discourseWordSeqLast), df2Address = "tokenChunkDF", rezrObj = x, fkey = "token"))
     }
 
 
