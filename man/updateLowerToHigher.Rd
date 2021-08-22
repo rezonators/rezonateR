@@ -34,5 +34,5 @@ updateLowerToHigher(
 The updated data frame.
 }
 \description{
-Not normally called by users, but acts as an updateFunct to be called be \link{reload}.
+Not normally called by users, but acts as an updateFunct to be called by \link{reload}.
 }

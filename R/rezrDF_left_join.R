@@ -125,7 +125,7 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
 
 #' Update a field using a left join.
 #'
-#' Not normally called by users, but acts as an updateFunct to be called be [rezonateR::reload].
+#' Not normally called by users, but acts as an updateFunct to be called by [rezonateR::reload].
 #'
 #' @param df1 The rezrDF to be updated.
 #' @param rezrObj The full rezrObj.

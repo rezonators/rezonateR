@@ -17,7 +17,7 @@
 #' @param layerRegex A list, each of which is a component (just track or chunk for now; stack and rez to be added later). In each list entry, there are three components: 'field' is the field on which the splitting is based; 'regex' is a vector of regular expressions; 'names' is a vector of layer names. 'regex' should have one fewer entry than 'names', as the last of the 'names' should be the default case.
 #'
 #' @return A rezrObj object. See [rezonateR::new_rezrObj] for details.
-#' @note After import, you may consider calling such functions as [rezonateR:: addUnitSeq], [rezonateR:: addIsWordFidld] or [rezonateR::getAllTreeCorrespondences], which are excluded from the import because of performane issues.
+#' @note After import, you may consider calling such functions as [rezonateR::addUnitSeq], [rezonateR::addIsWordField] or [rezonateR::getAllTreeCorrespondences], which are excluded from the import because of performane issues.
 #' @import stringr
 #' @import rlang
 #' @export

@@ -31,5 +31,5 @@ concatStringFields(
 complexDF
 }
 \description{
-Not recommended to be called by most users; \link{addFieldForeign} with \link{rezonateR:concatenateAll} suffices for most purposes.
+Not recommended to be called by most users; \link{addFieldForeign} with \link{concatenateAll} suffices for most purposes.
 }

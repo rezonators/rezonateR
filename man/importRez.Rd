@@ -24,5 +24,5 @@ A rezrObj object. See \link{new_rezrObj} for details.
 Import a Rez file. This returns an object containing, among other things, a nodeMap object containing raw information, and data frames for tokens, units, chunks, track chain entries, track chains, containing only key information likely to be useful for the user.
 }
 \note{
-After import, you may consider calling such functions as \link{ addUnitSeq}, \link{ addIsWordFidld} or \link{getAllTreeCorrespondences}, which are excluded from the import because of performane issues.
+After import, you may consider calling such functions as \link{addUnitSeq}, \link{addIsWordField} or \link{getAllTreeCorrespondences}, which are excluded from the import because of performane issues.
 }

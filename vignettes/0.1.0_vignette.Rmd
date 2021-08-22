@@ -40,6 +40,14 @@ The rezonateR engine is based heavily on Tidyverse packages, particularly rlang 
 
 If you're wondering when you should start learning rezonateR, the best time is now! Although you can get started with the Rezonator GUI relatively easily, if there are certain things you know you will use in rezonateR - such as multi-line chunks - you probably want to have the rezonateR post-processing in mind, even when you're annotating in Rezonator.
 
+Ready to use rezonateR? If so, run this in R:
+
+```{r}
+install.packages("devtools")
+library(devtools)
+install_github("johnwdubois/rezonateR")
+```
+
 ## A quick import
 
 Let's start by importing our first file. 

@@ -99,7 +99,7 @@ lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fiel
 
 #' Concatenate string values in a lower-level data frame
 #'
-#' Not recommended to be called by most users; [rezonateR::addFieldForeign] with [rezonateR:concatenateAll] suffices for most purposes.
+#' Not recommended to be called by most users; [rezonateR::addFieldForeign] with [rezonateR::concatenateAll] suffices for most purposes.
 #'
 #' @param simpleDF The lower-level dataframe, for example the token dataframe for chunks and units, or the unit dataframe for stacks.
 #' @param complexDF The dataframe that you're trying to add the concatenated fields to.
@@ -153,7 +153,7 @@ getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleI
 
 #' Update a field using a lowerToHigher operation.
 #'
-#' Not normally called by users, but acts as an updateFunct to be called be [rezonateR::reload].
+#' Not normally called by users, but acts as an updateFunct to be called by [rezonateR::reload].
 
 #'
 #' @param df The target rezrDF to be updated.
@@ -201,7 +201,7 @@ updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field 
 
 #' Create an update function based on a lowerToHigher-type action.
 #'
-#' A function factory that allows the user to create an update function based on a [rezonateR::lowerToUpper] operation. Not to be called by most users; [rezonateR::lowerToHigher] will call this automatically if the necessary data is supplied.
+#' A function factory that allows the user to create an update function based on a [rezonateR::lowerToHigher] operation. Not to be called by most users; [rezonateR::lowerToHigher] will call this automatically if the necessary data is supplied.
 #'
 #' @param df The target rezrDF you want to modify.
 #' @param rezrObj The rezrObj.

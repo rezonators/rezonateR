@@ -34,5 +34,5 @@ createLowerToHigherUpdate(
 An update function for a lowerToHigher-type foreign field.
 }
 \description{
-A function factory that allows the user to create an update function based on a \link{lowerToUpper} operation. Not to be called by most users; \link{lowerToHigher} will call this automatically if the necessary data is supplied.
+A function factory that allows the user to create an update function based on a \link{lowerToHigher} operation. Not to be called by most users; \link{lowerToHigher} will call this automatically if the necessary data is supplied.
 }

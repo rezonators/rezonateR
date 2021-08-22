@@ -80,7 +80,7 @@ changeFieldForeign(x, ...)
 
 \item{fieldaccess}{The field access value you want to set to the new / changed field.}
 
-\item{complexAction}{When type = "complex", the action that will aggregate the values from the source DF together. See \link{complexActions} for ideas.}
+\item{complexAction}{When type = "complex", the action that will aggregate the values from the source DF together. See \link{concatenateAll} for ideas.}
 
 \item{targetNodeMap}{The node map corresponding to the target DF. It only needs to be specified when type = "complex".}
 
