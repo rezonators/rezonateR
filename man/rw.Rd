@@ -32,8 +32,8 @@ rez_read_csv(
 \item{lubridate}{Are you using the lubridate package?}
 }
 \value{
-For rez_read_csv, the CSV being imported.
+For rez_read_csv, a data.frame for the CSV being imported. This is NOT a rezrDF, so please do not assign it to a rezrObj; use \link{updateFromDF} to update an existing rezrDF with the imported data.frame.
 }
 \description{
-Read and write rezrDFs as CSV files
+Replacement of readr read_csv and write_csv, but contains added functionality for dealing with rezrDFs more easily.
 }

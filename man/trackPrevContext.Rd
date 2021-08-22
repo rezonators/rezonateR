@@ -17,7 +17,7 @@
 \alias{countNextMentionsIf}
 \alias{countNextMentionsMatch}
 \alias{getNextMentionField}
-\title{Functions related to previous context in track chains.}
+\title{Functions related to mentions of the same entity in previous/following context in track chains.}
 \usage{
 lastMentionUnit(unitSeq = NULL, chain = NULL)
 
@@ -70,10 +70,18 @@ getNextMentionField(field, tokenSeq = NULL, chain = NULL)
 
 \item{chain}{The chain that each mention belongs to.}
 
+\item{tokenSeq}{The vector of sequence values values where the mentions appeared. Common choices are discourseTokenSeqFirst, discourseTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running \link{addIsWordField} on a rezrObj. By default it's discourseTokenSeqLast.}
+
+\item{zeroProtocol}{If 'literal', I will take the seq values of the zeroes at face value. (If you set zeros as non-words and use discourseWordSeqFirst or discourseWordSeLast as your tokenSeq, this will lead to meaningless values.) If 'unitFinal', I will treat zeroes as if they were the final word of the unit. If 'unitFirst', I will treat zeroes as if they were the first word of the unit.}
+
+\item{zeroCond}{A condition for determining whether a token is zero. For most people, this should be (word column) == "<0>".}
+
+\item{windowSize}{The size of the window in which you will be counting.}
+
 \item{cond}{For if functions, the condition that the previous / next mention must satisfy. It cannot refer to the current mention.}
 
 \item{field}{The field whose value you want to match or extract.}
 }
 \description{
-Functions related to previous context in track chains.
+See also \link{countCompetitors}.
 }

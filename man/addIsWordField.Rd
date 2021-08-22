@@ -15,12 +15,12 @@ addIsWordField(x, ...)
 \arguments{
 \item{x}{The rezrDF or rezrObj to be edited.}
 
-\item{cond}{The wordhood condition.}
+\item{cond}{The wordhood condition. For example, if your word column is called 'word', and you wish to exclude zeroes, you may write 'x == "<0>"'.}
 
-\item{addWordSeq}{True if you want to add wordSeq and discourseWordSeq?}
+\item{addWordSeq}{If TRUE, the columns wordSeq and discourseWordSeq will be added.}
 }
 \value{
-The modified rezrDF or rezrObj.
+The modified rezrDF or rezrObj. If addWordSeq is set to TRUE, the columns wordSeq and discourseWordSeq will be added to tokenDF and entryDF, and the columns wordSeqFirst, wordSeqLast, discourseWordSeqFirst and discourseWordSeqLast will be added to unitDF, chunkDF and trackDF.
 }
 \description{
 Add a field on whether something is a word or not.

@@ -36,7 +36,6 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
       }
 
       for(layer in layers){
-        print("HOOOOOOOOO")
         rezrObj[[entity %+% "DF"]][[layer]] = suppressMessages(rezrObj[[entity %+% "DF"]][[layer]] %>% rez_left_join(combineTokenChunk(rezrObj) %>% rez_select(id, unitSeqFirst, unitSeqLast), df2Address = "tokenChunkDF", rezrObj = rezrObj, fkey = "token"))
       }
     } else {
@@ -56,10 +55,10 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
 #'
 #' @rdname addIsWordField
 #' @param x The rezrDF or rezrObj to be edited.
-#' @param cond The wordhood condition.
-#' @param addWordSeq True if you want to add wordSeq and discourseWordSeq?
+#' @param cond The wordhood condition. For example, if your word column is called 'word', and you wish to exclude zeroes, you may write 'x == "<0>"'.
+#' @param addWordSeq If TRUE, the columns wordSeq and discourseWordSeq will be added.
 #'
-#' @return The modified rezrDF or rezrObj.
+#' @return The modified rezrDF or rezrObj. If addWordSeq is set to TRUE, the columns wordSeq and discourseWordSeq will be added to tokenDF and entryDF, and the columns wordSeqFirst, wordSeqLast, discourseWordSeqFirst and discourseWordSeqLast will be added to unitDF, chunkDF and trackDF.
 #' @note If used on a rezrObj and addWordSeq = T, wordSeq and discourseWordSeq are automatically added to entry, unit, chunk and track tables. Rez and stack tables coming soon.
 #' @export
 addIsWordField.rezrDF = function(x, cond, addWordSeq = T){

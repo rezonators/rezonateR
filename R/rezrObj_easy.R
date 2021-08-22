@@ -9,13 +9,17 @@
 
 #' Easily add a field to / change a field in a rezrDF from a rezrObj using only information from that rezrDF
 #'
-#' @rdname acFieldLocal.rezrObj
+#' @rdname acFieldLocal
 #' @param rezrObj The rezrObj that you will be changing.
 #' @param entity The name of the Rezonator entity that you will be changing - track, rez, chunk, token, unit, stack, etc.
 #' @param layer The name of the layer of the Rezonator entity that you wil be changing. Leave blank for entities without layers (i.e. token, entry and unit). If you don't have layers for other entities, type 'default'.
+#' @param fieldName The name of the field you would like to add or change.
+#' @param expression An R expression. For example, if you would like to add the columns a and b of the rezrDF together, type a + b.
+#' @param fieldaccess The access value that you would like to assign to the new or changed field.
 #' @inheritParams addFieldLocal.rezrDF
 #'
-#' @return A rezrObj with the changed rezrDF.
+#' @return When used on rezrObjs, a rezrObj with the changed rezrDF.
+#' @note There are no major differences between rezrDFs and rezrObjs. However, only the rezrDF variant can be applied on emancipated rezrDFs (rezrDFs that do not belong to a rezrObj), whereas the rezrObj variant is more elegant when working with rezrDFs within a rezrObj.
 #' @export
 addFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, type = "simple", fieldaccess = "flex", groupField = ""){
   entity = chompSuffix(entity, "DF")
@@ -32,7 +36,7 @@ addFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, 
   rezrObj
 }
 
-#' @rdname acFieldLocal.rezrObj
+#' @rdname acFieldLocal
 #' @export
 changeFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, type = "simple", fieldaccess = "flex", groupField = ""){
   entity = chompSuffix(entity, "DF")
@@ -77,17 +81,23 @@ validateACFieldLocalObj = function(rezrObj, entity, layer, fieldName, expression
   stopifnot(is.character(groupField))
 }
 
-#' Easily add a field to / change a field in a rezrDF using information from another rezrDF
+#' Easily add a field to / change a field in a rezrDF using information from another rezrDF. Has two variants that may be applied to rezrDFs or rezrObjs,
 #'
-#' @rdname acFieldForeign.rezrObj
-#' @param rezrObj The Rezonator object that you will be changing.
-#' @param targetEntity The Rezontor entity that you will be changing (e.g. token, unit, entry ...)
-#' @param targetLayer The layer of the Rezonator entity that you will be changing from. Leave blank for entities without layers (i.e. token, entry and unit). If you don't have layers for other entities, type 'default'.
+#' @rdname acFieldForeign
+#' @param rezrObj The rezrObj that you will be changing.
+#' @param targetEntity The Rezonator entity that you will be changing (e.g. token, unit, entry ...)
+#' @param targetLayer The layer of the Rezonator entity that you will be changing from. Leave blank for entities without layers (e.g. token, entry and unit). If you don't have layers for entities that may have layers (i.e. track, rez, chunk), type 'default'.
 #' @param sourceEntity The Rezonator entity that you will be getting your information from.
-#' @param sourceLayer The layer of the Rezonator entity that you will be getting your information from. Leave blank for entities without layers (i.e. token, entry and unit). If you don't have layers for other entities, type 'default'.
-#' @inheritParams addFieldForeign.rezrDF
-#'
-#' @return
+#' @param sourceLayer The layer of the Rezonator entity that you will be changing from. Leave blank for entities without layers (e.g. token, entry and unit). If you don't have layers for entities that may have layers (i.e. track, rez, chunk), type 'default'.
+#' @param targetForeignKeyName The name of the field in the target DF that corresponds to the key (ID) of the source DF. If type = "simple", this is a column in the rezrDF. If type = "complex", this is a field in the target node map, and targetNodeMap must be specified.
+#' @param targetFieldName The name of the field you want to add / change.
+#' @param sourceFieldName The name of the field in the source rezrDF that you will be pulling information from.
+#' @param type If "simple", each row of the target DF gets information from only one row of the source DF. If "complex", each row of the target DF gets information from multiple rows of the source DF.
+#' @param fieldaccess The field access value you want to set to the new / changed field.
+#' @param complexAction When type = "complex", the action that will aggregate the values from the source DF together. See [rezonateR::complexActions] for ideas.
+#' @param targetNodeMap The node map corresponding to the target DF. It only needs to be specified when type = "complex".
+#' @returns When applied on a rezrObj, the rezrObj with the change applied on the rezrDF.
+#' @note There are no major differences between rezrDFs and rezrObjs. However, only the rezrDF variant can be applied on emancipated rezrDFs (rezrDFs that do not belong to a rezrObj), whereas the rezrObj variant is more elegant when working with rezrDFs within a rezrObj.
 #' @export
 addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL){
 
@@ -161,7 +171,7 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
   rezrObj
 }
 
-#' @rdname acFieldForeign.rezrObj
+#' @rdname acFieldForeign
 #' @export
 changeFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL){
   #A bunch of input validation
@@ -242,6 +252,13 @@ changeField.rezrObj = function(rezrObj, ..., foreign = F){
   }
 }
 
+
+#' @rdname addRow
+#' @param rezrDF The rezrDF to be added.
+#' @inheritParams rez_add_row
+#'
+#' @return If applied to a rezrDF, the rezrDF to which a row is added.
+#' @export
 addRow.rezrDF = function(rezrDF, ...){
   rez_add_row(rezrDF, ...)
 }
@@ -251,10 +268,10 @@ addRow.rezrDF = function(rezrDF, ...){
 #' @rdname addRow
 #' @inheritParams addUnitSeq
 #' @param layer The layer you would like to edit.
-#' @param nodeMapArgs A list of fields to be added to the nodeMap only, not the DF.
+#' @param nodeMapArgs A list of fields to be added to the nodeMap only, not the rezrDF.
 #' @param ... Arguments to be passed on to [rezonateR::rez_add_row]
 #'
-#' @return A rezrObj with both the rezrDF and the associated nodeMap updated.
+#' @return If applied on a rezrObj, a rezrObj with both the rezrDF and the associated nodeMap updated.
 #' @export
 addRow.rezrObj = function(rezrObj, entity, layer, nodeMapArgs = list(), ...){
   args = list(...)

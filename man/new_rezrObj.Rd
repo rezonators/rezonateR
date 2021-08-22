@@ -7,11 +7,11 @@
 new_rezrObj(list)
 }
 \arguments{
-\item{list}{}
+\item{list}{A node map that has been organised into nodeLists, one for each entity.}
 }
 \value{
-The rezObj.
+The rezrObj, consisting of a series of rezrDFs and a nodeMap.
 }
 \description{
-Constructor function for rezrObj.
+Not normally called by users; automatically created in \link{importRez}.
 }

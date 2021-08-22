@@ -24,16 +24,13 @@ changeField(x, ..., foreign = F)
 \arguments{
 \item{...}{Arguments to be passed to functions such as those in see \link{addFieldLocal.rezrDF}, \link{addFieldForeign.rezrDF}, \link{addFieldLocal.rezrObj} and \link{addFieldForeign.rezrObj}.}
 
-\item{foreign}{If TRUE, you are adding a foreign field.}
+\item{foreign}{If TRUE, you are adding a foreign field. Normally set to false; you can just call \link{addFieldForeign.rezrDF} / \link{addFieldForeign.rezrObj} for foreign fields.}
 
 \item{rezrDF}{The rezrDF to be modified.}
 }
 \value{
-The rezrDF or rezrObj beig modified.
+The rezrDF or rezrObj being modified.
 }
 \description{
-Shortcut functions for functions beginning with addField and changeField
-}
-\note{
-This is mostly a shortcut for addLocalField and changeLocalField.
+Mostly a shortcut for \link{addFieldLocal} and \link{changeFieldLocal}.
 }

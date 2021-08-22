@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   warning = FALSE
 )
+Sys.setlocale("LC_CTYPE", locale="Tibetan")
 ```
 
 Welcome to the official vignette of rezonateR 0.1.0! As this is only version 0.1.0, please tolerate all the mistakes you find and tell me (by email, or in a GitHub issue) if you find any! :)
@@ -54,7 +55,7 @@ path = system.file("extdata", "parting_0.20.1.rez", package = "rezonateR")
 
 layerRegex = list(
   track = list(field = "trailLayer", regex = c("clausearg", "discdeix"), names = c("clausearg", "discdeix", "refexpr")),
-  chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "ref.expr")))
+  chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
 
 myRez = importRez(path, layerRegex = layerRegex, concatFields = c("word", "wordWylie"))
 ```
@@ -104,7 +105,7 @@ In practice, you will not interact with most of these nodeMaps except token. Mos
 A rezrDF is like a normal data frame that you know from base R. Here's the beginning of the unit table:
 
 ```{r}
-head(myRez$unitDF)
+print(head(myRez$unitDF))
 ```
 
 chunkDF and trackDF are divided into layers. If you directly access the 'chunkDF' and 'trackDF' components of myRez, you will get a list of rezrDFs, one for each layer. Here are the names of our chunk layers that you might remember from the introduction, along with the beginning of one of the associated rezrDFs:
@@ -112,7 +113,7 @@ chunkDF and trackDF are divided into layers. If you directly access the 'chunkDF
 ```{r}
 print("Component DFs of chunkDF:")
 names(myRez$chunkDF)
-head(myRez$chunkDF$refexpr)
+print(head(myRez$chunkDF$refexpr))
 ```
 
 rezrDF inherits from the Tidyverse 'tibble' structure, so all tibble-related functions can be used with them. However, using classic Tidyverse functions on rezrDFs is often dangerous, as rezrDFs have additional functionality that go beyond classic rezrDFs.
@@ -182,7 +183,7 @@ To cater to users of different habits and skill levels, I have introduced three 
 
 1. EasyEdit can be quickly picked up by everyone, including base R users, and covers the most basic operations you would want to do to a rezrDF (e.g. addField, changeFieldForeign)
 2. TidyRez is easy to pick up for tidyverse users, though there is some learning curve for others (e.g. rez_mutate, rez_left_join)
-3. Core engine: These are mostly functions that I use within rezonateR under the hood. Users who want maximum flexibility may also use them (e.g. lowerToUpper, createLeftJoinUpdate), but do be aware that I may make changes to these without notice, since I will assume that most users have little use for them.
+3. Core engine: These are mostly functions that I use within rezonateR under the hood. Users who want maximum flexibility may also use them (e.g. lowerToHigher, createLeftJoinUpdate), but do be aware that I may make changes to these without notice, since I will assume that most users have little use for them.
 
 Crucially, while EasyEdit and TidyRez syntax are very similar within each category, functions within the core engine are a lot more divergent, and EasyEdit and TidyRez also differ considerably in their syntax. So if you are comfortable with TidyRez, minimising the use of EasyEdit may make your code look more consistent, and vice versa.
 
@@ -329,7 +330,7 @@ Before we export this as a CSV for annotation, I would like to add a column insi
 
 ```{r}
 myRez$trackDF$refexpr = myRez$trackDF$refexpr %>%
-  rez_left_join(myRez$unitDF %>% rez_select(unitSeq, word), by = c(unitSeqLast = "unitSeq"), suffix = c("", "_unit"), df2key = "unitSeq", df2Address = "unit", fkey = "unitSeqLast") %>%
+  rez_left_join(myRez$unitDF %>% rez_select(unitSeq, word), by = c(unitSeqLast = "unitSeq"), suffix = c("", "_unit"), df2key = "unitSeq", df2Address = "unitDF", fkey = "unitSeqLast") %>%
   rez_rename(unitLastWord = word_unit)
 ```
 
@@ -419,7 +420,7 @@ myRez$trackDF$refexpr %>% select(id, treeEntry) %>% slice(10:16)
 The best thing that trees do for us is connecting verb information, stored in chunks, to track chain entry (i.e. referential expression) information. We can do this in two steps. First we add a treeParent column to trackDF\$refexpr that takes the value of the 'parent' column of treeEntryDF; in simple terms, this means we're getting the parent tree entry's ID into trackDF\$refexpr. We then use this parent tree entry's ID to find the corresponding verb chunk, and with this, we have successfully put the verb on the myRez table.
 
 ```{r}
-myRez = myRez %>% addFieldForeign.rezrObj("track", "refexpr", "treeEntry", "", "treeEntry", "treeParent", "parent", fieldaccess = "foreign")
+myRez = myRez %>% addFieldForeign("track", "refexpr", "treeEntry", "", "treeEntry", "treeParent", "parent", fieldaccess = "foreign")
 myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% rez_left_join(myRez$chunkDF$verb %>% select(id, word, treeEntry), by = c(treeParent = "treeEntry"), suffix = c("", "_verb"), df2Address = "chunkDF/verb", fkey = "treeParent", df2key = "treeEntry", rezrObj = myRez) %>% rename(verbID = id_verb, verbWord = word_verb)
 myRez$trackDF$refexpr %>% select(id, treeParent, verbID, verbWord) %>% slice(10:16)
 ```
@@ -440,7 +441,7 @@ myRez$chunkDF$refexpr %>% filter(combinedChunk != "") %>% select(id,name,  word,
 ```
 
 ```{r}
-#myRez = 
+myRez = 
   mergedChunksToTrack(myRez, "refexpr")
 
 ```

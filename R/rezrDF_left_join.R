@@ -6,7 +6,8 @@
 
 #' Perform a left join on two rez data.frames and change field access status.
 #'
-#' This is a wrapper for performing left joins on Rez data.frames. It *only* changes the data frame, such as by changing field access data, at the moment. If your desired fieldaccess value is flex, this may serve as a drop-in replacement for mutate. Note that apart from the data.frame to be modified and the data.frame you are joining from, all arguments of left_join must be named.
+#' This is a wrapper for performing left joins on Rez data.frames. It *only* changes the data frame, such as by changing field access values, at the moment. If your desired fieldaccess value is flex, this may serve as a drop-in replacement for mutate. Note that apart from the data.frame to be modified and the data.frame you are joining from, all arguments of left_join must be named.
+#'
 #' By default, if no suffix is specified, the suffixes are c("", "_lower"). That is, if you are joining two data.frames, both with a column called 'name', then the left data.frame's column will still be called 'name' in the new data.frame but the right data.frame's column will get called 'name_lower'.
 #'
 #' @param df1 The left data.frame.
@@ -101,14 +102,12 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
     for(i in 1:length(newNames)){
       newName = newNames[i]
       rightTblName = rightTblNames[i]
-      if(df2Address == "tokenChunkDF"){
+      if(all(df2Address == "tokenChunkDF")){
         if(str_ends(rightTblName, "First|Last")){
-          print("HEY1")
           updateAddress =
             c("tokenDF" %+% "/" %+% chompSuffix(rightTblName, "First|Last"),
               "chunkDF" %+% "/" %+% names(rezrObj$chunkDF) %+% "/" %+% rightTblName)
         } else {
-          print("WRONG")
           updateAddress =
           c("tokenDF" %+% "/" %+% rightTblName,
             "chunkDF" %+% "/" %+% names(rezrObj$chunkDF) %+% "/" %+% rightTblName)
@@ -126,6 +125,8 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
 
 #' Update a field using a left join.
 #'
+#' Not normally called by users, but acts as an updateFunct to be called be [rezonateR::reload].
+#'
 #' @param df1 The rezrDF to be updated.
 #' @param rezrObj The full rezrObj.
 #' @param address An address to the field from the original DF, from the rezrObj root. For example, the 'word' field of tokenDF has the address 'tokenDF/word', and the 'word' field of the 'verb' layer of chunkDF has the address 'chunkDF/verb/word'. This may be a multiple-entry vector if you want to merge the source DFs.
@@ -141,8 +142,6 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, df2key = "", field = ""){
   unpackList(sourceTableInfo)
   field = sourceTableInfo[["field"]]
   df2key = sourceTableInfo[["df2key"]]
-  print("HIIIIIIIII")
-  print(df2key)
 
   #Create the by-line
   if(length(fkey) != length(df2key)){
@@ -162,7 +161,7 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, df2key = "", field = ""){
 
 #' Create a left join update function.
 #'
-#' A function factory that allows the user to create an update function based on a left join.
+#' A function factory that allows the user to create an update function based on a left join. Not to be called by most users; it is automatically called by [rezonateR::rez_left_join] if the necessary information is supplied.
 #'
 #' @param df The rezrDF to be updated.
 #' @param rezrObj The full rezrObj.

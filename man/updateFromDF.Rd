@@ -42,7 +42,7 @@ updateFromDF(
 \item{rezrObj}{The rezrObj, if you would like to do a full reload.}
 }
 \value{
-
+The updated rezrDF.
 }
 \description{
 Update a rezrDF using data from another data frame

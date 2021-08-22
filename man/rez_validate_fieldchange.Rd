@@ -17,5 +17,5 @@ rez_validate_fieldchange(
 \item{changedFields}{The fields you want to change.}
 }
 \description{
-This function ensures that the fields in a DF you wish to change are actually a good idea to change. It produces an error if a primary key is among the fields you wish to change, and warnings otherwise. This is automatically called if you use a rezonateR-internal function such as rez_mutate.
+Not ordinarily called by users; it is automatically called by functions like \link{changeFieldLocal}, \link{changeFieldForeign} and \link{rez_mutate}. This function ensures that the fields in a DF you wish to change are actually a good idea to change. It produces an error if a primary key is among the fields you wish to change, and warnings otherwise. This is automatically called if you use a rezonateR-internal function such as rez_mutate.
 }

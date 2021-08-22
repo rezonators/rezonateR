@@ -1,6 +1,6 @@
 #' Concatenate two strings together with nothing in between.
 #'
-#' This is intended to be an equivalent of Python +.
+#' This is intended to be similar to Python + for strings, but vectorised. This is mainly to avoid the awkward syntax of base R [base::paste0].
 #'
 #' @param a A character object.
 #' @param b A character object.
@@ -169,6 +169,8 @@ zeroEntryToNA = function(x){
 }
 
 #' Create a Rezonator ID.
+#'
+#' Creates a Rezonator ID when new rows need to be added. Normally does not need to be called by the user; [rezonateR::rez_add_row] and [rezonateR::addRow] do this automatically.
 #'
 #' @param n The number of Rezonator IDs you want.
 #' @param existing Existing IDs, to avoid overlap.

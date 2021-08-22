@@ -34,6 +34,8 @@ rez_left_join(
 resultDF
 }
 \description{
-This is a wrapper for performing left joins on Rez data.frames. It \emph{only} changes the data frame, such as by changing field access data, at the moment. If your desired fieldaccess value is flex, this may serve as a drop-in replacement for mutate. Note that apart from the data.frame to be modified and the data.frame you are joining from, all arguments of left_join must be named.
+This is a wrapper for performing left joins on Rez data.frames. It \emph{only} changes the data frame, such as by changing field access values, at the moment. If your desired fieldaccess value is flex, this may serve as a drop-in replacement for mutate. Note that apart from the data.frame to be modified and the data.frame you are joining from, all arguments of left_join must be named.
+}
+\details{
 By default, if no suffix is specified, the suffixes are c("", "_lower"). That is, if you are joining two data.frames, both with a column called 'name', then the left data.frame's column will still be called 'name' in the new data.frame but the right data.frame's column will get called 'name_lower'.
 }

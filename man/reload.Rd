@@ -23,8 +23,11 @@ reloadForeign(df, rezrObj, fields = "")
 \item{fields}{The fields of the rezrDF you want to modify.}
 }
 \value{
-The modified rezrDF. Foreign fields are always updated before auto fields. If the fields parameter is not available, I will find the best update order; otherwise, I will use the order you provide except for the rule where foreign fields are updated first.
+The modified rezrDF. reloadLocal reloads only auto fields; reloadForeign reloads only foreign fields. Foreign fields are always updated before auto fields. If the fields parameter is not available, I will find the best update order; otherwise, I will use the order you provide except for the rule where foreign fields are updated first.
 }
 \description{
 Functions for reloading auto and foreign fields.
+}
+\note{
+reload.rezrObj is coming soon.
 }

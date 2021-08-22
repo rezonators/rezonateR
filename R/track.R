@@ -15,7 +15,9 @@ grabFromDF = function(...){
   }
 }
 
-#' Functions related to previous context in track chains.
+#' Functions related to mentions of the same entity in previous/following context in track chains.
+#'
+#' See also [rezonateR::countCompetitors].
 #'
 #' @rdname trackPrevContext
 #' @param unitSeq The vector of units where the mentions appeared.
@@ -46,7 +48,7 @@ unitsToLastMention = function(unitSeq = NULL, chain = NULL){
 }
 
 #' @rdname trackPrevContext
-#' @param unitSeq The vector of tokenSeq values where the mentions appeared. You can choose tokenSeqFirst, tokenSeqLast, or maybe an average of the two. By default it's tokenSeqLast.
+#' @param tokenSeq The vector of sequence values values where the mentions appeared. Common choices are discourseTokenSeqFirst, discourseTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running [rezonateR::addIsWordField] on a rezrObj. By default it's discourseTokenSeqLast.
 #' @export
 lastMentionToken = function(tokenSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment
@@ -63,6 +65,8 @@ lastMentionToken = function(tokenSeq = NULL, chain = NULL){
 }
 
 #' @rdname trackPrevContext
+#' @param zeroProtocol If 'literal', I will take the seq values of the zeroes at face value. (If you set zeros as non-words and use discourseWordSeqFirst or discourseWordSeLast as your tokenSeq, this will lead to meaningless values.) If 'unitFinal', I will treat zeroes as if they were the final word of the unit. If 'unitFirst', I will treat zeroes as if they were the first word of the unit.
+#' @param zeroCond A condition for determining whether a token is zero. For most people, this should be (word column) == "<0>".
 #' @export
 tokensToLastMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "literal", zeroCond = NULL, unitSeq = NULL, unitDF = NULL){
   #Get the default column names from the rezrDF environment if unspecified
@@ -104,6 +108,7 @@ tokensToLastMention = function(tokenSeq = NULL, chain = NULL, zeroProtocol = "li
 }
 
 #' @rdname trackPrevContext
+#' @param windowSize The size of the window in which you will be counting.
 #' @export
 countPrevMentions = function(windowSize, unitSeq = NULL, chain = NULL){
   #Get the default column names from the rezrDF environment

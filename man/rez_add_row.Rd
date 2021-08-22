@@ -20,5 +20,5 @@ The rezrDF with the new row(s).
 Add new rows to a rezrDF.
 }
 \note{
-Does not update foreign fields, since the node map is unchanged. If you want to update foreign fields, use \link{addRow.rezrDF}.
+Does not update foreign fields If you want to update foreign fields, use \link{addRow.rezrDF}. If you call this function on a rezrDF with complex foreign fields, use \link{addRow.rezrDF} instead; otherwise, you cannot update those fields in the future.
 }

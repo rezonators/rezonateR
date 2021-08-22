@@ -15,7 +15,7 @@ createRezId(n = 1, existing = character(0))
 A vector of Rezonator IDs.
 }
 \description{
-Create a Rezonator ID.
+Creates a Rezonator ID when new rows need to be added. Normally does not need to be called by the user; \link{rez_add_row} and \link{addRow} do this automatically.
 }
 \examples{
 createRezId(3)

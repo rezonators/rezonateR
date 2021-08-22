@@ -2,26 +2,33 @@
 % Please edit documentation in R/generic.R, R/rezrObj_easy.R
 \name{addRow}
 \alias{addRow}
+\alias{addRow.rezrDF}
 \alias{addRow.rezrObj}
 \title{Add rows to a certain data.frame}
 \usage{
 addRow(x, ...)
+
+\method{addRow}{rezrDF}(rezrDF, ...)
 
 \method{addRow}{rezrObj}(rezrObj, entity, layer, nodeMapArgs = list(), ...)
 }
 \arguments{
 \item{...}{Arguments to be passed on to \link{rez_add_row}}
 
-\item{rezrObj}{The rezrObj object}
+\item{rezrDF}{The rezrDF to be added.}
+
+\item{rezrObj}{A rezrObj, if you want to ensure that the primary key doesn't overlap with any other node in the nodeMap.}
 
 \item{entity}{The name of the Rezonator entity that you will be changing - track, rez, chunk, token, unit, stack, etc.}
 
 \item{layer}{The layer you would like to edit.}
 
-\item{nodeMapArgs}{A list of fields to be added to the nodeMap only, not the DF.}
+\item{nodeMapArgs}{A list of fields to be added to the nodeMap only, not the rezrDF.}
 }
 \value{
-A rezrObj with both the rezrDF and the associated nodeMap updated.
+If applied to a rezrDF, the rezrDF to which a row is added.
+
+If applied on a rezrObj, a rezrObj with both the rezrDF and the associated nodeMap updated.
 }
 \description{
 Add rows to a certain data.frame

@@ -10,38 +10,34 @@
 #' @param rezrObj The entire rezrObj.
 #' @param fields The fields of the rezrDF you want to modify.
 #'
-#' @return The modified rezrDF. Foreign fields are always updated before auto fields. If the fields parameter is not available, I will find the best update order; otherwise, I will use the order you provide except for the rule where foreign fields are updated first.
+#' @return The modified rezrDF. reloadLocal reloads only auto fields; reloadForeign reloads only foreign fields. Foreign fields are always updated before auto fields. If the fields parameter is not available, I will find the best update order; otherwise, I will use the order you provide except for the rule where foreign fields are updated first.
+#' @note reload.rezrObj is coming soon.
 #' @export
 reload = function(x, ...){
   UseMethod("reload")
 }
 
-#' Generic functions for easy editing
-#'
-#' @rdname easygeneric
-#' @param x The object to be modified.
-#' @param ... Argumnts to be passed to the specific functions.
-#'
-#' @return
-#' @note For details of these functions, see [rezonateR::addFieldLocal.rezrDF] / [rezonateR::addFieldForeign.rezrDF] for rezrDFs and [rezonateR::addFieldLocal.rezrObj] / [rezonateR::addFieldForeign.rezrObj] for rezrObjs.
+#' @rdname acFieldLocal
+#' @param x The object (rezrDF or rezrObj) to be modified.
+#' @param ... Arguments to be passed to the four specific functions.
 #' @export
 addFieldLocal = function(x, ...){
   UseMethod("addFieldLocal")
 }
 
-#' @rdname easygeneric
+#' @rdname acFieldLocal
 #' @export
 changeFieldLocal = function(x, ...){
   UseMethod("changeFieldLocal")
 }
 
-#' @rdname easygeneric
+#' @rdname acFieldForeign
 #' @export
 addFieldForeign = function(x, ...){
   UseMethod("addFieldForeign")
 }
 
-#' @rdname easygeneric
+#' @rdname acFieldForeign
 #' @export
 changeFieldForeign = function(x, ...){
   UseMethod("changeFieldForeign")

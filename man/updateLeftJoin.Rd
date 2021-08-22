@@ -23,5 +23,5 @@ updateLeftJoin(df1, rezrObj, address, fkey, df2key = "", field = "")
 The updated data frame.
 }
 \description{
-Update a field using a left join.
+Not normally called by users, but acts as an updateFunct to be called be \link{reload}.
 }

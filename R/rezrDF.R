@@ -18,7 +18,10 @@
 #' @param updateFunct A set of update functions
 #' @param inNodeMap Whether the fields of the data.frame are in the node map
 #'
-#' @return A rezrDF object
+#' @return A rezrDF object with the fieldaccess, updateFunct and inNodeMap values provided.
+#'
+#' @note Field access values include 'key' for the primary key, 'core' fields for fields mostly generated in Rezonator, 'flex' for fields that may be flexibly changed, 'auto' for fields that are automatically generated from information from the SAME table, and 'foreign' for fields that are automatically generated from information from  ANOTHER table.
+#'
 #' @export
 new_rezrDF = function(df, fieldaccess, updateFunct, inNodeMap){
   #Validate all components of the DF

@@ -17,5 +17,5 @@ createUpdateFunction(field, x, df, groupField = "")
 An update function with automatically generated dependency information. I will figure out the dependency information for you, so you don't have to define it yourself.
 }
 \description{
-This is for 'auto' fields only; 'foreign' field take createUpdateFunction.
+Create an update function for 'auto' fields only. 'foreign' fields take \link{createLowerToHigherUpdate} or \link{createLeftJoinUpdate}. Normally does not need to be called by the user; it is automatically called by \link{addFieldLocal} or \link{rez_mutate}.
 }

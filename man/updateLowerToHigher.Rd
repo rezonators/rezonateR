@@ -34,5 +34,5 @@ updateLowerToHigher(
 The updated data frame.
 }
 \description{
-Update a field using a lowerToHigher operation.
+Not normally called by users, but acts as an updateFunct to be called be \link{reload}.
 }

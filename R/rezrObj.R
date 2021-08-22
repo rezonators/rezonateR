@@ -7,9 +7,11 @@
 
 #' Constructor function for rezrObj.
 #'
-#' @param list
+#' Not normally called by users; automatically created in [rezonateR::importRez].
 #'
-#' @return The rezObj.
+#' @param list A node map that has been organised into nodeLists, one for each entity.
+#'
+#' @return The rezrObj, consisting of a series of rezrDFs and a nodeMap.
 #' @export
 new_rezrObj = function(list){
   stopifnot("nodeMap" %in% names(list))
@@ -23,11 +25,12 @@ new_rezrObj = function(list){
 #' Combine different layers of an entity, and similar entities
 #'
 #' @rdname combineLayer
+#' @inheritParams rez_bind_rows
 #' @param rezrObj A rezrObj object
 #' @param entity The Rezonator entity with multiple layers (e.g. track, rez, chunk) that you want to combine
-#' @param type Do you want the resultant rezrDF to contain the intersection of the columns in all the components, or the union (with absent fields becoming NA)?
 #'
-#' @return A rezrDF containing the required material
+#' @return A rezrDF containing the required material.
+#' @note This is mainly used when you need to draw information from more than one rezrDF for the purpose of functions like [rezonateR::addFieldForeign] or [rezonateR::rez_left_join].
 #' @export
 combineLayers = function(rezrObj, entity, type = "intersect"){
   layers = names(rezrObj[[entity %+% "DF"]])

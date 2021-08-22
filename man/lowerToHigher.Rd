@@ -20,32 +20,32 @@ lowerToHigher(
 )
 }
 \arguments{
-\item{simpleDF}{The DF containing simple information (source table).}
+\item{simpleDF}{The rezrDF containing simple information (source rezrDF).}
 
-\item{complexDF}{The DF to contain complex information from the simple table (target table).}
+\item{complexDF}{The rezrDF to contain complex information from the simple table (target rezrDF).}
 
-\item{complexNodeMap}{The node map corresponding to the complex (target) table.}
+\item{complexNodeMap}{The node map corresponding to the complex (target) rezrDF}
 
-\item{fieldnames}{The field names in the simple table whose information is to be extracted.}
+\item{fieldnames}{The field names in the simple rezrDF whose information is to be extracted.}
 
-\item{higherFieldnames}{The field names in the complex table whose information is to be extracted.}
+\item{higherFieldnames}{The field names in the complex rezrDF whose information is to be extracted.}
 
-\item{action}{The action to be performed on the data from the source table.}
+\item{action}{The action to be performed on the data from the source rezrDF}
 
-\item{seqName}{The name of the sequence field in the source table.}
+\item{seqName}{The name of the sequence field in the source (simple) rezrDF.}
 
 \item{tokenListName}{The name of the list of foreign keys in the target table.}
 
-\item{simpleDFAddress}{An address to the simple (source) DF. Only needed if you want an automatic update function.}
+\item{simpleDFAddress}{An address to the simple (source) rezrDF, e.g. 'unitDF' or 'chunkDF/refexpr'. Only needed if you want an automatic update function, i.e. for 'foreign' fields.}
 
-\item{complexNodeMapAddress}{An address to the complex (target) DF. Only needed if you want an automatic update function.}
+\item{complexNodeMapAddress}{An address to the complex (target) rezrDF. You don't need the 'nodeMap/' oart or the layer; just type the name of the entity (e.g. track, chunk). Only needed if you want an automatic update function, i.e. for 'foreign' fields.}
 
 \item{rezrObj}{A rezrObj object.}
 
 \item{fieldaccess}{The field access value of the field. If not set to foreign, no update function will be automatically added.}
 }
 \value{
-The modified target table (complexDF).
+The modified target table (complexDF). Most use cases should be handled by other functions like \link{addUnitSeq} and \link{addIsWordField}. If you do call this function, do note that the rezrDF you are changing is the second parameter, not the first. As such, piping should be done like this: someDF \%>\% getSeqBounds(simpleDF, ., complexNodeMap, ...)
 }
 \description{
 Combine information from multiple entries in a lower-level source table to a higher-level target table.

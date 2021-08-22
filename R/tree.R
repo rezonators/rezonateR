@@ -36,7 +36,7 @@ getTreeEntryForChunk = function(chunkDF, chunkNodeMap, treeEntryDF, treeEntryNod
     if(length(candsExact) > 0){
       exacts[x] = candsExact[1]
       if(length(candsExact) > 1){
-        print("There is more than one tree entry match for the chunk " %+% (chunkDF[x, ] %>% pull(id)) %+% ". I will take the first match.")
+        message("There is more than one tree entry match for the chunk " %+% (chunkDF[x, ] %>% pull(id)) %+% ". I will take the first match.")
       }
     }
 
@@ -63,7 +63,7 @@ getTreeEntryForToken = function(tokenDF, tokenNodeMap, treeEntryDF, treeEntryNod
         if(length(candsExact) > 0){
           exacts[x] = candsExact[1]
           if(length(candsExact) > 1){
-            print("There is more than one tree entry match for the token " %+% (tokenDF[x, ] %>% pull(id)) %+%". I will take the first match.")
+            message("There is more than one tree entry match for the token " %+% (tokenDF[x, ] %>% pull(id)) %+%". I will take the first match.")
           }
         }
     }
@@ -78,7 +78,7 @@ getTreeEntryForToken = function(tokenDF, tokenNodeMap, treeEntryDF, treeEntryNod
 #'
 #' @inheritParams addUnitSeq
 #'
-#' @return The rezrObj with table rows added to tree entries.
+#' @return The rezrObj with a new column called 'treeEntry' added to rows that correspond to tree entries. If called on 'track', treeEntry is added to token and chunk as well. Not available for units.
 #' @export
 getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
   #TODO: Tree into layers
@@ -101,6 +101,7 @@ getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
   }
   rezrObj
 }
+
 #' Relate table rows to tree entries covering the same tokens.
 #'
 #' @inheritParams addUnitSeq
@@ -108,7 +109,7 @@ getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
 #' @param addToTrack Do you want to add the chunks to the trackDF as well?
 #' @param selectCond The condition for selecting which chunk provides the field values.
 #'
-#' @return The rezrObj with additional rows for merged chunks. Original chunks stay behind.
+#' @return The rezrObj with additional rows for merged chunks. Original chunks stay behind. There will be a new column called combinedChunk. Combined chunks will get the value 'combined'. Members of those chunks will get the value '|infomember=COMBINEDCHUNKID' (if they are providing the data for the combined chunk) or '|member=COMBINEDCHUNKID' (if they are not the data-providing chunk).
 #' @export
 mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, selectCond = NULL){
   if(is.null(treeEntryDF)){
@@ -198,8 +199,16 @@ getNextChunks = function(chunkDF, currDoc, p, currDTSL, currVec = character(0)){
   result
 }
 
+#' Add merged chunks in the chunkDF to the trackDF
+#'
+#' @param rezrObj A rezrObj that has had chunked merged using [rezonateR::mergeChunksWithTree].
+#' @param trackLayers Track chain layers on which this is going to be performed. If NULL, the action will be performed on all layers.
+#'
+#' @return A rezrObj with the trackDF augmented with a combined chunks from the chunkDF.
+#' @export
 mergedChunksToTrack = function(rezrObj, trackLayers = NULL){
   chunkDF = combineChunks(rezrObj)
+
   mergedChunks = chunkDF %>% filter(combinedChunk == "combined") %>% pull(id)
   members = list()
   for(mergedChunk in mergedChunks){

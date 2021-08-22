@@ -2,7 +2,7 @@
 % Please edit documentation in R/rezrDF_lowerToHigher.R
 \name{getSeqBounds}
 \alias{getSeqBounds}
-\title{Get the max and min of a certain value (typically sequence or time) from a lower object table to a higher object table.}
+\title{Get the max and min of a certain value from a lower object table to a higher object table.}
 \usage{
 getSeqBounds(
   simpleDF,
@@ -27,11 +27,14 @@ getSeqBounds(
 
 \item{simpleIsAtom}{If set to T, that means the simpleDF only contains single values, not a range. If set to F, that means the simpleDF contains a range, i.e. somethingFirst and somethingLast.}
 
-\item{...}{Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from \code{\link[=lowerToHigher]{lowerToHigher()}}. Only needed if you want automatically generated update functions.}
+\item{...}{Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from \code{\link[=lowerToHigher]{lowerToHigher()}}. Needed if you want automatically generated update functions.}
 }
 \value{
 A complex DF.
 }
 \description{
-Get the max and min of a certain value (typically sequence or time) from a lower object table to a higher object table.
+This is typically used for sequence or time.
+}
+\note{
+Most use cases should be handled by other functions like \link{addUnitSeq} and \link{addIsWordField}. If you do call this function, do note that the rezrDF you are changing is the second parameter, not the first. As such, piping should be done like this: someDF \%>\% getSeqBounds(simpleDF, ., complexNodeMap, ...)
 }

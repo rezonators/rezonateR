@@ -10,13 +10,10 @@
 
 #' Easily add a field to / change a field in a rezrDF using only information from that rezrDF
 #'
-#' @rdname acFieldLocal.rezrDF
+#' @rdname acFieldLocal
 #' @param rezrDF The rezrDF object you would like to change.
-#' @param fieldName The name of the field you would like to add or change.
-#' @param expression An R expression. For example, if you would like to add the columns a and b of the rezrDF together, type a + b.
-#' @param fieldaccess The access value that you would like to assign to the new or changed field.
 #'
-#' @return A rezrDF with the new or changed field.
+#' @return When used on a rezrDF, the rezrDF with the new or changed field.
 #' @note changeFieldLocal and changeFieldForeign will set the field access status of the changed fields to 'flex' by default, even if they are originally auto or foreign. Please specify fieldaccess = 'auto' or 'foreign' if you want the changed fields to change to or maintain these statuses. (This is to ensure you are aware of the fact that you are changing the update function in these cases.) changeField does not support changing an auto or foreign field's value without changing its field access status or update function, as this is generally a mistake; if you must do it, use rez_mutate.')
 #' @export
 addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, type = "simple", fieldaccess = "flex", groupField = ""){
@@ -36,7 +33,7 @@ addFieldLocal.rezrDF = function(rezrDF, fieldName, expression, type = "simple", 
   localMutate(rezrDF, fieldName, expression, type, fieldaccess, groupField)
 }
 
-#' @rdname acFieldLocal.rezrDF
+#' @rdname acFieldLocal
 #' @export
 changeFieldLocal.rezrDF = function(rezrDF, fieldName, expression, type = "simple", fieldaccess = "", groupField =""){
   currArgs = c("fieldName", "fieldaccess")
@@ -91,20 +88,11 @@ localMutate = function(rezrDF, fieldName, enexpression, type, fieldaccess, group
 }
 
 
-#' Easily add a field to / change a field in a rezrDF using information from another rezrDF
-#'
-#' @rdname acFieldForeign.rezrDF
+#' @rdname acFieldForeign
 #' @param targetDF The rezrDF you will be changing.
 #' @param sourceDF The rezrDF you will be getting information from.
-#' @param targetForeignKeyName The name of the field in the target DF that corresponds to the key (ID) of the source DF. If type = "simple", this is a column in the rezrDF. If type = "complex", this is a field in the target node map, and targetNodeMap must be specified.
-#' @param targetFieldName The name of the field you want to add / change.
-#' @param sourceFieldName The name of the field in the source rezrDF that you will be pulling information from.
-#' @param type If "simple", each row of the target DF gets information from only one row of the source DF. If "complex", each row of the target DF gets information from multiple rows of the source DF.
-#' @param fieldaccess The field access value you want to set to the new / changed field.
-#' @param complexAction When type = "complex", the action that will aggregate the values from the source DF together. See [rezonateR::complexActions] for ideas.
-#' @param targetNodeMap The node map corresponding to the target DF. It only needs to be specified when type = "complex".
 #'
-#' @return A rezrDF object with the added / changed field.
+#' @return When applied on a rezrDF, a rezrDF object with the added / changed field.
 #' @export
 addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL, targetNodeMap = NULL){
   #Validate input
@@ -165,7 +153,7 @@ addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
 }
 
 
-#' @rdname acFieldForeign.rezrDF
+#' @rdname acFieldForeign
 #' @export
 changeFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL, targetNodeMap = NULL){
   #Validate input
@@ -218,11 +206,15 @@ validateSimpleForeign = function(targetDF, sourceDF, targetForeignKeyName, targe
 }
 
 
-#' Functions that may be used for the complexAction field in addFieldForeign / changeFieldForeign.
+#' Functions for getting summary information about a vector of strings.
+#'
+#' These functions may be used for the complexAction field in [rezonateR::addFieldForeign] / [rezonateR::changeFieldForeign]], or within expressions in functions like [rezonateR::addField].
 #'
 #' @rdname complexActions
 #' @param x The information from the source rezrDF.
-#' @note concatenateAll concatenates everything together. longest and shortest give the longest and shortest strings, and may have multiple entries if there are ties. longestLength and shortestLength give the lengths of the longest and shortest strings in x. Some base R functions that may be used include max, min, mean, range, etc.
+#' @note concatenateAll concatenates everything together. It is not to be confused with [rezonateR::concatStringFields], which is applied on dataFrames. longest and shortest give the longest and shortest strings, and may have multiple entries if there are ties. longestLength and shortestLength give the lengths of the longest and shortest strings in x. Some base R functions that may be used include max, min, mean, range, etc.
+#'
+#' @note Remember to include only the function name in complexAction fields, and include the 'x' (normally the name of a column inside your rezrDF) in expression fields.
 #'
 #' @return The aggregated data, usually a vector with a single value.
 #' @export
@@ -257,13 +249,14 @@ shortest = function(x){
 
 #' Shortcut functions for functions beginning with addField and changeField
 #'
+#' Mostly a shortcut for [rezonateR::addFieldLocal] and [rezonateR::changeFieldLocal].
+#'
 #' @rdname acField
 #' @param rezrDF The rezrDF to be modified.
 #' @param ... Arguments to be passed to functions such as those in see [rezonateR::addFieldLocal.rezrDF], [rezonateR::addFieldForeign.rezrDF], [rezonateR::addFieldLocal.rezrObj] and [rezonateR::addFieldForeign.rezrObj].
-#' @param foreign If TRUE, you are adding a foreign field.
+#' @param foreign If TRUE, you are adding a foreign field. Normally set to false; you can just call [rezonateR::addFieldForeign.rezrDF] / [rezonateR::addFieldForeign.rezrObj] for foreign fields.
 #'
-#' @note This is mostly a shortcut for addLocalField and changeLocalField.
-#' @return The rezrDF or rezrObj beig modified.
+#' @return The rezrDF or rezrObj being modified.
 #' @export
 addField.rezrDF = function(rezrDF, ..., foreign = F){
   if(!foreign){
@@ -285,13 +278,15 @@ changeField.rezrDF = function(rezrDF, ..., foreign = F){
 
 #' Merging and renaming categories
 #'
+#' Functions for merging and renaming categories in character or factor columns.
+#'
 #' @rdname mergecat
 #' @param x A column or vector whose categories are to be merged or renamed.
 #' @param ... The name of each argument is a new category, and the value of each argument is a vector of names of old categories (as character values, even if the original column/vector contains factors).
 #' @param asFactor Do you want the result to be a factor?
 #' @param levels If asFactor = T, you an use this to set the levels of the factor.
 #'
-#' @return A column or vector with the desired
+#' @return A column or vector with the desired changes.
 #' @export
 mergeCats = function(x, ..., asFactor = F, levels = NULL){
   x = as.character(x)

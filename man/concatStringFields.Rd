@@ -31,5 +31,5 @@ concatStringFields(
 complexDF
 }
 \description{
-Not currently available to users. I will later write a wrapper so that the user doesn't have to directly pass the DFs and node map, but can simply pass the full rez object and the names of the two DFs, and the function will also return the full rez object.
+Not recommended to be called by most users; \link{addFieldForeign} with \link{rezonateR:concatenateAll} suffices for most purposes.
 }

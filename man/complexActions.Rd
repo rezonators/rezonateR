@@ -6,7 +6,7 @@
 \alias{longest}
 \alias{shortestLength}
 \alias{shortest}
-\title{Functions that may be used for the complexAction field in addFieldForeign / changeFieldForeign.}
+\title{Functions for getting summary information about a vector of strings.}
 \usage{
 concatenateAll(x)
 
@@ -25,8 +25,10 @@ shortest(x)
 The aggregated data, usually a vector with a single value.
 }
 \description{
-Functions that may be used for the complexAction field in addFieldForeign / changeFieldForeign.
+These functions may be used for the complexAction field in \link{addFieldForeign} / \link{changeFieldForeign}], or within expressions in functions like \link{addField}.
 }
 \note{
-concatenateAll concatenates everything together. longest and shortest give the longest and shortest strings, and may have multiple entries if there are ties. longestLength and shortestLength give the lengths of the longest and shortest strings in x. Some base R functions that may be used include max, min, mean, range, etc.
+concatenateAll concatenates everything together. It is not to be confused with \link{concatStringFields}, which is applied on dataFrames. longest and shortest give the longest and shortest strings, and may have multiple entries if there are ties. longestLength and shortestLength give the lengths of the longest and shortest strings in x. Some base R functions that may be used include max, min, mean, range, etc.
+
+Remember to include only the function name in complexAction fields, and include the 'x' (normally the name of a column inside your rezrDF) in expression fields.
 }

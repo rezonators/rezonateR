@@ -19,8 +19,8 @@ renameCats(x, ..., asFactor = F, levels = NULL)
 \item{levels}{If asFactor = T, you an use this to set the levels of the factor.}
 }
 \value{
-A column or vector with the desired
+A column or vector with the desired changes.
 }
 \description{
-Merging and renaming categories
+Functions for merging and renaming categories in character or factor columns.
 }

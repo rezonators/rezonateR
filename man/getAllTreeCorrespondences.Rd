@@ -12,7 +12,7 @@ getAllTreeCorrespondences(rezrObj, entity = "chunk")
 \item{entity}{The name of the Rezonator entity that you will be changing - track, rez, chunk, token, unit, stack, etc.}
 }
 \value{
-The rezrObj with table rows added to tree entries.
+The rezrObj with a new column called 'treeEntry' added to rows that correspond to tree entries. If called on 'track', treeEntry is added to token and chunk as well. Not available for units.
 }
 \description{
 Relate table rows to tree entries covering the same tokens.

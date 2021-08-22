@@ -21,5 +21,5 @@ createLeftJoinUpdate(address, fkey, df2key = "", field = "")
 An update function for the left join defined.
 }
 \description{
-A function factory that allows the user to create an update function based on a left join.
+A function factory that allows the user to create an update function based on a left join. Not to be called by most users; it is automatically called by \link{rez_left_join} if the necessary information is supplied.
 }

@@ -1,6 +1,6 @@
 #This file is for rezrDF-related functions about mutations, i.e. creation, editing and updating of fields based on other columns in the SAME table.
 #Table of contents:
-#1) The rez_mutate function itself: rez_mutate. This correponds also to the update functions in left_join and lowerToUpper, since mutate both adds and changes fields.
+#1) The rez_mutate function itself: rez_mutate. This correponds also to the update functions in left_join and lowerToHigher, since mutate both adds and changes fields.
 #2) Validating a field change: rez_validate_fieldchange
 #3) Creating an update function with mutates: createUpdateFunction
 
@@ -59,7 +59,7 @@ rez_mutate = function(df, ..., fieldaccess = ""){
 
 #' Validate a field change.
 #'
-#' This function ensures that the fields in a DF you wish to change are actually a good idea to change. It produces an error if a primary key is among the fields you wish to change, and warnings otherwise. This is automatically called if you use a rezonateR-internal function such as rez_mutate.
+#' Not ordinarily called by users; it is automatically called by functions like [rezonateR::changeFieldLocal], [rezonateR::changeFieldForeign] and [rezonateR::rez_mutate]. This function ensures that the fields in a DF you wish to change are actually a good idea to change. It produces an error if a primary key is among the fields you wish to change, and warnings otherwise. This is automatically called if you use a rezonateR-internal function such as rez_mutate.
 #'
 #' @param df The rezrDF you are planning to change.
 #' @param changedFields The fields you want to change.
@@ -101,7 +101,7 @@ rez_validate_fieldchange = function(df, changedFields, changingStatus = F, field
 
 #' Create an update function.
 #'
-#' This is for 'auto' fields only; 'foreign' field take createUpdateFunction.
+#' Create an update function for 'auto' fields only. 'foreign' fields take [rezonateR::createLowerToHigherUpdate] or [rezonateR::createLeftJoinUpdate]. Normally does not need to be called by the user; it is automatically called by [rezonateR::addFieldLocal] or [rezonateR::rez_mutate].
 #'
 #' @param field The field for which you want to create an update function.
 #' @param x An R expression. For example, if you want to column2 to be updated to always be three times column3, then x should be column3 * 3.

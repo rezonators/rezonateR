@@ -14,7 +14,7 @@ createLowerToHigherUpdate(
 )
 }
 \arguments{
-\item{address}{The address to the info field that you want from your source DF.}
+\item{address}{The address to the info field that you want from your source rezrDF.}
 
 \item{fkeyAddress}{The address to the token list in the nodeMap that corresponds to the target rezrDF.}
 
@@ -24,7 +24,7 @@ createLowerToHigherUpdate(
 
 \item{fkeyInDF}{Whether the foreign key will be in the data frame.}
 
-\item{seqName}{The name of the sequencing in index in the lower DF.}
+\item{seqName}{The name of the sequencing in index in the lower rezrDF.}
 
 \item{df}{The target rezrDF you want to modify.}
 
@@ -34,5 +34,5 @@ createLowerToHigherUpdate(
 An update function for a lowerToHigher-type foreign field.
 }
 \description{
-Create an update function based on a lowerToHigher-type action.
+A function factory that allows the user to create an update function based on a \link{lowerToUpper} operation. Not to be called by most users; \link{lowerToHigher} will call this automatically if the necessary data is supplied.
 }

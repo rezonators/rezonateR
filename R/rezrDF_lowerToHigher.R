@@ -9,20 +9,20 @@
 
 #' Combine information from multiple entries in a lower-level source table to a higher-level target table.
 #'
-#' @param simpleDF The DF containing simple information (source table).
-#' @param complexDF The DF to contain complex information from the simple table (target table).
-#' @param complexNodeMap The node map corresponding to the complex (target) table.
-#' @param fieldnames The field names in the simple table whose information is to be extracted.
-#' @param higherFieldnames The field names in the complex table whose information is to be extracted.
-#' @param action The action to be performed on the data from the source table.
-#' @param seqName The name of the sequence field in the source table.
+#' @param simpleDF The rezrDF containing simple information (source rezrDF).
+#' @param complexDF The rezrDF to contain complex information from the simple table (target rezrDF).
+#' @param complexNodeMap The node map corresponding to the complex (target) rezrDF
+#' @param fieldnames The field names in the simple rezrDF whose information is to be extracted.
+#' @param higherFieldnames The field names in the complex rezrDF whose information is to be extracted.
+#' @param action The action to be performed on the data from the source rezrDF
+#' @param seqName The name of the sequence field in the source (simple) rezrDF.
 #' @param tokenListName The name of the list of foreign keys in the target table.
-#' @param simpleDFAddress An address to the simple (source) DF. Only needed if you want an automatic update function.
-#' @param complexNodeMapAddress An address to the complex (target) DF. Only needed if you want an automatic update function.
+#' @param simpleDFAddress An address to the simple (source) rezrDF, e.g. 'unitDF' or 'chunkDF/refexpr'. Only needed if you want an automatic update function, i.e. for 'foreign' fields.
+#' @param complexNodeMapAddress An address to the complex (target) rezrDF. You don't need the 'nodeMap/' oart or the layer; just type the name of the entity (e.g. track, chunk). Only needed if you want an automatic update function, i.e. for 'foreign' fields.
 #' @param rezrObj A rezrObj object.
 #' @param fieldaccess The field access value of the field. If not set to foreign, no update function will be automatically added.
 #'
-#' @return The modified target table (complexDF).
+#' @return The modified target table (complexDF). Most use cases should be handled by other functions like [rezonateR::addUnitSeq] and [rezonateR::addIsWordField]. If you do call this function, do note that the rezrDF you are changing is the second parameter, not the first. As such, piping should be done like this: someDF %>% getSeqBounds(simpleDF, ., complexNodeMap, ...)
 #' @export
 lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fieldnames, higherFieldnames = "", action, seqName = "discourseTokenSeq", tokenListName = "tokenList", simpleDFAddress = "", complexNodeMapAddress = "", rezrObj = NULL, fieldaccess = "foreign"){
   if(is.null(complexNodeMap)){
@@ -99,7 +99,7 @@ lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fiel
 
 #' Concatenate string values in a lower-level data frame
 #'
-#' Not currently available to users. I will later write a wrapper so that the user doesn't have to directly pass the DFs and node map, but can simply pass the full rez object and the names of the two DFs, and the function will also return the full rez object.
+#' Not recommended to be called by most users; [rezonateR::addFieldForeign] with [rezonateR:concatenateAll] suffices for most purposes.
 #'
 #' @param simpleDF The lower-level dataframe, for example the token dataframe for chunks and units, or the unit dataframe for stacks.
 #' @param complexDF The dataframe that you're trying to add the concatenated fields to.
@@ -108,21 +108,25 @@ lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fiel
 #' @param separator The character by which words will be separated.
 #' @param ... Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from [rezonateR::lowerToHigher()]. Only needed if you want automatically generated update functions.
 #'
+#' @export
 #' @return complexDF
 concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, tokenListName = "tokenList", separator = "", ...){
   lowerToHigher(simpleDF, complexDF, complexNodeMap, fieldnames, "", function(x) paste(x, collapse = separator), tokenListName = tokenListName, ...)
 }
 
-#' Get the max and min of a certain value (typically sequence or time) from a lower object table to a higher object table.
+#' Get the max and min of a certain value from a lower object table to a higher object table.
+#'
+#' This is typically used for sequence or time.
 #'
 #' @param simpleDF The lower-level dataframe, for example the token dataframe for chunks and units, or the unit dataframe for stacks. There should either be an integer field that contains the sequence in question, or two integer fields containing the first and last (see simpleIsAtom).
 #' @param complexDF The dataframe that you're trying to add the concatenated fields to. We will create two integer fields, one for the first and one for the last integer.
 #' @param complexNodeMap The node map corresponding to the simpleDF.
 #' @param simpleIsAtom If set to T, that means the simpleDF only contains single values, not a range. If set to F, that means the simpleDF contains a range, i.e. somethingFirst and somethingLast.
 #' @param fieldnames The fields to be concatenated.
-#' @param ... Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from [rezonateR::lowerToHigher()]. Only needed if you want automatically generated update functions.
+#' @param ... Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from [rezonateR::lowerToHigher()]. Needed if you want automatically generated update functions.
 #'
 #' @return A complex DF.
+#' @note Most use cases should be handled by other functions like [rezonateR::addUnitSeq] and [rezonateR::addIsWordField]. If you do call this function, do note that the rezrDF you are changing is the second parameter, not the first. As such, piping should be done like this: someDF %>% getSeqBounds(simpleDF, ., complexNodeMap, ...)
 #' @export
 getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleIsAtom = T, seqName = "", tokenListName = "tokenList", exclude0 =  T, ...){
   if(seqName == ""){
@@ -148,6 +152,9 @@ getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleI
 }
 
 #' Update a field using a lowerToHigher operation.
+#'
+#' Not normally called by users, but acts as an updateFunct to be called be [rezonateR::reload].
+
 #'
 #' @param df The target rezrDF to be updated.
 #' @param rezrObj The full rezrObj.
@@ -194,14 +201,16 @@ updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field 
 
 #' Create an update function based on a lowerToHigher-type action.
 #'
+#' A function factory that allows the user to create an update function based on a [rezonateR::lowerToUpper] operation. Not to be called by most users; [rezonateR::lowerToHigher] will call this automatically if the necessary data is supplied.
+#'
 #' @param df The target rezrDF you want to modify.
 #' @param rezrObj The rezrObj.
-#' @param address The address to the info field that you want from your source DF.
+#' @param address The address to the info field that you want from your source rezrDF.
 #' @param fkeyAddress The address to the token list in the nodeMap that corresponds to the target rezrDF.
 #' @param action The action to be performed to combine the fields.
 #' @param field The target field.
 #' @param fkeyInDF Whether the foreign key will be in the data frame.
-#' @param seqName The name of the sequencing in index in the lower DF.
+#' @param seqName The name of the sequencing in index in the lower rezrDF.
 #'
 #' @return An update function for a lowerToHigher-type foreign field.
 #' @export

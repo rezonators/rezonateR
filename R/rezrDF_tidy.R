@@ -1,7 +1,7 @@
 #1) General functions for rezrDF operations
 #  a) df_op: The main function called by all complex rezrDF operations
 #  b) getSourceTableInfo: Internal function used for unpacking information entered into update functions
-#  NB: See rezrDF_mutate.R, rezrDF_lowerToUpper.R and rezrDF_left_join.R for more complex rezrDF operations with their own R files, plus rezrDF_easy for ease-of-use versions of these.
+#  NB: See rezrDF_mutate.R, rezrDF_lowerToHigher.R and rezrDF_left_join.R for more complex rezrDF operations with their own R files, plus rezrDF_easy for ease-of-use versions of these.
 #2) Miscellaneous data.frame operations (without their own files):
 #3) Selecting columns: rez_select
 #4) Renaming columns: rez_rename
@@ -11,7 +11,7 @@
 
 #' Perform an operation on a data.frame while updating field access status.
 #'
-#' This is a wrapper for performing data frame manipulation functions (such as dplyr functions) while also updating field access status. This function only needs to be directly called by advanced users; beginning users may stick to function such as rez_mutate and rez_left_join, which are much more simple and intuitive to use.
+#' This is a wrapper for performing data frame manipulation functions (such as dplyr functions) while also updating field access status. Not ordinarily called by users; beginning users may stick to functions such as [rezonateR::addFieldLocal], [rezonateR::changeFieldForeign], [rezonateR::rez_mutate], [rezonateR::rez_left_join], which are much more simple and intuitive to use.
 #'
 #' @param df The data frame to be modified.
 #' @param fieldaccess The field access status of the field you're addding, either a single character (to apply to all of the new fields) or a vector of characters for each new field. Note that if you are both modifying and adding fields, only the added fields will have access values changed. So if you're specifying an entire vector of field access values, the best practice in using this function is to separate new-field and added-field mutates, otherwise the code will be difficult to read.
@@ -207,12 +207,13 @@ rez_ungroup = function(df, ...){
 
 #' Perform a group_split on a rezrDF
 #'
-#' The main difference with group_split is that attributes are retained. If you use dplyr group_split, attributes will NOT be retained!
+#' The main difference with group_split is that attributes are retained. If you use dplyr group_split, attributes will NOT be retained.
 #'
 #' @param df A rezrDF object.
 #' @param ... Usual group_split parameters.
 #'
 #' @return A list rezrDF objects after the group_split.
+#' @note This is mostly useful for creating smaller emancipated rezrDFs. Do not assign the results of this function back to a rezrObj.
 #' @export
 #'
 rez_group_split = function(df, ...){
@@ -268,7 +269,7 @@ rez_bind_rows = function(..., type = "intersect"){
 #'
 #'
 #' @return The rezrDF with the new row(s).
-#' @note Does not update foreign fields, since the node map is unchanged. If you want to update foreign fields, use [rezonateR::addRow.rezrDF].
+#' @note Does not update foreign fields If you want to update foreign fields, use [rezonateR::addRow.rezrDF]. If you call this function on a rezrDF with complex foreign fields, use [rezonateR::addRow.rezrDF] instead; otherwise, you cannot update those fields in the future.
 #' @export
 rez_add_row = function(df, ..., rezrObj = NULL){
   args = list(...)

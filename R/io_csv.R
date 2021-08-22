@@ -2,6 +2,8 @@
 
 #' Read and write rezrDFs as CSV files
 #'
+#' Replacement of readr read_csv and write_csv, but contains added functionality for dealing with rezrDFs more easily.
+#'
 #' @rdname rw
 #' @param df The rezrDF to be exported.
 #' @param path The path from which a CSV is to be imported / exported.
@@ -11,7 +13,7 @@
 #' @param origDF The rezrDF that originally produced this CSV, used to identify data types of the columns.
 #' @param ... Arguments passed onto read_csv and write_csv.
 #'
-#' @return For rez_read_csv, the CSV being imported.
+#' @return For rez_read_csv, a data.frame for the CSV being imported. This is NOT a rezrDF, so please do not assign it to a rezrObj; use [rezonateR::updateFromDF] to update an existing rezrDF with the imported data.frame.
 #' @export
 rez_write_csv = function(df, path, inclCols = character(0), exclCols = character(0), ...){
   if(length(inclCols) > 0){
@@ -80,7 +82,7 @@ rez_read_csv = function(path, origDF = NULL, lubridate = F, inclCols = character
 #' @param reloadAfterCorr Would you like to do a local reload on the rezrDF afterwards (if a rezrObj is not supplied) or a full reload (if a rezrObj is supplied)?
 #' @param rezrObj The rezrObj, if you would like to do a full reload.
 #'
-#' @return
+#' @return The updated rezrDF.
 #' @export
 #'
 #' @note Most often used for updating a rezrDF using data from a CSV used for manual annotation.

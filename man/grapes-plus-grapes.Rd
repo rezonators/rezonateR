@@ -15,7 +15,7 @@ a \%+\% b
 The concatenated string.
 }
 \description{
-This is intended to be an equivalent of Python +.
+This is intended to be similar to Python + for strings, but vectorised. This is mainly to avoid the awkward syntax of base R \link[base:paste]{base::paste0}.
 }
 \examples{
 "3" \%+\% "a" #You get "3a"

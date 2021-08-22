@@ -16,8 +16,11 @@ new_rezrDF(df, fieldaccess, updateFunct, inNodeMap)
 \item{inNodeMap}{Whether the fields of the data.frame are in the node map}
 }
 \value{
-A rezrDF object
+A rezrDF object with the fieldaccess, updateFunct and inNodeMap values provided.
 }
 \description{
 Constructor function for rezrDF
+}
+\note{
+Field access values include 'key' for the primary key, 'core' fields for fields mostly generated in Rezonator, 'flex' for fields that may be flexibly changed, 'auto' for fields that are automatically generated from information from the SAME table, and 'foreign' for fields that are automatically generated from information from  ANOTHER table.
 }

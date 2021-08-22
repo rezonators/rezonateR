@@ -15,5 +15,8 @@ rez_group_split(df, ...)
 A list rezrDF objects after the group_split.
 }
 \description{
-The main difference with group_split is that attributes are retained. If you use dplyr group_split, attributes will NOT be retained!
+The main difference with group_split is that attributes are retained. If you use dplyr group_split, attributes will NOT be retained.
+}
+\note{
+This is mostly useful for creating smaller emancipated rezrDFs. Do not assign the results of this function back to a rezrObj.
 }

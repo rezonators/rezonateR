@@ -23,5 +23,5 @@ rez_dfop(df, .f, ..., fieldaccess = "flex", updateFunct = NA, oldNames = "")
 The DF after the operation.
 }
 \description{
-This is a wrapper for performing data frame manipulation functions (such as dplyr functions) while also updating field access status. This function only needs to be directly called by advanced users; beginning users may stick to function such as rez_mutate and rez_left_join, which are much more simple and intuitive to use.
+This is a wrapper for performing data frame manipulation functions (such as dplyr functions) while also updating field access status. Not ordinarily called by users; beginning users may stick to functions such as \link{addFieldLocal}, \link{changeFieldForeign}, \link{rez_mutate}, \link{rez_left_join}, which are much more simple and intuitive to use.
 }
