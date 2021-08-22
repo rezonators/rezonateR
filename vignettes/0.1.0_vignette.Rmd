@@ -42,7 +42,7 @@ If you're wondering when you should start learning rezonateR, the best time is n
 
 Ready to use rezonateR? If so, run this in R:
 
-```{r}
+```{r, eval = FALSE}
 install.packages("devtools")
 library(devtools)
 install_github("johnwdubois/rezonateR")
@@ -93,9 +93,9 @@ print("Item in myRez:")
 names(myRez)
 ```
 The relationships between the various entites are as follows:
-- chunks and tree entries are built on top of tokens
-- entries correspond exactly to tokens, and units build on entries
-- trackDF refers to both chunks and tokens
+* chunks and tree entries are built on top of tokens
+* entries correspond exactly to tokens, and units build on entries
+* trackDF refers to both chunks and tokens
 
 This has some ramifications for updating, which we'll come to later.
 
@@ -274,14 +274,14 @@ Note that *if you don't specify the field access value, I will automatically cha
 In general, TidyRez functions are called by adding 'rez_' in front of a dplyr function name, such a rez_group_by or rez_mutate. Using TidyRez functions allows you to keep and/or update your field access values, inNodeMap values, and updateFunctions. Using base R or classic dplyr functions with rezrDFs may result in reload fails, unless supplemented by core engine functions, which are not covered in this vignette.
 
 A few dplyr functions are completely safe to use in rezonateR, mostly those that focus on selecting rows of a table, such as filter(), arrange() or slice(). Currently implemented TidyRez functions include:
-- rez_add_row for adding new entries
-- rez_mutate for adding and editing columns
-- rez_rename for renaming columns
-- rez_bind_rows for combining rezrDFs vertically
-- rez_group_split for splitting rezrDFs vertically
-- rez_group_by and rez_ungroup for grouping
-- rez_select for selecting certain columns inside a rezrDF
-- rez_left_join for left joins
+* rez_add_row for adding new entries
+* rez_mutate for adding and editing columns
+* rez_rename for renaming columns
+* rez_bind_rows for combining rezrDFs vertically
+* rez_group_split for splitting rezrDFs vertically
+* rez_group_by and rez_ungroup for grouping
+* rez_select for selecting certain columns inside a rezrDF
+* rez_left_join for left joins
 
 A few other planned ones include rez_bind_cols and rez_outer_join, which will be especially useful for the calculation of inter-annotator agreement.
 
