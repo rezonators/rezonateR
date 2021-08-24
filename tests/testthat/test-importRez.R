@@ -50,3 +50,17 @@ test_that("Tree node map", {
   layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
   rezEx = importRez(path, layerRegex = layerRegex, concatFields = c("word", "wordWylie"))
 })
+
+
+test_that("Clips", {
+  discoName = "Stack 2"
+  path = "inst/extdata/" %+% discoName %+% ".rez"
+  rezEx = importRez(path, layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr"))), concatFields = c("word", "wordWylie"))
+
+  rez_write_csv(rezEx$tokenDF, "inst/extdata/token.csv")
+  b = rez_read_csv("inst/extdata/chain.csv", inclCols = c("id", "tokenSeq"))
+  expect_type(b$id, "character")
+  expect_type(b$tokenSeq, "numeric")
+  b = rez_read_csv("inst/extdata/chain.csv", a$trackDF, exclCols = c("unit", "tokenSeq"))
+  expect(!("unit" %in% names(b)), "Exclusion failed")
+})

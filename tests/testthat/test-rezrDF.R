@@ -226,7 +226,7 @@ test_that("", {
   rezEx = rez_load("data/parting.rda")
 
   #addCol, delRow
-  changeDF = rez_read_csv("inst/extData/pre.csv", origDF = rezEx$trackDF$refexpr)
+  changeDF = rez_read_csv("inst/extdata/pre.csv", origDF = rezEx$trackDF$refexpr)
   a = rezEx$trackDF$refexpr %>% updateFromDF(changeDF, changeCols = c('roleType', 'case', 'person', 'pronType', 'definite', 'identifiable', 'referential'), delRows = T, addCols = T)
   expect_equal(a %>% filter(id == "51B0F2753A16") %>% pull(case), "གི")
   expect(!any(is.na(a$roleType)), "Deletion failed.")

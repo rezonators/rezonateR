@@ -14,13 +14,14 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 Sys.setlocale("LC_CTYPE", locale="Tibetan")
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 Welcome to the official vignette of rezonateR 0.1.0! As this is only version 0.1.0, please tolerate all the mistakes you find and tell me (by email, or in a GitHub issue) if you find any! :)
 
-# Preliminaries
+## Preliminaries
 
-## Why use rezonateR?
+### Why use rezonateR?
 
 If you're reading this, you're probably already using Rezonator to do your daily work. Rezonator is a powerful tool for annotating and visualising the dynamics of human engagement. The purpose of rezonateR is to add a series of additional tools that enhance the functionality of Rezonator and increase your productivity! My goal is to minimise the time you spend on coding and annotating so you have more time for *thinking*.
 
@@ -48,7 +49,7 @@ library(devtools)
 install_github("johnwdubois/rezonateR")
 ```
 
-## A quick import
+### A quick import
 
 Let's start by importing our first file. 
 
@@ -80,9 +81,9 @@ rez_save(myRez, savePath)
 myRez = rez_load(savePath)
 ```
 
-# Introduction to rezrObjs and nodeMaps
+## Introduction to rezrObjs and nodeMaps
 
-##rezrObjs
+###rezrObjs
 
 There are three main kinds of objects in rezonateR that you will interact with directly, namely rezrObj, nodeMap and rezrDF. rezrObjs and nodeMaps will be covered in this section. rezrDFs are relatively complex, and will form the bulk of our discussion in this vignette.
 
@@ -92,14 +93,19 @@ rezrObj objects contain one single nodeMap and several rezrDFs:
 print("Item in myRez:")
 names(myRez)
 ```
+
 The relationships between the various entites are as follows:
+
 * chunks and tree entries are built on top of tokens
+
 * entries correspond exactly to tokens, and units build on entries
+
 * trackDF refers to both chunks and tokens
 
 This has some ramifications for updating, which we'll come to later.
 
-## nodeMaps
+### nodeMaps
+
 The nodeMap is similar to the internal representation of the file used in Rezonator-generated .rez files. The node map in .rez files are a disorganised list of nodes, each of which correspond to an entity inside Rezonator: units, tokens, and so on. The rezonateR nodeMap is similar. The major difference is that nodes are organised into sub-categories, according to the type of entity that the node is encoding. Let's have a sneak peak at these categories:
 
 ```{r}
@@ -108,7 +114,7 @@ names(myRez$nodeMap)
 ```
 In practice, you will not interact with most of these nodeMaps except token. Most of the time, you will only be dealing with rezrDFs, which are much easier to work with. Let's take a look at them.
 
-# Introduction to rezrDFs
+## Introduction to rezrDFs
 
 A rezrDF is like a normal data frame that you know from base R. Here's the beginning of the unit table:
 
@@ -128,7 +134,7 @@ rezrDF inherits from the Tidyverse 'tibble' structure, so all tibble-related fun
 
 There are three main differences that make rezrDF special:
 
-## Perk 1: Field access labels
+### Perk 1: Field access labels
 
 Field access labels prevents you from accidentally changing things that you shouldn't be changing. Let's look at the field access values of the unitDF:
 
@@ -144,7 +150,7 @@ There are five possible field access values:
 -'foreign': Fields whose values are automatically generated using information from a DIFFERENT rezrDF (or several different rezrDFs, but this is an advanced feature we will stay away from in this vignette.)
 
 
-## Perk 2: Reloads
+### Perk 2: Reloads
 
 The reload() function is one of the core features of rezonateR that makes it so convenient to use. The reload() feature is based on updateFunctions. You can access the updateFunctions of a table using updateFunct:
 
@@ -172,7 +178,7 @@ myRez$unitDF %>% filter(str_detect(word, "<0>")) %>% rez_select(id, word, wordWy
 
 You might be wondering how to reload an entire rezrObj. Because tables often depend on each other (for example, field A in table X relies on field B in table Y which in turn relies on field C in table X), this is technically difficult, but I plan to add this function before the 1.0 release. Stay tuned!
 
-## Perk 3: Correpondences to nodeMaps
+### Perk 3: Correpondences to nodeMaps
 
 rezrDFs encode information about whether a field is in the nodeMap or not:
 
@@ -183,19 +189,21 @@ inNodeMap(myRez$unitDF)
 
 This doesn't do so much yet, since you're not yet allowed to push a field created in a rezrDF back to a nodeMap. This will be available in the 1.0 release.
 
-# Editing rezrDFs
+## Editing rezrDFs
 
 One of the core features of rezonateR is to facilitate the automatic and semi-automatic creation of fields, which is currently not supported in Rezonator. There are also other operations you may want to perform on rezrDFs.
 
 To cater to users of different habits and skill levels, I have introduced three different levels of rezrDFs.
 
 1. EasyEdit can be quickly picked up by everyone, including base R users, and covers the most basic operations you would want to do to a rezrDF (e.g. addField, changeFieldForeign)
+
 2. TidyRez is easy to pick up for tidyverse users, though there is some learning curve for others (e.g. rez_mutate, rez_left_join)
+
 3. Core engine: These are mostly functions that I use within rezonateR under the hood. Users who want maximum flexibility may also use them (e.g. lowerToHigher, createLeftJoinUpdate), but do be aware that I may make changes to these without notice, since I will assume that most users have little use for them.
 
 Crucially, while EasyEdit and TidyRez syntax are very similar within each category, functions within the core engine are a lot more divergent, and EasyEdit and TidyRez also differ considerably in their syntax. So if you are comfortable with TidyRez, minimising the use of EasyEdit may make your code look more consistent, and vice versa.
 
-## EasyEdit
+### EasyEdit
 
 EasyEdit consists of four commonly used functions, addFieldLocal, addFieldForeign, changeFieldLocal and changeFieldForeign. There is also a less useful function, addRow, that we will not cover in this vignette, but you can check out the documentation if you would like to add a row.
 
@@ -270,17 +278,25 @@ head(myRez$tokenDF %>% rez_select(id, word, orthoLength))
 
 Note that *if you don't specify the field access value, I will automatically change it to flex, even in changeField*. This is to force you to remember that you are not only changing the value of the field itself, but also how it will be updated in the future. If you don't supply a field access value and it's originally an auto or foreign field, I will warn you about this change, so you can run changeField again if you want to change your mind.
 
-## TidyRez
+### TidyRez
 In general, TidyRez functions are called by adding 'rez_' in front of a dplyr function name, such a rez_group_by or rez_mutate. Using TidyRez functions allows you to keep and/or update your field access values, inNodeMap values, and updateFunctions. Using base R or classic dplyr functions with rezrDFs may result in reload fails, unless supplemented by core engine functions, which are not covered in this vignette.
 
 A few dplyr functions are completely safe to use in rezonateR, mostly those that focus on selecting rows of a table, such as filter(), arrange() or slice(). Currently implemented TidyRez functions include:
+
 * rez_add_row for adding new entries
+
 * rez_mutate for adding and editing columns
+
 * rez_rename for renaming columns
+
 * rez_bind_rows for combining rezrDFs vertically
+
 * rez_group_split for splitting rezrDFs vertically
+
 * rez_group_by and rez_ungroup for grouping
+
 * rez_select for selecting certain columns inside a rezrDF
+
 * rez_left_join for left joins
 
 A few other planned ones include rez_bind_cols and rez_outer_join, which will be especially useful for the calculation of inter-annotator agreement.
@@ -303,7 +319,7 @@ A warning is in order: TidyRez only updates *the current table*. If other tables
 
 Most of the TidyRez functions' syntax deviate from dplyr only minimally in ways that you can read about in the documentation. However, rez_left_join is worth a quick mention. In addition to a fieldaccess field and a rezrObj field, which are self-explanatory, there is a fkey field and a df2Address field. fkey is the name of the field in the first data.frame that corresponds to IDs of the second data.frame. df2Address is a string that tells rez_left_join how to find the source rezrDF next time. If the source rezrDF doesn't belong to a layer, e.g. tokenDF, just type that. If the source rezrDF belongs to a layer, put a '/' between the table and the layer, e.g. 'trackDF/refexpr'.
 
-# An interlude: Time and sequence
+## An interlude: Time and sequence
 
 Before we continue our adventure, let's look at a couple of ways we can upgrade our rezrObj to contain even more information.
 
@@ -322,7 +338,7 @@ myRez = addUnitSeq(myRez, "track")
 
 This adds a unitSeqFirst and unitSeqLast field to chunks and track chains entries, and a unitSeq field to tokens.
 
-# Updating rezonateR using external information
+## Updating rezonateR using external information
 Some annotation actions are easier with a spreadsheet than in a Rezonator, so one action you will frequently perform is to do annotations in a spreadsheet programme and then integrate that information back into a rezrObj. Fortunately, rezonateR contains functionality that can facilitate this and minimise errors generated in the process.
 
 Let's say we want to annotate the person of the referential expressions inside trackDF$refexpr. Before we start annotating manually, I wrote some simple rules to guess what the person is that works for most situations, so we will only have to correct from this baseline:
@@ -361,11 +377,11 @@ myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% updateFromDF(changeDF, changeC
 head(myRez$trackDF$refexpr %>% select(id, word, person))
 ```
 
-# Analysing track chains with EasyTrack
+## Analysing track chains with EasyTrack
 
 Now that we've looked at an example of semi-automatic annotation, let's move on to some full automation! We will be looking in particulr at coreference chains. rezonateR contains a suite of functions for generating features useful for analysing the choice of referential forms, reference comprehension, and similar topics.
 
-## Anaphoric and cataphoric distance
+### Anaphoric and cataphoric distance
 
 Let's first find out how many units we are from the previous mention of something. This is equivalent to the gapUnit column that already exists as automatically generated by Rezonator:
 
@@ -389,7 +405,7 @@ myRez$trackDF$refexpr %>% select(id, wordsToLastMention) %>% slice(10:16)
 
 Note that unitsToNextMention and tokensToNextMention work in the same way.
 
-## Tallying preceding and following mentions
+### Tallying preceding and following mentions
 
 We can also count how many previous mentions of something there were within a window of units. Most people do five or 20 unit. Let's try this with 5. The countPrevMentions allows us to do this (countNextMentions does this but for the succeeding context):
 
@@ -405,7 +421,7 @@ myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% rez_mutate(noComingZeroes = co
 myRez$trackDF$refexpr %>% select(id, noComingZeroes)  %>% slice(10:16)
 ```
 
-## Counting competitors
+### Counting competitors
 
 We may also want to count competing mentions, that is, recent mentions not coreferential to the current mention. countCompetitors() tallies the number of competitors intervening between the previous and current mention, possibly within a window. Here is one example with no window:
 
@@ -416,7 +432,7 @@ myRez$trackDF$refexpr %>% select(id, noComingZeroes)  %>% slice(10:16)
 
 All of the functions introduced in this section have additional fields that allow for further customisation. Please feel free to refer to the manual for more information.
 
-# Adding tree information
+## Adding tree information
 
 Now let's add some information from trees. The first thing to do is to run the getAllTreeCorrespondences function, which adds a treeEntry column to non-tree tables. If you select entity = "track", this column will be added to tokenDF, chunkDF and trackDF.
 
@@ -433,23 +449,25 @@ myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% rez_left_join(myRez$chunkDF$ve
 myRez$trackDF$refexpr %>% select(id, treeParent, verbID, verbWord) %>% slice(10:16)
 ```
 
-# Advanced: Chunk mergers
+## Advanced: Chunk mergers
 
 The last topic to cover is merging chunks, most useful for creating muti-line chunks. There are several steps to merging chunks:
 
 1. Create constituent chunks that span the entire merged chunk
+
 2. Create a tree leaf that contains all tokens in the merged chunk, and put the leaf in a tree.
+
 3. Use the mergeChunksWithTree command in rezonateR to merge them.
 
 mergeChunksWithTree is very easy to use. After you call this command, the merged chunks will be added to the bottom of the correponding chunk rezrDF.  Chunk tags are taken from the first constituent chunk of each merger by default; see the manual for setting custom conditions. There will in addition be a column called combinedChunk that tells you whether a chunk is a combined chunk, a member of a combined chunk, or neither.
 
 ```{r}
 myRez = mergeChunksWithTree(myRez)
-myRez$chunkDF$refexpr %>% filter(combinedChunk != "") %>% select(id,name,  word, combinedChunk) #Showing only combined chunks and their members
+myRez$chunkDF$refexpr %>% filter(combinedChunk != "") %>% select(id, name, word, combinedChunk) #Showing only combined chunks and their members
 ```
 
-```{r}
-myRez = 
-  mergedChunksToTrack(myRez, "refexpr")
+You may also augment the trackDF with the merged chunks; the combinedChunk column works similarly:
 
+```{r}
+myRez = mergedChunksToTrack(myRez, "refexpr")
 ```
