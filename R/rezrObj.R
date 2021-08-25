@@ -98,3 +98,51 @@ getChunkAddresses = function(rezrObj){
 getTokenChunkAddresses = function(rezrObj){
   c("tokenDF", getChunkAddresses(rezrObj))
 }
+
+
+#' Get a list of values from a lower-level table.
+#'
+#' @rdname lowerList
+#' @param rezrObj The rezrObj object from which information is to be extracted.
+#' @param fieldName The field you would like to extract.
+#' @param simpleDF The lower rezrDF.
+#' @param complexDF The higher rezrDF.
+#' @param complexNodeMap The nodeMap corresponding to the higher rezrDF.
+#' @param listName The name of the list of keys in complexNodeMap.
+#' @param complexIDs The IDs of the rows in the complex rezrDF you would like to extract information on.
+#' @param trackDF The trackDF you would like to extract information for.
+#'
+#' @return A list of vectors. Each list entry has the ID in the more complex DF as its label, and the content is a vector, each entry of which corresponds to an entry in the lower rezrDF.
+#' @export
+getLowerFieldList = function(rezrObj, fieldName, simpleDF, complexDF, complexNodeMap, listName, complexIDs = NULL){
+  if(is.null(complexIDs)){
+    complexIDs = complexDF[[getKey(complexDF)]]
+  }
+  result = lapply(complexIDs, function(complexID){
+    simpleIDs = complexNodeMap[[complexID]][[listName]]
+    simpleDF %>% filter(id %in% simpleIDs) %>% pull(fieldName)
+  })
+  names(result) = complexIDs
+  result
+}
+
+#' @rdname lowerList
+#' @export
+getTrackTokens = function(rezrObj, fieldName, trackDF = NULL){
+  if(is.null(trackDF)){
+    trackDF = combineLayers(rezrObj, "track")
+  }
+
+  #Find the chunk text
+  allChunkIDs = names(rezrObj$nodeMap$chunk)
+  chunkIDs = trackDF$token[trackDF$token %in% allChunkIDs]
+  chunkResult = getLowerFieldList(rezrObj, fieldName, rezrObj$tokenDF, combineChunks(rezrObj), rezrObj$nodeMap$chunk, "tokenList", complexIDs = chunkIDs)
+
+  #Find the token text
+  tokenResult = rezrObj$tokenDF %>% filter(id %in% trackDF$token) %>% pull(fieldName)
+  names(tokenResult) = rezrObj$tokenDF %>% filter(id %in% trackDF$token) %>% pull(id)
+
+  result = c(chunkResult, tokenResult)[trackDF$token]
+  names(result) = trackDF$id
+  result
+}

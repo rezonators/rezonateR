@@ -32,3 +32,7 @@ test_that("CSV import/export", {
 })
 
 
+test_that("getTrackTokens", {
+  a = rez_load("inst/extdata/rezEx.Rdata")
+  a$trackDF$refexpr %>% rez_mutate(a = getTrackTokens(myRez, "word", myRez$trackDF$refexpr)) %>% select(word, a)
+})
