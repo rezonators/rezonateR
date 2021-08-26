@@ -258,13 +258,20 @@ getChildrenOfChunk = function(chunkID, chunkDF, treeEntryDF){
 
 getSiblingsOfEntry = function(treeEntry, treeEntryDF){
   parentID = treeEntryDF %>% filter(id == treeEntry) %>% slice(1) %>% pull(parent)
-  getChildrenOfEntry(parentID, treeEntryDF)
+  getChildrenOfEntry(parentID, treeEntryDF) %>% setdiff(treeEntry)
 }
 
 getSiblingsOfChunk = function(chunkID, chunkDF, treeEntryDF){
   entryID = chunkDF %>% filter(id == chunkID) %>% slice(1) %>% pull(treeEntry)
   childrenEntryIDs = getSiblingsOfEntry(entryID, treeEntryDF)
   chunkDF %>% filter(treeEntry %in% childrenEntryIDs) %>% pull(id)
+}
+
+getChunkSiblingIf = function(chunkID, chunkDF, treeEntryDF, cond){
+  cond = enexpr(cond)
+  cand = chunkDF %>% filter(id %in% getSiblingsOfChunk(chunkID, chunkDF, treeEntryDF), !!cond) %>% slice(1) %>% pull(id)
+  if(length(cand) == 0) cand = NA
+  cand
 }
 
 getPositionAmongSiblings = function(currChunkDF, rezrObj, treeEntryDF = NULL){
