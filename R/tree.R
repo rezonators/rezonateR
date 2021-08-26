@@ -245,3 +245,30 @@ mergedChunksToTrack = function(rezrObj, trackLayers = NULL){
   }
   rezrObj
 }
+
+getChildrenOfEntry = function(treeEntry, treeEntryDF){
+  treeEntryDF %>% filter(parent == treeEntry) %>% pull(id)
+}
+
+getChildrenOfChunk = function(chunkID, chunkDF, treeEntryDF){
+  parentEntryID = chunkDF %>% filter(id == chunkID) %>% slice(1) %>% pull(treeEntry)
+  childrenEntryIDs = getChildrenOfEntry(parentEntryID, treeEntryDF)
+  chunkDF %>% filter(treeEntry %in% childrenEntryIDs) %>% pull(id)
+}
+
+getPositionAmongSiblings = function(currChunkDF, rezrObj){
+  chunkDF = combineTokenChunk(rezrObj)
+  allChunkIDs = chunkDF$id
+  parentChildDict = lapply(allChunkIDs, function(x) getChildrenOfChunk(x, chunkDF, treeEntryDF))
+  result = numeric(nrow(currChunkDF))
+  for(i in 1:nrow(currChunkDF)){
+    currID = currChunkDF$id[i]
+    for(dictEntry in parentChildDict){
+      if(currID %in% dictEntry){
+        result[i] = which(currID == dictEntry)[1]
+        break
+      }
+    }
+  }
+  result
+}
