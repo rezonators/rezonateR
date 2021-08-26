@@ -114,7 +114,7 @@ findPrev = function(curr, x){
 #' @param unitSeq The vector of units where the mentions appeared.
 #' @param chain The chain that each mention belongs to.
 #' @export
-lastBridgeUnit = function(frameMatrix, unitSeq = NULL, chain = NULL, tokenSeqFirst = NULL, tokenSeqLast = NULL){
+lastBridgeUnit = function(frameMatrix, unitSeq = NULL, chain = NULL, tokenSeqFirst = NULL, tokenSeqLast = NULL, inclRelations = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqLast", chain = "chain", tokenSeqFirst = "discourseTokenSeqFirst", tokenSeqLast = "discourseTokenSeqLast")
 
@@ -123,7 +123,7 @@ lastBridgeUnit = function(frameMatrix, unitSeq = NULL, chain = NULL, tokenSeqFir
   #In units before
   for(currChain in unique(chain)){
     currUnits = unitSeq[chain == currChain]
-    relatedEntities = getRelatedEntities(currChain, frameMatrix)
+    relatedEntities = getRelatedEntities(currChain, frameMatrix, inclRelations)
     bridgeUnits = unitSeq[chain %in% relatedEntities] #Grab all the PRE's units
     result[chain == currChain] = sapply(currUnits, function(x) findPrev(x, bridgeUnits))
 
@@ -142,17 +142,17 @@ lastBridgeUnit = function(frameMatrix, unitSeq = NULL, chain = NULL, tokenSeqFir
 #' @rdname bridging
 #' @param unitSeq The vector of units where the mentions appeared.
 #' @export
-unitsToLastBridge = function(frameMatrix, unitSeq = NULL, chain = NULL, tokenSeqLast = NULL, tokenSeqFirst = NULL){
+unitsToLastBridge = function(frameMatrix, unitSeq = NULL, chain = NULL, tokenSeqLast = NULL, tokenSeqFirst = NULL, inclRelations = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqLast", chain = "chain", tokenSeqFirst = "discourseTokenSeqFirst", tokenSeqLast = "discourseTokenSeqLast")
 
-  unitSeq - lastBridgeUnit(frameMatrix, unitSeq, chain, tokenSeqFirst, tokenSeqLast)
+  unitSeq - lastBridgeUnit(frameMatrix, unitSeq, chain, tokenSeqFirst, tokenSeqLast, inclRelations)
 }
 
 #' @rdname bridging
 #' @param tokenSeq The vector of sequence values values where the mentions appeared. Common choices are discourseTokenSeqFirst, discourseTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running [rezonateR::addIsWordField] on a rezrObj. By default it's discourseTokenSeqLast.
 #' @export
-lastBridgeToken = function(frameMatrix, firstOrLast = "last", tokenSeqFirst = NULL, tokenSeqLast = NULL, chain = NULL){
+lastBridgeToken = function(frameMatrix, firstOrLast = "last", tokenSeqFirst = NULL, tokenSeqLast = NULL, chain = NULL, inclRelations = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(tokenSeqFirst = "discourseTokenSeqFirst", tokenSeqLast = "discourseTokenSeqLast", chain = "chain")
   if(firstOrLast == "last") tokenSeq = tokenSeqLast else tokenSeq = tokenSeqFirst
@@ -160,7 +160,7 @@ lastBridgeToken = function(frameMatrix, firstOrLast = "last", tokenSeqFirst = NU
   result = numeric(length(tokenSeqFirst))
   for(currChain in unique(chain)){
     currTokens = tokenSeq[chain == currChain]
-    bridgeBool = chain %in% getRelatedEntities(currChain, frameMatrix)
+    bridgeBool = chain %in% getRelatedEntities(currChain, frameMatrix, inclRelations)
     currBegins = tokenSeqFirst[chain == currChain]
     currEnds = tokenSeqLast[chain == currChain]
     result[chain == currChain] = sapply(1:length(currTokens), function(x){
@@ -176,13 +176,13 @@ lastBridgeToken = function(frameMatrix, firstOrLast = "last", tokenSeqFirst = NU
 #' @param zeroProtocol If 'literal', I will take the seq values of the zeroes at face value. (If you set zeros as non-words and use discourseWordSeqFirst or discourseWordSeLast as your tokenSeq, this will lead to meaningless values.) If 'unitFinal', I will treat zeroes as if they were the final word of the unit. If 'unitFirst', I will treat zeroes as if they were the first word of the unit.
 #' @param zeroCond A condition for determining whether a token is zero. For most people, this should be (word column) == "<0>".
 #' @export
-tokensToLastBridge = function(frameMatrix, firstOrLast = "last", tokenSeqFirst = NULL, tokenSeqLast = NULL, chain = NULL, zeroProtocol = "literal", zeroCond = NULL, unitSeq = NULL, unitDF = NULL){
+tokensToLastBridge = function(frameMatrix, firstOrLast = "last", tokenSeqFirst = NULL, tokenSeqLast = NULL, chain = NULL, zeroProtocol = "literal", zeroCond = NULL, unitSeq = NULL, unitDF = NULL, inclRelations = NULL){
   #Get the default column names from the rezrDF environment if unspecified
   grabFromDF(tokenSeqFirst = "discourseTokenSeqFirst", tokenSeqLast = "discourseTokenSeqLast", chain = "chain")
   if(firstOrLast == "last") tokenSeq = tokenSeqLast else tokenSeq = tokenSeqFirst
 
   if(zeroProtocol == "literal"){
-    result = tokenSeq - lastBridgeToken(frameMatrix, firstOrLast, tokenSeqFirst, tokenSeqLast, chain)
+    result = tokenSeq - lastBridgeToken(frameMatrix, firstOrLast, tokenSeqFirst, tokenSeqLast, chain, inclRelations)
   } else if(zeroProtocol == "unitFinal"){
     #Validation
     stopifnot(!is.null(zeroCond))
@@ -190,7 +190,7 @@ tokensToLastBridge = function(frameMatrix, firstOrLast = "last", tokenSeqFirst =
     stopifnot(!is.null(unitSeq))
     stopifnot(!is.null(unitDF))
 
-    prevUnit = lastBridgeUnit(frameMatrix, unitSeq, chain) #Prev units
+    prevUnit = lastBridgeUnit(frameMatrix, unitSeq, chain, inclRelations) #Prev units
     prevToken = sapply(prevUnit, function(x){
       if(!is.na(x)){
         unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(discourseTokenSeqLast)
@@ -204,7 +204,7 @@ tokensToLastBridge = function(frameMatrix, firstOrLast = "last", tokenSeqFirst =
     stopifnot(!is.null(unitSeq))
     stopifnot(!is.null(unitDF))
 
-    prevUnit = lastBridgeUnit(frameMatrix, unitSeq, chain) #Prev units
+    prevUnit = lastBridgeUnit(frameMatrix, unitSeq, chain, inclRelations) #Prev units
     prevToken = sapply(prevUnit, function(x){
       if(!is.na(x)){
         unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(discourseTokenSeqFirst)
@@ -219,11 +219,11 @@ tokensToLastBridge = function(frameMatrix, firstOrLast = "last", tokenSeqFirst =
 #' @rdname trackPrevContext
 #' @param windowSize The size of the window in which you will be counting.
 #' @export
-countPrevBridges = function(windowSize, frameMatrix, unitSeq = NULL, chain = NULL){
+countPrevBridges = function(windowSize, frameMatrix, unitSeq = NULL, chain = NULL, inclRelations = NULL){
   #Get the default column names from the rezrDF environment
   grabFromDF(unitSeq = "unitSeqLast", chain = "chain")
   sapply(1:length(unitSeq), function(i){
-    relatedEntities = getRelatedEntities(chain[i], frameMatrix)
+    relatedEntities = getRelatedEntities(chain[i], frameMatrix, inclRelations)
     window = unitSeq[sapply(chain, function(x) x %in% relatedEntities)
                      & unitSeq < unitSeq[i]
                      & unitSeq >= unitSeq[i] - windowSize]
