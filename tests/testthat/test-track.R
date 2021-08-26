@@ -59,3 +59,33 @@ test_that("Track functions work", {
 
 })
 
+
+test_that("Frame creation", {
+  a = rez_load("inst/extdata/rezEx.Rdata")
+  a = addFrameMatrix(a)
+  expect("frameMatrix" %in% class(frameMatrix(a)), "addFrameMatrix failed.")
+
+  reduced
+})
+
+
+test_that("Track functions work", {
+  a = rez_load("data/rezEx.rda")
+
+  #lastMentionUnit
+  b = a$trackDF$refexpr
+  b = b %>% rez_mutate(lastBridgeUnit = lastBridgeUnit(frameMatrix(a)),
+                       lastBridgeToken = lastBridgeToken(frameMatrix(a)))
+  expect(any(!is.na(b$lastBridgeUnit)), "lastBridgeUnit failed.")
+  expect(all(b$lastBridgeUnit <= b$lastBridgeToken, na.rm = T), "lastBridgeToken failed.")
+
+
+  b = b %>% rez_mutate(unitsToLastBridge = unitsToLastBridge(frameMatrix(a)),
+                       tokensToLastBridge = tokensToLastBridge(frameMatrix(a)),
+                       tokensToLastBridgeUF = tokensToLastBridge(frameMatrix(a), zeroProtocol = "unitFinal", zeroCond = (word == "<0>"), unitDF = corpus$unitDF))
+  expect(any(!is.na(b$unitsToLastBridge)), "unitsToLastBridge failed.")
+  expect(any(!is.na(b$tokensToLastBridge)), "tokensToLastBridge failed.")
+  expect(any(!is.na(b$tokensToLastBridgeUF)), "tokensToLastBridgeUF (unit-final) failed.")
+  expect(all(b$unitsToLastBridge <= b$tokensToLastBridge, na.rm = T), "tokensToLastBridgeUF failed.")
+
+})

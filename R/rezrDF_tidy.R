@@ -243,18 +243,19 @@ rez_bind_rows = function(..., type = "intersect"){
   df1 = dfs[[1]]
 
   if(type == "intersect"){
-    intersectCols = multi_intersect(lapply(dfs, names))
-    dfs_new = lapply(dfs, function(x) rez_select(x, all_of(intersectCols)))
+    newCols = multi_intersect(lapply(dfs, names))
+    dfs_new = lapply(dfs, function(x) rez_select(x, all_of(newCols)))
   } else {
     dfs_new = dfs
   }
 
 
   result = bind_rows(dfs_new)
+  if(type == "union") newCols = names(result)
 
-  updateFunct(result) = updateFunct(df1)[names(updateFunct(df1)) %in% intersectCols]
-  fieldaccess(result) = fieldaccess(df1)[names(fieldaccess(df1)) %in% intersectCols]
-  inNodeMap(result) = inNodeMap(df1)[names(inNodeMap(df1)) %in% intersectCols]
+  updateFunct(result) = updateFunct(df1)[names(updateFunct(df1)) %in% newCols]
+  fieldaccess(result) = fieldaccess(df1)[names(fieldaccess(df1)) %in% newCols]
+  inNodeMap(result) = inNodeMap(df1)[names(inNodeMap(df1)) %in% newCols]
   class(result) = c("rezrDF", class(result))
   result
 
