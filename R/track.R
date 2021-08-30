@@ -58,7 +58,7 @@ lastMentionToken = function(tokenSeq = NULL, chain = NULL){
   for(currChain in unique(chain)){
     chainTokens = tokenSeq[chain == currChain] #Grab all the PRE's units
     tokensOrdered = sort(chainTokens) #Put them in the right order
-    tokensOrderedLagged = lag(tokensOrdered) #Get the previous unit
+    tokensOrderedLagged = lag(tokensOrdered) #Get the previous token
     result[chain == currChain] = tokensOrderedLagged[rank(chainTokens)] #Put it back in the wrong order
   }
   result
@@ -311,4 +311,24 @@ countCompetitors = function(cond = NULL, window = Inf, tokenSeq = NULL, chain = 
     sum(tokenSeq < tokenSeq[x] & tokenSeq > lastMentionPos[x] & condition & tokenSeq > tokenSeq[x] - window)
   })
 
+}
+
+
+getLastMentionProp = function(column, chain = NULL, tokenSeq = NULL, inclRelations = NULL){
+  #Get the default column names from the rezrDF environment
+  grabFromDF(unitSeq = "unitSeqLast", chain = "chain", tokenSeq = "discourseTokenSeqLast")
+
+  result = numeric(length(tokenSeq))
+
+  for(currChain in unique(chain)){
+    currTokens = tokenSeq[chain == currChain] #Grab all the token positions of the PREs in the chain
+    currColumn = column[chain == currChain]
+    chainTokenSort = sort(currTokens, index.return = T)
+    columnOrdered = column[chainTokenSort$ix]
+    columnOrderedLagged = lag(columnOrdered) #Get the previous val
+    result[chain == currChain] = columnOrderedLagged[rank(currTokens)] #Put it back in the wrong order
+  }
+  result
+
+  result
 }

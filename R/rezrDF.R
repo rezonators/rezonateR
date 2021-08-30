@@ -280,6 +280,16 @@ reloadForeign = function(df, rezrObj, fields = ""){
   df
 }
 
+#' Change the strings in a rezrDF to factors
+#'
+#' @param df The data.frame to be modified.
+#' @param colsToChange The columns to be modified. If left blank, all character columns will be factor-fied.
+#' @param levels Factor levels, as a list with each label being a column name.
+#'
+#' @return
+#' @export
+#'
+#' @examples
 stringToFactor = function(df, colsToChange = NULL, levels = list()){
   result = df
   if(is.null(colsToChange)) colsToChange = colnames(df)

@@ -403,7 +403,7 @@ myRez$trackDF$refexpr =  myRez$trackDF$refexpr %>%
     discourseWordSeqLast, #What seq to use
     zeroProtocol = "unitFinal", #How to treat zeroes
     zeroCond = (word == "<0>"),
-    unitDF = myRez$unitDF)) #Additional argument for unitLast protocol
+    unitDF = myRez$unitDF)) #Additional argument for unitFinal protocol
 myRez$trackDF$refexpr %>% select(id, wordsToLastMention) %>% slice(10:16)
 ```
 
