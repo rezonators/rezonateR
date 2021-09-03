@@ -90,13 +90,31 @@ rez_load = function(filename){
   obj
 }
 
-getChunkAddresses = function(rezrObj){
-  "chunkDF/" %+% names(rezrObj$chunkDF)
+#' Get all the addresses of a DF with multiple layers
+#'
+#' @rdname getAddresses
+#' @param rezrObj The rezrObj object.
+#' @param entity The entity with multiple layers - chunk, track, trackChain, etc.
+#'
+#' @return The desired addresses.
+#' @export
+#'
+#' @examples
+getLayerAddresses = function(rezrObj, entity){
+  entity %+% "DF/" %+% names(rezrObj[[entity %+% "DF"]])
 }
 
 
+#' Get combined addressese or token and chunk DFs
+#'
+#' @rdname getAddresses
+#'
+#' @return
+#' @export
+#'
+#' @examples
 getTokenChunkAddresses = function(rezrObj){
-  c("tokenDF", getChunkAddresses(rezrObj))
+  c("tokenDF", getLayerAddresses(rezrObj, "chunk"))
 }
 
 

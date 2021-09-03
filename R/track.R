@@ -313,6 +313,27 @@ countCompetitors = function(cond = NULL, window = Inf, tokenSeq = NULL, chain = 
 
 }
 
+#' Count the number of competitors intervening between the previous mention and the current mention
+#'
+#' @param matchCol The column for which a value is to be matched.
+#' @inheritParams lastMentionToken
+#' @return
+#' @export
+countMatchingCompetitors = function(matchCol, window = Inf, tokenSeq = NULL, chain = NULL){
+  grabFromDF(tokenSeq = "discourseTokenSeqLast", chain = "chain")
+  lastMentionPos = lastMentionToken(tokenSeq, chain)
+  if(is.null(cond)){
+    condition = T
+  } else {
+    condition = eval_bare(enexpr(cond), env = env_parent(caller_env()))
+  }
+
+  sapply(1:length(tokenSeq), function(x){
+    sum(tokenSeq < tokenSeq[x] & tokenSeq > lastMentionPos[x] & matchCol[x] == matchCol & tokenSeq > tokenSeq[x] - window)
+  })
+
+}
+
 
 getLastMentionProp = function(column, chain = NULL, tokenSeq = NULL, inclRelations = NULL){
   #Get the default column names from the rezrDF environment
