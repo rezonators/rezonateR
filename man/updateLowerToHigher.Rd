@@ -12,7 +12,7 @@ updateLowerToHigher(
   action,
   field = "",
   fkeyInDF = FALSE,
-  seqName = "discourseTokenSeq"
+  seqName = "docTokenSeq"
 )
 }
 \arguments{

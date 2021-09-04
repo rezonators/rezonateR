@@ -24,7 +24,7 @@
 #'
 #' @return The modified target table (complexDF). Most use cases should be handled by other functions like [rezonateR::addUnitSeq] and [rezonateR::addIsWordField]. If you do call this function, do note that the rezrDF you are changing is the second parameter, not the first. As such, piping should be done like this: someDF %>% getSeqBounds(simpleDF, ., complexNodeMap, ...)
 #' @export
-lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fieldnames, higherFieldnames = "", action, seqName = "discourseTokenSeq", tokenListName = "tokenList", simpleDFAddress = "", complexNodeMapAddress = "", rezrObj = NULL, fieldaccess = "foreign"){
+lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fieldnames, higherFieldnames = "", action, seqName = "docTokenSeq", tokenListName = "tokenList", simpleDFAddress = "", complexNodeMapAddress = "", rezrObj = NULL, fieldaccess = "foreign"){
   if(is.null(complexNodeMap)){
     if(!all(complexNodeMapAddress == "") & !is.null(rezrObj)){
       complexNodeMap = listAt(rezrObj, "nodeMap/" %+% complexNodeMapAddress)
@@ -131,9 +131,9 @@ concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, t
 getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleIsAtom = T, seqName = "", tokenListName = "tokenList", exclude0 =  T, ...){
   if(seqName == ""){
     if(simpleIsAtom){
-      seqName = "discourseTokenSeq"
+      seqName = "docTokenSeq"
     } else {
-      seqName = "discourseTokenSeqFirst"
+      seqName = "docTokenSeqFirst"
     }
   }
 
@@ -166,7 +166,7 @@ getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleI
 #'
 #' @return The updated data frame.
 #' @export
-updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
+updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "docTokenSeq"){
   if(length(fkeyAddress) > 1){
     stop("Multiple sources are currently not supported in the updateLowerToHigher function. Please run this function multiple times. Sorry!")
   } else if(fkeyInDF){
@@ -214,7 +214,7 @@ updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field 
 #'
 #' @return An update function for a lowerToHigher-type foreign field.
 #' @export
-createLowerToHigherUpdate = function(address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "discourseTokenSeq"){
+createLowerToHigherUpdate = function(address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "docTokenSeq"){
   if(length(fkeyAddress) > 1){
     stop("Multiple sources are currently not supported in the updateLowerToHigher function. Sorry!")
   } else if(fkeyInDF){

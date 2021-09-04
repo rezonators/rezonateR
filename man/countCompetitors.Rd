@@ -4,12 +4,12 @@
 \alias{countCompetitors}
 \title{Count the number of competitors intervening between the previous mention and the current mention}
 \usage{
-countCompetitors(cond = NULL, window = Inf, tokenSeq = NULL, chain = NULL)
+countCompetitors(cond = NULL, window = Inf, tokenOrder = NULL, chain = NULL)
 }
 \arguments{
 \item{cond}{The condition under which something counts as a competitor. Leave blank if anything goes.}
 
-\item{tokenSeq}{The vector of sequence values values where the mentions appeared. Common choices are discourseTokenSeqFirst, discourseTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running \link{addIsWordField} on a rezrObj. By default it's discourseTokenSeqLast.}
+\item{tokenOrder}{The vector of sequence values values where the mentions appeared. Common choices are docTokenSeqFirst, docTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running \link{addIsWordField} on a rezrObj. By default it's docTokenSeqLast.}
 
 \item{chain}{The chain that each mention belongs to.}
 }

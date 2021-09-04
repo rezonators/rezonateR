@@ -77,17 +77,17 @@ nodeMap = function(importNodeMap, docname){
         next
       }
       if(length(node) > 1){
-        if(node$type == "entry"){
+        if(node$type == "treeEntry"){
           rawNodeMap[["treeEntry"]][[nodeName]] = node
           rawNodeMap[["treeEntry"]][[nodeName]][["doc"]] = docname
         } else if(node$type == "tree"){
           rawNodeMap[["tree"]][[nodeName]] = node
           rawNodeMap[["tree"]][[nodeName]][["doc"]] = docname
-        } else if(node$type == "link"){
+        } else if(node$type == "treeLink"){
           rawNodeMap[["treeLink"]][[nodeName]] = node
           rawNodeMap[["treeLink"]][[nodeName]][["doc"]] = docname
         } else {
-          warning("Unknown tree node encountered.")
+          warning("Unknown tree node encountered:" %+% node$type)
         }
       }
     }

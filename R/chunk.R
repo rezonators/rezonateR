@@ -4,9 +4,9 @@ findContainingChunk = function(containedDF, containerDF, proper = F){
   #Will have to be modified when I have multiple docs
   sapply(1:nrow(containedDF), function(x){
     result = containerDF %>%
-      filter(containerDF$discourseTokenSeqFirst <= containedDF$discourseTokenSeqFirst[x], containerDF$discourseTokenSeqLast >= containedDF$discourseTokenSeqLast[x],
-      !proper | (containerDF$discourseTokenSeqFirst != containedDF$discourseTokenSeqFirst[x] | containerDF$discourseTokenSeqLast != containedDF$discourseTokenSeqLast[x])) %>%
-      arrange(discourseTokenSeqLast - discourseTokenSeqFirst, desc(discourseTokenSeqFirst), discourseTokenSeqLast) %>%
+      filter(containerDF$docTokenSeqFirst <= containedDF$docTokenSeqFirst[x], containerDF$docTokenSeqLast >= containedDF$docTokenSeqLast[x],
+      !proper | (containerDF$docTokenSeqFirst != containedDF$docTokenSeqFirst[x] | containerDF$docTokenSeqLast != containedDF$docTokenSeqLast[x])) %>%
+      arrange(docTokenSeqLast - docTokenSeqFirst, desc(docTokenSeqFirst), docTokenSeqLast) %>%
       slice(1) %>% pull(id)
     if(length(result) == 0) result = NA
     result

@@ -17,14 +17,14 @@ addIsWordField(x, ...)
 
 \item{cond}{The wordhood condition. For example, if your word column is called 'word', and you wish to exclude zeroes, you may write 'x == "<0>"'.}
 
-\item{addWordSeq}{If TRUE, the columns wordSeq and discourseWordSeq will be added.}
+\item{addWordSeq}{If TRUE, the columns wordOrder and docWordSeq will be added.}
 }
 \value{
-The modified rezrDF or rezrObj. If addWordSeq is set to TRUE, the columns wordSeq and discourseWordSeq will be added to tokenDF and entryDF, and the columns wordSeqFirst, wordSeqLast, discourseWordSeqFirst and discourseWordSeqLast will be added to unitDF, chunkDF and trackDF.
+The modified rezrDF or rezrObj. If addWordSeq is set to TRUE, the columns wordOrder and docWordSeq will be added to tokenDF and entryDF, and the columns wordOrderFirst, wordOrderLast, docWordSeqFirst and docWordSeqLast will be added to unitDF, chunkDF and trackDF.
 }
 \description{
 Add a field on whether something is a word or not.
 }
 \note{
-If used on a rezrObj and addWordSeq = T, wordSeq and discourseWordSeq are automatically added to entry, unit, chunk and track tables. Rez and stack tables coming soon.
+If used on a rezrObj and addWordSeq = T, wordOrder and docWordSeq are automatically added to entry, unit, chunk and track tables. Rez and stack tables coming soon.
 }

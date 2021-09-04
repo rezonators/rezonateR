@@ -56,19 +56,19 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
 #' @rdname addIsWordField
 #' @param x The rezrDF or rezrObj to be edited.
 #' @param cond The wordhood condition. For example, if your word column is called 'word', and you wish to exclude zeroes, you may write 'x == "<0>"'.
-#' @param addWordSeq If TRUE, the columns wordSeq and discourseWordSeq will be added.
+#' @param addWordSeq If TRUE, the columns wordOrder and docWordSeq will be added.
 #'
-#' @return The modified rezrDF or rezrObj. If addWordSeq is set to TRUE, the columns wordSeq and discourseWordSeq will be added to tokenDF and entryDF, and the columns wordSeqFirst, wordSeqLast, discourseWordSeqFirst and discourseWordSeqLast will be added to unitDF, chunkDF and trackDF.
-#' @note If used on a rezrObj and addWordSeq = T, wordSeq and discourseWordSeq are automatically added to entry, unit, chunk and track tables. Rez and stack tables coming soon.
+#' @return The modified rezrDF or rezrObj. If addWordSeq is set to TRUE, the columns wordOrder and docWordSeq will be added to tokenDF and entryDF, and the columns wordOrderFirst, wordOrderLast, docWordSeqFirst and docWordSeqLast will be added to unitDF, chunkDF and trackDF.
+#' @note If used on a rezrObj and addWordSeq = T, wordOrder and docWordSeq are automatically added to entry, unit, chunk and track tables. Rez and stack tables coming soon.
 #' @export
 addIsWordField.rezrDF = function(x, cond, addWordSeq = T){
   if("isWord" %in% x) message("This action overrides the original isWord field in your tokenDF.")
   cond = enexpr(cond)
   result = rez_mutate(x, isWord = !!cond, fieldaccess = "auto")
   if(addWordSeq){
-    wordSeq = numeric(nrow(result))
-    result = rez_mutate(result, wordSeq = getWordSeq(isWord, unit, tokenSeq), fieldaccess = "auto")
-    result = rez_mutate(result, discourseWordSeq = getDiscourseWordSeq(isWord, discourseTokenSeq), fieldaccess = "auto")
+    wordOrder = numeric(nrow(result))
+    result = rez_mutate(result, wordOrder = getWordSeq(isWord, unit, tokenOrder), fieldaccess = "auto")
+    result = rez_mutate(result, docWordSeq = getDiscourseWordSeq(isWord, docTokenSeq), fieldaccess = "auto")
   }
   result
 }
@@ -81,44 +81,44 @@ addIsWordField.rezrObj = function(x, cond, addWordSeq = T){
     #Chunk and dependencies
     if("chunkDF" %in% names(x)){
       for(layer in names(x$chunkDF)){
-        x$chunkDF[[layer]] = getSeqBounds(x$tokenDF, x$chunkDF[[layer]], x$nodeMap$chunk, c("wordSeq", "discourseWordSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
+        x$chunkDF[[layer]] = getSeqBounds(x$tokenDF, x$chunkDF[[layer]], x$nodeMap$chunk, c("wordOrder", "docWordSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
       }
     }
 
 
     for(layer in names(x$trackDF)){
-      x$trackDF[[layer]] = suppressMessages(x$trackDF[[layer]] %>% rez_left_join(combineTokenChunk(x) %>% rez_select(id, wordSeqFirst, wordSeqLast, discourseWordSeqFirst, discourseWordSeqLast), df2Address = "tokenChunkDF", rezrObj = x, fkey = "token"))
+      x$trackDF[[layer]] = suppressMessages(x$trackDF[[layer]] %>% rez_left_join(combineTokenChunk(x) %>% rez_select(id, wordOrderFirst, wordOrderLast, docWordSeqFirst, docWordSeqLast), df2Address = "tokenChunkDF", rezrObj = x, fkey = "token"))
     }
 
 
     #Entry and dependencies
-    x$entryDF = x$entryDF %>% rez_left_join(x$tokenDF %>% select(id, wordSeq, discourseWordSeq), by = c(token = "id"), df2Address = "token", fkey = "token", rezrObj = x)
-    x$unitDF = getSeqBounds(x$entryDF, x$unitDF, x$nodeMap$unit, "discourseWordSeq", tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit")
+    x$entryDF = x$entryDF %>% rez_left_join(x$tokenDF %>% select(id, wordOrder, docWordSeq), by = c(token = "id"), df2Address = "token", fkey = "token", rezrObj = x)
+    x$unitDF = getSeqBounds(x$entryDF, x$unitDF, x$nodeMap$unit, "docWordSeq", tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit")
 
   }
   x
 }
 
-getWordSeq = function(isWord, unit, tokenSeq){
+getWordSeq = function(isWord, unit, tokenOrder){
   result = numeric(length(isWord))
   for(currUnit in unique(unit)){
     isWordSubset = isWord[unit == currUnit]
-    tokenSeqSubset = tokenSeq[unit == currUnit]
+    tokenOrderSubset = tokenOrder[unit == currUnit]
 
     noWord = length(isWordSubset[isWordSubset])
-    isWordSubsetOrdered = sapply(1:length(isWordSubset), function(i) isWordSubset[which(rank(tokenSeqSubset) == i)])
+    isWordSubsetOrdered = sapply(1:length(isWordSubset), function(i) isWordSubset[which(rank(tokenOrderSubset) == i)])
 
     resultSubsetOrdered = numeric(length(isWordSubset))
     resultSubsetOrdered[isWordSubsetOrdered] = 1:noWord
-    result[unit == currUnit] = resultSubsetOrdered[rank(tokenSeqSubset)]
+    result[unit == currUnit] = resultSubsetOrdered[rank(tokenOrderSubset)]
   }
   result
 }
 
-getDiscourseWordSeq = function(isWord, discourseTokenSeq){
+getDiscourseWordSeq = function(isWord, docTokenSeq){
   noWord = length(isWord[isWord])
-  isWordOrdered = sapply(1:length(isWord), function(i) isWord[which(rank(discourseTokenSeq) == i)])
+  isWordOrdered = sapply(1:length(isWord), function(i) isWord[which(rank(docTokenSeq) == i)])
   resultOrdered = numeric(length(isWord))
   resultOrdered[isWordOrdered] = 1:noWord
-  resultOrdered[rank(discourseTokenSeq)]
+  resultOrdered[rank(docTokenSeq)]
 }

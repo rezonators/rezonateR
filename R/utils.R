@@ -190,3 +190,19 @@ createRezId = function(n = 1, existing = character(0)){
     cand
   })
 }
+
+undupe = function(names){
+  for(i in 2:length(names)){
+    if(names[i] %in% names[1:(i-1)]){
+      origName = names[i]
+      j = 2
+      done = F
+      while(!done){
+        names[i] = origName %+% "_" %+% j
+        j = j + 1
+        if(!(names[i] %in% names[1:(i-1)])) done = T
+      }
+    }
+  }
+  names
+}

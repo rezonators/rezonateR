@@ -11,7 +11,7 @@ lowerToHigher(
   fieldnames,
   higherFieldnames = "",
   action,
-  seqName = "discourseTokenSeq",
+  seqName = "docTokenSeq",
   tokenListName = "tokenList",
   simpleDFAddress = "",
   complexNodeMapAddress = "",

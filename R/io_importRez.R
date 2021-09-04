@@ -67,7 +67,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
     }
     if("track" %in% names(fullNodeMap)){
       trackDF = nodeToDF(fullNodeMap[["track"]], trackDFFields)
-      trackChainDF = nodeToDF(fullNodeMap[["trackChain"]], trackChainDFFields)
+      trailDF = nodeToDF(fullNodeMap[["trail"]], trailDFFields)
     }
     if("link" %in% names(fullNodeMap)){
       linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
@@ -81,24 +81,24 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
     docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
 
     message("Adding foreign fields to rezrDFs and sorting (this is the slowest step) ...")
-    tokenDF = tokenDF %>% arrange(discourseTokenSeq)
+    tokenDF = tokenDF %>% arrange(docTokenSeq)
 
     message(">Adding to unit entry DF ...")
     #Adding fields to higher-level DFs that depend on lower-level DFs.
     entryDF = entryDF %>% rez_left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"), df2Address = "tokenDF", fkey = "token")
-    entryDF = entryDF %>% arrange(discourseTokenSeq)
+    entryDF = entryDF %>% arrange(docTokenSeq)
 
     message(">Adding to unit DF ...")
     unitDF = concatStringFields(entryDF, unitDF, fullNodeMap[["unit"]], concatFields, tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit", separator = separator)
-    unitDF = getSeqBounds(entryDF, unitDF, fullNodeMap[["unit"]], "discourseTokenSeq", tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit")
-    unitDF = unitDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
+    unitDF = getSeqBounds(entryDF, unitDF, fullNodeMap[["unit"]], "docTokenSeq", tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit")
+    unitDF = unitDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
 
     if("chunk" %in% names(fullNodeMap)){
       message(">Adding to chunk DF ...")
-      chunkDF = getSeqBounds(tokenDF, chunkDF, fullNodeMap[["chunk"]], c("tokenSeq", "discourseTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
+      chunkDF = getSeqBounds(tokenDF, chunkDF, fullNodeMap[["chunk"]], c("tokenOrder", "docTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")
       chunkDF = concatStringFields(tokenDF, chunkDF, fullNodeMap[["chunk"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk", separator = separator)
       fieldaccess(chunkDF, concatFields) = "foreign"
-      chunkDF = chunkDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
+      chunkDF = chunkDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
       mergedDF = mergeTokenChunk(tokenDF, chunkDF)
     }
 
@@ -107,23 +107,23 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
       #mergedDF from the previous condition
       trackDF = trackDF %>% rez_left_join(mergedDF, by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token")
       #Adding fields to lower-level DFs that depend on higher-level DFs.
-      trackDF = trackDF %>% rez_left_join(trackChainDF, by = c(chain = "id", doc = "doc"), df2Address = "trackChainDF", fkey = "token")
-      trackDF = trackDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
+      trackDF = trackDF %>% rez_left_join(trailDF, by = c(chain = "id", doc = "doc"), df2Address = "trailDF", fkey = "token")
+      trackDF = trackDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
     }
 
-    if("track" %in% names(fullNodeMap)){
+    if("tree" %in% names(fullNodeMap)){
       message(">Adding to tree DFs ...")
-      treeEntryDF = getSeqBounds(tokenDF, treeEntryDF, fullNodeMap[["treeEntry"]], c("tokenSeq", "discourseTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "treeEntry")
+      treeEntryDF = getSeqBounds(tokenDF, treeEntryDF, fullNodeMap[["treeEntry"]], c("tokenOrder", "docTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "treeEntry")
       treeEntryDF = concatStringFields(tokenDF, treeEntryDF, fullNodeMap[["treeEntry"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "treeEntry", separator = separator)
       fieldaccess(treeEntryDF, concatFields) = "foreign"
-      treeEntryDF = treeEntryDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
+      treeEntryDF = treeEntryDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
       treeEntryDF = treeEntryDF %>% getTreeOfEntry(treeLinkDF, fullNodeMap$tree)
       treeEntryDF = treeEntryDF %>% rez_left_join(treeLinkDF %>% select(-goal, -doc, -type), df2Address = "treeLink", fkey = "sourceLink", by = c("sourceLink" = "id")) %>% rename(parent = source)
 
-      treeDF = getSeqBounds(tokenDF, treeDF, fullNodeMap[["tree"]], c("tokenSeq", "discourseTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree")
+      treeDF = getSeqBounds(tokenDF, treeDF, fullNodeMap[["tree"]], c("tokenOrder", "docTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree")
       treeDF = concatStringFields(tokenDF, treeDF, fullNodeMap[["tree"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree", separator = separator)
       fieldaccess(treeDF, concatFields) = "foreign"
-      treeDF = treeDF %>% arrange(discourseTokenSeqFirst, discourseTokenSeqLast)
+      treeDF = treeDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
       }
 
     #TODO: Rez, Stack, Clique
@@ -157,14 +157,14 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
 
         if(type == "track"){
           trackDF = trackDF %>% splitLayers
-          trackChainDF = trackChainDF %>% splitLayers
+          trailDF = trailDF %>% splitLayers
         } else if(type == "chunk"){
           chunkDF = chunkDF %>% splitLayers
         }
       } else {
         if(type == "track"){
           trackDF = list("default" = trackDF)
-          trackChainDF = list("default" = trackChainDF)
+          trailDF = list("default" = trailDF)
         } else if(type == "chunk"){
           chunkDF = list("default" = chunkDF)
         }
@@ -174,7 +174,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
     message("A few finishing touches ...")
     #Track DFs needs dependencies fixed for two reasons:
     #1) First, Last mistakenly present in dependencies for tokenDF (not the most elegant solution to solve here, should think about this later)
-    #2) After chunks and trackChainDF got split into layers, need to update addresses
+    #2) After chunks and trailDF got split into layers, need to update addresses
     if("track" %in% names(fullNodeMap)){
       for(trackLayer in names(trackDF)){
         for(i in 1:length(updateFunct(trackDF[[trackLayer]]))){
@@ -186,9 +186,9 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
             sourceFieldChunk = (deps(updateFunct(trackDF[[trackLayer]], field))[2] %>% strsplit("/"))[[1]] %>% last
             sourceField = c(sourceFieldToken, rep(sourceFieldChunk, length(chunkDF)))
             updateFunct(trackDF[[trackLayer]], field) = createLeftJoinUpdate(address = c("tokenDF", paste0("chunkDF/", names(chunkDF))) %+% "/" %+% sourceField, fkey = "token", field =field)
-          } else if(any(str_detect(deps(uf), "trackChainDF"))){
+          } else if(any(str_detect(deps(uf), "trailDF"))){
             sourceField = (deps(updateFunct(trackDF[[trackLayer]], field))[1] %>% strsplit("/"))[[1]] %>% last
-            updateFunct(trackDF[[trackLayer]], field) = createLeftJoinUpdate(address = "trackChainDF/" %+% trackLayer %+% "/" %+% sourceField, fkey = "chain", field = field)
+            updateFunct(trackDF[[trackLayer]], field) = createLeftJoinUpdate(address = "trailDF/" %+% trackLayer %+% "/" %+% sourceField, fkey = "chain", field = field)
           }
           #print(updateFunct(trackDF[[trackLayer]], field))
         }
@@ -206,11 +206,11 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
 
 entryDFFields = c("doc", "unit", "token")
 unitDFFields = c("doc", "unitStart", "unitEnd", "unitSeq", "pID")
-tokenDFFields = c("doc", "unit", "discourseTokenSeq", "tokenSeq")
+tokenDFFields = c("doc", "unit", "docTokenSeq", "tokenOrder")
 chunkDFFields = c("doc", "name")
 trackDFFields = c("doc", "chain", "sourceLink", "token")
-trackChainDFFields = c("doc", "chainSeq", "name")
-linkDFFields = c("doc", "source", "goal", "type")
+trailDFFields = c("doc", "chainCreateSeq", "name")
+linkDFFields = c("doc", "source", "goal", "type", "subtype")
 treeEntryDFFields = c("doc", "order", "sourceLink", "level")
 treeDFFields = c("doc", "name", "maxLevel")
 corpusDFFields = c("doc")
@@ -240,7 +240,8 @@ nodeToDF = function(nodeList, fields){
   #These will be treated as NA
   if(any(sapply(propList, is.list))){
     missing = names(propList)[sapply(propList, is.list)]
-    message("One or more of the fields specified is present in only some of the nodes in one of the node lists: ", paste(missing, sep = ", "))
+    #message("One or more of the fields specified is present in only some of the nodes in one of the node lists: ", paste(missing, sep = ", "))
+    #useful for debugging but the regular user doesn't need to see this
     for(prop in missing){
       propList[[prop]] = sapply(propList[[prop]], function(x){
         if(is.null(x)) NA else x
@@ -268,7 +269,7 @@ nodeToDF = function(nodeList, fields){
 #This is mostly for handling chains, which may refer to a mix of tokens and chunks in Rezonator. (Single-token chain entries are not automatically stored as chunks in Rezonator.)
 mergeTokenChunk = function(tokenDF, chunkDF){
   #This is because chunk have begins/end; tokens do not.
-  tokenDF = tokenDF %>% mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discourseTokenSeqLast = discourseTokenSeq)
+  tokenDF = tokenDF %>% mutate(tokenOrderFirst = tokenOrder, tokenOrderLast = tokenOrder, docTokenSeqFirst = docTokenSeq, docTokenSeqLast = docTokenSeq)
 
   commonFields = intersect(colnames(tokenDF), colnames(chunkDF))
   (tokenDF %>% select(all_of(commonFields))) %>% rbind(chunkDF %>% select(commonFields))

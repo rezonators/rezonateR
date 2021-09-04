@@ -41,12 +41,12 @@ test_that("rezrDF modification works", {
   expect(rezEx[["entryDF"]]$wordWylie[1] != "hohoho", failure_message = "Reload failed.")
   expect(rezEx[["tokenDF"]]$word[1] != "hahaha", failure_message = "Reload failed.")
 
-  updateFunct(rezEx[["trackDF"]][["refexpr"]], "word") = createLeftJoinUpdate(address = c("tokenDF/word", "chunkDF/refexpr/word"), fkey = "token", field = "tokenSeqFirst")
-  rezEx[["trackDF"]][["refexpr"]] = rezEx[["trackDF"]][["refexpr"]] %>% mutate(tokenSeqFirst = 120)
+  updateFunct(rezEx[["trackDF"]][["refexpr"]], "word") = createLeftJoinUpdate(address = c("tokenDF/word", "chunkDF/refexpr/word"), fkey = "token", field = "tokenOrderFirst")
+  rezEx[["trackDF"]][["refexpr"]] = rezEx[["trackDF"]][["refexpr"]] %>% mutate(tokenOrderFirst = 120)
   rezEx[["trackDF"]][["refexpr"]] = reloadForeign(rezEx[["trackDF"]][["refexpr"]], rezEx)
-  expect(rezEx[["trackDF"]][["refexpr"]]$tokenSeqFirst[1] != 120, failure_message = "Reload failed.")
+  expect(rezEx[["trackDF"]][["refexpr"]]$tokenOrderFirst[1] != 120, failure_message = "Reload failed.")
 
-  updateFunct(rezEx[["chunkDF"]][["refexpr"]], "word") = createLowerToHigherUpdate(address = "tokenDF/word", fkeyAddress = "chunk/tokenList", action = function(x) paste(x, collapse = ""), field = "word", fkeyInDF = FALSE, seqName = "discourseTokenSeq")
+  updateFunct(rezEx[["chunkDF"]][["refexpr"]], "word") = createLowerToHigherUpdate(address = "tokenDF/word", fkeyAddress = "chunk/tokenList", action = function(x) paste(x, collapse = ""), field = "word", fkeyInDF = FALSE, seqName = "docTokenSeq")
   rezEx[["chunkDF"]][["refexpr"]] = rezEx[["chunkDF"]][["refexpr"]] %>% mutate(word = "hahaha")
   rezEx[["chunkDF"]][["refexpr"]] = reloadForeign(rezEx[["chunkDF"]][["refexpr"]], rezEx, c("word"))
   expect(rezEx[["chunkDF"]][["refexpr"]]$word[1] !="hahaha", failure_message = "Reload failed.")
@@ -75,18 +75,18 @@ test_that("rezrDF modification works", {
   rezEx[["entryDF"]] = rezEx[["entryDF"]] %>% mutate(word = "hahaha") %>% reload(rezEx)
   expect(rezEx[["entryDF"]]$word[1] != "hahaha", failure_message = "Reload failed.")
 
-  rezEx[["unitDF"]] = rezEx[["unitDF"]] %>% mutate(discourseTokenSeqLast = -1, word = "hahaha", lit = "hohoho") %>% reload(rezEx)
-  expect(rezEx[["unitDF"]]$discourseTokenSeqLast[1] != -1, failure_message = "Reload failed.")
+  rezEx[["unitDF"]] = rezEx[["unitDF"]] %>% mutate(docTokenSeqLast = -1, word = "hahaha", lit = "hohoho") %>% reload(rezEx)
+  expect(rezEx[["unitDF"]]$docTokenSeqLast[1] != -1, failure_message = "Reload failed.")
   expect(rezEx[["unitDF"]]$word[1] != "hahaha", failure_message = "Reload failed.")
   expect(rezEx[["unitDF"]]$lit[1] != "hohoho", failure_message = "Reload failed.")
 
-  rezEx[["chunkDF"]][["adv"]] = rezEx[["chunkDF"]][["adv"]] %>% mutate(discourseTokenSeqLast = -1, word = "hahaha", lit = "hohoho") %>% reload(rezEx)
-  expect(rezEx[["chunkDF"]][["adv"]]$discourseTokenSeqLast[1] != -1, failure_message = "Reload failed.")
+  rezEx[["chunkDF"]][["adv"]] = rezEx[["chunkDF"]][["adv"]] %>% mutate(docTokenSeqLast = -1, word = "hahaha", lit = "hohoho") %>% reload(rezEx)
+  expect(rezEx[["chunkDF"]][["adv"]]$docTokenSeqLast[1] != -1, failure_message = "Reload failed.")
   expect(rezEx[["chunkDF"]][["adv"]]$word[1] != "hahaha", failure_message = "Reload failed.")
   expect(rezEx[["chunkDF"]][["adv"]]$lit[1] != "hohoho", failure_message = "Reload failed.")
 
-  rezEx[["trackDF"]][["refexpr"]] = rezEx[["trackDF"]][["refexpr"]] %>% mutate(tokenSeqLast = -1, wordWylie = "hahaha", lit = "hohoho") %>% reload(rezEx)
-  expect(rezEx[["trackDF"]][["refexpr"]]$tokenSeqLast[1] != -1, failure_message = "Reload failed.")
+  rezEx[["trackDF"]][["refexpr"]] = rezEx[["trackDF"]][["refexpr"]] %>% mutate(tokenOrderLast = -1, wordWylie = "hahaha", lit = "hohoho") %>% reload(rezEx)
+  expect(rezEx[["trackDF"]][["refexpr"]]$tokenOrderLast[1] != -1, failure_message = "Reload failed.")
   expect(rezEx[["trackDF"]][["refexpr"]]$wordWylie[1] != "hahaha", failure_message = "Reload failed.")
   expect(rezEx[["trackDF"]][["refexpr"]]$lit[1] != "hohoho", failure_message = "Reload failed.")
 
@@ -185,9 +185,9 @@ test_that("Field validation", {
   a = rezEx$tokenDF %>% rez_mutate(unit = "har", lit = "heh", word2 = "woo")
   expect_warning(rezEx$tokenDF %>% rez_mutate(unit = "har"), "value of a core field unit")
   expect_warning(rezEx$tokenDF %>% rez_mutate(unit = "har", fieldaccess = "flex"), "status and value of a core field unit")
-  expect_warning(rezEx$unitDF %>% rez_mutate(discourseTokenSeqFirst = "har"), "Your change is likely to be overridden by a future update")
-  expect_message(rezEx$unitDF %>% rez_mutate(discourseTokenSeqFirst = "har", fieldaccess = "auto"), "This will change reload behaviour.")
-  expect_message(rezEx$unitDF %>% rez_mutate(discourseTokenSeqFirst = "har", fieldaccess = "flex"), "no longer reload")
+  expect_warning(rezEx$unitDF %>% rez_mutate(docTokenSeqFirst = "har"), "Your change is likely to be overridden by a future update")
+  expect_message(rezEx$unitDF %>% rez_mutate(docTokenSeqFirst = "har", fieldaccess = "auto"), "This will change reload behaviour.")
+  expect_message(rezEx$unitDF %>% rez_mutate(docTokenSeqFirst = "har", fieldaccess = "flex"), "no longer reload")
 
   a = rezEx$tokenDF %>% rez_mutate(fieldaccess = "auto", word3 = wordWylie %+% ", lol.")
   expect_warning(a %>% rez_mutate(word3 = "har"), "Your change is likely to be overridden by a future update")
@@ -232,7 +232,7 @@ test_that("", {
   expect(!any(is.na(a$roleType)), "Deletion failed.")
 
   #renameCols
-  a = rezEx$trackDF$refexpr %>% updateFromDF(changeDF, changeCols = c('roleType', 'case', 'person', 'pronType', 'definite', 'identifiable', 'referential', 'overallTokenSeqFirst', 'overallTokenSeqLast'), colCorr = list(overallTokenSeqFirst = "discourseTokenSeqFirst", overallTokenSeqLast = "discourseTokenSeqLast"), addRows = T, renameCols = T, delRows = T)
+  a = rezEx$trackDF$refexpr %>% updateFromDF(changeDF, changeCols = c('roleType', 'case', 'person', 'pronType', 'definite', 'identifiable', 'referential', 'overallTokenSeqFirst', 'overallTokenSeqLast'), colCorr = list(overallTokenSeqFirst = "docTokenSeqFirst", overallTokenSeqLast = "docTokenSeqLast"), addRows = T, renameCols = T, delRows = T)
   expect(nrow(a) == 53, "addRow / delRow failed.")
   expect(!any(is.na(a$roleType)), "delRow failed.")
 

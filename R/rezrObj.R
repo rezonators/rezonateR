@@ -50,15 +50,14 @@ combineTokenChunk = function(rezrObj, type = "intersect"){
   if("chunkDF" %in% names(rezrObj)){
       chunkDF = combineChunks(rezrObj, type)
 
-      tokenDF = rezrObj$tokenDF %>% rez_mutate(tokenSeqFirst = tokenSeq, tokenSeqLast = tokenSeq, discourseTokenSeqFirst = discourseTokenSeq, discousreTokenSeqLast = discourseTokenSeq)
+      tokenDF = rezrObj$tokenDF %>% rez_mutate(tokenOrderFirst = tokenOrder, tokenOrderLast = tokenOrder, docTokenSeqFirst = docTokenSeq, docTokenSeqLast = docTokenSeq)
 
-      otherSeqHeaders = c("word", "discourseWord", "unit")
+      otherSeqHeaders = c("wordOrder", "docWordSeq", "unitSeq")
       for(header in otherSeqHeaders){
-        seq = header %+% "Seq"
-        last = header %+% "SeqLast"
-        first = header %+% "SeqFirst"
-        if((seq %in% names(tokenDF)) & (last %in% names(chunkDF)) & (first %in% names(chunkDF))){
-          tokenDF = tokenDF %>% rez_mutate(!!last := !!parse_expr(seq), !!first := !!parse_expr(seq))
+        last = header %+% "Last"
+        first = header %+% "First"
+        if((header %in% names(tokenDF)) & (last %in% names(chunkDF)) & (first %in% names(chunkDF))){
+          tokenDF = tokenDF %>% rez_mutate(!!last := !!parse_expr(header), !!first := !!parse_expr(header))
         }
       }
 
@@ -94,7 +93,7 @@ rez_load = function(filename){
 #'
 #' @rdname getAddresses
 #' @param rezrObj The rezrObj object.
-#' @param entity The entity with multiple layers - chunk, track, trackChain, etc.
+#' @param entity The entity with multiple layers - chunk, track, trail, etc.
 #'
 #' @return The desired addresses.
 #' @export

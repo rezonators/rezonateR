@@ -19,11 +19,11 @@ getTreeOfEntry = function(treeEntryDF, treeLinkDF, treeNodeMap){
 getTreeEntryForChunk = function(chunkDF, chunkNodeMap, treeEntryDF, treeEntryNodeMap){
   exacts = character(nrow(chunkDF))
   for(x in 1:nrow(chunkDF)){
-    currDTSF = chunkDF[x,] %>% pull(discourseTokenSeqFirst)
-    currDTSL = chunkDF[x,] %>% pull(discourseTokenSeqLast)
+    currDTSF = chunkDF[x,] %>% pull(docTokenSeqFirst)
+    currDTSL = chunkDF[x,] %>% pull(docTokenSeqLast)
     currDoc = chunkDF[x,] %>% pull(doc)
     currID = chunkDF[x,] %>% pull(id)
-    candRows = treeEntryDF %>% filter(doc == currDoc, discourseTokenSeqFirst == currDTSF, discourseTokenSeqLast >= currDTSL, level != -1)
+    candRows = treeEntryDF %>% filter(doc == currDoc, docTokenSeqFirst == currDTSF, docTokenSeqLast >= currDTSL, level != -1)
     candIDs = candRows$id
 
     candsExact = character(0)
@@ -51,10 +51,10 @@ getTreeEntryForChunk = function(chunkDF, chunkNodeMap, treeEntryDF, treeEntryNod
 getTreeEntryForToken = function(tokenDF, tokenNodeMap, treeEntryDF, treeEntryNodeMap){
   exacts = character(nrow(tokenDF))
   for(x in 1:nrow(tokenDF)){
-    currDTS = tokenDF[x,] %>% pull(discourseTokenSeq)
+    currDTS = tokenDF[x,] %>% pull(docTokenSeq)
     currDoc = tokenDF[x,] %>% pull(doc)
     currID = tokenDF[x,] %>% pull(id)
-    candIDs = treeEntryDF %>% filter(doc == currDoc, discourseTokenSeqFirst == currDTS, discourseTokenSeqLast >= currDTS, level != -1) %>% pull(id)
+    candIDs = treeEntryDF %>% filter(doc == currDoc, docTokenSeqFirst == currDTS, docTokenSeqLast >= currDTS, level != -1) %>% pull(id)
 
     if(length(candIDs) > 0){
         isExact = sapply(candIDs, function(cand) all(treeEntryNodeMap[[cand]]$tokenList == currID))
@@ -135,8 +135,8 @@ mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, sele
 
   for(entry in missingEntries){
     currRow = treeEntryDF %>% filter(id == entry)
-    currDTSF = currRow %>% pull(discourseTokenSeqFirst)
-    currDTSL = currRow %>% pull(discourseTokenSeqLast)
+    currDTSF = currRow %>% pull(docTokenSeqFirst)
+    currDTSL = currRow %>% pull(docTokenSeqLast)
     currDoc = currRow %>% pull(doc)
 
     done = F
@@ -150,7 +150,7 @@ mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, sele
         if(nrow(infoSourceCands) > 1) infoSource = infoSourceCands %>% slice(1)
       }
       if(is.null(infoSource)){
-        infoSource = chunkDF %>% filter(id %in% chunksCombined) %>% arrange(tokenSeqFirst) %>% slice(1)
+        infoSource = chunkDF %>% filter(id %in% chunksCombined) %>% arrange(tokenOrderFirst) %>% slice(1)
         newRow = infoSource
         newRow[fieldaccess(chunkDF) %in% c("foreign", "auto")] = NA
         newRow$name = "New Chunk " %+% i
@@ -177,10 +177,10 @@ mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, sele
 }
 
 getNextChunks = function(chunkDF, currDoc, p, currDTSL, currVec = character(0)){
-  candChunks = chunkDF %>% filter(doc == currDoc, discourseTokenSeqFirst == p, discourseTokenSeqLast <= currDTSL) %>% pull(id)
+  candChunks = chunkDF %>% filter(doc == currDoc, docTokenSeqFirst == p, docTokenSeqLast <= currDTSL) %>% pull(id)
   if(length(candChunks) > 0){
     for(cand in candChunks){
-      p = chunkDF %>% filter(id == cand) %>% pull(discourseTokenSeqLast) + 1
+      p = chunkDF %>% filter(id == cand) %>% pull(docTokenSeqLast) + 1
       if(p - 1 == currDTSL){
         result = c(currVec, cand)
         #print("Victory")

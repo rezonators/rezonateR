@@ -82,7 +82,7 @@ getSourceTableInfo = function(rezrObj, address, df2key, field){
     #When there isn't one single source table but multiple.
     #We'll have to combine the source tables.
     #Most common example:
-    #address = c("tokenDF/tokenSeq", "chunkDF/refexpr/tokenSeqFirst")
+    #address = c("tokenDF/tokenOrder", "chunkDF/refexpr/tokenOrderFirst")
 
     #These are mostly as above but apply to a vector of addresses.
     splitAdds = strsplit(address, "/")
