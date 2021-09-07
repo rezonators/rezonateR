@@ -1,4 +1,3 @@
-
 getTreeOfEntry = function(treeEntryDF, treeLinkDF, treeNodeMap){
   parents = character(nrow(treeEntryDF))
   trees = sapply(treeEntryDF$id, function(x){
@@ -84,10 +83,10 @@ getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
   #TODO: Tree into layers
   if(entity == "chunk"){
     for(chunkLayer in names(rezrObj$chunkDF)){
-      rezrObj$chunkDF[[chunkLayer]] = rezrObj$chunkDF[[chunkLayer]] %>% getTreeEntryForChunk(rezrObj$nodeMap$chunk, rezrObj$treeEntryDF, rezrObj$nodeMap$treeEntry)
+      rezrObj$chunkDF[[chunkLayer]] = rezrObj$chunkDF[[chunkLayer]] %>% getTreeEntryForChunk(rezrObj$nodeMap$chunk, combineLayers(rezrObj, "treeEntry"), rezrObj$nodeMap$treeEntry)
     }
   } else if(entity == "token"){
-    rezrObj$tokenDF = rezrObj$tokenDF %>% getTreeEntryForToken(rezrObj$nodeMap$token, rezrObj$treeEntryDF, rezrObj$nodeMap$treeEntry)
+    rezrObj$tokenDF = rezrObj$tokenDF %>% getTreeEntryForToken(rezrObj$nodeMap$token, combineLayers(rezrObj, "treeEntry"), rezrObj$nodeMap$treeEntry)
   } else if(entity == "track"){
     if(!("treeEntry" %in% names(rezrObj$tokenDF))) rezrObj = getAllTreeCorrespondences(rezrObj, entity = "token")
     if(!any(sapply(rezrObj$chunkEntry, function(x) "treeEntry" %in% names(x)))) rezrObj = getAllTreeCorrespondences(rezrObj, entity = "chunk")
@@ -114,7 +113,7 @@ getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
 mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, selectCond = NULL){
   if(is.null(treeEntryDF)){
     #treeEntryDF = combineLayers(rezrObj, "treeEntry")
-    treeEntryDF = rezrObj$treeEntryDF
+    treeEntryDF = combineLayers(rezrObj, "treeEntry")
   }
   tcDF = combineTokenChunk(rezrObj)
   chunkDF = combineChunks(rezrObj)
@@ -287,7 +286,7 @@ getPositionAmongSiblings = function(currChunkDF, rezrObj, treeEntryDF = NULL, co
   cond = enexpr(cond)
   chunkDF = combineTokenChunk(rezrObj)
   allChunkIDs = chunkDF$id
-  if(is.null(treeEntryDF)) treeEntryDF = rezrObj$treeEntryDF
+  if(is.null(treeEntryDF)) treeEntryDF = combineLayers(rezrObj, "treeEntry")
   parentChildDict = lapply(allChunkIDs, function(x) getChildrenOfChunkIf(x, chunkDF, treeEntryDF, !!cond))
   result = numeric(nrow(currChunkDF))
   for(i in 1:nrow(currChunkDF)){
@@ -302,9 +301,9 @@ getPositionAmongSiblings = function(currChunkDF, rezrObj, treeEntryDF = NULL, co
   result
 }
 
-addPositionAmongSiblings = function(chunkDF, rezrObj, treeEntryDFAddress = "treeEntryDF", cond = expr(TRUE)){
-  #LATER: change treeEntryDFAddress after splitting treeEntry into layers
+addPositionAmongSiblings = function(chunkDF, rezrObj, treeEntryDFAddress = NULL, cond = expr(TRUE)){
   cond = enexpr(cond)
+  if(is.null(treeEntryDFAddress)) treeEntryDFAdress = getLayerAddresses(rezrObj, "treeEntry")
 
   chunkDF = suppressWarnings(chunkDF %>% rez_mutate(siblingPos = getPositionAmongSiblings(chunkDF, rezrObj, cond = !!cond), fieldaccess = "foreign"))
   updateFunct(chunkDF, "siblingPos") = new_updateFunction(function(df, rezrObj) updatePositionAmongSiblings(df, rezrObj, treeEntryDFAddress, cond = !!cond), c(treeEntryDFAddress, getTokenChunkAddresses(rezrObj)))

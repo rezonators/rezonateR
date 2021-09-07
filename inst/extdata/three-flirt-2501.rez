@@ -4,14 +4,14 @@
 			"docNode": "1A029F5BAB12",
 			"functionChainList_focusedUnitSeq": 0,
 			"navTokenFieldList": [
-				"Col.0",
+				"Col 0",
 				"word",
 				"wordWylie",
 				"lit",
 				"chunkLayer"
 			],
 			"navChunkFieldList": [
-				"Col.0",
+				"Col 0",
 				"word",
 				"wordWylie",
 				"lit",
@@ -42,7 +42,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "190",
+						"Col 0": "190",
 						"chunkLayer": "",
 						"wordWylie": "'ong ",
 						"word": "འོང་"
@@ -72,7 +72,7 @@
 					"pixelX": 507,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "137",
+						"Col 0": "137",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -92,7 +92,7 @@
 					"pixelX": 496,
 					"tagMap": {
 						"lit": "ཨ་འདྲས་",
-						"Col.0": "151",
+						"Col 0": "151",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -114,7 +114,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -152,7 +152,7 @@
 					"pixelX": 586,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "59",
+						"Col 0": "59",
 						"chunkLayer": "",
 						"wordWylie": "ga pa",
 						"word": "ག་པ"
@@ -175,7 +175,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "72",
+						"Col 0": "72",
 						"chunkLayer": "",
 						"wordWylie": "nga ",
 						"word": "ང་"
@@ -201,7 +201,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -244,7 +244,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "adv",
 						"wordWylie": "",
 						"word": ""
@@ -288,7 +288,7 @@
 					"pixelX": 635,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "110",
+						"Col 0": "110",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -308,7 +308,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "111",
+						"Col 0": "111",
 						"chunkLayer": "",
 						"wordWylie": "'ong ",
 						"word": "འོང་"
@@ -364,7 +364,7 @@
 					"pixelX": 497,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "140",
+						"Col 0": "140",
 						"chunkLayer": "",
 						"wordWylie": "'grig ",
 						"word": "འགྲིག་"
@@ -387,7 +387,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "clause",
 						"wordWylie": "",
 						"word": ""
@@ -456,7 +456,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -493,7 +493,7 @@
 					"pixelX": 602,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "55",
+						"Col 0": "55",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -551,7 +551,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -573,7 +573,7 @@
 					"pixelX": 865,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "130",
+						"Col 0": "130",
 						"chunkLayer": "",
 						"wordWylie": "red",
 						"word": "རེད"
@@ -638,7 +638,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "clause",
 						"wordWylie": "",
 						"word": ""
@@ -701,7 +701,7 @@
 					"pixelX": 689,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "61",
+						"Col 0": "61",
 						"chunkLayer": "",
 						"wordWylie": "yod ",
 						"word": "ཡོད་"
@@ -877,7 +877,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "68",
+						"Col 0": "68",
 						"chunkLayer": "",
 						"wordWylie": "de ring ",
 						"word": "དེ་རིང་"
@@ -904,7 +904,7 @@
 					"pixelX": 443,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "165",
+						"Col 0": "165",
 						"chunkLayer": "",
 						"wordWylie": "sngon ma ",
 						"word": "སྔོན་མ་"
@@ -991,7 +991,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -1013,7 +1013,7 @@
 					"pixelX": 349,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "4",
+						"Col 0": "4",
 						"chunkLayer": "",
 						"wordWylie": "phur sgron ",
 						"word": "ཕུར་སྒྲོན་"
@@ -1034,7 +1034,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -1074,7 +1074,7 @@
 					"pixelX": 411,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "52",
+						"Col 0": "52",
 						"chunkLayer": "",
 						"wordWylie": "dus tshod ",
 						"word": "དུས་ཚོད་"
@@ -1115,7 +1115,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "adv",
 						"wordWylie": "",
 						"word": ""
@@ -1138,7 +1138,7 @@
 					"pixelX": 396,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "164",
+						"Col 0": "164",
 						"chunkLayer": "",
 						"wordWylie": "tsho ",
 						"word": "ཚོ་"
@@ -1252,7 +1252,7 @@
 					"pixelX": 777,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "117",
+						"Col 0": "117",
 						"chunkLayer": "",
 						"wordWylie": "'gro ",
 						"word": "འགྲོ་"
@@ -1274,7 +1274,7 @@
 					"pixelX": 489,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "ཧ་"
@@ -1304,7 +1304,7 @@
 					"pixelX": 640,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -1373,7 +1373,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -1394,7 +1394,7 @@
 					"pixelX": 406,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "149",
+						"Col 0": "149",
 						"chunkLayer": "",
 						"wordWylie": "  ",
 						"word": "་་"
@@ -1413,7 +1413,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -1498,7 +1498,7 @@
 					"pixelX": 701,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "127",
+						"Col 0": "127",
 						"chunkLayer": "",
 						"wordWylie": "ga re ",
 						"word": "ག་རེ་"
@@ -1528,7 +1528,7 @@
 					"pixelX": 404,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "21",
+						"Col 0": "21",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -1588,7 +1588,7 @@
 					"pixelX": 663,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "32",
+						"Col 0": "32",
 						"chunkLayer": "",
 						"wordWylie": "ga",
 						"word": "ག"
@@ -2036,7 +2036,7 @@
 					"pixelX": 393,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "ས་"
@@ -2058,7 +2058,7 @@
 					"pixelX": 531,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "108",
+						"Col 0": "108",
 						"chunkLayer": "",
 						"wordWylie": "ha go ",
 						"word": "གོ་"
@@ -2080,7 +2080,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "142",
+						"Col 0": "142",
 						"chunkLayer": "",
 						"wordWylie": "rang ",
 						"word": "རང་"
@@ -2148,7 +2148,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -2188,7 +2188,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -2231,7 +2231,7 @@
 					"pixelX": 406,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "157",
+						"Col 0": "157",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -2289,7 +2289,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "45",
+						"Col 0": "45",
 						"chunkLayer": "",
 						"wordWylie": "phur sgron ",
 						"word": "ཕུར་སྒྲོན་"
@@ -2339,7 +2339,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "156",
+						"Col 0": "156",
 						"chunkLayer": "",
 						"wordWylie": "'ong ",
 						"word": "འོང་"
@@ -2363,7 +2363,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -2406,7 +2406,7 @@
 					"pixelX": 721,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "16",
+						"Col 0": "16",
 						"chunkLayer": "",
 						"wordWylie": "ma ",
 						"word": "མ་"
@@ -2441,7 +2441,7 @@
 					"pixelX": 408,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "3",
+						"Col 0": "3",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -2463,7 +2463,7 @@
 					"pixelX": 711,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "169",
+						"Col 0": "169",
 						"chunkLayer": "",
 						"wordWylie": "red pa",
 						"word": "རེད་པ"
@@ -2488,7 +2488,7 @@
 					"pixelX": 400,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "39",
+						"Col 0": "39",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -2551,7 +2551,7 @@
 					"pixelX": 464,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "191",
+						"Col 0": "191",
 						"chunkLayer": "",
 						"wordWylie": "yag ",
 						"word": "ཡག་"
@@ -2604,7 +2604,7 @@
 					"pixelX": 438,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "107",
+						"Col 0": "107",
 						"chunkLayer": "",
 						"wordWylie": "s",
 						"word": "ས་"
@@ -2629,7 +2629,7 @@
 					"pixelX": 349,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "7",
+						"Col 0": "7",
 						"chunkLayer": "",
 						"wordWylie": "a ",
 						"word": "ཨ་"
@@ -2656,7 +2656,7 @@
 					"pixelX": 778,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "187",
+						"Col 0": "187",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -2694,7 +2694,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -2717,7 +2717,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "64",
+						"Col 0": "64",
 						"chunkLayer": "",
 						"wordWylie": "ngar",
 						"word": "ངར"
@@ -2737,7 +2737,7 @@
 					"pixelX": 726,
 					"tagMap": {
 						"lit": "དེ་ཚོ་",
-						"Col.0": "78",
+						"Col 0": "78",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -2762,7 +2762,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -2812,7 +2812,7 @@
 					"pixelX": 406,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -2832,7 +2832,7 @@
 					"pixelX": 398,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "8",
+						"Col 0": "8",
 						"chunkLayer": "",
 						"wordWylie": "hang hang ",
 						"word": "ཧང་ཧང་"
@@ -2852,7 +2852,7 @@
 					"pixelX": 349,
 					"tagMap": {
 						"lit": "འོ་ཙི",
-						"Col.0": "10",
+						"Col 0": "10",
 						"chunkLayer": "",
 						"wordWylie": "a tsi",
 						"word": "ཨ་ཙི"
@@ -2879,7 +2879,7 @@
 					"pixelX": 535,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "144",
+						"Col 0": "144",
 						"chunkLayer": "",
 						"wordWylie": "ha go ",
 						"word": "གོ་"
@@ -5358,7 +5358,7 @@
 					"pixelX": 430,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "5",
+						"Col 0": "5",
 						"chunkLayer": "",
 						"wordWylie": "lags",
 						"word": "ལགས"
@@ -5380,7 +5380,7 @@
 					"pixelX": 761,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "128",
+						"Col 0": "128",
 						"chunkLayer": "",
 						"wordWylie": "zer ",
 						"word": "ཟེར་"
@@ -5435,7 +5435,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "25",
+						"Col 0": "25",
 						"chunkLayer": "",
 						"wordWylie": "khyed rang ",
 						"word": "ཁྱེད་རང་"
@@ -5503,7 +5503,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "88",
+						"Col 0": "88",
 						"chunkLayer": "",
 						"wordWylie": "rang ",
 						"word": "རང་"
@@ -5551,7 +5551,7 @@
 					"pixelX": 643,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "60",
+						"Col 0": "60",
 						"chunkLayer": "",
 						"wordWylie": "ra ",
 						"word": "ར་"
@@ -5573,7 +5573,7 @@
 					"pixelX": 466,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "89",
+						"Col 0": "89",
 						"chunkLayer": "",
 						"wordWylie": "mnyam du ",
 						"word": "མཉམ་དུ་"
@@ -5595,7 +5595,7 @@
 					"pixelX": 578,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "109",
+						"Col 0": "109",
 						"chunkLayer": "",
 						"wordWylie": "song ",
 						"word": "སོང་"
@@ -5632,7 +5632,7 @@
 					"pixelX": 677,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "177",
+						"Col 0": "177",
 						"chunkLayer": "",
 						"wordWylie": "yang ",
 						"word": "ཡང་"
@@ -5719,7 +5719,7 @@
 					"pixelX": 406,
 					"tagMap": {
 						"lit": "གྱིས་",
-						"Col.0": "180",
+						"Col 0": "180",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -5739,7 +5739,7 @@
 					"pixelX": 735,
 					"tagMap": {
 						"lit": "འི་ལའི",
-						"Col.0": "178",
+						"Col 0": "178",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -5789,7 +5789,7 @@
 					"pixelX": 597,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "31",
+						"Col 0": "31",
 						"chunkLayer": "",
 						"wordWylie": "'dug ",
 						"word": "འདུག་"
@@ -5811,7 +5811,7 @@
 					"pixelX": 548,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "54",
+						"Col 0": "54",
 						"chunkLayer": "",
 						"wordWylie": "pas",
 						"word": "པས"
@@ -5836,7 +5836,7 @@
 					"pixelX": 579,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "193",
+						"Col 0": "193",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -5858,7 +5858,7 @@
 					"pixelX": 418,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "57",
+						"Col 0": "57",
 						"chunkLayer": "",
 						"wordWylie": "dgong dag ",
 						"word": "དགོང་དག་"
@@ -5880,7 +5880,7 @@
 					"pixelX": 747,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "62",
+						"Col 0": "62",
 						"chunkLayer": "",
 						"wordWylie": "red",
 						"word": "རེད"
@@ -5940,7 +5940,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -5965,7 +5965,7 @@
 					"pixelX": 431,
 					"tagMap": {
 						"lit": "ཚང་མ་",
-						"Col.0": "80",
+						"Col 0": "80",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -5992,7 +5992,7 @@
 					"pixelX": 471,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "159",
+						"Col 0": "159",
 						"chunkLayer": "",
 						"wordWylie": "bshad ",
 						"word": "བཤད་"
@@ -6014,7 +6014,7 @@
 					"pixelX": 562,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "99",
+						"Col 0": "99",
 						"chunkLayer": "",
 						"wordWylie": "las ka ",
 						"word": "ལས་ཀ་"
@@ -6036,7 +6036,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -6058,7 +6058,7 @@
 					"pixelX": 396,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "139",
+						"Col 0": "139",
 						"chunkLayer": "",
 						"wordWylie": "dga' rogs ",
 						"word": "དགའ་རོགས་"
@@ -6080,7 +6080,7 @@
 					"pixelX": 577,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "153",
+						"Col 0": "153",
 						"chunkLayer": "",
 						"wordWylie": "lab ",
 						"word": "ལབ་"
@@ -6140,7 +6140,7 @@
 					"pixelX": 465,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "24",
+						"Col 0": "24",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -6203,7 +6203,7 @@
 					"pixelX": 486,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "ཧ་"
@@ -6261,7 +6261,7 @@
 					"pixelX": 648,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "77",
+						"Col 0": "77",
 						"chunkLayer": "",
 						"wordWylie": "de gyad da",
 						"word": "དེ་གྱད་ད"
@@ -6283,7 +6283,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "106",
+						"Col 0": "106",
 						"chunkLayer": "",
 						"wordWylie": "da ",
 						"word": "ད་"
@@ -6306,7 +6306,7 @@
 					"pixelX": 499,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "182",
+						"Col 0": "182",
 						"chunkLayer": "",
 						"wordWylie": "phar ",
 						"word": "ཕར་"
@@ -6354,7 +6354,7 @@
 					"pixelX": 473,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "9",
+						"Col 0": "9",
 						"chunkLayer": "",
 						"wordWylie": "    ",
 						"word": "་་་་"
@@ -6420,7 +6420,7 @@
 					"pixelX": 652,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "15",
+						"Col 0": "15",
 						"chunkLayer": "",
 						"wordWylie": "mjal ",
 						"word": "མཇལ་"
@@ -6491,7 +6491,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -6535,7 +6535,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "134",
+						"Col 0": "134",
 						"chunkLayer": "",
 						"wordWylie": "dga' rogs",
 						"word": "དགའ་རོགས"
@@ -6601,7 +6601,7 @@
 					"pixelX": 578,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "83",
+						"Col 0": "83",
 						"chunkLayer": "",
 						"wordWylie": "'gro ",
 						"word": "འགྲོ་"
@@ -6686,7 +6686,7 @@
 					"pixelX": 411,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "སྣྙིང་"
@@ -6708,7 +6708,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -6728,7 +6728,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "40",
+						"Col 0": "40",
 						"chunkLayer": "",
 						"wordWylie": "hang hang ",
 						"word": "ཧང་ཧང་"
@@ -6767,7 +6767,7 @@
 					"pixelX": 823,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "18",
+						"Col 0": "18",
 						"chunkLayer": "",
 						"wordWylie": "nga ",
 						"word": "ང་"
@@ -6787,7 +6787,7 @@
 					"pixelX": 464,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "95",
+						"Col 0": "95",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -6812,7 +6812,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "171",
+						"Col 0": "171",
 						"chunkLayer": "",
 						"wordWylie": "yA ",
 						"word": "ཡཱ་"
@@ -6842,7 +6842,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -6884,7 +6884,7 @@
 					"pixelX": 768,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "17",
+						"Col 0": "17",
 						"chunkLayer": "",
 						"wordWylie": "byung ",
 						"word": "བྱུང་"
@@ -6906,7 +6906,7 @@
 					"pixelX": 467,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "33",
+						"Col 0": "33",
 						"chunkLayer": "",
 						"wordWylie": "snying rje ru rje ru ",
 						"word": "རྗེ་རུ་རྗེ་རུ་"
@@ -7730,7 +7730,7 @@
 					"pixelX": 502,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "174",
+						"Col 0": "174",
 						"chunkLayer": "",
 						"wordWylie": "rnying pa ",
 						"word": "རྙིང་པ་"
@@ -7757,7 +7757,7 @@
 					"pixelX": 438,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -7787,7 +7787,7 @@
 					"pixelX": 917,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "131",
+						"Col 0": "131",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -7865,7 +7865,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -7894,7 +7894,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -8267,7 +8267,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -8287,7 +8287,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "adv",
 						"wordWylie": "",
 						"word": ""
@@ -8310,7 +8310,7 @@
 					"pixelX": 629,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "146",
+						"Col 0": "146",
 						"chunkLayer": "",
 						"wordWylie": "yod",
 						"word": "ཡོད"
@@ -8371,7 +8371,7 @@
 					"pixelX": 594,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "126",
+						"Col 0": "126",
 						"chunkLayer": "",
 						"wordWylie": "na ",
 						"word": "ན་"
@@ -8393,7 +8393,7 @@
 					"pixelX": 582,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "145",
+						"Col 0": "145",
 						"chunkLayer": "",
 						"wordWylie": "gi ",
 						"word": "གི་"
@@ -8415,7 +8415,7 @@
 					"pixelX": 492,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "29",
+						"Col 0": "29",
 						"chunkLayer": "",
 						"wordWylie": "'gro ",
 						"word": "འགྲོ་"
@@ -8475,7 +8475,7 @@
 					"pixelX": 396,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "nga",
 						"word": "ང"
@@ -8502,7 +8502,7 @@
 					"pixelX": 634,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "100",
+						"Col 0": "100",
 						"chunkLayer": "",
 						"wordWylie": "yod",
 						"word": "ཡོད"
@@ -8527,7 +8527,7 @@
 					"pixelX": 496,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "6",
+						"Col 0": "6",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -8611,7 +8611,7 @@
 					"pixelX": 432,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "46",
+						"Col 0": "46",
 						"chunkLayer": "",
 						"wordWylie": "lags",
 						"word": "ལགས"
@@ -8634,7 +8634,7 @@
 					"pixelX": 538,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "125",
+						"Col 0": "125",
 						"chunkLayer": "",
 						"wordWylie": "zer ",
 						"word": "ཟེར་"
@@ -8706,7 +8706,7 @@
 					"pixelX": 904,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "120",
+						"Col 0": "120",
 						"chunkLayer": "",
 						"wordWylie": "red ",
 						"word": "རེད་"
@@ -8726,7 +8726,7 @@
 					"pixelX": 776,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "170",
+						"Col 0": "170",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -8748,7 +8748,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -8769,7 +8769,7 @@
 					"pixelX": 410,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "44",
+						"Col 0": "44",
 						"chunkLayer": "",
 						"wordWylie": "  ",
 						"word": "་་"
@@ -8826,7 +8826,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "132",
+						"Col 0": "132",
 						"chunkLayer": "",
 						"wordWylie": "A ",
 						"word": "ཨཱ་"
@@ -8848,7 +8848,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -8873,7 +8873,7 @@
 					"pixelX": 668,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "36",
+						"Col 0": "36",
 						"chunkLayer": "",
 						"wordWylie": "lags",
 						"word": "ལགས"
@@ -8895,7 +8895,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -8954,7 +8954,7 @@
 					"pixelX": 595,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "115",
+						"Col 0": "115",
 						"chunkLayer": "",
 						"wordWylie": "mnyam po",
 						"word": "མཉམ་པོ"
@@ -9012,7 +9012,7 @@
 							"chunkLayer"
 						]
 					},
-					"Col.0": {
+					"Col 0": {
 						"targetList": [
 							"token",
 							"chunk"
@@ -9242,7 +9242,7 @@
 					"pixelX": 349,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -9271,7 +9271,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "50",
+						"Col 0": "50",
 						"chunkLayer": "",
 						"wordWylie": "de ring ",
 						"word": "དེ་རིང་"
@@ -9293,7 +9293,7 @@
 					"pixelX": 468,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "ཅོག་"
@@ -9331,7 +9331,7 @@
 					"pixelX": 1013,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "122",
+						"Col 0": "122",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -9392,7 +9392,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -9435,7 +9435,7 @@
 					"pixelX": 404,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -9455,7 +9455,7 @@
 					"pixelX": 717,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "92",
+						"Col 0": "92",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -9485,7 +9485,7 @@
 					"pixelX": 408,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "11",
+						"Col 0": "11",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -9508,7 +9508,7 @@
 					"pixelX": 409,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "12",
+						"Col 0": "12",
 						"chunkLayer": "",
 						"wordWylie": "rgyun ",
 						"word": "རྒྱུན་"
@@ -9587,7 +9587,7 @@
 					"pixelX": 735,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "37",
+						"Col 0": "37",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -9628,7 +9628,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -9651,7 +9651,7 @@
 					"pixelX": 410,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "23",
+						"Col 0": "23",
 						"chunkLayer": "",
 						"wordWylie": "rang ",
 						"word": "རང་"
@@ -9686,7 +9686,7 @@
 					"pixelX": 661,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "91",
+						"Col 0": "91",
 						"chunkLayer": "",
 						"wordWylie": "gas",
 						"word": "གས"
@@ -9708,7 +9708,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "96",
+						"Col 0": "96",
 						"chunkLayer": "",
 						"wordWylie": "nga ",
 						"word": "ང་"
@@ -9776,7 +9776,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -9796,7 +9796,7 @@
 					"pixelX": 413,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "67",
+						"Col 0": "67",
 						"chunkLayer": "",
 						"wordWylie": "  ",
 						"word": "་་"
@@ -9841,7 +9841,7 @@
 					"pixelX": 672,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "116",
+						"Col 0": "116",
 						"chunkLayer": "",
 						"wordWylie": "ra ",
 						"word": "ར་"
@@ -9901,7 +9901,7 @@
 					"pixelX": 396,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "105",
+						"Col 0": "105",
 						"chunkLayer": "",
 						"wordWylie": "   ",
 						"word": "་་་"
@@ -9923,7 +9923,7 @@
 					"pixelX": 411,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "113",
+						"Col 0": "113",
 						"chunkLayer": "",
 						"wordWylie": "yang ",
 						"word": "ཡང་"
@@ -9951,7 +9951,7 @@
 					"pixelX": 466,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "13",
+						"Col 0": "13",
 						"chunkLayer": "",
 						"wordWylie": "ring po ",
 						"word": "རིང་པོ་"
@@ -10002,7 +10002,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "27",
+						"Col 0": "27",
 						"chunkLayer": "",
 						"wordWylie": "snying ",
 						"word": "སྙིང་"
@@ -10024,7 +10024,7 @@
 					"pixelX": 490,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "53",
+						"Col 0": "53",
 						"chunkLayer": "",
 						"wordWylie": "yod ",
 						"word": "ཡོད་"
@@ -10082,7 +10082,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "148",
+						"Col 0": "148",
 						"chunkLayer": "",
 						"wordWylie": "ha'e ",
 						"word": "ཧའེ་"
@@ -10104,7 +10104,7 @@
 					"pixelX": 549,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "167",
+						"Col 0": "167",
 						"chunkLayer": "",
 						"wordWylie": "slob grogs ",
 						"word": "སློབ་གྲོགས་"
@@ -10350,7 +10350,7 @@
 					"pixelX": 553,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "34",
+						"Col 0": "34",
 						"chunkLayer": "",
 						"wordWylie": "'gro ",
 						"word": "འགྲོ་"
@@ -10377,7 +10377,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -10396,7 +10396,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "adv",
 						"wordWylie": "",
 						"word": ""
@@ -10429,7 +10429,7 @@
 					"pixelX": 475,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "70",
+						"Col 0": "70",
 						"chunkLayer": "",
 						"wordWylie": "pA",
 						"word": "པཱ"
@@ -10451,7 +10451,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "138",
+						"Col 0": "138",
 						"chunkLayer": "",
 						"wordWylie": "nga ",
 						"word": "ང་"
@@ -10476,7 +10476,7 @@
 					"pixelX": 612,
 					"tagMap": {
 						"lit": "ཕར་ཙ་",
-						"Col.0": "184",
+						"Col 0": "184",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -10510,7 +10510,7 @@
 					"pixelX": 468,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "124",
+						"Col 0": "124",
 						"chunkLayer": "",
 						"wordWylie": "lags ",
 						"word": "ལགས་"
@@ -10649,7 +10649,7 @@
 					"pixelX": 516,
 					"tagMap": {
 						"lit": "སྔན་མ་",
-						"Col.0": "166",
+						"Col 0": "166",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -10672,7 +10672,7 @@
 					"pixelX": 646,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "185",
+						"Col 0": "185",
 						"chunkLayer": "",
 						"wordWylie": "bskyal ",
 						"word": "བསྐྱལ་"
@@ -10692,7 +10692,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "93",
+						"Col 0": "93",
 						"chunkLayer": "",
 						"wordWylie": "'ong ",
 						"word": "འོང་"
@@ -10744,7 +10744,7 @@
 					"pixelX": 793,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "87",
+						"Col 0": "87",
 						"chunkLayer": "",
 						"wordWylie": "shag",
 						"word": "ཤག"
@@ -10766,7 +10766,7 @@
 					"pixelX": 409,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "173",
+						"Col 0": "173",
 						"chunkLayer": "",
 						"wordWylie": "slob grogs ",
 						"word": "སློབ་གྲོགས་"
@@ -10822,7 +10822,7 @@
 					"pixelX": 498,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "47",
+						"Col 0": "47",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -10854,7 +10854,7 @@
 					"pixelX": 817,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "129",
+						"Col 0": "129",
 						"chunkLayer": "",
 						"wordWylie": "gyi ",
 						"word": "གྱི་"
@@ -10897,7 +10897,7 @@
 					"pixelX": 403,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "65",
+						"Col 0": "65",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -10917,7 +10917,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -10938,7 +10938,7 @@
 					"pixelX": 406,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "94",
+						"Col 0": "94",
 						"chunkLayer": "",
 						"wordWylie": "ong ",
 						"word": "ཨོང་"
@@ -11024,7 +11024,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "66",
+						"Col 0": "66",
 						"chunkLayer": "",
 						"wordWylie": "a tsi ",
 						"word": "ཨ་ཙི་"
@@ -11068,7 +11068,7 @@
 					"pixelX": 688,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "101",
+						"Col 0": "101",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -11091,7 +11091,7 @@
 					"pixelX": 555,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "183",
+						"Col 0": "183",
 						"chunkLayer": "",
 						"wordWylie": "tsam ",
 						"word": "ཙམ་"
@@ -11141,7 +11141,7 @@
 					"pixelX": 532,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "82",
+						"Col 0": "82",
 						"chunkLayer": "",
 						"wordWylie": "ra ",
 						"word": "ར་"
@@ -11163,7 +11163,7 @@
 					"pixelX": 571,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "175",
+						"Col 0": "175",
 						"chunkLayer": "",
 						"wordWylie": "yin ",
 						"word": "ཡིན་"
@@ -11185,7 +11185,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -11205,7 +11205,7 @@
 					"pixelX": 426,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "41",
+						"Col 0": "41",
 						"chunkLayer": "",
 						"wordWylie": "    ",
 						"word": "་་་་"
@@ -11233,7 +11233,7 @@
 					"pixelX": 411,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "123",
+						"Col 0": "123",
 						"chunkLayer": "",
 						"wordWylie": "cog ",
 						"word": "ཅོག་"
@@ -11255,7 +11255,7 @@
 					"pixelX": 411,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "150",
+						"Col 0": "150",
 						"chunkLayer": "",
 						"wordWylie": "'di 'dras",
 						"word": "འདི་འདྲས"
@@ -11277,7 +11277,7 @@
 					"pixelX": 411,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "158",
+						"Col 0": "158",
 						"chunkLayer": "",
 						"wordWylie": "ga re ",
 						"word": "ག་རེ་"
@@ -11305,7 +11305,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "clause",
 						"wordWylie": "",
 						"word": ""
@@ -11328,7 +11328,7 @@
 					"pixelX": 610,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "35",
+						"Col 0": "35",
 						"chunkLayer": "",
 						"wordWylie": "gis ",
 						"word": "གིས་"
@@ -11350,7 +11350,7 @@
 					"pixelX": 464,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "81",
+						"Col 0": "81",
 						"chunkLayer": "",
 						"wordWylie": "nang ma",
 						"word": "ནང་མ"
@@ -11480,7 +11480,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -11538,7 +11538,7 @@
 					"pixelX": 429,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "26",
+						"Col 0": "26",
 						"chunkLayer": "",
 						"wordWylie": "dngos gnas ",
 						"word": "དངོས་གནས་"
@@ -11560,7 +11560,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -11587,7 +11587,7 @@
 					"pixelX": 592,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -11626,7 +11626,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "ང"
@@ -11656,7 +11656,7 @@
 					"pixelX": 507,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "135",
+						"Col 0": "135",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -11683,7 +11683,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "22",
+						"Col 0": "22",
 						"chunkLayer": "",
 						"wordWylie": "da ga ",
 						"word": "ད་ག་"
@@ -11708,7 +11708,7 @@
 					"pixelX": 684,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "147",
+						"Col 0": "147",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -11738,7 +11738,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "adv",
 						"wordWylie": "",
 						"word": ""
@@ -11766,7 +11766,7 @@
 					"pixelX": 406,
 					"tagMap": {
 						"lit": "ག་འདྲས་ཟེ་",
-						"Col.0": "143",
+						"Col 0": "143",
 						"chunkLayer": "",
 						"wordWylie": "ga 'dra se ",
 						"word": "ག་འདྲ་སེ་"
@@ -11802,7 +11802,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -11884,7 +11884,7 @@
 					"pixelX": 530,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "152",
+						"Col 0": "152",
 						"chunkLayer": "",
 						"wordWylie": "ma ",
 						"word": "མ་"
@@ -11904,7 +11904,7 @@
 					"pixelX": 349,
 					"tagMap": {
 						"lit": "འོ་ཙི",
-						"Col.0": "2",
+						"Col 0": "2",
 						"chunkLayer": "",
 						"wordWylie": "a tsi",
 						"word": "ཨ་ཙི"
@@ -11949,7 +11949,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -12007,7 +12007,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -12035,7 +12035,7 @@
 					"pixelX": 705,
 					"tagMap": {
 						"lit": "ཉན་",
-						"Col.0": "85",
+						"Col 0": "85",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -12057,7 +12057,7 @@
 					"pixelX": 418,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "51",
+						"Col 0": "51",
 						"chunkLayer": "",
 						"wordWylie": "dgong dag ",
 						"word": "དགོང་དག་"
@@ -12149,7 +12149,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -12172,7 +12172,7 @@
 					"pixelX": 714,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "186",
+						"Col 0": "186",
 						"chunkLayer": "",
 						"wordWylie": "dgos",
 						"word": "དགོས"
@@ -12193,7 +12193,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -12214,7 +12214,7 @@
 					"pixelX": 799,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "63",
+						"Col 0": "63",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -12271,7 +12271,7 @@
 					"pixelX": 447,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -12300,7 +12300,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -12355,7 +12355,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -12378,7 +12378,7 @@
 					"pixelX": 535,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "14",
+						"Col 0": "14",
 						"chunkLayer": "",
 						"wordWylie": "cig ",
 						"word": "ཅིག་"
@@ -12431,7 +12431,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "102",
+						"Col 0": "102",
 						"chunkLayer": "",
 						"wordWylie": "a las ",
 						"word": "ཨ་ལས་"
@@ -12456,7 +12456,7 @@
 					"pixelX": 406,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "189",
+						"Col 0": "189",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -12499,7 +12499,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -12535,7 +12535,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "43",
+						"Col 0": "43",
 						"chunkLayer": "",
 						"wordWylie": "o'o ",
 						"word": "ཨོའོ་"
@@ -12557,7 +12557,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "79",
+						"Col 0": "79",
 						"chunkLayer": "",
 						"wordWylie": "'gang ga ",
 						"word": "འགང་ག་"
@@ -12582,7 +12582,7 @@
 					"pixelX": 636,
 					"tagMap": {
 						"lit": "འི་",
-						"Col.0": "162",
+						"Col 0": "162",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": ""
@@ -12668,7 +12668,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -12691,7 +12691,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -12718,7 +12718,7 @@
 					"pixelX": 642,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "168",
+						"Col 0": "168",
 						"chunkLayer": "",
 						"wordWylie": "rnying pa ",
 						"word": "རྙིང་པ་"
@@ -12750,7 +12750,7 @@
 					"pixelX": 630,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "176",
+						"Col 0": "176",
 						"chunkLayer": "",
 						"wordWylie": "na ",
 						"word": "ན་"
@@ -12788,7 +12788,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -12821,7 +12821,7 @@
 					"pixelX": 959,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "121",
+						"Col 0": "121",
 						"chunkLayer": "",
 						"wordWylie": "pas",
 						"word": "པས"
@@ -12958,7 +12958,7 @@
 					"pixelX": 566,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "141",
+						"Col 0": "141",
 						"chunkLayer": "",
 						"wordWylie": "min ",
 						"word": "མིན་"
@@ -13023,7 +13023,7 @@
 					"pixelX": 519,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "71",
+						"Col 0": "71",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -13114,7 +13114,7 @@
 					"pixelX": 526,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "ལགས་"
@@ -13144,7 +13144,7 @@
 					"pixelX": 473,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "98",
+						"Col 0": "98",
 						"chunkLayer": "",
 						"wordWylie": "dgong dag ",
 						"word": "དགོང་དག་"
@@ -13188,7 +13188,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "38",
+						"Col 0": "38",
 						"chunkLayer": "",
 						"wordWylie": "a ",
 						"word": "ཨ་"
@@ -13212,7 +13212,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "56",
+						"Col 0": "56",
 						"chunkLayer": "",
 						"wordWylie": "de ring ",
 						"word": "དེ་རིང་"
@@ -13234,7 +13234,7 @@
 					"pixelX": 635,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "84",
+						"Col 0": "84",
 						"chunkLayer": "",
 						"wordWylie": "mkhan ",
 						"word": "མཁན་"
@@ -13266,7 +13266,7 @@
 					"pixelX": 407,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "28",
+						"Col 0": "28",
 						"chunkLayer": "",
 						"wordWylie": "rje ru rje ru ",
 						"word": "རྗེ་རུ་རྗེ་རུ་"
@@ -13334,7 +13334,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -13371,7 +13371,7 @@
 					"pixelX": 392,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "1",
+						"Col 0": "1",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -13391,7 +13391,7 @@
 					"pixelX": 349,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "20",
+						"Col 0": "20",
 						"chunkLayer": "",
 						"wordWylie": "'ong ",
 						"word": "འོང་"
@@ -13413,7 +13413,7 @@
 					"pixelX": 506,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "58",
+						"Col 0": "58",
 						"chunkLayer": "",
 						"wordWylie": "dus tshod ",
 						"word": "དུས་ཚོད་"
@@ -13435,7 +13435,7 @@
 					"pixelX": 487,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "75",
+						"Col 0": "75",
 						"chunkLayer": "",
 						"wordWylie": "slob grogs ",
 						"word": "སློབ་གྲོགས་"
@@ -13530,7 +13530,7 @@
 					"pixelX": 447,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -13550,7 +13550,7 @@
 					"pixelX": 406,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "112",
+						"Col 0": "112",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -13607,7 +13607,7 @@
 					"pixelX": 550,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "30",
+						"Col 0": "30",
 						"chunkLayer": "",
 						"wordWylie": "gi ",
 						"word": "གི་"
@@ -13629,7 +13629,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "136",
+						"Col 0": "136",
 						"chunkLayer": "",
 						"wordWylie": "dga' rogs",
 						"word": "དགའ་རོགས"
@@ -13651,7 +13651,7 @@
 					"pixelX": 634,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "154",
+						"Col 0": "154",
 						"chunkLayer": "",
 						"wordWylie": "dang ",
 						"word": "དང་"
@@ -13758,7 +13758,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -13779,7 +13779,7 @@
 					"pixelX": 425,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "103",
+						"Col 0": "103",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -13804,7 +13804,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "188",
+						"Col 0": "188",
 						"chunkLayer": "",
 						"wordWylie": "'ong ",
 						"word": "འོང་"
@@ -13824,7 +13824,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -13847,7 +13847,7 @@
 					"pixelX": 544,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -13869,7 +13869,7 @@
 					"pixelX": 717,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -13891,7 +13891,7 @@
 					"pixelX": 581,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "161",
+						"Col 0": "161",
 						"chunkLayer": "",
 						"wordWylie": "'ang ",
 						"word": "འང་"
@@ -13910,7 +13910,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -13964,7 +13964,7 @@
 					"pixelX": 400,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "133",
+						"Col 0": "133",
 						"chunkLayer": "",
 						"wordWylie": "  ",
 						"word": "་་"
@@ -14036,7 +14036,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -14057,7 +14057,7 @@
 					"pixelX": 689,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "155",
+						"Col 0": "155",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -14099,7 +14099,7 @@
 					"pixelX": 580,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "76",
+						"Col 0": "76",
 						"chunkLayer": "",
 						"wordWylie": "rnying pa ",
 						"word": "རྙིང་པ་"
@@ -14132,7 +14132,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "42",
+						"Col 0": "42",
 						"chunkLayer": "",
 						"wordWylie": "[@]",
 						"word": "@"
@@ -14185,7 +14185,7 @@
 					"pixelX": 349,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "0",
+						"Col 0": "0",
 						"chunkLayer": "",
 						"wordWylie": "'o",
 						"word": "འོ"
@@ -14319,7 +14319,7 @@
 					"pixelX": 869,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "19",
+						"Col 0": "19",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -14377,7 +14377,7 @@
 					"pixelX": 604,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "90",
+						"Col 0": "90",
 						"chunkLayer": "",
 						"wordWylie": "'gro ",
 						"word": "འགྲོ་"
@@ -14399,7 +14399,7 @@
 					"pixelX": 834,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "118",
+						"Col 0": "118",
 						"chunkLayer": "",
 						"wordWylie": "mkhan ",
 						"word": "མཁན་"
@@ -14429,7 +14429,7 @@
 					"pixelX": 537,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "160",
+						"Col 0": "160",
 						"chunkLayer": "",
 						"wordWylie": "na",
 						"word": "ན"
@@ -14459,7 +14459,7 @@
 					"pixelX": 417,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "49",
+						"Col 0": "49",
 						"chunkLayer": "",
 						"wordWylie": "\/",
 						"word": "།"
@@ -14520,7 +14520,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "104",
+						"Col 0": "104",
 						"chunkLayer": "",
 						"wordWylie": "hA ",
 						"word": "ཧཱ་"
@@ -14554,7 +14554,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "verb",
 						"wordWylie": "",
 						"word": ""
@@ -14636,7 +14636,7 @@
 					"pixelX": 396,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "73",
+						"Col 0": "73",
 						"chunkLayer": "",
 						"wordWylie": "tsho",
 						"word": "ཚོ"
@@ -14663,7 +14663,7 @@
 					"pixelX": 524,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "192",
+						"Col 0": "192",
 						"chunkLayer": "",
 						"wordWylie": "byung ",
 						"word": "བྱུང་"
@@ -14685,7 +14685,7 @@
 					"pixelX": 418,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "69",
+						"Col 0": "69",
 						"chunkLayer": "",
 						"wordWylie": "yod ",
 						"word": "ཡོད་"
@@ -14705,7 +14705,7 @@
 					"pixelX": 399,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "172",
+						"Col 0": "172",
 						"chunkLayer": "",
 						"wordWylie": "  ",
 						"word": "་་"
@@ -14737,7 +14737,7 @@
 					"pixelX": 349,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"chunkLayer": "",
 						"wordWylie": "",
 						"word": "<0>"
@@ -14773,7 +14773,7 @@
 					],
 					"tagMap": {
 						"lit": "",
-						"Col.0": "",
+						"Col 0": "",
 						"wordWylie": "",
 						"word": ""
 					},
@@ -14880,7 +14880,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "48",
+						"Col 0": "48",
 						"chunkLayer": "",
 						"wordWylie": "lags",
 						"word": "ལགས"
@@ -14903,7 +14903,7 @@
 					"pixelX": 440,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "74",
+						"Col 0": "74",
 						"chunkLayer": "",
 						"wordWylie": "'i ",
 						"word": "འི་"
@@ -14925,7 +14925,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "163",
+						"Col 0": "163",
 						"chunkLayer": "",
 						"wordWylie": "nga ",
 						"word": "ང་"
@@ -14953,7 +14953,7 @@
 					"pixelX": 738,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "86",
+						"Col 0": "86",
 						"chunkLayer": "",
 						"wordWylie": "red ",
 						"word": "རེད་"
@@ -14975,7 +14975,7 @@
 					"pixelX": 396,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "97",
+						"Col 0": "97",
 						"chunkLayer": "",
 						"wordWylie": "do dgong ",
 						"word": "དོ་དགོང་"
@@ -15103,7 +15103,7 @@
 					"pixelX": 351,
 					"tagMap": {
 						"lit": "",
-						"Col.0": "179",
+						"Col 0": "179",
 						"chunkLayer": "",
 						"wordWylie": "byed ",
 						"word": "བྱེད་"
@@ -15128,14 +15128,14 @@
 				"srtLineEnd"
 			],
 			"chunkFieldList": [
-				"Col.0",
+				"Col 0",
 				"word",
 				"wordWylie",
 				"lit",
 				"chunkLayer"
 			],
 			"tokenFieldList": [
-				"Col.0",
+				"Col 0",
 				"word",
 				"wordWylie",
 				"lit",
@@ -15177,7 +15177,7 @@
 			"tokenImportTranscriptColName": "wordWylie",
 			"unitImportUnitEndColName": "iuEnd",
 			"importGridColNameList": [
-				"Col.0",
+				"Col 0",
 				"iu",
 				"speaker",
 				"word",

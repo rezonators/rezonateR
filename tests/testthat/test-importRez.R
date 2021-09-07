@@ -4,7 +4,7 @@ test_that("importRez works", {
   rezEx = importRez(path,
                     layerRegex = list(
                       track = list(field = "trailLayer", regex = c("clausearg", "discdeix", "mandem"), names = c("clausearg", "discdeix", "mandem", "refexpr")),
-                      chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr"))),
+                      chunk = list(field = "chunkLayer", regex = c("verb", "adv", "clause", "predadj"), names = c("verb", "adv", "clause", "predadj", "refexpr"))),
                     concatFields = c("word", "wordWylie", "lit"))
   expect_s3_class(rezEx, "rezrObj")
   expect_s3_class(rezEx[["tokenDF"]], "rezrDF")

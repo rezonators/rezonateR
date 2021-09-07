@@ -118,7 +118,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
       fieldaccess(treeEntryDF, concatFields) = "foreign"
       treeEntryDF = treeEntryDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
       treeEntryDF = treeEntryDF %>% getTreeOfEntry(treeLinkDF, fullNodeMap$tree)
-      treeEntryDF = treeEntryDF %>% rez_left_join(treeLinkDF %>% select(-goal, -doc, -type), df2Address = "treeLink", fkey = "sourceLink", by = c("sourceLink" = "id")) %>% rename(parent = source)
+      treeEntryDF = treeEntryDF %>% rez_left_join(treeLinkDF %>% select(-goal, -doc, -type), df2Address = "treeLink", fkey = "sourceLink", by = c("sourceLink" = "id")) %>% rez_rename(parent = source)
 
       treeDF = getSeqBounds(tokenDF, treeDF, fullNodeMap[["tree"]], c("tokenOrder", "docTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree")
       treeDF = concatStringFields(tokenDF, treeDF, fullNodeMap[["tree"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree", separator = separator)
@@ -132,18 +132,18 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
 
     #Split DFs by layer
     #layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
-    layeredTypes = c("track", "chunk") %>% intersect(names(fullNodeMap))
+    layeredTypes = c("track", "chunk", "tree") %>% intersect(names(fullNodeMap))
     for(type in layeredTypes){
       if(type %in% names(layerRegex)){
         info = layerRegex[[type]]
         #Validate input
         if(length(info[["regex"]]) > length(info[["names"]])){
-          stop("You have more regexes than name for track layers.")
+          stop("You have more regexes than name for layers.")
         } else if(length(info[["names"]]) > length(info[["regex"]]) + 1){
-          stop("In the track layers, the number of names should be equal to or one more than the number of regexes.")
+          stop("In the layers object, the number of names should be equal to or one more than the number of regexes.")
         } else if(length(info[["names"]]) == length(info[["regex"]])){
           info[["regex"]] = info[["regex"]][-length(info[["regex"]])]
-          warning("In the track layers, you have as many regexes as you have names. I will ignore the last regex; it will be the default case.")
+          warning("In the layers object, you have as many regexes as you have names. I will ignore the last regex; it will be the default case.")
         }
 
         #Split DFs into layers
@@ -160,6 +160,9 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
           trailDF = trailDF %>% splitLayers
         } else if(type == "chunk"){
           chunkDF = chunkDF %>% splitLayers
+        } else if(type == "tree"){
+          treeDF = treeDF %>% splitLayers
+          treeEntryDF = treeEntryDF %>% splitLayers
         }
       } else {
         if(type == "track"){
@@ -167,13 +170,16 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
           trailDF = list("default" = trailDF)
         } else if(type == "chunk"){
           chunkDF = list("default" = chunkDF)
+        } else if(type == "tree"){
+          treeDF = list("default" = treeDF)
+          treeEntryDF = list("default" = treeEntryDF)
         }
       }
     }
 
     message("A few finishing touches ...")
     #Track DFs needs dependencies fixed for two reasons:
-    #1) First, Last mistakenly present in dependencies for tokenDF (not the most elegant solution to solve here, should think about this later)
+    #1) First, First/Last mistakenly present in dependencies for tokenDF (not the most elegant solution to solve here, should think about this later)
     #2) After chunks and trailDF got split into layers, need to update addresses
     if("track" %in% names(fullNodeMap)){
       for(trackLayer in names(trackDF)){
@@ -207,7 +213,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
 entryDFFields = c("doc", "unit", "token")
 unitDFFields = c("doc", "unitStart", "unitEnd", "unitSeq", "pID")
 tokenDFFields = c("doc", "unit", "docTokenSeq", "tokenOrder")
-chunkDFFields = c("doc", "name")
+chunkDFFields = c("doc", "name", "nest")
 trackDFFields = c("doc", "chain", "sourceLink", "token")
 trailDFFields = c("doc", "chainCreateSeq", "name")
 linkDFFields = c("doc", "source", "goal", "type", "subtype")
