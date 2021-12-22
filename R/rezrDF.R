@@ -288,8 +288,6 @@ reloadForeign = function(df, rezrObj, fields = ""){
 #'
 #' @return
 #' @export
-#'
-#' @examples
 stringToFactor = function(df, colsToChange = NULL, levels = list()){
   result = df
   if(is.null(colsToChange)) colsToChange = colnames(df)

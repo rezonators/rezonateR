@@ -145,11 +145,16 @@ mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, sele
       infoSource = NULL
       selectCond = enexpr(selectCond)
       if(!is.null(selectCond)){
-        infoSourceCands = chunkDF %>% filter(id %in% chunksCombined & selectCond)
-        if(nrow(infoSourceCands) > 1) infoSource = infoSourceCands %>% slice(1)
+        infoSourceCands = chunkDF %>% filter(id %in% chunksCombined & !!selectCond)
+        if(nrow(infoSourceCands) == 1){
+          infoSource = infoSourceCands
+        } else if(nrow(infoSourceCands) > 1){
+          infoSource = infoSourceCands %>% slice(1)
+        }
       }
       if(is.null(infoSource)){
-        infoSource = chunkDF %>% filter(id %in% chunksCombined) %>% arrange(tokenOrderFirst) %>% slice(1)
+        infoSource = chunkDF %>% filter(id %in% chunksCombined) %>% arrange(docTokenSeqFirst) %>% slice(1)
+      }
         newRow = infoSource
         newRow[fieldaccess(chunkDF) %in% c("foreign", "auto")] = NA
         newRow$name = "New Chunk " %+% i
@@ -169,7 +174,6 @@ mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, sele
         #args[["x"]] = rezrObj
         rezrObj = exec("addRow", !!!args)
         rezrObj$chunkDF[[newRow$layer]] = rezrObj$chunkDF[[newRow$layer]] %>% mutate(combinedChunk = case_when(id == infoSource$id ~ combinedChunk %+% "|infomember-" %+% newRow$id, id %in% chunksCombined ~ combinedChunk %+% "|member-" %+% newRow$id, T ~ combinedChunk))
-      }
     }
   }
   rezrObj

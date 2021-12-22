@@ -77,7 +77,7 @@ nodeMap = function(importNodeMap, docname){
         next
       }
       if(length(node) > 1){
-        if(node$type == "treeEntry"){
+        if(node$type == "treeEntry" | node$type == "entry"){
           rawNodeMap[["treeEntry"]][[nodeName]] = node
           rawNodeMap[["treeEntry"]][[nodeName]][["doc"]] = docname
         } else if(node$type == "tree"){

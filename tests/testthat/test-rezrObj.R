@@ -16,7 +16,6 @@ test_that("CSV import/export", {
   #expect(!("unit" %in% names(b)), "Exclusion failed")
 })
 
-
 test_that("getTrackTokens", {
   load("data/rezEx.rda")
   b = rezEx$trackDF$refexpr %>% rez_mutate(a = getTrackTokens(rezEx, "word", rezEx$trackDF$refexpr)) %>% select(word, a)
