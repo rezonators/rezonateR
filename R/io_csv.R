@@ -31,6 +31,25 @@ rez_write_csv = function(df, path, inclCols = character(0), exclCols = character
 #' @export
 rez_read_csv = function(path, origDF = NULL, lubridate = F, inclCols = character(0), exclCols = character(0), ...){
   inImport = strsplit(read_lines(path, n_max = 1), ",")[[1]]
+
+  #Handling cases with commas in column names
+  inString = F
+  currPrevQuote = 0
+  i = 1
+  for(item in inImport){
+    numQuotes = str_count(item, "\"")
+    if(numQuotes/2 != round(numQuotes/2)){
+      if(!inString){
+        currPrevQuote = i
+      } else {
+        inImport[[currPrevQuote]] = paste(inImport[currPrevQuote:i], collapse = ",") %>% str_remove_all("\\\"")
+        inImport = c(inImport[1:currPrevQuote],inImport[(i+1):length(inImport)])
+        i = currPrevQuote
+      }
+      inString = !inString
+    }
+    i = i + 1
+  }
   if(length(inclCols) > 0){
     if(length(exclCols) > 0){
       warning("You specified columns to both include and exclude. I will ignore the exclude parameter.")
