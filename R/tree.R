@@ -256,14 +256,14 @@ getChildrenOfEntry = function(treeEntry, treeEntryDF){
 getChildrenOfChunk = function(chunkID, chunkDF, treeEntryDF){
   parentEntryID = chunkDF %>% filter(id == chunkID) %>% slice(1) %>% pull(treeEntry)
   childrenEntryIDs = getChildrenOfEntry(parentEntryID, treeEntryDF)
-  chunkDF %>% filter(treeEntry %in% childrenEntryIDs) %>% pull(id)
+  chunkDF %>% filter(treeEntry %in% childrenEntryIDs) %>% arrange(tokenOrderFirst) %>% pull(id)
 }
 
 getChildrenOfChunkIf = function(chunkID, chunkDF, treeEntryDF, cond = expr(TRUE)){
   cond = enexpr(cond)
   parentEntryID = chunkDF %>% filter(id == chunkID) %>% slice(1) %>% pull(treeEntry)
   childrenEntryIDs = getChildrenOfEntry(parentEntryID, treeEntryDF)
-  chunkDF %>% filter(treeEntry %in% childrenEntryIDs, !!cond) %>% pull(id)
+  chunkDF %>% filter(treeEntry %in% childrenEntryIDs, !!cond) %>% arrange(tokenOrderFirst) %>% pull(id)
 }
 
 getSiblingsOfEntry = function(treeEntry, treeEntryDF){
@@ -275,13 +275,13 @@ getSiblingsOfChunk = function(chunkID, chunkDF, treeEntryDF){
   entryID = chunkDF %>% filter(id == chunkID) %>% slice(1) %>% pull(treeEntry)
   if(!any(entryID == "") & length(entryID) > 0){
     childrenEntryIDs = getSiblingsOfEntry(entryID, treeEntryDF)
-    chunkDF %>% filter(treeEntry %in% childrenEntryIDs) %>% pull(id)
+    chunkDF %>% filter(treeEntry %in% childrenEntryIDs) %>% arrange(tokenOrderFirst) %>% pull(id)
   } else character(0)
 }
 
 getChunkSiblingIf = function(chunkID, chunkDF, treeEntryDF, cond = expr(TRUE)){
   cond = enexpr(cond)
-  cand = chunkDF %>% filter(id %in% getSiblingsOfChunk(chunkID, chunkDF, treeEntryDF), !!cond) %>% slice(1) %>% pull(id)
+  cand = chunkDF %>% filter(id %in% getSiblingsOfChunk(chunkID, chunkDF, treeEntryDF), !!cond) %>% arrange(tokenOrderFirst) %>% pull(id)
   if(length(cand) == 0) cand = NA
   cand
 }
@@ -326,7 +326,7 @@ addAllPositionsAmongSiblings = function(rezrObj, cond = expr(TRUE)){
   #Later: combine treeEntryDF
   rezrObj$tokenDF = rezrObj$tokenDF %>% addPositionAmongSiblings(rezrObj, cond = !!cond)
   for(chunkLayer in names(rezrObj$chunkDF)){
-    rezrObj$chunkDF[[chunkLayer]] = rezrObj$chunkDF[[chunkLayer]] %>% addPositionAmongSiblings(rezrObj)
+    rezrObj$chunkDF[[chunkLayer]] = rezrObj$chunkDF[[chunkLayer]] %>% addPositionAmongSiblings(rezrObj, cond = !!cond)
   }
   rezrObj
 }

@@ -292,15 +292,17 @@ getNextMentionField = function(field, tokenOrder = NULL, chain = NULL){
   sapply(1:length(field), function(i) field[which(tokenOrder == prevMentionPos[i])]) %>% zeroEntryToNA
 }
 
-#' Count the number of competitors intervening between the previous mention and the current mention
+#' Count the number of competing referents to the current mention
+#'
+#' This may either be counted within a window of units from the current one, or all referents competing with the current one may be counted, or a mix of both conditions. By default, we count referents intervening between the current and previous mention. Despite its name, tokenOrder can be set as unitSeqLast or similar.
 #'
 #' @param cond The condition under which something counts as a competitor. Leave blank if anything goes.
 #' @inheritParams lastMentionToken
 #' @return
 #' @export
-countCompetitors = function(cond = NULL, window = Inf, tokenOrder = NULL, chain = NULL){
+countCompetitors = function(cond = NULL, window = Inf, tokenOrder = NULL, chain = NULL, between = T){
   grabFromDF(tokenOrder = "docTokenSeqLast", chain = "chain")
-  lastMentionPos = lastMentionToken(tokenOrder, chain)
+  if(between) lastMentionPos = lastMentionToken(tokenOrder, chain)
   if(is.null(cond)){
     condition = T
   } else {
@@ -308,9 +310,14 @@ countCompetitors = function(cond = NULL, window = Inf, tokenOrder = NULL, chain 
   }
 
   sapply(1:length(tokenOrder), function(x){
-    sum(tokenOrder < tokenOrder[x] & tokenOrder > lastMentionPos[x] & condition & tokenOrder > tokenOrder[x] - window)
+    if(between){
+      result = sum(tokenOrder < tokenOrder[x] & tokenOrder > lastMentionPos[x] & condition & tokenOrder > tokenOrder[x] - window & chain[x] != chain)
+    } else {
+      result = sum(tokenOrder < tokenOrder[x] & condition & tokenOrder > tokenOrder[x] - window & chain[x] != chain)
+    }
+    #if(is.na(result)) result = 0
+    result
   })
-
 }
 
 #' Count the number of competitors intervening between the previous mention and the current mention

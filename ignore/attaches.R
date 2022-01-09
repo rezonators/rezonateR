@@ -7,7 +7,7 @@ library(xml2)
 library(rlang)
 
 setwd("C:/Users/User/Documents/GitHub/rezonateR")
-
+#setwd("C:/Users/kayau/Documents/GitHub/rezonateR")
 load_all()
 
 #build_manual()
