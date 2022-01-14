@@ -21,7 +21,7 @@
 #' @import stringr
 #' @import rlang
 #' @export
-importRez = function(paths, docnames = "", concatFields, layerRegex, separator = " "){
+importRez = function(paths, docnames = "", concatFields, layerRegex = list(), separator = " "){
     if(length(paths) != length(docnames) & docnames != ""){
       docnames = ""
       warning("Number of input paths does not match the number of document names. I will name your documents automatically, according to your filenames.")
@@ -69,6 +69,10 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
       trackDF = nodeToDF(fullNodeMap[["track"]], trackDFFields)
       trailDF = nodeToDF(fullNodeMap[["trail"]], trailDFFields)
     }
+    if("rez" %in% names(fullNodeMap)){
+      rezDF = nodeToDF(fullNodeMap[["rez"]], rezDFFields)
+      resonanceDF = nodeToDF(fullNodeMap[["resonance"]], resonanceDFFields)
+    }
     if("link" %in% names(fullNodeMap)){
       linkDF = nodeToDF(fullNodeMap[["link"]], linkDFFields)
     }
@@ -102,6 +106,17 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
       mergedDF = mergeTokenChunk(tokenDF, chunkDF)
     }
 
+
+    if("rez" %in% names(fullNodeMap)){
+      message(">Adding to track DFs ...")
+      #mergedDF from the previous condition
+      rezDF = rezDF %>% rez_left_join(mergedDF, by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token")
+      #Adding fields to lower-level DFs that depend on higher-level DFs.
+      rezDF = rezDF %>% rez_left_join(resonanceDF, by = c(chain = "id", doc = "doc"), df2Address = "resonanceDF", fkey = "token")
+      rezDF = rezDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
+    }
+
+
     if("track" %in% names(fullNodeMap)){
       message(">Adding to track DFs ...")
       #mergedDF from the previous condition
@@ -132,7 +147,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
 
     #Split DFs by layer
     #layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
-    layeredTypes = c("track", "chunk", "tree") %>% intersect(names(fullNodeMap))
+    layeredTypes = c("track", "chunk", "tree", "rez") %>% intersect(names(fullNodeMap))
     for(type in layeredTypes){
       if(type %in% names(layerRegex)){
         info = layerRegex[[type]]
@@ -163,6 +178,9 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
         } else if(type == "tree"){
           treeDF = treeDF %>% splitLayers
           treeEntryDF = treeEntryDF %>% splitLayers
+        } else if(type == "rez"){
+          rezDF = trackDF %>% splitLayers
+          resonanceDF = trailDF %>% splitLayers
         }
       } else {
         if(type == "track"){
@@ -173,6 +191,9 @@ importRez = function(paths, docnames = "", concatFields, layerRegex, separator =
         } else if(type == "tree"){
           treeDF = list("default" = treeDF)
           treeEntryDF = list("default" = treeEntryDF)
+        } else if(type == "rez"){
+          rezDF = list("default" = rezDF)
+          resonanceDF = list("default" = resonanceDF)
         }
       }
     }
@@ -216,6 +237,8 @@ tokenDFFields = c("doc", "unit", "docTokenSeq", "tokenOrder")
 chunkDFFields = c("doc", "name", "nest")
 trackDFFields = c("doc", "chain", "sourceLink", "token")
 trailDFFields = c("doc", "chainCreateSeq", "name")
+rezDFFields = c("doc", "chain", "sourceLink", "token")
+resonanceDFFields = c("doc", "chainCreateSeq", "name")
 linkDFFields = c("doc", "source", "goal", "type", "subtype")
 treeEntryDFFields = c("doc", "order", "sourceLink", "level")
 treeDFFields = c("doc", "name", "maxLevel")

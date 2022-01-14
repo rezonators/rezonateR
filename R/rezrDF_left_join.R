@@ -87,6 +87,7 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
     if(length(autoBy) == 0){
       result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, oldNames = oldNames, df2, ...)
     } else {
+      #Some bug here that leads to suffixes being ignored ...
       result = rez_dfop(df1, left_join, fieldaccess = fieldaccess, updateFunct = updateFunction, oldNames = oldNames, df2, by = autoBy)
     }
 

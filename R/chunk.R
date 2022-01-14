@@ -1,5 +1,15 @@
 #Some chunk-related functions
 
+#' Find chunks containing other chunks
+#'
+#' @param containedDF The rezrDF with contained chunks (may be a track/rez rezrDF)
+#' @param containerDF The rezrDF with container chunks (may be a track/rez rezrDF)
+#' @param proper Do you count only proper containment?
+#'
+#' @return A vector of container chunks, each of which corresponds to one row in the containedDF (the first one is chosen in the case of multiple parents). Right now, we do not support criteria for choosing container chunk.
+#' @export
+#'
+#' @examples
 findContainingChunk = function(containedDF, containerDF, proper = F){
   #Will have to be modified when I have multiple docs
   sapply(1:nrow(containedDF), function(x){

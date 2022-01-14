@@ -97,6 +97,16 @@ getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
       if(!("treeEntry" %in% names(rezrObj$trackDF[[trackLayer]])))
       rezrObj$trackDF[[trackLayer]] = rezrObj$trackDF[[trackLayer]] %>% rez_left_join(joinDF, df2Address = df2Address, fkey = "token", by = c(token = "id"))
     }
+  } else if(entity == "rez"){
+    if(!("treeEntry" %in% names(rezrObj$tokenDF))) rezrObj = getAllTreeCorrespondences(rezrObj, entity = "token")
+    if(!any(sapply(rezrObj$chunkEntry, function(x) "treeEntry" %in% names(x)))) rezrObj = getAllTreeCorrespondences(rezrObj, entity = "chunk")
+
+    joinDF = combineTokenChunk(rezrObj) %>% select(id, treeEntry)
+    df2Address = c("chunkDF/" %+% names(rezrObj$chunkDF), "tokenDF")
+    for(rezLayer in names(rezrObj$rezDF)){
+      if(!("treeEntry" %in% names(rezrObj$rezDF[[rezLayer]])))
+        rezrObj$rezDF[[rezLayer]] = rezrObj$rezDF[[rezLayer]] %>% rez_left_join(joinDF, df2Address = df2Address, fkey = "token", by = c(token = "id"))
+    }
   }
   rezrObj
 }
