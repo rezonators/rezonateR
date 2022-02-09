@@ -6,8 +6,7 @@
 #3) Selecting columns: rez_select
 #4) Renaming columns: rez_rename
 #5) Grouping functions: rez_group_by, rez_ungroup, rez_group_split
-#6) Combining data frames: rez_bind_rows
-
+#6) Combining data frames: rez_bind_row
 
 #' Perform an operation on a data.frame while updating field access status.
 #'

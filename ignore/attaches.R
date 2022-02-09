@@ -11,3 +11,4 @@ setwd("C:/Users/User/Documents/GitHub/rezonateR")
 load_all()
 
 #build_manual()
+

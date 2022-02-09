@@ -90,6 +90,11 @@ addIsWordField.rezrObj = function(x, cond, addWordSeq = T){
       x$trackDF[[layer]] = suppressMessages(x$trackDF[[layer]] %>% rez_left_join(combineTokenChunk(x) %>% rez_select(id, wordOrderFirst, wordOrderLast, docWordSeqFirst, docWordSeqLast), df2Address = "tokenChunkDF", rezrObj = x, fkey = "token"))
     }
 
+    for(layer in names(x$rezDF)){
+      x$rezDF[[layer]] = suppressMessages(x$rezDF[[layer]] %>% rez_left_join(combineTokenChunk(x) %>% rez_select(id, wordOrderFirst, wordOrderLast, docWordSeqFirst, docWordSeqLast), df2Address = "tokenChunkDF", rezrObj = x, fkey = "token"))
+    }
+
+
 
     #Entry and dependencies
     x$entryDF = x$entryDF %>% rez_left_join(x$tokenDF %>% select(id, wordOrder, docWordSeq), by = c(token = "id"), df2Address = "token", fkey = "token", rezrObj = x)
