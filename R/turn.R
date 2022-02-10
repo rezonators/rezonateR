@@ -17,7 +17,7 @@ defaultScheme = c(turnStart = "", turnEnd = "turnEnd", turn = "turnEnd",
 #' @examples
 getTurnFromAnnos = function(unitDF, annoScheme = defaultScheme, sior = "new", bc = "noTurn", turnAnno = "turnPos"){
   for(cat in names(defaultScheme)){
-    if(!(cat %in% annoScheme)) annoScheme[[cat]] = defaultScheme[[cat]]
+    if(!(cat %in% names(annoScheme))) annoScheme[[cat]] = defaultScheme[[cat]]
   }
 
   turnEndCats = c(annoScheme[["turnEnd"]])
@@ -27,9 +27,8 @@ getTurnFromAnnos = function(unitDF, annoScheme = defaultScheme, sior = "new", bc
   if(bc == "noTurn") noTurnCats = c(noTurnCats, annoScheme[["bcStart"]], annoScheme[["bc"]])
 
   noTurnStatus = c("noTurn")
-  if(bc == "noTurn") noTurnStatus = c(noTurnStatus, "noTurn")
+  if(bc == "noTurn") noTurnStatus = c(noTurnStatus, "bc")
   if(sior == "old") noturnStatus = c(noTurnStatus, "sior")
-
 
   turnList = list()
   for(currPart in unique(unique(unitDF$participant))){
@@ -57,7 +56,6 @@ getTurnFromAnnos = function(unitDF, annoScheme = defaultScheme, sior = "new", bc
       if(!(currAnno %in% noTurnCats) & !(currStatus %in% noTurnStatus)){
         turnList[[currDF %>% slice(i) %>% pull(id)]] = currTurn
       } else {
-        print("hi")
         turnList[[currDF %>% slice(i) %>% pull(id)]] = 0
       }
 
@@ -67,7 +65,6 @@ getTurnFromAnnos = function(unitDF, annoScheme = defaultScheme, sior = "new", bc
   }
 
   unitDF = unitDF %>% mutate(turnProvisional = sapply(unitDF$id, function(id) turnList[[id]]))
-  print(unitDF$turnProvisional)
   allTurns = unitDF %>% filter(turnProvisional != 0) %>% group_by(participant, turnProvisional) %>% summarise(firstUnit = min(as.numeric(unitId))) %>% arrange(as.numeric(firstUnit)) %>% ungroup
   allTurns = allTurns %>% mutate(turnFinal = 1:nrow(allTurns))
   unitDF = unitDF %>% left_join(allTurns, by = c("turnProvisional", "participant"))
