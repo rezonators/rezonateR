@@ -6,7 +6,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">rezonateR</a>
 
@@ -21,11 +21,8 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/0.1.0_vignette.html">An introduction to rezonateR 0.1.0</a>
-  </div>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/index.html">Articles</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -41,9 +38,112 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="importing-exporting-saving-and-loading">Importing, exporting, saving and loading<a class="anchor" aria-label="anchor" href="#importing-exporting-saving-and-loading"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions for importing .rez files, saving and loading rezonateR files, and exporting to other formats.</p>
+
+      
+    </div><div id="" class="section level2">
       
       
+      
+
+      <dl><dt>
+          
+          <code><a href="importRez.html">importRez()</a></code> 
+        </dt>
+        <dd>Import a Rez file</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rez_pangloss.html">rez_pangloss()</a></code> 
+        </dt>
+        <dd>Read Pangloss file</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rw.html">rez_write_csv()</a></code> <code><a href="rw.html">rez_read_csv()</a></code> 
+        </dt>
+        <dd>Read and write rezrDFs as CSV files</dd>
+      </dl><dl><dt>
+          
+          <code><a href="updateFromDF.html">updateFromDF()</a></code> 
+        </dt>
+        <dd>Update a rezrDF using data from another data frame</dd>
+      </dl><dl><dt>
+          
+          <code><a href="lowerList.html">getLowerFieldList()</a></code> <code><a href="lowerList.html">getTrackTokens()</a></code> 
+        </dt>
+        <dd>Get a list of values from a lower-level table.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="saveload.html">rez_save()</a></code> <code><a href="saveload.html">rez_load()</a></code> 
+        </dt>
+        <dd>Save and load rezrObj and rezrDF objects.</dd>
+      </dl></div><div class="section level2">
+      <h2 id="basics-of-rezrobjs-and-rezrdfs">Basics of rezrObjs and rezrDFs<a class="anchor" aria-label="anchor" href="#basics-of-rezrobjs-and-rezrdfs"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="combineLayer.html">combineLayers()</a></code> <code><a href="combineLayer.html">combineChunks()</a></code> <code><a href="combineLayer.html">combineTokenChunk()</a></code> 
+        </dt>
+        <dd>Combine different layers of an entity, and similar entities</dd>
+      </dl><dl><dt>
+          
+          <code><a href="deps.html">deps()</a></code> <code><a href="deps.html">`deps&lt;-`()</a></code> 
+        </dt>
+        <dd>Extract/set an attribute of a updateFunction.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="getAddresses.html">getLayerAddresses()</a></code> <code><a href="getAddresses.html">getTokenChunkAddresses()</a></code> 
+        </dt>
+        <dd>Get all the addresses of a DF with multiple layers</dd>
+      </dl><dl><dt>
+          
+          <code><a href="getRezrDFAttr.html">getRezrDFAttr()</a></code> <code><a href="getRezrDFAttr.html">fieldaccess()</a></code> <code><a href="getRezrDFAttr.html">updateFunct()</a></code> <code><a href="getRezrDFAttr.html">inNodeMap()</a></code> <code><a href="getRezrDFAttr.html">setRezrDFAttr()</a></code> <code><a href="getRezrDFAttr.html">`updateFunct&lt;-`()</a></code> <code><a href="getRezrDFAttr.html">`fieldaccess&lt;-`()</a></code> <code><a href="getRezrDFAttr.html">`inNodeMap&lt;-`()</a></code> 
+        </dt>
+        <dd>Extract/set an attribute of a rezrDF.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="reload.html">reload()</a></code> <code><a href="reload.html">reloadLocal()</a></code> <code><a href="reload.html">reloadForeign()</a></code> 
+        </dt>
+        <dd>Functions for reloading auto and foreign fields.</dd>
+      </dl></div><div class="section level2">
+      <h2 id="time-and-sequence">Time and sequence<a class="anchor" aria-label="anchor" href="#time-and-sequence"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="addIsWordField.html">addIsWordField()</a></code> 
+        </dt>
+        <dd>Add a field on whether something is a word or not.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="addUnitSeq.html">addUnitSeq()</a></code> 
+        </dt>
+        <dd>Add unit sequence information to different levels of rezrObj.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="getSeqBounds.html">getSeqBounds()</a></code> 
+        </dt>
+        <dd>Get the max and min of a certain value from a lower object table to a higher object table.</dd>
+      </dl></div><div class="section level2">
+      <h2 id="easyedit">EasyEdit<a class="anchor" aria-label="anchor" href="#easyedit"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions for editing rezonateR objects.</p>
 
       
     </div><div id="" class="section level2">
@@ -58,19 +158,14 @@
         <dd>Shortcut functions for functions beginning with addField and changeField</dd>
       </dl><dl><dt>
           
-          <code><a href="acFieldForeign.html">addFieldForeign()</a></code> <code><a href="acFieldForeign.html">changeFieldForeign()</a></code> 
-        </dt>
-        <dd>Easily add a field to / change a field in a rezrDF using information from another rezrDF. Has two variants that may be applied to rezrDFs or rezrObjs,</dd>
-      </dl><dl><dt>
-          
           <code><a href="acFieldLocal.html">addFieldLocal()</a></code> <code><a href="acFieldLocal.html">changeFieldLocal()</a></code> 
         </dt>
         <dd>Easily add a field to / change a field in a rezrDF using only information from that rezrDF</dd>
       </dl><dl><dt>
           
-          <code><a href="addIsWordField.html">addIsWordField()</a></code> 
+          <code><a href="acFieldForeign.html">addFieldForeign()</a></code> <code><a href="acFieldForeign.html">changeFieldForeign()</a></code> 
         </dt>
-        <dd>Add a field on whether something is a word or not.</dd>
+        <dd>Easily add a field to / change a field in a rezrDF using information from another rezrDF. Has two variants that may be applied to rezrDFs or rezrObjs,</dd>
       </dl><dl><dt>
           
           <code><a href="addRow.html">addRow()</a></code> 
@@ -78,84 +173,9 @@
         <dd>Add rows to a certain data.frame</dd>
       </dl><dl><dt>
           
-          <code><a href="addUnitSeq.html">addUnitSeq()</a></code> 
-        </dt>
-        <dd>Add unit sequence information to different levels of rezrObj.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="bridging.html">lastBridgeUnit()</a></code> <code><a href="bridging.html">unitsToLastBridge()</a></code> <code><a href="bridging.html">lastBridgeToken()</a></code> <code><a href="bridging.html">tokensToLastBridge()</a></code> 
-        </dt>
-        <dd>Functions related to bridging and frames.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="combineLayer.html">combineLayers()</a></code> <code><a href="combineLayer.html">combineChunks()</a></code> <code><a href="combineLayer.html">combineTokenChunk()</a></code> 
-        </dt>
-        <dd>Combine different layers of an entity, and similar entities</dd>
-      </dl><dl><dt>
-          
           <code><a href="complexActions.html">concatenateAll()</a></code> <code><a href="complexActions.html">longestLength()</a></code> <code><a href="complexActions.html">longest()</a></code> <code><a href="complexActions.html">shortestLength()</a></code> <code><a href="complexActions.html">shortest()</a></code> 
         </dt>
         <dd>Functions for getting summary information about a vector of strings.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="concatStringFields.html">concatStringFields()</a></code> 
-        </dt>
-        <dd>Concatenate string values in a lower-level data frame</dd>
-      </dl><dl><dt>
-          
-          <code><a href="countCompetitors.html">countCompetitors()</a></code> 
-        </dt>
-        <dd>Count the number of competitors intervening between the previous mention and the current mention</dd>
-      </dl><dl><dt>
-          
-          <code><a href="countMatchingCompetitors.html">countMatchingCompetitors()</a></code> 
-        </dt>
-        <dd>Count the number of competitors intervening between the previous mention and the current mention</dd>
-      </dl><dl><dt>
-          
-          <code><a href="createLeftJoinUpdate.html">createLeftJoinUpdate()</a></code> 
-        </dt>
-        <dd>Create a left join update function.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="createLowerToHigherUpdate.html">createLowerToHigherUpdate()</a></code> 
-        </dt>
-        <dd>Create an update function based on a lowerToHigher-type action.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="createRezId.html">createRezId()</a></code> 
-        </dt>
-        <dd>Create a Rezonator ID.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="createUpdateFunction.html">createUpdateFunction()</a></code> 
-        </dt>
-        <dd>Create an update function.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="deps.html">deps()</a></code> <code><a href="deps.html">`deps&lt;-`()</a></code> 
-        </dt>
-        <dd>Extract/set an attribute of a updateFunction.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="getAddresses.html">getLayerAddresses()</a></code> <code><a href="getAddresses.html">getTokenChunkAddresses()</a></code> 
-        </dt>
-        <dd>Get all the addresses of a DF with multiple layers</dd>
-      </dl><dl><dt>
-          
-          <code><a href="getAllTreeCorrespondences.html">getAllTreeCorrespondences()</a></code> 
-        </dt>
-        <dd>Relate table rows to tree entries covering the same tokens.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="getRezrDFAttr.html">getRezrDFAttr()</a></code> <code><a href="getRezrDFAttr.html">fieldaccess()</a></code> <code><a href="getRezrDFAttr.html">updateFunct()</a></code> <code><a href="getRezrDFAttr.html">inNodeMap()</a></code> <code><a href="getRezrDFAttr.html">setRezrDFAttr()</a></code> <code><a href="getRezrDFAttr.html">`updateFunct&lt;-`()</a></code> <code><a href="getRezrDFAttr.html">`fieldaccess&lt;-`()</a></code> <code><a href="getRezrDFAttr.html">`inNodeMap&lt;-`()</a></code> 
-        </dt>
-        <dd>Extract/set an attribute of a rezrDF.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="getSeqBounds.html">getSeqBounds()</a></code> 
-        </dt>
-        <dd>Get the max and min of a certain value from a lower object table to a higher object table.</dd>
       </dl><dl><dt>
           
           <code><a href="grapes-plus-grapes.html">`%+%`</a></code> 
@@ -163,54 +183,30 @@
         <dd>Concatenate two strings together with nothing in between.</dd>
       </dl><dl><dt>
           
-          <code><a href="gug.html">rez_group_by()</a></code> <code><a href="gug.html">rez_ungroup()</a></code> 
-        </dt>
-        <dd>Group / ungroup rezrDFs.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="importRez.html">importRez()</a></code> 
-        </dt>
-        <dd>Import a Rez file</dd>
-      </dl><dl><dt>
-          
-          <code><a href="lowerList.html">getLowerFieldList()</a></code> <code><a href="lowerList.html">getTrackTokens()</a></code> 
-        </dt>
-        <dd>Get a list of values from a lower-level table.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="lowerToHigher.html">lowerToHigher()</a></code> 
-        </dt>
-        <dd>Combine information from multiple entries in a lower-level source table to a higher-level target table.</dd>
-      </dl><dl><dt>
-          
           <code><a href="mergecat.html">mergeCats()</a></code> <code><a href="mergecat.html">renameCats()</a></code> 
         </dt>
         <dd>Merging and renaming categories</dd>
       </dl><dl><dt>
           
-          <code><a href="mergeChunksWithTree.html">mergeChunksWithTree()</a></code> 
+          <code><a href="stringToFactor.html">stringToFactor()</a></code> 
         </dt>
-        <dd>Relate table rows to tree entries covering the same tokens.</dd>
-      </dl><dl><dt>
+        <dd>Change the strings in a rezrDF to factors</dd>
+      </dl></div><div class="section level2">
+      <h2 id="tidyrez">TidyRez<a class="anchor" aria-label="anchor" href="#tidyrez"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions based on dplyr for dealing with rezrDFs with confidence.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
-          <code><a href="mergedChunksToTrack.html">mergedChunksToTrack()</a></code> 
+          <code><a href="gug.html">rez_group_by()</a></code> <code><a href="gug.html">rez_ungroup()</a></code> 
         </dt>
-        <dd>Add merged chunks in the chunkDF to the trackDF</dd>
-      </dl><dl><dt>
-          
-          <code><a href="new_rezrDF.html">new_rezrDF()</a></code> 
-        </dt>
-        <dd>Constructor function for rezrDF</dd>
-      </dl><dl><dt>
-          
-          <code><a href="new_rezrObj.html">new_rezrObj()</a></code> 
-        </dt>
-        <dd>Constructor function for rezrObj.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="reload.html">reload()</a></code> <code><a href="reload.html">reloadLocal()</a></code> <code><a href="reload.html">reloadForeign()</a></code> 
-        </dt>
-        <dd>Functions for reloading auto and foreign fields.</dd>
+        <dd>Group / ungroup rezrDFs.</dd>
       </dl><dl><dt>
           
           <code><a href="rez_add_row.html">rez_add_row()</a></code> 
@@ -221,11 +217,6 @@
           <code><a href="rez_bind_rows.html">rez_bind_rows()</a></code> 
         </dt>
         <dd>Bind together related rezrDF objects.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="rez_dfop.html">rez_dfop()</a></code> 
-        </dt>
-        <dd>Perform an operation on a data.frame while updating field access status.</dd>
       </dl><dl><dt>
           
           <code><a href="rez_group_split.html">rez_group_split()</a></code> 
@@ -243,16 +234,6 @@
         <dd>Mutate a Rez data.frame and change field access status.</dd>
       </dl><dl><dt>
           
-          <code><a href="rez_pangloss.html">rez_pangloss()</a></code> 
-        </dt>
-        <dd>Read Pangloss file</dd>
-      </dl><dl><dt>
-          
-          <code><a href="rez_rename.html">rez_rename()</a></code> 
-        </dt>
-        <dd>Rename rezrDF columns.</dd>
-      </dl><dl><dt>
-          
           <code><a href="rez_select.html">rez_select()</a></code> 
         </dt>
         <dd>Select columns in a rezrDF</dd>
@@ -263,29 +244,122 @@
         <dd>Validate a field change.</dd>
       </dl><dl><dt>
           
-          <code><a href="rw.html">rez_write_csv()</a></code> <code><a href="rw.html">rez_read_csv()</a></code> 
+          <code><a href="rez_rename.html">rez_rename()</a></code> 
         </dt>
-        <dd>Read and write rezrDFs as CSV files</dd>
+        <dd>Rename rezrDF columns.</dd>
+      </dl></div><div class="section level2">
+      <h2 id="easytrack">EasyTrack<a class="anchor" aria-label="anchor" href="#easytrack"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions for keeping track of track chains.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="bridging.html">lastBridgeUnit()</a></code> <code><a href="bridging.html">unitsToLastBridge()</a></code> <code><a href="bridging.html">lastBridgeToken()</a></code> <code><a href="bridging.html">tokensToLastBridge()</a></code> 
+        </dt>
+        <dd>Functions related to bridging and frames.</dd>
       </dl><dl><dt>
           
-          <code><a href="saveload.html">rez_save()</a></code> <code><a href="saveload.html">rez_load()</a></code> 
+          <code><a href="countCompetitors.html">countCompetitors()</a></code> 
         </dt>
-        <dd>Save and load rezrObj and rezrDF objects.</dd>
+        <dd>Count the number of competitors intervening between the previous mention and the current mention</dd>
       </dl><dl><dt>
           
-          <code><a href="stringToFactor.html">stringToFactor()</a></code> 
+          <code><a href="countMatchingCompetitors.html">countMatchingCompetitors()</a></code> 
         </dt>
-        <dd>Change the strings in a rezrDF to factors</dd>
+        <dd>Count the number of competitors intervening between the previous mention and the current mention</dd>
+      </dl><dl><dt>
+          
+          <code><a href="mergedChunksToTrack.html">mergedChunksToTrack()</a></code> 
+        </dt>
+        <dd>Add merged chunks in the chunkDF to the trackDF</dd>
       </dl><dl><dt>
           
           <code><a href="trackPrevContext.html">lastMentionUnit()</a></code> <code><a href="trackPrevContext.html">unitsToLastMention()</a></code> <code><a href="trackPrevContext.html">lastMentionToken()</a></code> <code><a href="trackPrevContext.html">tokensToLastMention()</a></code> <code><a href="trackPrevContext.html">countPrevMentions()</a></code> <code><a href="trackPrevContext.html">countPrevMentionsIf()</a></code> <code><a href="trackPrevContext.html">countPrevMentionsMatch()</a></code> <code><a href="trackPrevContext.html">getPrevMentionField()</a></code> <code><a href="trackPrevContext.html">nextMentionUnit()</a></code> <code><a href="trackPrevContext.html">unitsToNextMention()</a></code> <code><a href="trackPrevContext.html">nextMentionToken()</a></code> <code><a href="trackPrevContext.html">tokensToNextMention()</a></code> <code><a href="trackPrevContext.html">countNextMentions()</a></code> <code><a href="trackPrevContext.html">countNextMentionsIf()</a></code> <code><a href="trackPrevContext.html">countNextMentionsMatch()</a></code> <code><a href="trackPrevContext.html">getNextMentionField()</a></code> <code><a href="trackPrevContext.html">countPrevBridges()</a></code> 
         </dt>
         <dd>Functions related to mentions of the same entity in previous/following context in track chains.</dd>
+      </dl></div><div class="section level2">
+      <h2 id="trees">Trees<a class="anchor" aria-label="anchor" href="#trees"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions for keeping track of trees.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="getAllTreeCorrespondences.html">getAllTreeCorrespondences()</a></code> 
+        </dt>
+        <dd>Relate table rows to tree entries covering the same tokens.</dd>
       </dl><dl><dt>
           
-          <code><a href="updateFromDF.html">updateFromDF()</a></code> 
+          <code><a href="mergeChunksWithTree.html">mergeChunksWithTree()</a></code> 
         </dt>
-        <dd>Update a rezrDF using data from another data frame</dd>
+        <dd>Relate table rows to tree entries covering the same tokens.</dd>
+      </dl></div><div class="section level2">
+      <h2 id="other-editing-functions">Other editing functions<a class="anchor" aria-label="anchor" href="#other-editing-functions"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions not ordinarily called by users, but may be used by advanced users. Subject to change without wwarning. Many are related to update functions.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="new_rezrDF.html">new_rezrDF()</a></code> 
+        </dt>
+        <dd>Constructor function for rezrDF</dd>
+      </dl><dl><dt>
+          
+          <code><a href="new_rezrObj.html">new_rezrObj()</a></code> 
+        </dt>
+        <dd>Constructor function for rezrObj.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="concatStringFields.html">concatStringFields()</a></code> 
+        </dt>
+        <dd>Concatenate string values in a lower-level data frame</dd>
+      </dl><dl><dt>
+          
+          <code><a href="createUpdateFunction.html">createUpdateFunction()</a></code> 
+        </dt>
+        <dd>Create an update function.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="createLeftJoinUpdate.html">createLeftJoinUpdate()</a></code> 
+        </dt>
+        <dd>Create a left join update function.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="createLowerToHigherUpdate.html">createLowerToHigherUpdate()</a></code> 
+        </dt>
+        <dd>Create an update function based on a lowerToHigher-type action.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="createRezId.html">createRezId()</a></code> 
+        </dt>
+        <dd>Create a Rezonator ID.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="lowerToHigher.html">lowerToHigher()</a></code> 
+        </dt>
+        <dd>Combine information from multiple entries in a lower-level source table to a higher-level target table.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rez_dfop.html">rez_dfop()</a></code> 
+        </dt>
+        <dd>Perform an operation on a data.frame while updating field access status.</dd>
       </dl><dl><dt>
           
           <code><a href="updateFunction.html">new_updateFunction()</a></code> 
@@ -302,7 +376,8 @@
         </dt>
         <dd>Update a field using a lowerToHigher operation.</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

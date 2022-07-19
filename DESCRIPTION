@@ -1,14 +1,14 @@
 Package: rezonateR
 Title: A Support Package for Working with Rezonator in R
 Version: 0.1.1.0000
-Authors@R: 
+Authors@R:
     c(person(given = "John W",
            family = "Du Bois",
            role = c("cre"),
            email = "dubois@ucsb.edu"),
     person(given = "Ryan Ka Yau",
            family = "Lai",
-           role = c("aut"),
+           role = c("aut", "cre"),
            email = "kayaulai@ucsb.edu",
            comment = c(ORCID = "0000-0001-6478-0649")))
 Maintainer: Ryan Ka Yau Lai <kayaulai@ucsb.edu>
@@ -18,12 +18,12 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Imports: 
+Imports:
     xml2,
     rjson,
     stats

@@ -1,4 +1,91 @@
+pandoc: 2.17.1.1
+pkgdown: 2.0.5
+pkgdown_sha: ~
+articles:
+  0.1.0_vignette: 0.1.0_vignette.html
+last_built: 2022-07-19T09:32Z
 url: https://rezonators.github.io/rezonateR/
 template:
   bootstrap: 5
-
+  bootswatch: cerulean
+reference:
+- title: "Importing, exporting, saving and loading"
+  desc: >
+    Functions for importing .rez files, saving and loading rezonateR files, and exporting to other formats.
+  contents:
+  - importRez
+  - rez_pangloss
+  - rez_write_csv
+  - updateFromDF
+  - getLowerFieldList
+  - rez_save
+  - rez_load
+  - updateFromDF
+- title: "Basics of rezrObjs and rezrDFs"
+  contents:
+  - combineLayers
+  - deps
+  - getLayerAddresses
+  - getRezrDFAttr
+  - reload
+- title: "Time and sequence"
+  contents:
+  - addIsWordField
+  - addUnitSeq
+  - getSeqBounds
+- title: "EasyEdit"
+  desc: >
+    Functions for editing rezonateR objects.
+  contents:
+  - addField
+  - addFieldLocal
+  - addFieldForeign
+  - addRow
+  - concatenateAll
+  - "`%+%`"
+  - mergeCats
+  - stringToFactor
+- title: "TidyRez"
+  desc: >
+    Functions based on dplyr for dealing with rezrDFs with confidence.
+  contents:
+  - rez_group_by
+  - rez_add_row
+  - rez_bind_rows
+  - rez_group_split
+  - rez_left_join
+  - rez_mutate
+  - rez_select
+  - rez_validate_fieldchange
+  - rez_rename
+- title: "EasyTrack"
+  desc: >
+     Functions for keeping track of track chains.
+  contents:
+  - lastBridgeUnit
+  - countCompetitors
+  - countMatchingCompetitors
+  - mergedChunksToTrack
+  - lastMentionUnit
+- title: "Trees"
+  desc: >
+     Functions for keeping track of trees.
+  contents:
+  - getAllTreeCorrespondences
+  - mergeChunksWithTree
+- title: "Other editing functions"
+  desc: >
+     Functions not ordinarily called by users, but may be used by advanced users. Subject to change without wwarning. Many are related to update functions.
+  contents:
+  - new_rezrDF
+  - new_rezrObj
+  - concatStringFields
+  - createUpdateFunction
+  - createLeftJoinUpdate
+  - createLowerToHigherUpdate
+  - createRezId
+  - lowerToHigher
+  - rez_dfop
+  - new_updateFunction
+  - updateLeftJoin
+  - updateLowerToHigher
