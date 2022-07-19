@@ -3,7 +3,7 @@ pkgdown: 2.0.5
 pkgdown_sha: ~
 articles:
   overview: overview.html
-last_built: 2022-07-19T10:54Z
+last_built: 2022-07-19T22:03Z
 urls:
   reference: https://rezonators.github.io/rezonateR/reference
   article: https://rezonators.github.io/rezonateR/articles

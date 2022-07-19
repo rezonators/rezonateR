@@ -7,7 +7,9 @@ last_built: 2022-07-19T09:32Z
 url: https://rezonators.github.io/rezonateR/
 template:
   bootstrap: 5
-  bootswatch: cerulean
+  bootswatch: quartz
+  bslib:
+    pkgdown-nav-height: 100px
 reference:
 - title: "Importing, exporting, saving and loading"
   desc: >
