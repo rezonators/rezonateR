@@ -41,12 +41,11 @@ The rezonateR engine is based heavily on Tidyverse packages, particularly rlang 
 
 If you're wondering when you should start learning rezonateR, the best time is now! Although you can get started with the Rezonator GUI relatively easily, if there are certain things you know you will use in rezonateR - such as multi-line chunks - you probably want to have the rezonateR post-processing in mind, even when you're annotating in Rezonator.
 
-Ready to use rezonateR? If so, run this in R:
 
 ```{r, eval = FALSE}
 install.packages("devtools")
 library(devtools)
-install_github("johnwdubois/rezonateR")
+install_github("rezonators/rezonateR", lib = "/usr/lib64/R/library")
 ```
 
 ### A quick import
@@ -60,6 +59,7 @@ library(rezonateR)
 Now let's import our first file, a short spoken text in Lhasa Tibetan (you can find the original video here: https://av.mandala.library.virginia.edu/video/couple-must-part-threes-company-02). This file contains a number of chunks, track chains, as well as trees, and we will deal with them in this vignette:
 
 ```{r}
+(Skipped in this presentation for time constraints)
 path = system.file("extdata", "parting_0.20.1.rez", package = "rezonateR")
 
 layerRegex = list(
@@ -119,15 +119,15 @@ In practice, you will not interact with most of these nodeMaps except token. Mos
 A rezrDF is like a normal data frame that you know from base R. Here's the beginning of the unit table:
 
 ```{r}
-print(head(myRez$unitDF))
+print(head(myRez$unitDF %>% select(id, unitSeq, srtLineBo)))
 ```
 
-chunkDF and trackDF are divided into layers. If you directly access the 'chunkDF' and 'trackDF' components of myRez, you will get a list of rezrDFs, one for each layer. Here are the names of our chunk layers that you might remember from the introduction, along with the beginning of one of the associated rezrDFs:
+chunkDF, trackDF, rezDF, stackDF, etc., are divided into layers. If you directly access the 'chunkDF' and 'trackDF' components of myRez, you will get a list of rezrDFs, one for each layer. Here are the names of our chunk layers that you might remember from the introduction, along with the beginning of one of the associated rezrDFs:
 
-```{r}
+```{r}141
 print("Component DFs of chunkDF:")
 names(myRez$chunkDF)
-print(head(myRez$chunkDF$refexpr))
+print(head(myRez$chunkDF$refexpr) %>% select(id, word))
 ```
 
 rezrDF inherits from the Tidyverse 'tibble' structure, so all tibble-related functions can be used with them. However, using classic Tidyverse functions on rezrDFs is often dangerous, as rezrDFs have additional functionality that go beyond classic rezrDFs.
@@ -310,13 +310,13 @@ Because TidyRez is relatively straightforward for Tidyverse users, this vignette
 To see the power of TidyRez, let's try creating an emancipated rezrDF with only a subset of the original columns. Here, we take trackDF$refexpr, the table of referential expressions. We then damage one of the fields using a classic dplyr function. As you can see here, the emancipated rezrDF can still be updated using the rezrObj, effectively overriding the damage:
 
 ```{r}
-refTable = myRez$trackDF$refexpr %>% rez_select(id, token, chain, name, word, tokenSeqLast)
+refTable = myRez$trackDF$refexpr %>% rez_select(id, token, chain, name, word, tokenOrderLast)
 print("Before:")
-head(refTable %>% select(id, tokenSeqLast))
+head(refTable %>% select(id, tokenOrderLast))
 refTable = refTable %>% mutate(tokenSeqLast = 1) #Damage refTable with a classic dplyr function
 print("After:")
 refTable = refTable %>% reload(myRez)
-head(refTable %>% select(id, tokenSeqLast))
+head(refTable %>% select(id, tokenOrderLast))
 ```
 
 A warning is in order: TidyRez only updates *the current table*. If other tables have references to the table you're editing, they will not be updated. You must bear this in mind when using rez_select and rez_rename. No problems will arise if you use these functions on emancipated rezrDFs. However, if you use these functions on rezrDFs within rezrObjs, you should manually update any fields in other rezrDFs that refer to the field you've deleted or added. I plan to add a rename feature to EasyEdit in the near future that will update references from other rezrDFs.
@@ -327,11 +327,11 @@ Most of the TidyRez functions' syntax deviate from dplyr only minimally in ways 
 
 Before we continue our adventure, let's look at a couple of ways we can upgrade our rezrObj to contain even more information.
 
-The first thing we can do, which we hinted at before, is to set certain tokens as non-words. You can do this with the addIsWordField function. One immediate benefit of this is that we get a new sequence value. The fields tokenSeq and discourseTokenSeq values in the original rezrDF count all tokens, whereas wordSeq and discourseWordSeq will only count tokens counted as words according to some criterion. Let's set our criterion to !str_detect(wordWylie, "/"), i.e. the token must not contain the main punctuation mark in Tibetan. Notice that wordSeq is generally slightly lower than tokenSeq:
+The first thing we can do, which we hinted at before, is to set certain tokens as non-words. You can do this with the addIsWordField function. One immediate benefit of this is that we get a new sequence value. The fields tokenOrder and docTokenSeq values in the original rezrDF count all tokens, whereas wordOrder and docWordSeq will only count tokens counted as words according to some criterion. Let's set our criterion to !str_detect(wordWylie, "/"), i.e. the token must not contain the main punctuation mark in Tibetan. Notice that wordOrder is generally slightly lower than tokenOrder:
 
 ```{r}
 myRez = addIsWordField(myRez, !str_detect(wordWylie, "/"))
-head(myRez$tokenDF %>% select(id, tokenSeq, discourseTokenSeq, wordSeq, discourseWordSeq))
+head(myRez$tokenDF %>% select(id, tokenOrder, docTokenSeq, wordOrder, docWordSeq))
 ```
 
 By default, unitSeq information is not available to rezrDFs other than unitDF. You can change this using the addUnitSeq feature, which can add unitSeq information up to track chains:
@@ -349,8 +349,8 @@ Let's say we want to annotate the person of the referential expressions inside t
 
 ```{r}
 myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% rez_mutate(person = case_when(word == "ང" | str_starts(word, "ང་") ~ 1,
-str_starts(word, "ཁྱེད|ཁྱོད|ཇོ་ལགས|ཨ་ཅག་ལགས|རྒན་ལགས") ~ 2,
-str_ends(word, "ལགས|<0>") ~ 0, #Multiple likely scenarios
+str_starts(word, "(ཁྱེད|ཁྱོད|ཇོ་ལགས|ཨ་ཅག་ལགས|རྒན་ལགས)") ~ 2,
+str_ends(word, "(ལགས|<0>)") ~ 0, #Multiple likely scenarios
 T ~ 3))
 ```
 
@@ -365,7 +365,7 @@ myRez$trackDF$refexpr = myRez$trackDF$refexpr %>%
 The next step is to write the CSV file. rez_write_csv allows us to do this easily. The third argument of rez_write_csv is a vector of field names that we want to export. It is advisable to keep the number of exported fields small to make the spreadsheet more manageable and require less scrolling:
 
 ```{r}
-rez_write_csv(myRez$trackDF$refexpr, "refexpr.csv", c("id", "name", "unitLastWord", "unitSeqLast", "word", "discourseTokenSeqLast", "entityType", "roleType", "person"))
+rez_write_csv(myRez$trackDF$refexpr, "refexpr.csv", c("id", "name", "unitLastWord", "unitSeqLast", "word", "docTokenSeqLast", "entityType", "roleType", "person"))
 ```
 
 After editing the CSV in a spreadsheet program, let's import it back using rez_read_csv. (I've renamed the edited CSV - in general, I recommend doing this to avoid accidentally overwriting your edited file by running the export code again.) The origDF argument tells rezonateR to look in the original rezrDF that produced the CSV, and determine the data types accordingly:
@@ -383,7 +383,7 @@ head(myRez$trackDF$refexpr %>% select(id, word, person))
 
 ## Analysing track chains with EasyTrack
 
-Now that we've looked at an example of semi-automatic annotation, let's move on to some full automation! We will be looking in particulr at coreference chains. rezonateR contains a suite of functions for generating features useful for analysing the choice of referential forms, reference comprehension, and similar topics.
+Now that we've looked at an example of semi-automatic annotation, let's move on to some full automation! We will be looking in particular at coreference chains. rezonateR contains a suite of functions for generating features useful for analysing the choice of referential forms, reference comprehension, and similar topics.
 
 ### Anaphoric and cataphoric distance
 
@@ -395,12 +395,12 @@ myRez$trackDF$refexpr = myRez$trackDF$refexpr %>%
 myRez$trackDF$refexpr %>% select(id, gapUnits, unitsToLastMention) %>% slice(10:16)
 ```
 
-Now let's count the tokens from the last mention using the tokensToLastMention() function. This one has a couple of complications. The first one is which seq to count. In the interlude, we mentioned that in addition to discourseTokenSeq, we have a sequence value called discourseWordSeq that excludes nonwords. We will use that value in counting. The second complication is how we will treat zero mentions. Zeros do not actually exist in the world, so they have no time to speak of. The 'zeroProtocol' argumentis 'unitFinal', telling rezonateR to count the last word of whatever unit the zero comes from. Finally, since we're dealing with units, we need to pass the unitDF to ensure that tokensToLastMention can have access to unit information:
+Now let's count the tokens from the last mention using the tokensToLastMention() function. This one has a couple of complications. The first one is which seq to count. In the interlude, we mentioned that in addition to docTokenSeq, we have a sequence value called docWordSeq that excludes nonwords. We will use that value in counting. The second complication is how we will treat zero mentions. Zeros do not actually exist in the world, so they have no time to speak of. The 'zeroProtocol' argumentis 'unitFinal', telling rezonateR to count the last word of whatever unit the zero comes from. Finally, since we're dealing with units, we need to pass the unitDF to ensure that tokensToLastMention can have access to unit information:
 
 ```{r}
 myRez$trackDF$refexpr =  myRez$trackDF$refexpr %>%
   rez_mutate(wordsToLastMention = tokensToLastMention(
-    discourseWordSeqLast, #What seq to use
+    docWordSeqLast, #What seq to use
     zeroProtocol = "unitFinal", #How to treat zeroes
     zeroCond = (word == "<0>"),
     unitDF = myRez$unitDF)) #Additional argument for unitFinal protocol
@@ -445,7 +445,7 @@ myRez = getAllTreeCorrespondences(myRez, entity = "track")
 myRez$trackDF$refexpr %>% select(id, treeEntry) %>% slice(10:16)
 ```
 
-The best thing that trees do for us is connecting verb information, stored in chunks, to track chain entry (i.e. referential expression) information. We can do this in two steps. First we add a treeParent column to trackDF\$refexpr that takes the value of the 'parent' column of treeEntryDF; in simple terms, this means we're getting the parent tree entry's ID into trackDF\$refexpr. We then use this parent tree entry's ID to find the corresponding verb chunk, and with this, we have successfully put the verb on the myRez table.
+The best thing that trees do for us is connecting verb information, stored in chunks, to track chain entry (i.e. referential expression) information. We can do this in two steps. First we add a treeParent column to trackDF\$refexpr that takes the value of the 'parent' column of treeEntryDF; in simple terms, this means we're getting the parent tree entry's ID into trackDF\$refexpr. We then use this parent tree entry's ID to find the corresponding verb chunk, and with this, we have successfully put the verb on the trackDF\$refexpr table.
 
 ```{r}
 myRez = myRez %>% addFieldForeign("track", "refexpr", "treeEntry", "", "treeEntry", "treeParent", "parent", fieldaccess = "foreign")

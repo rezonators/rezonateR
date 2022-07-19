@@ -4,7 +4,7 @@ Version: 0.1.1.0000
 Authors@R:
     c(person(given = "John W",
            family = "Du Bois",
-           role = c("cre"),
+           role = c("aut"),
            email = "dubois@ucsb.edu"),
     person(given = "Ryan Ka Yau",
            family = "Lai",
