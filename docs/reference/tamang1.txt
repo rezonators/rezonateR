@@ -1,0 +1,349 @@
+word_id	text_id	sentence_id	word_form	word_gloss	sent_audio_start	sent_audio_end	sent_form	sent_translation
+1	1	ORIGTAMs1	⁴unma	NA	0.0000	5.7573	⁴unma ⁴taŋpo ⁴tui-ri, ¹tor-se ³poi-ri	autrefois, dans les temps anciens, là-haut, au Tibet
+2	1	ORIGTAMs1	⁴taŋpo	NA	0.0000	5.7573	⁴unma ⁴taŋpo ⁴tui-ri, ¹tor-se ³poi-ri	autrefois, dans les temps anciens, là-haut, au Tibet
+3	1	ORIGTAMs1	⁴tui-ri	NA	0.0000	5.7573	⁴unma ⁴taŋpo ⁴tui-ri, ¹tor-se ³poi-ri	autrefois, dans les temps anciens, là-haut, au Tibet
+4	1	ORIGTAMs1	¹tor-se	NA	0.0000	5.7573	⁴unma ⁴taŋpo ⁴tui-ri, ¹tor-se ³poi-ri	autrefois, dans les temps anciens, là-haut, au Tibet
+5	1	ORIGTAMs1	³poi-ri	NA	0.0000	5.7573	⁴unma ⁴taŋpo ⁴tui-ri, ¹tor-se ³poi-ri	autrefois, dans les temps anciens, là-haut, au Tibet
+6	1	ORIGTAMs2	⁴unma	NA	5.7573	11.0001	⁴unma ⁴taŋpo ⁴tui-ri, ¹tor-se ³poi-ri-mi	autrefois, dans les temps anciens, là-haut, au Tibet donc
+7	1	ORIGTAMs2	⁴taŋpo	NA	5.7573	11.0001	⁴unma ⁴taŋpo ⁴tui-ri, ¹tor-se ³poi-ri-mi	autrefois, dans les temps anciens, là-haut, au Tibet donc
+8	1	ORIGTAMs2	⁴tui-ri	NA	5.7573	11.0001	⁴unma ⁴taŋpo ⁴tui-ri, ¹tor-se ³poi-ri-mi	autrefois, dans les temps anciens, là-haut, au Tibet donc
+9	1	ORIGTAMs2	¹tor-se	NA	5.7573	11.0001	⁴unma ⁴taŋpo ⁴tui-ri, ¹tor-se ³poi-ri-mi	autrefois, dans les temps anciens, là-haut, au Tibet donc
+10	1	ORIGTAMs2	³poi-ri-mi	NA	5.7573	11.0001	⁴unma ⁴taŋpo ⁴tui-ri, ¹tor-se ³poi-ri-mi	autrefois, dans les temps anciens, là-haut, au Tibet donc
+11	1	ORIGTAMs3	chetri	NA	11.0001	18.3013	chetri ⁴kik, ⁴pa:man ⁴kik, ¹tamaŋ ⁴kik, ²som-cim-ro	il y avait un chetri, un brahmane et un tamang ; ils étaient trois
+12	1	ORIGTAMs3	⁴kik	NA	11.0001	18.3013	chetri ⁴kik, ⁴pa:man ⁴kik, ¹tamaŋ ⁴kik, ²som-cim-ro	il y avait un chetri, un brahmane et un tamang ; ils étaient trois
+13	1	ORIGTAMs3	⁴pa:man	NA	11.0001	18.3013	chetri ⁴kik, ⁴pa:man ⁴kik, ¹tamaŋ ⁴kik, ²som-cim-ro	il y avait un chetri, un brahmane et un tamang ; ils étaient trois
+14	1	ORIGTAMs3	⁴kik	NA	11.0001	18.3013	chetri ⁴kik, ⁴pa:man ⁴kik, ¹tamaŋ ⁴kik, ²som-cim-ro	il y avait un chetri, un brahmane et un tamang ; ils étaient trois
+15	1	ORIGTAMs3	¹tamaŋ	NA	11.0001	18.3013	chetri ⁴kik, ⁴pa:man ⁴kik, ¹tamaŋ ⁴kik, ²som-cim-ro	il y avait un chetri, un brahmane et un tamang ; ils étaient trois
+16	1	ORIGTAMs3	⁴kik	NA	11.0001	18.3013	chetri ⁴kik, ⁴pa:man ⁴kik, ¹tamaŋ ⁴kik, ²som-cim-ro	il y avait un chetri, un brahmane et un tamang ; ils étaient trois
+17	1	ORIGTAMs3	²som-cim-ro	NA	11.0001	18.3013	chetri ⁴kik, ⁴pa:man ⁴kik, ¹tamaŋ ⁴kik, ²som-cim-ro	il y avait un chetri, un brahmane et un tamang ; ils étaient trois
+18	1	ORIGTAMs4	²som-naŋ-ri	NA	18.3013	22.1610	²som-naŋ-ri	parmi ces trois
+19	1	ORIGTAMs5	¹ama-mi	NA	22.1610	32.0675	¹ama-mi ³palaŋ, ¹apa-m ¹hanuman-cim-ro	la mère était une vache, le père un singe
+20	1	ORIGTAMs5	³palaŋ	NA	22.1610	32.0675	¹ama-mi ³palaŋ, ¹apa-m ¹hanuman-cim-ro	la mère était une vache, le père un singe
+21	1	ORIGTAMs5	¹apa-m	NA	22.1610	32.0675	¹ama-mi ³palaŋ, ¹apa-m ¹hanuman-cim-ro	la mère était une vache, le père un singe
+22	1	ORIGTAMs5	¹hanuman-cim-ro	NA	22.1610	32.0675	¹ama-mi ³palaŋ, ¹apa-m ¹hanuman-cim-ro	la mère était une vache, le père un singe
+23	1	ORIGTAMs6	¹am'-se	NA	32.0675	36.8599	¹am'-se ¹tik ³pi-cim-ro	la mère leur dit:
+24	1	ORIGTAMs6	¹tik	NA	32.0675	36.8599	¹am'-se ¹tik ³pi-cim-ro	la mère leur dit:
+25	1	ORIGTAMs6	³pi-cim-ro	NA	32.0675	36.8599	¹am'-se ¹tik ³pi-cim-ro	la mère leur dit:
+26	1	ORIGTAMs7	¹thetmai	NA	36.8599	41.4915	¹thetmai ²som ³ca-ta, 	aux trois frères ses fils,
+27	1	ORIGTAMs7	²som	NA	36.8599	41.4915	¹thetmai ²som ³ca-ta, 	aux trois frères ses fils,
+28	1	ORIGTAMs7	³ca-ta	NA	36.8599	41.4915	¹thetmai ²som ³ca-ta, 	aux trois frères ses fils,
+29	1	ORIGTAMs8	⁴camam	NA	41.4915	51.5267	⁴camam ¹ŋa ¹si-ma, ¹ŋa ¹si-ma bel'-ri, ¹ŋa ¹si-ma	alors, quand je mourrai, à l'heure de ma mort
+30	1	ORIGTAMs8	¹ŋa	NA	41.4915	51.5267	⁴camam ¹ŋa ¹si-ma, ¹ŋa ¹si-ma bel'-ri, ¹ŋa ¹si-ma	alors, quand je mourrai, à l'heure de ma mort
+31	1	ORIGTAMs8	¹si-ma	NA	41.4915	51.5267	⁴camam ¹ŋa ¹si-ma, ¹ŋa ¹si-ma bel'-ri, ¹ŋa ¹si-ma	alors, quand je mourrai, à l'heure de ma mort
+32	1	ORIGTAMs8	¹ŋa	NA	41.4915	51.5267	⁴camam ¹ŋa ¹si-ma, ¹ŋa ¹si-ma bel'-ri, ¹ŋa ¹si-ma	alors, quand je mourrai, à l'heure de ma mort
+33	1	ORIGTAMs8	¹si-ma	NA	41.4915	51.5267	⁴camam ¹ŋa ¹si-ma, ¹ŋa ¹si-ma bel'-ri, ¹ŋa ¹si-ma	alors, quand je mourrai, à l'heure de ma mort
+34	1	ORIGTAMs8	bel'-ri	NA	41.4915	51.5267	⁴camam ¹ŋa ¹si-ma, ¹ŋa ¹si-ma bel'-ri, ¹ŋa ¹si-ma	alors, quand je mourrai, à l'heure de ma mort
+35	1	ORIGTAMs8	¹ŋa	NA	41.4915	51.5267	⁴camam ¹ŋa ¹si-ma, ¹ŋa ¹si-ma bel'-ri, ¹ŋa ¹si-ma	alors, quand je mourrai, à l'heure de ma mort
+36	1	ORIGTAMs8	¹si-ma	NA	41.4915	51.5267	⁴camam ¹ŋa ¹si-ma, ¹ŋa ¹si-ma bel'-ri, ¹ŋa ¹si-ma	alors, quand je mourrai, à l'heure de ma mort
+37	1	ORIGTAMs9	¹ŋa-la	NA	51.5267	57.9595	¹ŋa-la ¹sja, ²ai-ni-se, ³a-²khraŋ-na, ³a-⁴pjaŋ-na	ma chair, vous autres, ne l'incinérer pas, ne la jetez pas
+38	1	ORIGTAMs9	¹sja	NA	51.5267	57.9595	¹ŋa-la ¹sja, ²ai-ni-se, ³a-²khraŋ-na, ³a-⁴pjaŋ-na	ma chair, vous autres, ne l'incinérer pas, ne la jetez pas
+39	1	ORIGTAMs9	²ai-ni-se	NA	51.5267	57.9595	¹ŋa-la ¹sja, ²ai-ni-se, ³a-²khraŋ-na, ³a-⁴pjaŋ-na	ma chair, vous autres, ne l'incinérer pas, ne la jetez pas
+40	1	ORIGTAMs9	³a-²khraŋ-na	NA	51.5267	57.9595	¹ŋa-la ¹sja, ²ai-ni-se, ³a-²khraŋ-na, ³a-⁴pjaŋ-na	ma chair, vous autres, ne l'incinérer pas, ne la jetez pas
+41	1	ORIGTAMs9	³a-⁴pjaŋ-na	NA	51.5267	57.9595	¹ŋa-la ¹sja, ²ai-ni-se, ³a-²khraŋ-na, ³a-⁴pjaŋ-na	ma chair, vous autres, ne l'incinérer pas, ne la jetez pas
+42	1	ORIGTAMs10	¹ŋa-la	NA	57.9595	62.3338	¹ŋa-la ¹sja, ²ai-ni ²kola-kat'-se ¹ca-o, ³pi-cim-ro	ma chair, vous autres enfants, mangez-la, dit-elle
+43	1	ORIGTAMs10	¹sja	NA	57.9595	62.3338	¹ŋa-la ¹sja, ²ai-ni ²kola-kat'-se ¹ca-o, ³pi-cim-ro	ma chair, vous autres enfants, mangez-la, dit-elle
+44	1	ORIGTAMs10	²ai-ni	NA	57.9595	62.3338	¹ŋa-la ¹sja, ²ai-ni ²kola-kat'-se ¹ca-o, ³pi-cim-ro	ma chair, vous autres enfants, mangez-la, dit-elle
+45	1	ORIGTAMs10	²kola-kat'-se	NA	57.9595	62.3338	¹ŋa-la ¹sja, ²ai-ni ²kola-kat'-se ¹ca-o, ³pi-cim-ro	ma chair, vous autres enfants, mangez-la, dit-elle
+46	1	ORIGTAMs10	¹ca-o	NA	57.9595	62.3338	¹ŋa-la ¹sja, ²ai-ni ²kola-kat'-se ¹ca-o, ³pi-cim-ro	ma chair, vous autres enfants, mangez-la, dit-elle
+47	1	ORIGTAMs10	³pi-cim-ro	NA	57.9595	62.3338	¹ŋa-la ¹sja, ²ai-ni ²kola-kat'-se ¹ca-o, ³pi-cim-ro	ma chair, vous autres enfants, mangez-la, dit-elle
+48	1	ORIGTAMs11	³pi-ma	NA	62.3338	68.6379	³pi-ma, ³oca ¹ama ¹si-si ¹ni-ci	avec ces paroles, la mère mourut
+49	1	ORIGTAMs11	³oca	NA	62.3338	68.6379	³pi-ma, ³oca ¹ama ¹si-si ¹ni-ci	avec ces paroles, la mère mourut
+50	1	ORIGTAMs11	¹ama	NA	62.3338	68.6379	³pi-ma, ³oca ¹ama ¹si-si ¹ni-ci	avec ces paroles, la mère mourut
+51	1	ORIGTAMs11	¹si-si	NA	62.3338	68.6379	³pi-ma, ³oca ¹ama ¹si-si ¹ni-ci	avec ces paroles, la mère mourut
+52	1	ORIGTAMs11	¹ni-ci	NA	62.3338	68.6379	³pi-ma, ³oca ¹ama ¹si-si ¹ni-ci	avec ces paroles, la mère mourut
+53	1	ORIGTAMs12	³ca	NA	68.6379	76.7915	³ca ²som-se, ¹am-ta ¹phral-si, ²tha:-si, ¹am-ta ¹phral-si, ²tha:-si,	les trois fils dépecèrent leur mère, la découpèrent (bis)
+54	1	ORIGTAMs12	²som-se	NA	68.6379	76.7915	³ca ²som-se, ¹am-ta ¹phral-si, ²tha:-si, ¹am-ta ¹phral-si, ²tha:-si,	les trois fils dépecèrent leur mère, la découpèrent (bis)
+55	1	ORIGTAMs12	¹am-ta	NA	68.6379	76.7915	³ca ²som-se, ¹am-ta ¹phral-si, ²tha:-si, ¹am-ta ¹phral-si, ²tha:-si,	les trois fils dépecèrent leur mère, la découpèrent (bis)
+56	1	ORIGTAMs12	¹phral-si	NA	68.6379	76.7915	³ca ²som-se, ¹am-ta ¹phral-si, ²tha:-si, ¹am-ta ¹phral-si, ²tha:-si,	les trois fils dépecèrent leur mère, la découpèrent (bis)
+57	1	ORIGTAMs12	²tha:-si	NA	68.6379	76.7915	³ca ²som-se, ¹am-ta ¹phral-si, ²tha:-si, ¹am-ta ¹phral-si, ²tha:-si,	les trois fils dépecèrent leur mère, la découpèrent (bis)
+58	1	ORIGTAMs12	¹am-ta	NA	68.6379	76.7915	³ca ²som-se, ¹am-ta ¹phral-si, ²tha:-si, ¹am-ta ¹phral-si, ²tha:-si,	les trois fils dépecèrent leur mère, la découpèrent (bis)
+59	1	ORIGTAMs12	¹phral-si	NA	68.6379	76.7915	³ca ²som-se, ¹am-ta ¹phral-si, ²tha:-si, ¹am-ta ¹phral-si, ²tha:-si,	les trois fils dépecèrent leur mère, la découpèrent (bis)
+60	1	ORIGTAMs12	²tha:-si	NA	68.6379	76.7915	³ca ²som-se, ¹am-ta ¹phral-si, ²tha:-si, ¹am-ta ¹phral-si, ²tha:-si,	les trois fils dépecèrent leur mère, la découpèrent (bis)
+61	1	ORIGTAMs13	³ca	NA	76.7915	79.3255	³ca ¹thepa (aaa)	le fils aîné (euh)
+62	1	ORIGTAMs13	¹thepa	NA	76.7915	79.3255	³ca ¹thepa (aaa)	le fils aîné (euh)
+63	1	ORIGTAMs13	(aaa)	NA	76.7915	79.3255	³ca ¹thepa (aaa)	le fils aîné (euh)
+64	1	ORIGTAMs14	¹thepa	NA	79.3255	82.6838	¹thepa ²paraŋ-ca ²tha:-ci, 	l'aîné et le second découpèrent, 
+65	1	ORIGTAMs14	²paraŋ-ca	NA	79.3255	82.6838	¹thepa ²paraŋ-ca ²tha:-ci, 	l'aîné et le second découpèrent, 
+66	1	ORIGTAMs14	²tha:-ci	NA	79.3255	82.6838	¹thepa ²paraŋ-ca ²tha:-ci, 	l'aîné et le second découpèrent, 
+67	1	ORIGTAMs15	³ca	NA	83.0705	86.1134	³ca ¹cjaŋpa-ca ³kruŋ ²khru-pa-r' ²pit-cim-ro	et ils envoyèrent le plus jeune laver les boyaux
+68	1	ORIGTAMs15	¹cjaŋpa-ca	NA	83.0705	86.1134	³ca ¹cjaŋpa-ca ³kruŋ ²khru-pa-r' ²pit-cim-ro	et ils envoyèrent le plus jeune laver les boyaux
+69	1	ORIGTAMs15	³kruŋ	NA	83.0705	86.1134	³ca ¹cjaŋpa-ca ³kruŋ ²khru-pa-r' ²pit-cim-ro	et ils envoyèrent le plus jeune laver les boyaux
+70	1	ORIGTAMs15	²khru-pa-r'	NA	83.0705	86.1134	³ca ¹cjaŋpa-ca ³kruŋ ²khru-pa-r' ²pit-cim-ro	et ils envoyèrent le plus jeune laver les boyaux
+71	1	ORIGTAMs15	²pit-cim-ro	NA	83.0705	86.1134	³ca ¹cjaŋpa-ca ³kruŋ ²khru-pa-r' ²pit-cim-ro	et ils envoyèrent le plus jeune laver les boyaux
+72	1	ORIGTAMs16	³ca	NA	87.5178	90.6475	³ca ¹cjaŋpa-ca ³kruŋ ²khru-pa-ri ²pit-ma	ils envoyèrent le plus jeune laver les boyaux
+73	1	ORIGTAMs16	¹cjaŋpa-ca	NA	87.5178	90.6475	³ca ¹cjaŋpa-ca ³kruŋ ²khru-pa-ri ²pit-ma	ils envoyèrent le plus jeune laver les boyaux
+74	1	ORIGTAMs16	³kruŋ	NA	87.5178	90.6475	³ca ¹cjaŋpa-ca ³kruŋ ²khru-pa-ri ²pit-ma	ils envoyèrent le plus jeune laver les boyaux
+75	1	ORIGTAMs16	²khru-pa-ri	NA	87.5178	90.6475	³ca ¹cjaŋpa-ca ³kruŋ ²khru-pa-ri ²pit-ma	ils envoyèrent le plus jeune laver les boyaux
+76	1	ORIGTAMs16	²pit-ma	NA	87.5178	90.6475	³ca ¹cjaŋpa-ca ³kruŋ ²khru-pa-ri ²pit-ma	ils envoyèrent le plus jeune laver les boyaux
+77	1	ORIGTAMs17	³kruŋ	NA	93.0925	95.2007	³kruŋ ²khru-si ³pa-ma	et quand il rapporta les boyaux lavés
+78	1	ORIGTAMs17	²khru-si	NA	93.0925	95.2007	³kruŋ ²khru-si ³pa-ma	et quand il rapporta les boyaux lavés
+79	1	ORIGTAMs17	³pa-ma	NA	93.0925	95.2007	³kruŋ ²khru-si ³pa-ma	et quand il rapporta les boyaux lavés
+80	1	ORIGTAMs18	³cjocjo	NA	95.2007	98.1566	³cjocjo ⁴ni:-se ¹tik ¹la-cim-ro ³pi-sam	que firent ses deux grands frères
+81	1	ORIGTAMs18	⁴ni:-se	NA	95.2007	98.1566	³cjocjo ⁴ni:-se ¹tik ¹la-cim-ro ³pi-sam	que firent ses deux grands frères
+82	1	ORIGTAMs18	¹tik	NA	95.2007	98.1566	³cjocjo ⁴ni:-se ¹tik ¹la-cim-ro ³pi-sam	que firent ses deux grands frères
+83	1	ORIGTAMs18	¹la-cim-ro	NA	95.2007	98.1566	³cjocjo ⁴ni:-se ¹tik ¹la-cim-ro ³pi-sam	que firent ses deux grands frères
+84	1	ORIGTAMs18	³pi-sam	NA	95.2007	98.1566	³cjocjo ⁴ni:-se ¹tik ¹la-cim-ro ³pi-sam	que firent ses deux grands frères
+85	1	ORIGTAMs19	¹sja	NA	98.9281	105.6874	¹sja ²khraŋ-si, (bis) ³ol' ¹la-si, bag ²som ¹la-si	ayant rôti la viande, (bis) comme ça, ils en firent trois parts
+86	1	ORIGTAMs19	²khraŋ-si	NA	98.9281	105.6874	¹sja ²khraŋ-si, (bis) ³ol' ¹la-si, bag ²som ¹la-si	ayant rôti la viande, (bis) comme ça, ils en firent trois parts
+87	1	ORIGTAMs19	(bis)	NA	98.9281	105.6874	¹sja ²khraŋ-si, (bis) ³ol' ¹la-si, bag ²som ¹la-si	ayant rôti la viande, (bis) comme ça, ils en firent trois parts
+88	1	ORIGTAMs19	³ol'	NA	98.9281	105.6874	¹sja ²khraŋ-si, (bis) ³ol' ¹la-si, bag ²som ¹la-si	ayant rôti la viande, (bis) comme ça, ils en firent trois parts
+89	1	ORIGTAMs19	¹la-si	NA	98.9281	105.6874	¹sja ²khraŋ-si, (bis) ³ol' ¹la-si, bag ²som ¹la-si	ayant rôti la viande, (bis) comme ça, ils en firent trois parts
+90	1	ORIGTAMs19	bag	NA	98.9281	105.6874	¹sja ²khraŋ-si, (bis) ³ol' ¹la-si, bag ²som ¹la-si	ayant rôti la viande, (bis) comme ça, ils en firent trois parts
+91	1	ORIGTAMs19	²som	NA	98.9281	105.6874	¹sja ²khraŋ-si, (bis) ³ol' ¹la-si, bag ²som ¹la-si	ayant rôti la viande, (bis) comme ça, ils en firent trois parts
+92	1	ORIGTAMs19	¹la-si	NA	98.9281	105.6874	¹sja ²khraŋ-si, (bis) ³ol' ¹la-si, bag ²som ¹la-si	ayant rôti la viande, (bis) comme ça, ils en firent trois parts
+93	1	ORIGTAMs20	³cjocjo	NA	106.4759	108.6520	³cjocjo ⁴ni:-la ¹sja-cati ²tok ²sum ¹than-cim-ro	les deux grands frères cachèrent vite leur part 
+94	1	ORIGTAMs20	⁴ni:-la	NA	106.4759	108.6520	³cjocjo ⁴ni:-la ¹sja-cati ²tok ²sum ¹than-cim-ro	les deux grands frères cachèrent vite leur part 
+95	1	ORIGTAMs20	¹sja-cati	NA	106.4759	108.6520	³cjocjo ⁴ni:-la ¹sja-cati ²tok ²sum ¹than-cim-ro	les deux grands frères cachèrent vite leur part 
+96	1	ORIGTAMs20	²tok	NA	106.4759	108.6520	³cjocjo ⁴ni:-la ¹sja-cati ²tok ²sum ¹than-cim-ro	les deux grands frères cachèrent vite leur part 
+97	1	ORIGTAMs20	²sum	NA	106.4759	108.6520	³cjocjo ⁴ni:-la ¹sja-cati ²tok ²sum ¹than-cim-ro	les deux grands frères cachèrent vite leur part 
+98	1	ORIGTAMs20	¹than-cim-ro	NA	106.4759	108.6520	³cjocjo ⁴ni:-la ¹sja-cati ²tok ²sum ¹than-cim-ro	les deux grands frères cachèrent vite leur part 
+99	1	ORIGTAMs21	³kruŋ	NA	108.6520	110.6233	³kruŋ ²khru-si ¹kha-pa ¹cjaŋpa-ca-la ¹sja	et la part du jeune frère qui revenait ayant lavé les boyaux
+100	1	ORIGTAMs21	²khru-si	NA	108.6520	110.6233	³kruŋ ²khru-si ¹kha-pa ¹cjaŋpa-ca-la ¹sja	et la part du jeune frère qui revenait ayant lavé les boyaux
+101	1	ORIGTAMs21	¹kha-pa	NA	108.6520	110.6233	³kruŋ ²khru-si ¹kha-pa ¹cjaŋpa-ca-la ¹sja	et la part du jeune frère qui revenait ayant lavé les boyaux
+102	1	ORIGTAMs21	¹cjaŋpa-ca-la	NA	108.6520	110.6233	³kruŋ ²khru-si ¹kha-pa ¹cjaŋpa-ca-la ¹sja	et la part du jeune frère qui revenait ayant lavé les boyaux
+103	1	ORIGTAMs21	¹sja	NA	108.6520	110.6233	³kruŋ ²khru-si ¹kha-pa ¹cjaŋpa-ca-la ¹sja	et la part du jeune frère qui revenait ayant lavé les boyaux
+104	1	ORIGTAMs22	¹ale	NA	111.2559	113.2639	« ¹ale, ¹ale, ¹in-che-m ³tolon ¹ca-ci	« frère, frère, nous autres avons mangé avant
+105	1	ORIGTAMs22	¹ale	NA	111.2559	113.2639	« ¹ale, ¹ale, ¹in-che-m ³tolon ¹ca-ci	« frère, frère, nous autres avons mangé avant
+106	1	ORIGTAMs22	¹in-che-m	NA	111.2559	113.2639	« ¹ale, ¹ale, ¹in-che-m ³tolon ¹ca-ci	« frère, frère, nous autres avons mangé avant
+107	1	ORIGTAMs22	³tolon	NA	111.2559	113.2639	« ¹ale, ¹ale, ¹in-che-m ³tolon ¹ca-ci	« frère, frère, nous autres avons mangé avant
+108	1	ORIGTAMs22	¹ca-ci	NA	111.2559	113.2639	« ¹ale, ¹ale, ¹in-che-m ³tolon ¹ca-ci	« frère, frère, nous autres avons mangé avant
+109	1	ORIGTAMs23	²ai-la	NA	114.0249	115.5469	²ai-la bag ²cu-ri ¹mu-la »	ta part est ici »,
+110	1	ORIGTAMs23	bag	NA	114.0249	115.5469	²ai-la bag ²cu-ri ¹mu-la »	ta part est ici »,
+111	1	ORIGTAMs23	²cu-ri	NA	114.0249	115.5469	²ai-la bag ²cu-ri ¹mu-la »	ta part est ici »,
+112	1	ORIGTAMs23	¹mu-la	NA	114.0249	115.5469	²ai-la bag ²cu-ri ¹mu-la »	ta part est ici »,
+113	1	ORIGTAMs24	³pi-si	NA	116.8397	118.8844	³pi-si ³cjot' ⁴ni:-se ²paŋ-cim-ro	dirent les deux frères aînés.
+114	1	ORIGTAMs24	³cjot'	NA	116.8397	118.8844	³pi-si ³cjot' ⁴ni:-se ²paŋ-cim-ro	dirent les deux frères aînés.
+115	1	ORIGTAMs24	⁴ni:-se	NA	116.8397	118.8844	³pi-si ³cjot' ⁴ni:-se ²paŋ-cim-ro	dirent les deux frères aînés.
+116	1	ORIGTAMs24	²paŋ-cim-ro	NA	116.8397	118.8844	³pi-si ³cjot' ⁴ni:-se ²paŋ-cim-ro	dirent les deux frères aînés.
+117	1	ORIGTAMs25	³osem	NA	120.9941	123.5591	³osem, ¹cjon-se ³hin-pa-n ¹mu ¹ta-nam biswas ¹la-si	alors, le jeune frère, crut que c'était vrai
+118	1	ORIGTAMs25	¹cjon-se	NA	120.9941	123.5591	³osem, ¹cjon-se ³hin-pa-n ¹mu ¹ta-nam biswas ¹la-si	alors, le jeune frère, crut que c'était vrai
+119	1	ORIGTAMs25	³hin-pa-n	NA	120.9941	123.5591	³osem, ¹cjon-se ³hin-pa-n ¹mu ¹ta-nam biswas ¹la-si	alors, le jeune frère, crut que c'était vrai
+120	1	ORIGTAMs25	¹mu	NA	120.9941	123.5591	³osem, ¹cjon-se ³hin-pa-n ¹mu ¹ta-nam biswas ¹la-si	alors, le jeune frère, crut que c'était vrai
+121	1	ORIGTAMs25	¹ta-nam	NA	120.9941	123.5591	³osem, ¹cjon-se ³hin-pa-n ¹mu ¹ta-nam biswas ¹la-si	alors, le jeune frère, crut que c'était vrai
+122	1	ORIGTAMs25	biswas	NA	120.9941	123.5591	³osem, ¹cjon-se ³hin-pa-n ¹mu ¹ta-nam biswas ¹la-si	alors, le jeune frère, crut que c'était vrai
+123	1	ORIGTAMs25	¹la-si	NA	120.9941	123.5591	³osem, ¹cjon-se ³hin-pa-n ¹mu ¹ta-nam biswas ¹la-si	alors, le jeune frère, crut que c'était vrai
+124	1	ORIGTAMs26	biswas	NA	125.9577	129.2516	biswas ¹la-si, ³oca ¹sja ¹ca-ci	il le crut, et mangea la viande
+125	1	ORIGTAMs26	¹la-si	NA	125.9577	129.2516	biswas ¹la-si, ³oca ¹sja ¹ca-ci	il le crut, et mangea la viande
+126	1	ORIGTAMs26	³oca	NA	125.9577	129.2516	biswas ¹la-si, ³oca ¹sja ¹ca-ci	il le crut, et mangea la viande
+127	1	ORIGTAMs26	¹sja	NA	125.9577	129.2516	biswas ¹la-si, ³oca ¹sja ¹ca-ci	il le crut, et mangea la viande
+128	1	ORIGTAMs26	¹ca-ci	NA	125.9577	129.2516	biswas ¹la-si, ³oca ¹sja ¹ca-ci	il le crut, et mangea la viande
+129	1	ORIGTAMs27	¹sja	NA	129.6907	131.5818	¹sja ¹ca-si ³cin-si, 	quand il eut mangé la viande, 
+130	1	ORIGTAMs27	¹ca-si	NA	129.6907	131.5818	¹sja ¹ca-si ³cin-si, 	quand il eut mangé la viande, 
+131	1	ORIGTAMs27	³cin-si	NA	129.6907	131.5818	¹sja ¹ca-si ³cin-si, 	quand il eut mangé la viande, 
+132	1	ORIGTAMs28	³cjot	NA	132.6207	134.1645	³cjot ⁴ni:-se ¹tik ³pi-cim-ro	que dirent les deux aînés?
+133	1	ORIGTAMs28	⁴ni:-se	NA	132.6207	134.1645	³cjot ⁴ni:-se ¹tik ³pi-cim-ro	que dirent les deux aînés?
+134	1	ORIGTAMs28	¹tik	NA	132.6207	134.1645	³cjot ⁴ni:-se ¹tik ³pi-cim-ro	que dirent les deux aînés?
+135	1	ORIGTAMs28	³pi-cim-ro	NA	132.6207	134.1645	³cjot ⁴ni:-se ¹tik ³pi-cim-ro	que dirent les deux aînés?
+136	1	ORIGTAMs29	¹ale	NA	134.1645	136.0452	« ¹ale, ²ai ²khatpa pa:pi,	« frère, quel pêcheur tu es
+137	1	ORIGTAMs29	²ai	NA	134.1645	136.0452	« ¹ale, ²ai ²khatpa pa:pi,	« frère, quel pêcheur tu es
+138	1	ORIGTAMs29	²khatpa	NA	134.1645	136.0452	« ¹ale, ²ai ²khatpa pa:pi,	« frère, quel pêcheur tu es
+139	1	ORIGTAMs29	pa:pi	NA	134.1645	136.0452	« ¹ale, ²ai ²khatpa pa:pi,	« frère, quel pêcheur tu es
+140	1	ORIGTAMs30	janma	NA	136.3289	137.5983	janma ¹pin-pa ¹ap'-la, 	 le père qui donne la vie
+141	1	ORIGTAMs30	¹pin-pa	NA	136.3289	137.5983	janma ¹pin-pa ¹ap'-la, 	 le père qui donne la vie
+142	1	ORIGTAMs30	¹ap'-la	NA	136.3289	137.5983	janma ¹pin-pa ¹ap'-la, 	 le père qui donne la vie
+143	1	ORIGTAMs31	janma-n	NA	137.5983	139.6277	janma-n ¹pin-pa ¹am'-la ¹sja suttai ¹ca ²kham-cim 	la mère qui donne la vie, tu a pu manger sa chair sans broncher, 
+144	1	ORIGTAMs31	¹pin-pa	NA	137.5983	139.6277	janma-n ¹pin-pa ¹am'-la ¹sja suttai ¹ca ²kham-cim 	la mère qui donne la vie, tu a pu manger sa chair sans broncher, 
+145	1	ORIGTAMs31	¹am'-la	NA	137.5983	139.6277	janma-n ¹pin-pa ¹am'-la ¹sja suttai ¹ca ²kham-cim 	la mère qui donne la vie, tu a pu manger sa chair sans broncher, 
+146	1	ORIGTAMs31	¹sja	NA	137.5983	139.6277	janma-n ¹pin-pa ¹am'-la ¹sja suttai ¹ca ²kham-cim 	la mère qui donne la vie, tu a pu manger sa chair sans broncher, 
+147	1	ORIGTAMs31	suttai	NA	137.5983	139.6277	janma-n ¹pin-pa ¹am'-la ¹sja suttai ¹ca ²kham-cim 	la mère qui donne la vie, tu a pu manger sa chair sans broncher, 
+148	1	ORIGTAMs31	¹ca	NA	137.5983	139.6277	janma-n ¹pin-pa ¹am'-la ¹sja suttai ¹ca ²kham-cim 	la mère qui donne la vie, tu a pu manger sa chair sans broncher, 
+149	1	ORIGTAMs31	²kham-cim	NA	137.5983	139.6277	janma-n ¹pin-pa ¹am'-la ¹sja suttai ¹ca ²kham-cim 	la mère qui donne la vie, tu a pu manger sa chair sans broncher, 
+150	1	ORIGTAMs32	¹am'la	NA	139.6277	140.7732	¹am'la ¹sja suttai ¹ca ²kham-pa-cim male	tu a pu manger la chair de ta mère sans broncher, ma foi
+151	1	ORIGTAMs32	¹sja	NA	139.6277	140.7732	¹am'la ¹sja suttai ¹ca ²kham-pa-cim male	tu a pu manger la chair de ta mère sans broncher, ma foi
+152	1	ORIGTAMs32	suttai	NA	139.6277	140.7732	¹am'la ¹sja suttai ¹ca ²kham-pa-cim male	tu a pu manger la chair de ta mère sans broncher, ma foi
+153	1	ORIGTAMs32	¹ca	NA	139.6277	140.7732	¹am'la ¹sja suttai ¹ca ²kham-pa-cim male	tu a pu manger la chair de ta mère sans broncher, ma foi
+154	1	ORIGTAMs32	²kham-pa-cim	NA	139.6277	140.7732	¹am'la ¹sja suttai ¹ca ²kham-pa-cim male	tu a pu manger la chair de ta mère sans broncher, ma foi
+155	1	ORIGTAMs32	male	NA	139.6277	140.7732	¹am'la ¹sja suttai ¹ca ²kham-pa-cim male	tu a pu manger la chair de ta mère sans broncher, ma foi
+156	1	ORIGTAMs33	¹in-se-m	NA	140.7732	142.1830	¹in-se-m ³a-¹ca-lai, i:, ¹cja:-ko »	nous autres ne l'avons pas mangé, tiens, regarde »
+157	1	ORIGTAMs33	³a-¹ca-lai	NA	140.7732	142.1830	¹in-se-m ³a-¹ca-lai, i:, ¹cja:-ko »	nous autres ne l'avons pas mangé, tiens, regarde »
+158	1	ORIGTAMs33	i:	NA	140.7732	142.1830	¹in-se-m ³a-¹ca-lai, i:, ¹cja:-ko »	nous autres ne l'avons pas mangé, tiens, regarde »
+159	1	ORIGTAMs33	¹cja:-ko	NA	140.7732	142.1830	¹in-se-m ³a-¹ca-lai, i:, ¹cja:-ko »	nous autres ne l'avons pas mangé, tiens, regarde »
+160	1	ORIGTAMs34	³pi-ma-la	NA	142.4666	143.9260	³pi-ma-la pal-ʈi	quand il lui dirent ça
+161	1	ORIGTAMs34	pal-ʈi	NA	142.4666	143.9260	³pi-ma-la pal-ʈi	quand il lui dirent ça
+162	1	ORIGTAMs35	³ca	NA	145.8149	148.3124	³ca ¹cjaŋpa ³pi-pa, ³pomo ¹kha-si	le jeune frère, furieux
+163	1	ORIGTAMs35	¹cjaŋpa	NA	145.8149	148.3124	³ca ¹cjaŋpa ³pi-pa, ³pomo ¹kha-si	le jeune frère, furieux
+164	1	ORIGTAMs35	³pi-pa	NA	145.8149	148.3124	³ca ¹cjaŋpa ³pi-pa, ³pomo ¹kha-si	le jeune frère, furieux
+165	1	ORIGTAMs35	³pomo	NA	145.8149	148.3124	³ca ¹cjaŋpa ³pi-pa, ³pomo ¹kha-si	le jeune frère, furieux
+166	1	ORIGTAMs35	¹kha-si	NA	145.8149	148.3124	³ca ¹cjaŋpa ³pi-pa, ³pomo ¹kha-si	le jeune frère, furieux
+167	1	ORIGTAMs36	³pomo	NA	149.2593	157.3880	³pomo ¹kha-si, ³oca ¹sja-se, ³kruŋ-se, ²to-cim-ro, ⁴pa:man-ta	furieux, avec cette viande, avec les boyaux, il frappa le brahmane
+168	1	ORIGTAMs36	¹kha-si	NA	149.2593	157.3880	³pomo ¹kha-si, ³oca ¹sja-se, ³kruŋ-se, ²to-cim-ro, ⁴pa:man-ta	furieux, avec cette viande, avec les boyaux, il frappa le brahmane
+169	1	ORIGTAMs36	³oca	NA	149.2593	157.3880	³pomo ¹kha-si, ³oca ¹sja-se, ³kruŋ-se, ²to-cim-ro, ⁴pa:man-ta	furieux, avec cette viande, avec les boyaux, il frappa le brahmane
+170	1	ORIGTAMs36	¹sja-se	NA	149.2593	157.3880	³pomo ¹kha-si, ³oca ¹sja-se, ³kruŋ-se, ²to-cim-ro, ⁴pa:man-ta	furieux, avec cette viande, avec les boyaux, il frappa le brahmane
+171	1	ORIGTAMs36	³kruŋ-se	NA	149.2593	157.3880	³pomo ¹kha-si, ³oca ¹sja-se, ³kruŋ-se, ²to-cim-ro, ⁴pa:man-ta	furieux, avec cette viande, avec les boyaux, il frappa le brahmane
+172	1	ORIGTAMs36	²to-cim-ro	NA	149.2593	157.3880	³pomo ¹kha-si, ³oca ¹sja-se, ³kruŋ-se, ²to-cim-ro, ⁴pa:man-ta	furieux, avec cette viande, avec les boyaux, il frappa le brahmane
+173	1	ORIGTAMs36	⁴pa:man-ta	NA	149.2593	157.3880	³pomo ¹kha-si, ³oca ¹sja-se, ³kruŋ-se, ²to-cim-ro, ⁴pa:man-ta	furieux, avec cette viande, avec les boyaux, il frappa le brahmane
+174	1	ORIGTAMs37	lu:	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+175	1	ORIGTAMs37	¹ŋa-ca	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+176	1	ORIGTAMs37	⁴pa:man	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+177	1	ORIGTAMs37	¹ta-ci	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+178	1	ORIGTAMs37	⁴tamo-m	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+179	1	ORIGTAMs37	jat	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+180	1	ORIGTAMs37	¹jaŋ-ci	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+181	1	ORIGTAMs37	³pi-si	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+182	1	ORIGTAMs37	¹the-ta	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+183	1	ORIGTAMs37	⁴pa:man	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+184	1	ORIGTAMs37	⁴to:-ci	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+185	1	ORIGTAMs37	³pi-ci	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+186	1	ORIGTAMs37	¹the-se	NA	157.3880	162.8622	« lu:, ¹ŋa-ca ⁴pa:man ¹ta-ci ⁴tamo-m, jat ¹jaŋ-ci », ³pi-si, ¹the-ta, « ⁴pa:man ⁴to:-ci » ³pi-ci ¹the-se	« bon, je suis brahmane maintenant, j'ai trouvé ma caste », dit-il, « je suis devenu brahmane »
+187	1	ORIGTAMs38	chetri-ta	NA	162.8622	165.0761	chetri-ta ²to-cim-ro, ²pho-se	il frappa le chetri avec l'estomac
+188	1	ORIGTAMs38	²to-cim-ro	NA	162.8622	165.0761	chetri-ta ²to-cim-ro, ²pho-se	il frappa le chetri avec l'estomac
+189	1	ORIGTAMs38	²pho-se	NA	162.8622	165.0761	chetri-ta ²to-cim-ro, ²pho-se	il frappa le chetri avec l'estomac
+190	1	ORIGTAMs39	lu:	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+191	1	ORIGTAMs39	¹ŋa-ca	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+192	1	ORIGTAMs39	chetri	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+193	1	ORIGTAMs39	⁴to:-ci	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+194	1	ORIGTAMs39	³pi-si	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+195	1	ORIGTAMs39	chetri	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+196	1	ORIGTAMs39	¹ŋa-ta	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+197	1	ORIGTAMs39	jat	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+198	1	ORIGTAMs39	¹jaŋ-ci	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+199	1	ORIGTAMs39	jat	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+200	1	ORIGTAMs39	¹ta-ci	NA	165.0761	171.2387	«lu:, ¹ŋa-ca chetri ⁴to:-ci », ³pi-si, chetri, «¹ŋa-ta jat ¹jaŋ-ci, jat ¹ta-ci»	« bon, je suis devenu chetri », dit-il, « j'ai trouvé ma caste, j'ai ma caste »
+201	1	ORIGTAMs40	³ot-che	NA	171.5945	174.2519	³ot-che ⁴cama, ⁴meme ¹khe ²som ¹ta-cim-ro	ainsi, alors, il y eut trois ancêtres
+202	1	ORIGTAMs40	⁴cama	NA	171.5945	174.2519	³ot-che ⁴cama, ⁴meme ¹khe ²som ¹ta-cim-ro	ainsi, alors, il y eut trois ancêtres
+203	1	ORIGTAMs40	⁴meme	NA	171.5945	174.2519	³ot-che ⁴cama, ⁴meme ¹khe ²som ¹ta-cim-ro	ainsi, alors, il y eut trois ancêtres
+204	1	ORIGTAMs40	¹khe	NA	171.5945	174.2519	³ot-che ⁴cama, ⁴meme ¹khe ²som ¹ta-cim-ro	ainsi, alors, il y eut trois ancêtres
+205	1	ORIGTAMs40	²som	NA	171.5945	174.2519	³ot-che ⁴cama, ⁴meme ¹khe ²som ¹ta-cim-ro	ainsi, alors, il y eut trois ancêtres
+206	1	ORIGTAMs40	¹ta-cim-ro	NA	171.5945	174.2519	³ot-che ⁴cama, ⁴meme ¹khe ²som ¹ta-cim-ro	ainsi, alors, il y eut trois ancêtres
+207	1	ORIGTAMs41	⁴meme	NA	174.2519	175.2663	⁴meme ¹khe ²som-la	ces trois ancêtres
+208	1	ORIGTAMs41	¹khe	NA	174.2519	175.2663	⁴meme ¹khe ²som-la	ces trois ancêtres
+209	1	ORIGTAMs41	²som-la	NA	174.2519	175.2663	⁴meme ¹khe ²som-la	ces trois ancêtres
+210	1	ORIGTAMs42	⁴unma	NA	176.5870	182.2325	⁴unma ⁴taŋpo ⁴tui-ri, ⁴meme ¹khe ²som ³naŋ-la	autrefois, parmi ces trois ancêtres
+211	1	ORIGTAMs42	⁴taŋpo	NA	176.5870	182.2325	⁴unma ⁴taŋpo ⁴tui-ri, ⁴meme ¹khe ²som ³naŋ-la	autrefois, parmi ces trois ancêtres
+212	1	ORIGTAMs42	⁴tui-ri	NA	176.5870	182.2325	⁴unma ⁴taŋpo ⁴tui-ri, ⁴meme ¹khe ²som ³naŋ-la	autrefois, parmi ces trois ancêtres
+213	1	ORIGTAMs42	⁴meme	NA	176.5870	182.2325	⁴unma ⁴taŋpo ⁴tui-ri, ⁴meme ¹khe ²som ³naŋ-la	autrefois, parmi ces trois ancêtres
+214	1	ORIGTAMs42	¹khe	NA	176.5870	182.2325	⁴unma ⁴taŋpo ⁴tui-ri, ⁴meme ¹khe ²som ³naŋ-la	autrefois, parmi ces trois ancêtres
+215	1	ORIGTAMs42	²som	NA	176.5870	182.2325	⁴unma ⁴taŋpo ⁴tui-ri, ⁴meme ¹khe ²som ³naŋ-la	autrefois, parmi ces trois ancêtres
+216	1	ORIGTAMs42	³naŋ-la	NA	176.5870	182.2325	⁴unma ⁴taŋpo ⁴tui-ri, ⁴meme ¹khe ²som ³naŋ-la	autrefois, parmi ces trois ancêtres
+217	1	ORIGTAMs43	⁴cama	NA	183.2205	187.2958	⁴cama, ¹tor ³poi-se, ³poi ⁴kjam-se ⁴cama, ¹mar ¹phep-ka-cim-ro	alors, du Tibet, alors venant du Tibet, ils descendirent
+218	1	ORIGTAMs43	¹tor	NA	183.2205	187.2958	⁴cama, ¹tor ³poi-se, ³poi ⁴kjam-se ⁴cama, ¹mar ¹phep-ka-cim-ro	alors, du Tibet, alors venant du Tibet, ils descendirent
+219	1	ORIGTAMs43	³poi-se	NA	183.2205	187.2958	⁴cama, ¹tor ³poi-se, ³poi ⁴kjam-se ⁴cama, ¹mar ¹phep-ka-cim-ro	alors, du Tibet, alors venant du Tibet, ils descendirent
+220	1	ORIGTAMs43	³poi	NA	183.2205	187.2958	⁴cama, ¹tor ³poi-se, ³poi ⁴kjam-se ⁴cama, ¹mar ¹phep-ka-cim-ro	alors, du Tibet, alors venant du Tibet, ils descendirent
+221	1	ORIGTAMs43	⁴kjam-se	NA	183.2205	187.2958	⁴cama, ¹tor ³poi-se, ³poi ⁴kjam-se ⁴cama, ¹mar ¹phep-ka-cim-ro	alors, du Tibet, alors venant du Tibet, ils descendirent
+222	1	ORIGTAMs43	⁴cama	NA	183.2205	187.2958	⁴cama, ¹tor ³poi-se, ³poi ⁴kjam-se ⁴cama, ¹mar ¹phep-ka-cim-ro	alors, du Tibet, alors venant du Tibet, ils descendirent
+223	1	ORIGTAMs43	¹mar	NA	183.2205	187.2958	⁴cama, ¹tor ³poi-se, ³poi ⁴kjam-se ⁴cama, ¹mar ¹phep-ka-cim-ro	alors, du Tibet, alors venant du Tibet, ils descendirent
+224	1	ORIGTAMs43	¹phep-ka-cim-ro	NA	183.2205	187.2958	⁴cama, ¹tor ³poi-se, ³poi ⁴kjam-se ⁴cama, ¹mar ¹phep-ka-cim-ro	alors, du Tibet, alors venant du Tibet, ils descendirent
+225	1	ORIGTAMs44	³poi	NA	188.0015	195.4641	³poi ⁴kjam-se, ¹mar ¹phep-ka-si, ³poi-se ¹mar ¹phep-ka-si,	en descendant du Tibet
+226	1	ORIGTAMs44	⁴kjam-se	NA	188.0015	195.4641	³poi ⁴kjam-se, ¹mar ¹phep-ka-si, ³poi-se ¹mar ¹phep-ka-si,	en descendant du Tibet
+227	1	ORIGTAMs44	¹mar	NA	188.0015	195.4641	³poi ⁴kjam-se, ¹mar ¹phep-ka-si, ³poi-se ¹mar ¹phep-ka-si,	en descendant du Tibet
+228	1	ORIGTAMs44	¹phep-ka-si	NA	188.0015	195.4641	³poi ⁴kjam-se, ¹mar ¹phep-ka-si, ³poi-se ¹mar ¹phep-ka-si,	en descendant du Tibet
+229	1	ORIGTAMs44	³poi-se	NA	188.0015	195.4641	³poi ⁴kjam-se, ¹mar ¹phep-ka-si, ³poi-se ¹mar ¹phep-ka-si,	en descendant du Tibet
+230	1	ORIGTAMs44	¹mar	NA	188.0015	195.4641	³poi ⁴kjam-se, ¹mar ¹phep-ka-si, ³poi-se ¹mar ¹phep-ka-si,	en descendant du Tibet
+231	1	ORIGTAMs44	¹phep-ka-si	NA	188.0015	195.4641	³poi ⁴kjam-se, ¹mar ¹phep-ka-si, ³poi-se ¹mar ¹phep-ka-si,	en descendant du Tibet
+232	1	ORIGTAMs45	¹tor-se	NA	195.4641	198.3574	¹tor-se ²choŋ-tui-jul-ʈi ³tan ¹sja:-cim-ro	venant d'en haut, ils séjournèrent à Chongduiyul
+233	1	ORIGTAMs45	²choŋ-tui-jul-ʈi	NA	195.4641	198.3574	¹tor-se ²choŋ-tui-jul-ʈi ³tan ¹sja:-cim-ro	venant d'en haut, ils séjournèrent à Chongduiyul
+234	1	ORIGTAMs45	³tan	NA	195.4641	198.3574	¹tor-se ²choŋ-tui-jul-ʈi ³tan ¹sja:-cim-ro	venant d'en haut, ils séjournèrent à Chongduiyul
+235	1	ORIGTAMs45	¹sja:-cim-ro	NA	195.4641	198.3574	¹tor-se ²choŋ-tui-jul-ʈi ³tan ¹sja:-cim-ro	venant d'en haut, ils séjournèrent à Chongduiyul
+236	1	ORIGTAMs46	²choŋ-tui-jul-ʈi	NA	199.2395	201.0743	²choŋ-tui-jul-ʈi ³tan ¹sja:-ma	comme ils séjournaient à Chongduiyul
+237	1	ORIGTAMs46	³tan	NA	199.2395	201.0743	²choŋ-tui-jul-ʈi ³tan ¹sja:-ma	comme ils séjournaient à Chongduiyul
+238	1	ORIGTAMs46	¹sja:-ma	NA	199.2395	201.0743	²choŋ-tui-jul-ʈi ³tan ¹sja:-ma	comme ils séjournaient à Chongduiyul
+239	1	ORIGTAMs47	⁴meme	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+240	1	ORIGTAMs47	¹khe	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+241	1	ORIGTAMs47	²som	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+242	1	ORIGTAMs47	³naŋ-ri	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+243	1	ORIGTAMs47	¹moktan	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+244	1	ORIGTAMs47	⁴meme	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+245	1	ORIGTAMs47	⁴kik	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+246	1	ORIGTAMs47	³kisiŋ	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+247	1	ORIGTAMs47	⁴meme	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+248	1	ORIGTAMs47	⁴kik	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+249	1	ORIGTAMs47	³joncan	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+250	1	ORIGTAMs47	⁴meme	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+251	1	ORIGTAMs47	⁴kik	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+252	1	ORIGTAMs47	⁴meme	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+253	1	ORIGTAMs47	²som	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+254	1	ORIGTAMs47	¹kha-cim-ro	NA	201.0743	207.0197	⁴meme ¹khe ²som ³naŋ-ri, ¹moktan ⁴meme ⁴kik, ³kisiŋ ⁴meme ⁴kik, ³joncan ⁴meme ⁴kik, ⁴meme ²som ¹kha-cim-ro	parmi les trois ancêtres, l'ancêtre Moktan, l'ancêtre Gising, l'ancêtre Yoncan, les trois ancêtres vinrent
+255	1	ORIGTAMs48	⁴ʈam-ri	NA	207.0197	209.1897	⁴ʈam-ri ³pi-pa, ⁴ʈam-ri ¹phep-ka-si	au lieu dit Tram, à Tram quand ils arrivèrent
+256	1	ORIGTAMs48	³pi-pa	NA	207.0197	209.1897	⁴ʈam-ri ³pi-pa, ⁴ʈam-ri ¹phep-ka-si	au lieu dit Tram, à Tram quand ils arrivèrent
+257	1	ORIGTAMs48	⁴ʈam-ri	NA	207.0197	209.1897	⁴ʈam-ri ³pi-pa, ⁴ʈam-ri ¹phep-ka-si	au lieu dit Tram, à Tram quand ils arrivèrent
+258	1	ORIGTAMs48	¹phep-ka-si	NA	207.0197	209.1897	⁴ʈam-ri ³pi-pa, ⁴ʈam-ri ¹phep-ka-si	au lieu dit Tram, à Tram quand ils arrivèrent
+259	1	ORIGTAMs49	aaa	NA	210.0009	211.8244	aaa, ⁴meme ⁴kik-se ¹tik ¹ta-cim-ro	aaa, qu'arriva-t-il à l'un des ancêtres
+260	1	ORIGTAMs49	⁴meme	NA	210.0009	211.8244	aaa, ⁴meme ⁴kik-se ¹tik ¹ta-cim-ro	aaa, qu'arriva-t-il à l'un des ancêtres
+261	1	ORIGTAMs49	⁴kik-se	NA	210.0009	211.8244	aaa, ⁴meme ⁴kik-se ¹tik ¹ta-cim-ro	aaa, qu'arriva-t-il à l'un des ancêtres
+262	1	ORIGTAMs49	¹tik	NA	210.0009	211.8244	aaa, ⁴meme ⁴kik-se ¹tik ¹ta-cim-ro	aaa, qu'arriva-t-il à l'un des ancêtres
+263	1	ORIGTAMs49	¹ta-cim-ro	NA	210.0009	211.8244	aaa, ⁴meme ⁴kik-se ¹tik ¹ta-cim-ro	aaa, qu'arriva-t-il à l'un des ancêtres
+264	1	ORIGTAMs50	²kjui	NA	211.8244	213.6479	²kjui ¹phju:-si ²auti-n tirsan ¹ta-cim-ro	il fut très assoiffé
+265	1	ORIGTAMs50	¹phju:-si	NA	211.8244	213.6479	²kjui ¹phju:-si ²auti-n tirsan ¹ta-cim-ro	il fut très assoiffé
+266	1	ORIGTAMs50	²auti-n	NA	211.8244	213.6479	²kjui ¹phju:-si ²auti-n tirsan ¹ta-cim-ro	il fut très assoiffé
+267	1	ORIGTAMs50	tirsan	NA	211.8244	213.6479	²kjui ¹phju:-si ²auti-n tirsan ¹ta-cim-ro	il fut très assoiffé
+268	1	ORIGTAMs50	¹ta-cim-ro	NA	211.8244	213.6479	²kjui ¹phju:-si ²auti-n tirsan ¹ta-cim-ro	il fut très assoiffé
+269	1	ORIGTAMs51	tirsana	NA	214.1838	216.4389	tirsana ¹ta-ma, ²kjui ¹phju:-si,   ??   pal-ʈi-mi	comme il mourrait de soif
+270	1	ORIGTAMs51	¹ta-ma	NA	214.1838	216.4389	tirsana ¹ta-ma, ²kjui ¹phju:-si,   ??   pal-ʈi-mi	comme il mourrait de soif
+271	1	ORIGTAMs51	²kjui	NA	214.1838	216.4389	tirsana ¹ta-ma, ²kjui ¹phju:-si,   ??   pal-ʈi-mi	comme il mourrait de soif
+272	1	ORIGTAMs51	¹phju:-si	NA	214.1838	216.4389	tirsana ¹ta-ma, ²kjui ¹phju:-si,   ??   pal-ʈi-mi	comme il mourrait de soif
+273	1	ORIGTAMs51	pal-ʈi-mi	NA	214.1838	216.4389	tirsana ¹ta-ma, ²kjui ¹phju:-si,   ??   pal-ʈi-mi	comme il mourrait de soif
+274	1	ORIGTAMs52	⁴meme	NA	217.4368	218.9848	⁴meme ⁴kik-se ¹tik ³pi-cim-ro	que dit l'ancêtre
+275	1	ORIGTAMs52	⁴kik-se	NA	217.4368	218.9848	⁴meme ⁴kik-se ¹tik ³pi-cim-ro	que dit l'ancêtre
+276	1	ORIGTAMs52	¹tik	NA	217.4368	218.9848	⁴meme ⁴kik-se ¹tik ³pi-cim-ro	que dit l'ancêtre
+277	1	ORIGTAMs52	³pi-cim-ro	NA	217.4368	218.9848	⁴meme ⁴kik-se ¹tik ³pi-cim-ro	que dit l'ancêtre
+278	1	ORIGTAMs53	lau	NA	218.9813	222.1526	« lau, ⁴tamo, ⁴jaŋ-ta ²kjui ¹phju:-ci, ⁴tamo ¹tik lasai », ³pi-ma	« là, maintenant j'ai soif, que faire », dit-il
+279	1	ORIGTAMs53	⁴tamo	NA	218.9813	222.1526	« lau, ⁴tamo, ⁴jaŋ-ta ²kjui ¹phju:-ci, ⁴tamo ¹tik lasai », ³pi-ma	« là, maintenant j'ai soif, que faire », dit-il
+280	1	ORIGTAMs53	⁴jaŋ-ta	NA	218.9813	222.1526	« lau, ⁴tamo, ⁴jaŋ-ta ²kjui ¹phju:-ci, ⁴tamo ¹tik lasai », ³pi-ma	« là, maintenant j'ai soif, que faire », dit-il
+281	1	ORIGTAMs53	²kjui	NA	218.9813	222.1526	« lau, ⁴tamo, ⁴jaŋ-ta ²kjui ¹phju:-ci, ⁴tamo ¹tik lasai », ³pi-ma	« là, maintenant j'ai soif, que faire », dit-il
+282	1	ORIGTAMs53	¹phju:-ci	NA	218.9813	222.1526	« lau, ⁴tamo, ⁴jaŋ-ta ²kjui ¹phju:-ci, ⁴tamo ¹tik lasai », ³pi-ma	« là, maintenant j'ai soif, que faire », dit-il
+283	1	ORIGTAMs53	⁴tamo	NA	218.9813	222.1526	« lau, ⁴tamo, ⁴jaŋ-ta ²kjui ¹phju:-ci, ⁴tamo ¹tik lasai », ³pi-ma	« là, maintenant j'ai soif, que faire », dit-il
+284	1	ORIGTAMs53	¹tik	NA	218.9813	222.1526	« lau, ⁴tamo, ⁴jaŋ-ta ²kjui ¹phju:-ci, ⁴tamo ¹tik lasai », ³pi-ma	« là, maintenant j'ai soif, que faire », dit-il
+285	1	ORIGTAMs53	lasai	NA	218.9813	222.1526	« lau, ⁴tamo, ⁴jaŋ-ta ²kjui ¹phju:-ci, ⁴tamo ¹tik lasai », ³pi-ma	« là, maintenant j'ai soif, que faire », dit-il
+286	1	ORIGTAMs53	³pi-ma	NA	218.9813	222.1526	« lau, ⁴tamo, ⁴jaŋ-ta ²kjui ¹phju:-ci, ⁴tamo ¹tik lasai », ³pi-ma	« là, maintenant j'ai soif, que faire », dit-il
+287	1	ORIGTAMs54	¹ŋa-i	NA	222.5608	224.0742	« ¹ŋa-i ²kjui ²tat-la »	« je vais puiser de l'eau »
+288	1	ORIGTAMs54	²kjui	NA	222.5608	224.0742	« ¹ŋa-i ²kjui ²tat-la »	« je vais puiser de l'eau »
+289	1	ORIGTAMs54	²tat-la	NA	222.5608	224.0742	« ¹ŋa-i ²kjui ²tat-la »	« je vais puiser de l'eau »
+290	1	ORIGTAMs55	²ai-se	NA	224.2061	228.3382	« ²ai-se ²kjui ²tat-sam, ¹ŋa-i ⁴mar-la ¹chaŋ ²ra:-la », ³pi-cim-ro	« si tu puises de l'eau, je tisserai une hotte d'or,
+291	1	ORIGTAMs55	²kjui	NA	224.2061	228.3382	« ²ai-se ²kjui ²tat-sam, ¹ŋa-i ⁴mar-la ¹chaŋ ²ra:-la », ³pi-cim-ro	« si tu puises de l'eau, je tisserai une hotte d'or,
+292	1	ORIGTAMs55	²tat-sam	NA	224.2061	228.3382	« ²ai-se ²kjui ²tat-sam, ¹ŋa-i ⁴mar-la ¹chaŋ ²ra:-la », ³pi-cim-ro	« si tu puises de l'eau, je tisserai une hotte d'or,
+293	1	ORIGTAMs55	¹ŋa-i	NA	224.2061	228.3382	« ²ai-se ²kjui ²tat-sam, ¹ŋa-i ⁴mar-la ¹chaŋ ²ra:-la », ³pi-cim-ro	« si tu puises de l'eau, je tisserai une hotte d'or,
+294	1	ORIGTAMs55	⁴mar-la	NA	224.2061	228.3382	« ²ai-se ²kjui ²tat-sam, ¹ŋa-i ⁴mar-la ¹chaŋ ²ra:-la », ³pi-cim-ro	« si tu puises de l'eau, je tisserai une hotte d'or,
+295	1	ORIGTAMs55	¹chaŋ	NA	224.2061	228.3382	« ²ai-se ²kjui ²tat-sam, ¹ŋa-i ⁴mar-la ¹chaŋ ²ra:-la », ³pi-cim-ro	« si tu puises de l'eau, je tisserai une hotte d'or,
+296	1	ORIGTAMs55	²ra:-la	NA	224.2061	228.3382	« ²ai-se ²kjui ²tat-sam, ¹ŋa-i ⁴mar-la ¹chaŋ ²ra:-la », ³pi-cim-ro	« si tu puises de l'eau, je tisserai une hotte d'or,
+297	1	ORIGTAMs55	³pi-cim-ro	NA	224.2061	228.3382	« ²ai-se ²kjui ²tat-sam, ¹ŋa-i ⁴mar-la ¹chaŋ ²ra:-la », ³pi-cim-ro	« si tu puises de l'eau, je tisserai une hotte d'or,
+298	1	ORIGTAMs56	⁴mar-la	NA	229.1608	230.9317	« ⁴mar-la ¹chaŋ ²ra:la », ³pi-cim-ro	je tisserai une hotte d'or »
+299	1	ORIGTAMs56	¹chaŋ	NA	229.1608	230.9317	« ⁴mar-la ¹chaŋ ²ra:la », ³pi-cim-ro	je tisserai une hotte d'or »
+300	1	ORIGTAMs56	²ra:la	NA	229.1608	230.9317	« ⁴mar-la ¹chaŋ ²ra:la », ³pi-cim-ro	je tisserai une hotte d'or »
+301	1	ORIGTAMs56	³pi-cim-ro	NA	229.1608	230.9317	« ⁴mar-la ¹chaŋ ²ra:la », ³pi-cim-ro	je tisserai une hotte d'or »
+302	1	ORIGTAMs57	³to:si	NA	230.9317	232.8847	³to:si ⁴meme ⁴kik-se ¹tik ³pi-cim-ro ³pi-sam	et après, que dit un des ancêtres: 
+303	1	ORIGTAMs57	⁴meme	NA	230.9317	232.8847	³to:si ⁴meme ⁴kik-se ¹tik ³pi-cim-ro ³pi-sam	et après, que dit un des ancêtres: 
+304	1	ORIGTAMs57	⁴kik-se	NA	230.9317	232.8847	³to:si ⁴meme ⁴kik-se ¹tik ³pi-cim-ro ³pi-sam	et après, que dit un des ancêtres: 
+305	1	ORIGTAMs57	¹tik	NA	230.9317	232.8847	³to:si ⁴meme ⁴kik-se ¹tik ³pi-cim-ro ³pi-sam	et après, que dit un des ancêtres: 
+306	1	ORIGTAMs57	³pi-cim-ro	NA	230.9317	232.8847	³to:si ⁴meme ⁴kik-se ¹tik ³pi-cim-ro ³pi-sam	et après, que dit un des ancêtres: 
+307	1	ORIGTAMs57	³pi-sam	NA	230.9317	232.8847	³to:si ⁴meme ⁴kik-se ¹tik ³pi-cim-ro ³pi-sam	et après, que dit un des ancêtres: 
+308	1	ORIGTAMs58	³ca-sam	NA	232.8847	236.6400	« ³ca-sam ¹ŋa-i ⁴kjam, ¹ŋa-i-ca ⁴kjam ²tat-la », ³pi-si	« dans ce cas moi un chemin, moi je tracerai un chemin », dit-il
+309	1	ORIGTAMs58	¹ŋa-i	NA	232.8847	236.6400	« ³ca-sam ¹ŋa-i ⁴kjam, ¹ŋa-i-ca ⁴kjam ²tat-la », ³pi-si	« dans ce cas moi un chemin, moi je tracerai un chemin », dit-il
+310	1	ORIGTAMs58	⁴kjam	NA	232.8847	236.6400	« ³ca-sam ¹ŋa-i ⁴kjam, ¹ŋa-i-ca ⁴kjam ²tat-la », ³pi-si	« dans ce cas moi un chemin, moi je tracerai un chemin », dit-il
+311	1	ORIGTAMs58	¹ŋa-i-ca	NA	232.8847	236.6400	« ³ca-sam ¹ŋa-i ⁴kjam, ¹ŋa-i-ca ⁴kjam ²tat-la », ³pi-si	« dans ce cas moi un chemin, moi je tracerai un chemin », dit-il
+312	1	ORIGTAMs58	⁴kjam	NA	232.8847	236.6400	« ³ca-sam ¹ŋa-i ⁴kjam, ¹ŋa-i-ca ⁴kjam ²tat-la », ³pi-si	« dans ce cas moi un chemin, moi je tracerai un chemin », dit-il
+313	1	ORIGTAMs58	²tat-la	NA	232.8847	236.6400	« ³ca-sam ¹ŋa-i ⁴kjam, ¹ŋa-i-ca ⁴kjam ²tat-la », ³pi-si	« dans ce cas moi un chemin, moi je tracerai un chemin », dit-il
+314	1	ORIGTAMs58	³pi-si	NA	232.8847	236.6400	« ³ca-sam ¹ŋa-i ⁴kjam, ¹ŋa-i-ca ⁴kjam ²tat-la », ³pi-si	« dans ce cas moi un chemin, moi je tracerai un chemin », dit-il
+315	1	ORIGTAMs59	¹moktan	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+316	1	ORIGTAMs59	⁴meme-se	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+317	1	ORIGTAMs59	pacar-se	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+318	1	ORIGTAMs59	⁴plo:-si	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+319	1	ORIGTAMs59	paharapacar-se	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+320	1	ORIGTAMs59	⁴plo:-si	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+321	1	ORIGTAMs59	²kjui	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+322	1	ORIGTAMs59	²tat-cim-ro	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+323	1	ORIGTAMs60	³joncan	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
+324	1	ORIGTAMs60	⁴meme-se	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
+325	1	ORIGTAMs60	³joncan	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
+326	1	ORIGTAMs60	⁴meme-ca-se	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
+327	1	ORIGTAMs60	⁴mar-la	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
+328	1	ORIGTAMs60	¹chaŋ-ri	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
+329	1	ORIGTAMs60	²kjui	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
+330	1	ORIGTAMs60	²ta:-cim-ro	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
+331	1	ORIGTAMs61	³kisiŋ	NA	248.8542	255.8688	³kisiŋ ⁴meme-ca-se (bis) ⁴jaŋ ⁴pra-pa-r' ³pi-si ⁴kjam ²tat-cim-ro	l'ancêtre Gising révéla un chemin pour notre migration.
+332	1	ORIGTAMs61	⁴meme-ca-se	NA	248.8542	255.8688	³kisiŋ ⁴meme-ca-se (bis) ⁴jaŋ ⁴pra-pa-r' ³pi-si ⁴kjam ²tat-cim-ro	l'ancêtre Gising révéla un chemin pour notre migration.
+333	1	ORIGTAMs61	(bis)	NA	248.8542	255.8688	³kisiŋ ⁴meme-ca-se (bis) ⁴jaŋ ⁴pra-pa-r' ³pi-si ⁴kjam ²tat-cim-ro	l'ancêtre Gising révéla un chemin pour notre migration.
+334	1	ORIGTAMs61	⁴jaŋ	NA	248.8542	255.8688	³kisiŋ ⁴meme-ca-se (bis) ⁴jaŋ ⁴pra-pa-r' ³pi-si ⁴kjam ²tat-cim-ro	l'ancêtre Gising révéla un chemin pour notre migration.
+335	1	ORIGTAMs61	⁴pra-pa-r'	NA	248.8542	255.8688	³kisiŋ ⁴meme-ca-se (bis) ⁴jaŋ ⁴pra-pa-r' ³pi-si ⁴kjam ²tat-cim-ro	l'ancêtre Gising révéla un chemin pour notre migration.
+336	1	ORIGTAMs61	³pi-si	NA	248.8542	255.8688	³kisiŋ ⁴meme-ca-se (bis) ⁴jaŋ ⁴pra-pa-r' ³pi-si ⁴kjam ²tat-cim-ro	l'ancêtre Gising révéla un chemin pour notre migration.
+337	1	ORIGTAMs61	⁴kjam	NA	248.8542	255.8688	³kisiŋ ⁴meme-ca-se (bis) ⁴jaŋ ⁴pra-pa-r' ³pi-si ⁴kjam ²tat-cim-ro	l'ancêtre Gising révéla un chemin pour notre migration.
+338	1	ORIGTAMs61	²tat-cim-ro	NA	248.8542	255.8688	³kisiŋ ⁴meme-ca-se (bis) ⁴jaŋ ⁴pra-pa-r' ³pi-si ⁴kjam ²tat-cim-ro	l'ancêtre Gising révéla un chemin pour notre migration.
+339	1	ORIGTAMs62	lu	NA	254.8632	256.2020	lu, ²ot-ce-n	bon, c'est tout.
+340	1	ORIGTAMs62	²ot-ce-n	NA	254.8632	256.2020	lu, ²ot-ce-n	bon, c'est tout.
