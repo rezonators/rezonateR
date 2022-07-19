@@ -34,3 +34,4 @@ Depends:
     rlang,
     R (>= 2.10)
 VignetteBuilder: knitr
+URL: https://rezonators.github.io/rezonateR/

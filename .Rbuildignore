@@ -3,3 +3,7 @@
 ^/graph_stats$
 ^LICENSE\.md$
 ^attaches\.R$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
