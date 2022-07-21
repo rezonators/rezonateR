@@ -41,11 +41,10 @@ The rezonateR engine is based heavily on Tidyverse packages, particularly rlang 
 
 If you're wondering when you should start learning rezonateR, the best time is now! Although you can get started with the Rezonator GUI relatively easily, if there are certain things you know you will use in rezonateR - such as multi-line chunks - you probably want to have the rezonateR post-processing in mind, even when you're annotating in Rezonator.
 
-
 ```{r, eval = FALSE}
 install.packages("devtools")
 library(devtools)
-install_github("rezonators/rezonateR", lib = "/usr/lib64/R/library")
+install_github("rezonators/rezonateR")
 ```
 
 ### A quick import
@@ -59,8 +58,7 @@ library(rezonateR)
 Now let's import our first file, a short spoken text in Lhasa Tibetan (you can find the original video here: https://av.mandala.library.virginia.edu/video/couple-must-part-threes-company-02). This file contains a number of chunks, track chains, as well as trees, and we will deal with them in this vignette:
 
 ```{r}
-(Skipped in this presentation for time constraints)
-path = system.file("extdata", "parting_0.20.1.rez", package = "rezonateR")
+path = system.file("extdata", "virginia-library-20766.rez", package = "rezonateR")
 
 layerRegex = list(
   track = list(field = "trailLayer", regex = c("clausearg", "discdeix"), names = c("clausearg", "discdeix", "refexpr")),
@@ -448,7 +446,7 @@ myRez$trackDF$refexpr %>% select(id, treeEntry) %>% slice(10:16)
 The best thing that trees do for us is connecting verb information, stored in chunks, to track chain entry (i.e. referential expression) information. We can do this in two steps. First we add a treeParent column to trackDF\$refexpr that takes the value of the 'parent' column of treeEntryDF; in simple terms, this means we're getting the parent tree entry's ID into trackDF\$refexpr. We then use this parent tree entry's ID to find the corresponding verb chunk, and with this, we have successfully put the verb on the trackDF\$refexpr table.
 
 ```{r}
-myRez = myRez %>% addFieldForeign("track", "refexpr", "treeEntry", "", "treeEntry", "treeParent", "parent", fieldaccess = "foreign")
+myRez = myRez %>% addFieldForeign("track", "refexpr", "treeEntry", "default", "treeEntry", "treeParent", "parent", fieldaccess = "foreign")
 myRez$trackDF$refexpr = myRez$trackDF$refexpr %>% rez_left_join(myRez$chunkDF$verb %>% select(id, word, treeEntry), by = c(treeParent = "treeEntry"), suffix = c("", "_verb"), df2Address = "chunkDF/verb", fkey = "treeParent", df2key = "treeEntry", rezrObj = myRez) %>% rename(verbID = id_verb, verbWord = word_verb)
 myRez$trackDF$refexpr %>% select(id, treeParent, verbID, verbWord) %>% slice(10:16)
 ```

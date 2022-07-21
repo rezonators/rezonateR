@@ -1,8 +1,6 @@
 pandoc: 2.17.1.1
 pkgdown: 2.0.5
 pkgdown_sha: ~
-articles:
-  0.1.0_vignette: 0.1.0_vignette.html
 last_built: 2022-07-19T09:32Z
 url: https://rezonators.github.io/rezonateR/
 template:
@@ -91,3 +89,8 @@ reference:
   - new_updateFunction
   - updateLeftJoin
   - updateLowerToHigher
+articles:
+- title: "Introduction"
+  navbar: Intro
+  contents:
+  - overview
