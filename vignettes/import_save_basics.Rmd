@@ -1,0 +1,165 @@
+---
+title: "An introduction to rezonateR 0.1.0"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{0.1.0_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE
+)
+Sys.setlocale("LC_CTYPE", locale="Tibetan")
+options(rmarkdown.html_vignette.check_title = FALSE)
+```
+
+In this tutorial, we will talk through data import in Rezonator.
+
+### Importing: The detailed guide
+
+Let's start by importing our first file. 
+
+```{r setup}
+library(rezonateR)
+```
+
+Now let's import our first file, a short spoken text in Lhasa Tibetan (you can find the original video here: https://av.mandala.library.virginia.edu/video/couple-must-part-threes-company-02). This file contains a number of chunks, track chains, as well as trees, and we will deal with them in this vignette:
+
+```{r}
+path = system.file("extdata", "virginia-library-20766.rez", package = "rezonateR")
+
+layerRegex = list(
+  track = list(field = "trailLayer", regex = c("clausearg", "discdeix"), names = c("clausearg", "discdeix", "refexpr")),
+  chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
+
+myRez = importRez(path, layerRegex = layerRegex, concatFields = c("word", "wordWylie"))
+```
+
+The layerRegex object is a series of instructions to tell importRez how to divide chunks and track chains into different layers. In this case, I placed a field called 'trailLayer' on track chains, which has three possible values: clausearg, discdeix, and nothing. These are captured in the regex field. The first two regexes correspond to the two names 'clausearg' and 'discdeix', and the default case where neither of the first two regexes are detected is 'refexpr'. I have done the same thing to chunks, as you can see above. If you don't want to use layers, you don't have to specify layerRegex. In that case, I will create a single layer called 'default' for you.
+
+The other mysterious field in the importRez function is concatFields. These are fields belonging to tokens that you would like to concatenate for higher-level units like chunks and tokens. For example, if tokens 1 and 2 are 'happy' and 'person', and you have a chunk that contains these two tokens, you would want the whole string 'happy person' to be associated with the chunk. Typically, you should specify at least one field for doing this. In this case, we will concatenate the fields 'word' and 'wordWylie' (Wylie is the most common Romanisation system for Tibetan). It is important not to overdo it, and specify too many fields to concatenate, as this step can slow down your import considerably.
+
+The result of the import is an object called rezrObj, which we will discuss below. When you import a more substantial file, say around 30 minutes, the import speed can be rather slow. Please be patient! The good news is that rezonateR contains functionality for saving and loading rezrObj objects, so you don't have to import each time you work on a file in R.
+
+```{r}
+savePath = "myRez.Rdata"
+rez_save(myRez, savePath)
+myRez = rez_load(savePath)
+```
+
+## Introduction to rezrObjs and nodeMaps
+
+###rezrObjs
+
+There are three main kinds of objects in rezonateR that you will interact with directly, namely rezrObj, nodeMap and rezrDF. rezrObjs and nodeMaps will be covered in this section. rezrDFs are relatively complex, and will form the bulk of our discussion in this vignette.
+
+rezrObj objects contain one single nodeMap and several rezrDFs:
+
+```{r}
+print("Item in myRez:")
+names(myRez)
+```
+
+The relationships between the various entites are as follows:
+
+* chunks and tree entries are built on top of tokens
+
+* entries correspond exactly to tokens, and units build on entries
+
+* trackDF refers to both chunks and tokens
+
+This has some ramifications for updating, which we'll come to later.
+
+### nodeMaps
+
+The nodeMap is similar to the internal representation of the file used in Rezonator-generated .rez files. The node map in .rez files are a disorganised list of nodes, each of which correspond to an entity inside Rezonator: units, tokens, and so on. The rezonateR nodeMap is similar. The major difference is that nodes are organised into sub-categories, according to the type of entity that the node is encoding. Let's have a sneak peak at these categories:
+
+```{r}
+print("Items in the nodeMap:")
+names(myRez$nodeMap)
+```
+In practice, you will not interact with most of these nodeMaps except token. Most of the time, you will only be dealing with rezrDFs, which are much easier to work with. Let's take a look at them.
+
+## Introduction to rezrDFs
+
+A rezrDF is like a normal data frame that you know from base R. Here's the beginning of the unit table:
+
+```{r}
+print(head(myRez$unitDF %>% select(id, unitSeq, srtLineBo)))
+```
+
+chunkDF, trackDF, rezDF, stackDF, etc., are divided into layers. If you directly access the 'chunkDF' and 'trackDF' components of myRez, you will get a list of rezrDFs, one for each layer. Here are the names of our chunk layers that you might remember from the introduction, along with the beginning of one of the associated rezrDFs:
+
+```{r}141
+print("Component DFs of chunkDF:")
+names(myRez$chunkDF)
+print(head(myRez$chunkDF$refexpr) %>% select(id, word))
+```
+
+rezrDF inherits from the Tidyverse 'tibble' structure, so all tibble-related functions can be used with them. However, using classic Tidyverse functions on rezrDFs is often dangerous, as rezrDFs have additional functionality that go beyond classic rezrDFs.
+
+There are three main differences that make rezrDF special:
+
+### Perk 1: Field access labels
+
+Field access labels prevents you from accidentally changing things that you shouldn't be changing. Let's look at the field access values of the unitDF:
+
+```{r}
+print("fieldaccess:")
+fieldaccess(myRez$unitDF)
+```
+There are five possible field access values:
+* 'key': The primary key of the table. You are not allowed to change it (unless you turn it into a non-key field, but this is not encouraged since you will basically break everything). If you try to update these fields using rezonateR functions, I will stop you with an error.
+
+* 'core': Core fields, mostly generated by Rezonator. You can change them, but I will give you a warning if you do, because changing a core field has strong potential to break things.  
+
+* 'flex': Flexible fields, usually fields whose values you enter into Rezonator, though there are also flex fields automatically generated by Rezonator.
+
+* 'auto': Fields whose values are automatically generated using information from the SAME rezrDF.
+
+* 'foreign': Fields whose values are automatically generated using information from a DIFFERENT rezrDF (or several different rezrDFs, but this is an advanced feature we will stay away from in this vignette.)
+
+
+### Perk 2: Reloads
+
+The reload() function is one of the core features of rezonateR that makes it so convenient to use. The reload() feature is based on updateFunctions. You can access the updateFunctions of a table using updateFunct:
+
+```{r}
+print("updateFunct of unitDF:")
+updateFunct(myRez$unitDF)
+```
+There are three reload functions, reloadLocal(), reloadForeign() and reload(). reloadLocal() only takes a rezrDF, and only updates auto fields. reloadForeign() and reload() take a rezrDF and a rezrObj, and updates the rezrDF using the rezrObj (which may or may not contain the rezrDF).
+
+Let's take a look at reload(), which is the most useful function of these. Here, in the original data, when there are zero mentions, only the orthographic representation is written as <0>; the Wylie romanisation is a blank string. I want to change the Wylie romanisation to also contain <0>s. I do that by using the rez_mutate function on the tokenDF first (don't worry about what that means yet; we'll cover it later). After that, I reload the entryDF, and then reload the unitDF. (Recall that the units depend on entries which in turn depend on tokens; that's why we can't just reloated the unitDF directly.) After the update, the unitDF is updated with <0>s appearing in the Wylie romanisation:
+
+```{r}
+print("Before the update")
+myRez$unitDF %>% filter(str_detect(word, "<0>")) %>% rez_select(id, word, wordWylie) %>% head
+
+#Change something in the token rezrDF that is significant for the unit rezrDF
+myRez$tokenDF = myRez$tokenDF %>% rez_mutate(
+  wordWylie = case_when(word == "<0>" ~ "<0>", T ~ wordWylie))
+myRez$entryDF = myRez$entryDF %>% reload(myRez)
+myRez$unitDF = myRez$unitDF %>% reload(myRez)
+
+print("After the update")
+myRez$unitDF %>% filter(str_detect(word, "<0>")) %>% rez_select(id, word, wordWylie) %>% head
+```
+
+You might be wondering how to reload an entire rezrObj. Because tables often depend on each other (for example, field A in table X relies on field B in table Y which in turn relies on field C in table X), this is technically difficult, but I plan to add this function before the 1.0 release. Stay tuned!
+
+### Perk 3: Correpondences to nodeMaps
+
+rezrDFs encode information about whether a field is in the nodeMap or not:
+
+```{r}
+print("inNodeMap:")
+inNodeMap(myRez$unitDF)
+```
+
+This doesn't do so much yet, since you're not yet allowed to push a field created in a rezrDF back to a nodeMap. This will be available in the 1.0 release.
+
