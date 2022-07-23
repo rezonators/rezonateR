@@ -1,4 +1,4 @@
-test_that("importRez works", {
+test_that("getTurnFromAnnos works", {
   discoName = "sbc002-turn"
   path = "inst/extdata/" %+% discoName %+% ".rez"
   turnText = importRez(path,
