@@ -1,8 +1,8 @@
 ---
-title: "An introduction to rezonateR 0.1.0"
+title: "Importing .rez files, saving rezrObjs, and basic data structure"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{0.1.0_vignette}
+  %\VignetteIndexEntry{import_save_basics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,149 +17,205 @@ Sys.setlocale("LC_CTYPE", locale="Tibetan")
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
-In this tutorial, we will talk through data import in Rezonator.
+Hello! If you're reading this tutorial, you're probably wondering how exactly RezonateR works, how to import data into RezonateR and how to understand how the data is then structured internally. If this desribes your situation, then this tutorial is for you!
 
-### Importing: The detailed guide
+You may or may not have read the introduction (vignette("overview")) that gives an overview to RezonateR, and it's fine either way - everything overed in that introduction that you'll need will be repeated here, in greater detail. The only exception is if you have not installed rezonateR at all - in that case, please do install it using the instructions from that tutorial first!
 
-Let's start by importing our first file. 
+In this tutorial, we will first meet the file that we need to import, along with a brief introduction on how Rezonator's JSON format, .rez files, are structured. Then we'll import the file into Rezonator, and the
 
-```{r setup}
+## Meet our file!
+
+To begin with, in this tutorial we will be using a simple Rezonator file. This file contains a minimal amount of annotation - just enough to explain the basic workings of RezonateR without being bogged down in long loading times that would result from a more extensively annotated files. The file is based on the text *A Tree's Life*, a conversation between two sisters. The first part of the file, which deals with the topic of one of the sisters' roommates, has been annotated for coreference (trails), resonance, as well as argument structure (through trees). There are also largely arbitrary stacks drawn throughout the file.
+
+![An image of the Rezonator interface with trail (wavy lines), resonances (straight lines) and a dependency tree in the nav window.](img/iosave-sbc007.PNG){width=100%}
+
+
+### Node maps: The secret life of Rezonator files
+
+The .rez files produced by Rezonator are visualised through the Rezonator interface, but they lead a secret double life! Internally, they are represented by a structure called a node map. All objects inside .rez files are represented as nodes, which store information in the form of text, numbers and pointers to other nodes.
+
+To get an idea of what the node map looks like, let's load a .rez file. (You will never need to do this directly when working in rezonateR, as the import function will handle it for you; this is for demonstration purposes only.) We'll extract the node map from the .rez file after importing it into R, and then store it in the variable `rez007_nm`.
+
+```{r}
+path = system.file("extdata", "sbc007.rez", package = "rezonateR", mustWork = T)
+
+library(rjson)
+getwd()
+rez007_json = rjson::fromJSON(file = path)
+rez007_nm = rez007_json[["ROOT"]][[1]][["nodeMap"]]
+```
+
+Let's zero on to a single node. The simplest type of node is a token, or a 'word' (this may be a morpheme or some other unit depending on the language and data you're working with.). Inside the Rezonator interface, tokens are the basic unit that you may interact with. Let's try the word 'midnight'. The word 'midnight' that you see on the screen has an ID of `28A862601A235`, and that's the key we access it from the node map by. Let's go ahead and examine some of the information embeddded inside the node:
+
+```{r}
+midnight = rez007_nm[["28A862601A235"]]
+print(paste0("type: ", midnight$type))
+print(paste0("docTokenSeq: ", midnight$docTokenSeq))
+print(paste0("unit: ", midnight$unit))
+print(paste0("place: ", midnight$place))
+print(paste0("inEntryList: ", midnight$inEntryList))
+print(paste0("inChainsList: ", midnight$inChainsList))
+print(paste0("inChunkList: ", midnight$inChunkList))
+print("tagMap:")
+print(sapply(midnight$tagMap, c))
+```
+The `type` value indicates that we're looking at a token. `docTokenSeq` indicates the position of the word within the document. `unit` is a pointer to the node that contains the token's unit. `place` gives the position of the token within the unit.
+
+The next three are lists of pointers to larger structures that may contain the token. (These 'lists' in .rez files are represented by vectors, not lists, in R.) `inEntryList`, `inChainsList` and `inChunkList` give the entries, chains and chunks in which 'midnight' are found. We will discuss entries in the next section. A chain is either a Track chain, i.e. trail, or a Rez chain, i.e. a resonance. In this case, 'midnight' was put in a trail, albeit one that contains only itself (i.e. it is a singleton), which is why you see a coloured box around the word, but no links emanating from it. So we do see a pointer to the track chain. It does not belong to any chunks, i.e. the larger rectangles typically consisting of multiple words.
+
+The `tagMap` of a specific node includes the tags that were given when the raw file was first imported into Rezonator, as well as tags that were created by Rezonator or manually added in Rezonator. These tags were all given during import; we will see examples of these later.
+
+### Tokens and units
+An entry is a leftover structure in Rezonator that currently serves no real purpose, except as the intermediate layer between units and tokens. As a general rule, entries correspond one-to-one with tokens. This is a technicality that you will occasionally need to know when working in RezonateR.
+
+Basically, a unit only contains pointers to the entries that consists of it, in the attribute `entryList`. To look up individual tokens from a unit, then, you will have to go to individual entries' nodes to look up the corresponding token. For example, here is the entryList of the unit 2D1B3667B6110:
+
+```{r}
+print("entryList of unit 2D1B3667B6110:")
+print(rez007_nm[["2D1B3667B6110"]][["entryList"]])
+```
+
+To look up the first token in this unit, the word 'if', you need to look at the token value of the associated entry:
+
+```{r}
+print("token corresponding to entry 24796648BFF31:")
+rez007_nm[["24796648BFF31"]][["token"]]
+```
+
+Let's now verify that this token is indeed the word 'if':
+
+```{r}
+print("token corresponding to token A27E39A69272:")
+rez007_nm[["A27E39A69272"]]$tagMap$text
+```
+
+### Chunks
+Chunks are the large rectangular boxes that typically span more than one token. A chunk is automatically created whenever you add a track or rez entry that spans more than one token, but not when you add a single-token track or rez entry. So, for example, *midnight* was not put inside a chunk, but *the purpose of getting up in the morning* was put in a chunk the moment it became part of a track chain.
+
+There are also chunks that do not belong to any chains, sometimes called *blank chunks*. In this document, blank chunks are used to mark verbal complexes in English, including verbs and auxiliaries, as well as any intervening adverbs. When a nominal intervenes between the auxiliary and the verb, the auxiliary is excluded from the verb chunk.
+
+The word *stay* on line 3 belongs to a blank chunk and a chunk in a track chain. Let's look at those two chunks. The ID for the token *stay* is 1A0742C9033E5:
+
+```{r}
+print("Chunks that contain 1A0742C9033E5:")
+rez007_nm[["1A0742C9033E5"]]$inChunkList
+```
+
+So the two chunks that contain *stay* are 35E3E0AB6803A ans 15B9BB5D5086C. 35E3E0AB6803A is the larger chunk that belongs to a chain (note that the individual token *stay* 1A0742C9033E5 does *not* belong in the chain):
+
+```{r} 
+print("Chains that contain 35E3E0AB6803A:")
+rez007_nm[["35E3E0AB6803A"]]$inChainsList
+print("Chains that contain 1A0742C9033E5:")
+rez007_nm[["1A0742C9033E5"]]$inChainsList
+```
+A manually added field in this file, `chunkType`, specifies the type of chunk that a certain chunk is. The field is blank for mentions in track chains, but filled for verbs:
+
+```{r} 
+print("chunkType of 35E3E0AB6803A:")
+rez007_nm[["35E3E0AB6803A"]]$tagMap$chunkType
+print("chunkType of 15B9BB5D5086C:")
+rez007_nm[["15B9BB5D5086C"]]$tagMap$chunkType
+```
+This point will be important later on when we import, as it will be used to separate chunks into layers.
+
+### Entries, links and chains
+Rezonator currently has three data types that are termed 'chains'. Each of them have specific names for their entries. They are:
+* A chain of track objects (i.e. mentions) is called a *trail* - i.e. a coreference chain containing mentions
+* A chain of rez objects is a *resonances* - a rez object is a specific instance of a word that is resonated somewhere else in the document, and a resonance is a collection of resonating tokens
+* A chain of cards is a *stack*.
+
+The first two types of entries correspond to words and chunks, and the third type of entries correspond to units.
+
+Let's look at the track 1BF2260B4AB78, which corresponds to the chunk *Stay up late* 35E3E0AB6803A that we have seen before:
+
+```{r}
+rez007_nm[["1BF2260B4AB78"]]$chain
+rez007_nm[["1BF2260B4AB78"]]$token
+rez007_nm[["1BF2260B4AB78"]]$goalLinkList
+```
+*Stay up late* belongs to the chain, and corresponds to the 'token' (actually chunk - this is a quirk of the .rez format that will be important to remember when working in rezonateR) 35E3E0AB6803A. `goalLinkList` is a list of links that starts from this entry. Links live in a world of their own and are not particularly important for working in RezonateR, so we can safely ignore them for now.
+
+To find out the member entries that a chain contains, you can look at its `setIDList`.
+
+```{r}
+rez007_nm[["2A01379C5D049"]]$setIDList
+```
+Entries and chains, like tokens (and units), have `tagMap`s, and these generally correspond to tags generated or manually added in Rezonator. Here's the tagMap of the track and trail we've seen. The track contains the tags `gapWords` (number of words from the previous track) and `gapUnits` (number of units from the previous track), as well as counts for the number of tokens and characters inside the track. The tag `chainSize` indicates the number of entries inside the chain. These are all automatically generated by Rezonator and will be covered in more detail when discussing coreference.
+
+```{r}
+sapply(rez007_nm[["1BF2260B4AB78"]]$tagMap, c)
+sapply(rez007_nm[["2A01379C5D049"]]$tagMap, c)
+```
+### The tree map
+Information related to trees reside in a sub-map of their own, separate from their . There are three types of objects inside the tree map: `treeEntry`, `treeLink` and `tree`. 
+
+A treeEntry is a 'leaf' of a tree. It may contain one or multiple 'leaves', 
+
+## Importing our file
+Let's now actually import the file into RezonateR! Obviously our first step is to import the file:
+
+```{r}
 library(rezonateR)
 ```
 
-Now let's import our first file, a short spoken text in Lhasa Tibetan (you can find the original video here: https://av.mandala.library.virginia.edu/video/couple-must-part-threes-company-02). This file contains a number of chunks, track chains, as well as trees, and we will deal with them in this vignette:
+
+The import function is `importRez`. When importing, there are two important settings you will need to set. We will store the values of these settings in variables before importing.
+
+The first one is `layerRegex`:
 
 ```{r}
-path = system.file("extdata", "virginia-library-20766.rez", package = "rezonateR")
-
-layerRegex = list(
-  track = list(field = "trailLayer", regex = c("clausearg", "discdeix"), names = c("clausearg", "discdeix", "refexpr")),
-  chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr")))
-
-myRez = importRez(path, layerRegex = layerRegex, concatFields = c("word", "wordWylie"))
+layerRegex = list(chunk = list(field = "chunkType",
+                               regex = c("verb"),
+                               names = c("verb", "refexpr")))
 ```
 
-The layerRegex object is a series of instructions to tell importRez how to divide chunks and track chains into different layers. In this case, I placed a field called 'trailLayer' on track chains, which has three possible values: clausearg, discdeix, and nothing. These are captured in the regex field. The first two regexes correspond to the two names 'clausearg' and 'discdeix', and the default case where neither of the first two regexes are detected is 'refexpr'. I have done the same thing to chunks, as you can see above. If you don't want to use layers, you don't have to specify layerRegex. In that case, I will create a single layer called 'default' for you.
+`layerRegex` allows you to separate chunks, tracks, rezes and trees as well as associated objects such as trails and treeEntries into layers. (At the moment, it is not technically possible for there to be meaningful stack layers, so this has not yet been implemented for stacks.) Each layer will receive a separate data frame.
 
-The other mysterious field in the importRez function is concatFields. These are fields belonging to tokens that you would like to concatenate for higher-level units like chunks and tokens. For example, if tokens 1 and 2 are 'happy' and 'person', and you have a chunk that contains these two tokens, you would want the whole string 'happy person' to be associated with the chunk. Typically, you should specify at least one field for doing this. In this case, we will concatenate the fields 'word' and 'wordWylie' (Wylie is the most common Romanisation system for Tibetan). It is important not to overdo it, and specify too many fields to concatenate, as this step can slow down your import considerably.
+In this file, we have two types of chunks: verbs and (largely) referential expressions. Verbs are annotated with the `chunkType` value 'verb', and referential expressions are unannotated. In order to tell this to rezonateR, we need to set layerRegex. We need to pass a list to layerRegex. The keys to this list must be in the list 'chunk', 'track', 'rez', 'tree'; you can't use other keywords (such as 'trail').
 
-The result of the import is an object called rezrObj, which we will discuss below. When you import a more substantial file, say around 30 minutes, the import speed can be rather slow. Please be patient! The good news is that rezonateR contains functionality for saving and loading rezrObj objects, so you don't have to import each time you work on a file in R.
+Each of these entries is another list with three values: `field`, `regex` and `names`. The field `field` specifies the name of the field that will determine layer status. The field `regex` specifies a list of regular expressions which, if matched, will put an object in a certain layer. The field `names` specifies the layer names; when it has one more item than the regex list (in this case the extra item is `"refexpr"`), then that layer is for items that do not match any of the regexes.
+
+**If you do not assign layers to any of chunk, track, rez and tree, everything will be placed in a layer called `default`.*** In our case, track, rez and tree (and their related object) are all put in a layer called `default`. We will see how this works later on.
+
+The other setting is `concatFields`:
 
 ```{r}
-savePath = "myRez.Rdata"
-rez_save(myRez, savePath)
+concatFields = c("text", "transcript")
+```
+
+When we are just looking at nodeMaps, we often feel lost because many nodes do not have any semblance of text on them. In order to fix this, we can concatenate the text or transript fields of the tokens associated with each node. These fields must be specified as a vector passed to `concatFields`.
+
+Here is the import function, using the settings from above. If you're following on, do note that this takes long! The tree-related steps should, in particular, take extra time to process.
+
+```{r, cache=TRUE}
+rez007 = importRez(path,
+                   layerRegex = layerRegex,
+                   concatFields = concatFields)
+```
+
+The variable `rez007` belongs to the class `rezrObj`. A `rezrObj` consists of two components: a `nodeMap` and a bunch of `rezrDF`s. Let's look at the `nodeMap` object first.
+
+### Meeting our nodeMap again
+If you felt a bit lost when we were exploring .rez files before, here's some good news: `nodeMap`s in RezonateR are slightly easier to navigate than the node map in .rez files (phew)! The only major difference is that in rezonateR `nodeMap`s, every item type belongs to its own list. So the nodes in `rez007` nodeMap are organised into these categories:
+
+```{r}
+names(rez007$nodeMap)
+```
+To save the imported object (something you will definitely want to do - nobody wants to import again!), use the function rez_save(). To load it again, use the function rez_load(). Both 
+
+```{r}
+savePath = "rez007.Rdata"
+rez_save(rez007, savePath)
 myRez = rez_load(savePath)
 ```
 
-## Introduction to rezrObjs and nodeMaps
-
-###rezrObjs
-
-There are three main kinds of objects in rezonateR that you will interact with directly, namely rezrObj, nodeMap and rezrDF. rezrObjs and nodeMaps will be covered in this section. rezrDFs are relatively complex, and will form the bulk of our discussion in this vignette.
-
-rezrObj objects contain one single nodeMap and several rezrDFs:
-
-```{r}
-print("Item in myRez:")
-names(myRez)
-```
-
-The relationships between the various entites are as follows:
-
-* chunks and tree entries are built on top of tokens
-
-* entries correspond exactly to tokens, and units build on entries
-
-* trackDF refers to both chunks and tokens
-
-This has some ramifications for updating, which we'll come to later.
-
-### nodeMaps
-
-The nodeMap is similar to the internal representation of the file used in Rezonator-generated .rez files. The node map in .rez files are a disorganised list of nodes, each of which correspond to an entity inside Rezonator: units, tokens, and so on. The rezonateR nodeMap is similar. The major difference is that nodes are organised into sub-categories, according to the type of entity that the node is encoding. Let's have a sneak peak at these categories:
-
-```{r}
-print("Items in the nodeMap:")
-names(myRez$nodeMap)
-```
-In practice, you will not interact with most of these nodeMaps except token. Most of the time, you will only be dealing with rezrDFs, which are much easier to work with. Let's take a look at them.
-
-## Introduction to rezrDFs
-
-A rezrDF is like a normal data frame that you know from base R. Here's the beginning of the unit table:
-
-```{r}
-print(head(myRez$unitDF %>% select(id, unitSeq, srtLineBo)))
-```
-
-chunkDF, trackDF, rezDF, stackDF, etc., are divided into layers. If you directly access the 'chunkDF' and 'trackDF' components of myRez, you will get a list of rezrDFs, one for each layer. Here are the names of our chunk layers that you might remember from the introduction, along with the beginning of one of the associated rezrDFs:
-
-```{r}141
-print("Component DFs of chunkDF:")
-names(myRez$chunkDF)
-print(head(myRez$chunkDF$refexpr) %>% select(id, word))
-```
-
-rezrDF inherits from the Tidyverse 'tibble' structure, so all tibble-related functions can be used with them. However, using classic Tidyverse functions on rezrDFs is often dangerous, as rezrDFs have additional functionality that go beyond classic rezrDFs.
-
-There are three main differences that make rezrDF special:
-
-### Perk 1: Field access labels
-
-Field access labels prevents you from accidentally changing things that you shouldn't be changing. Let's look at the field access values of the unitDF:
-
-```{r}
-print("fieldaccess:")
-fieldaccess(myRez$unitDF)
-```
-There are five possible field access values:
-* 'key': The primary key of the table. You are not allowed to change it (unless you turn it into a non-key field, but this is not encouraged since you will basically break everything). If you try to update these fields using rezonateR functions, I will stop you with an error.
-
-* 'core': Core fields, mostly generated by Rezonator. You can change them, but I will give you a warning if you do, because changing a core field has strong potential to break things.  
-
-* 'flex': Flexible fields, usually fields whose values you enter into Rezonator, though there are also flex fields automatically generated by Rezonator.
-
-* 'auto': Fields whose values are automatically generated using information from the SAME rezrDF.
-
-* 'foreign': Fields whose values are automatically generated using information from a DIFFERENT rezrDF (or several different rezrDFs, but this is an advanced feature we will stay away from in this vignette.)
 
 
-### Perk 2: Reloads
+### From nodeMap to rezrDF
 
-The reload() function is one of the core features of rezonateR that makes it so convenient to use. The reload() feature is based on updateFunctions. You can access the updateFunctions of a table using updateFunct:
 
-```{r}
-print("updateFunct of unitDF:")
-updateFunct(myRez$unitDF)
-```
-There are three reload functions, reloadLocal(), reloadForeign() and reload(). reloadLocal() only takes a rezrDF, and only updates auto fields. reloadForeign() and reload() take a rezrDF and a rezrObj, and updates the rezrDF using the rezrObj (which may or may not contain the rezrDF).
+## Importing our file
 
-Let's take a look at reload(), which is the most useful function of these. Here, in the original data, when there are zero mentions, only the orthographic representation is written as <0>; the Wylie romanisation is a blank string. I want to change the Wylie romanisation to also contain <0>s. I do that by using the rez_mutate function on the tokenDF first (don't worry about what that means yet; we'll cover it later). After that, I reload the entryDF, and then reload the unitDF. (Recall that the units depend on entries which in turn depend on tokens; that's why we can't just reloated the unitDF directly.) After the update, the unitDF is updated with <0>s appearing in the Wylie romanisation:
 
-```{r}
-print("Before the update")
-myRez$unitDF %>% filter(str_detect(word, "<0>")) %>% rez_select(id, word, wordWylie) %>% head
-
-#Change something in the token rezrDF that is significant for the unit rezrDF
-myRez$tokenDF = myRez$tokenDF %>% rez_mutate(
-  wordWylie = case_when(word == "<0>" ~ "<0>", T ~ wordWylie))
-myRez$entryDF = myRez$entryDF %>% reload(myRez)
-myRez$unitDF = myRez$unitDF %>% reload(myRez)
-
-print("After the update")
-myRez$unitDF %>% filter(str_detect(word, "<0>")) %>% rez_select(id, word, wordWylie) %>% head
-```
-
-You might be wondering how to reload an entire rezrObj. Because tables often depend on each other (for example, field A in table X relies on field B in table Y which in turn relies on field C in table X), this is technically difficult, but I plan to add this function before the 1.0 release. Stay tuned!
-
-### Perk 3: Correpondences to nodeMaps
-
-rezrDFs encode information about whether a field is in the nodeMap or not:
-
-```{r}
-print("inNodeMap:")
-inNodeMap(myRez$unitDF)
-```
-
-This doesn't do so much yet, since you're not yet allowed to push a field created in a rezrDF back to a nodeMap. This will be available in the 1.0 release.
-
+## Saving 
