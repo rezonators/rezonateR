@@ -199,7 +199,7 @@ library(rezonateR)
 ```
 
 
-The import function is importRez(). When importing, there are two important settings you will need to set. We will store the values of these settings in variables before importing.
+The import function is `importRez()`. When importing, there are two important settings you will need to set. We will store the values of these settings in variables before importing.
 
 The first one is `layerRegex`:
 
@@ -223,7 +223,7 @@ The other setting is `concatFields`:
 concatFields = c("text", "transcript")
 ```
 
-When we are just looking at nodeMaps, we often feel lost because many nodes do not have any semblance of text on them. In order to fix this, we can concatenate the text or transript fields of the tokens associated with each node. These fields must be specified as a vector passed to `concatFields`.
+When we are just looking at `nodeMap`s, we often feel lost because many nodes do not have any semblance of text on them. In order to fix this, we can concatenate the text or transript fields of the tokens associated with each node. These fields must be specified as a vector passed to `concatFields`.
 
 Here is the import function, using the settings from above. If you're following on, do note that this takes long! The tree-related steps should, in particular, take extra time to process.
 
@@ -233,20 +233,21 @@ rez007 = importRez(path,
                    concatFields = concatFields)
 ```
 
-The variable `rez007` belongs to the class `rezrObj`. A `rezrObj` consists of two components: a `nodeMap` and a bunch of `rezrDF`s. Let's look at the `nodeMap` object first.
+The variable `rez007` belongs to the class `rezrObj`. To save the imported `rezrObj` (something you will definitely want to do - nobody wants to import again!), use the function `rez_save()`. To load it again, use the function `rez_load()`. Both functions are quite easy: `rez_save()` simply requires a `rezrObj` and a save path, and `rez_load()` only a path to load from.
+
+```{r}
+savePath = "rez007.Rdata"
+rez_save(rez007, savePath)
+rez007 = rez_load(savePath)
+```
+
+A `rezrObj` consists of two components: a `nodeMap` and a bunch of `rezrDF`s. Let's look at the `nodeMap` object first.
 
 ### Meeting our nodeMap again
 If you felt a bit lost when we were exploring .rez files before, here's some good news: `nodeMap`s in RezonateR are slightly easier to navigate than the node map in .rez files (phew)! The only major difference is that in rezonateR `nodeMap`s, every item type belongs to its own list. So the nodes in `rez007` nodeMap are organised into these categories:
 
 ```{r}
 names(rez007$nodeMap)
-```
-To save the imported rezrObj (something you will definitely want to do - nobody wants to import again!), use the function rez_save(). To load it again, use the function rez_load(). Both functions are quite easy: rez_save() simply requires a `rezrObj` and a save path, and `rez_load` only a path to load from.
-
-```{r}
-savePath = "rez007.Rdata"
-rez_save(rez007, savePath)
-rez007 = rez_load(savePath)
 ```
 
 ### From nodeMap to rezrDF
@@ -300,7 +301,7 @@ head(rez007$unitDF)
 
 This is for simplicity's sake. Although it is technically possible to include these lists in data frames, it is clumsy and will likely slow down rezonateR a lot to do so. 
 
-Of course, understandably sometimes we will still need to refer to each individual component of a larger entity. The function getLowerFieldList() is a way, if somewhat clumsy, of doing this:
+Of course, understandably sometimes we will still need to refer to each individual component of a larger entity. The function `getLowerFieldList()` is a way, if somewhat clumsy, of doing this:
 
 ```{r}
 getLowerFieldList(rez007,
@@ -315,13 +316,13 @@ getLowerFieldList(rez007,
 
 Here, we extract the 'kinds' (Word, Pause, etc.) of the tokens of certain units. `fieldName` is the attribute we're extracting, `simpleDF` is the `rezrDF` of the 'smaller' entity, `complexDF` is the `rezrDF` of the 'larger' entity, `complexNodeMap` is the nodeMap of the 'larger' entity, `listName` is the name of the list inside each node of the `complexNodeMap` that gives the lower-level entries, and complexIDs which 'larger' entities (in this case units) you want to extract values for. If left blank, this will be every single complex node (in this case every unit).
 
-This is a very complicated function. One annoying use case is to get properties of tokens from track entries, so I provide the function getTrackTokens() to do this easily. For example, this code extracts the `kind` value of tracks:
+This is a very complicated function. One annoying use case is to get properties of tokens from track entries, so I provide the function `getTrackTokens()` to do this easily. For example, this code extracts the `kind` value of tracks:
 
 ```{r}
 getTrackTokens(rez007, fieldName = "kind", trackDF = rez007$trackDF$default)[1:3]
 ```
 
-In general, though, it is preferable to minimise this type of extraction. The coming tutorials will explain how we can do common operations without resorting to using getLowerFieldList().
+In general, though, it is preferable to minimise this type of extraction. The coming tutorials will explain how we can do common operations without resorting to using `getLowerFieldList()`.
 
 ## Onwards!
 

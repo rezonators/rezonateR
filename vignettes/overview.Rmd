@@ -57,7 +57,7 @@ library(rezonateR)
 
 Now let's import our first file, a short spoken text in Lhasa Tibetan (you can find the original video here: https://av.mandala.library.virginia.edu/video/couple-must-part-threes-company-02). This file contains a number of chunks, track chains, as well as trees, and we will deal with them in this vignette:
 
-```{r}
+```{r, cache = TRUE}
 path = system.file("extdata", "virginia-library-20766.rez", package = "rezonateR")
 
 layerRegex = list(
@@ -463,13 +463,13 @@ The last topic to cover is merging chunks, most useful for creating muti-line ch
 
 mergeChunksWithTree is very easy to use. After you call this command, the merged chunks will be added to the bottom of the correponding chunk rezrDF.  Chunk tags are taken from the first constituent chunk of each merger by default; see the manual for setting custom conditions. There will in addition be a column called combinedChunk that tells you whether a chunk is a combined chunk, a member of a combined chunk, or neither.
 
-```{r}
+```{r, cache = TRUE}
 myRez = mergeChunksWithTree(myRez)
 myRez$chunkDF$refexpr %>% filter(combinedChunk != "") %>% select(id, name, word, combinedChunk) #Showing only combined chunks and their members
 ```
 
 You may also augment the trackDF with the merged chunks; the combinedChunk column works similarly:
 
-```{r}
+```{r, cache = TRUE}
 myRez = mergedChunksToTrack(myRez, "refexpr")
 ```

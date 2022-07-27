@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   import_save_basics: import_save_basics.html
   overview: overview.html
-last_built: 2022-07-27T05:55Z
+last_built: 2022-07-27T07:58Z
 urls:
   reference: https://rezonators.github.io/rezonateR/reference
   article: https://rezonators.github.io/rezonateR/articles
