@@ -90,7 +90,13 @@ reference:
   - updateLeftJoin
   - updateLowerToHigher
 articles:
-- title: "Introduction"
-  navbar: Intro
+- title: "Overview"
+  desc: An overview of the main capabilities of rezonateR.
+  navbar: Overview
   contents:
   - overview
+- title: "A detailed walkthrough"
+  desc: An detailed walkthrough of useful functions in rezonateR. You can choose to read only sections that interest you, though if you are new to rezonateR, it might help to read through the first two first.
+  navbar: Detailed walkthrough
+  contents:
+  - import_save_basics

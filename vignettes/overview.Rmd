@@ -1,8 +1,8 @@
 ---
-title: "An introduction to rezonateR 0.1.1"
+title: "An overview of rezonateR 0.1.1"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{overview}
+  %\VignetteIndexEntry{An overview of rezonateR 0.1.1}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

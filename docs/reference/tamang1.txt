@@ -313,22 +313,22 @@ word_id	text_id	sentence_id	word_form	word_gloss	sent_audio_start	sent_audio_end
 312	1	ORIGTAMs58	⁴kjam	NA	232.8847	236.6400	« ³ca-sam ¹ŋa-i ⁴kjam, ¹ŋa-i-ca ⁴kjam ²tat-la », ³pi-si	« dans ce cas moi un chemin, moi je tracerai un chemin », dit-il
 313	1	ORIGTAMs58	²tat-la	NA	232.8847	236.6400	« ³ca-sam ¹ŋa-i ⁴kjam, ¹ŋa-i-ca ⁴kjam ²tat-la », ³pi-si	« dans ce cas moi un chemin, moi je tracerai un chemin », dit-il
 314	1	ORIGTAMs58	³pi-si	NA	232.8847	236.6400	« ³ca-sam ¹ŋa-i ⁴kjam, ¹ŋa-i-ca ⁴kjam ²tat-la », ³pi-si	« dans ce cas moi un chemin, moi je tracerai un chemin », dit-il
-315	1	ORIGTAMs59	¹moktan	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
-            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
-316	1	ORIGTAMs59	⁴meme-se	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
-            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
-317	1	ORIGTAMs59	pacar-se	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
-            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
-318	1	ORIGTAMs59	⁴plo:-si	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
-            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
-319	1	ORIGTAMs59	paharapacar-se	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
-            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
-320	1	ORIGTAMs59	⁴plo:-si	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
-            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
-321	1	ORIGTAMs59	²kjui	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
-            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
-322	1	ORIGTAMs59	²tat-cim-ro	NA	236.6400	242.3232	¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
-            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+315	1	ORIGTAMs59	¹moktan	NA	236.6400	242.3232	"¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro"	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+316	1	ORIGTAMs59	⁴meme-se	NA	236.6400	242.3232	"¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro"	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+317	1	ORIGTAMs59	pacar-se	NA	236.6400	242.3232	"¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro"	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+318	1	ORIGTAMs59	⁴plo:-si	NA	236.6400	242.3232	"¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro"	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+319	1	ORIGTAMs59	paharapacar-se	NA	236.6400	242.3232	"¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro"	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+320	1	ORIGTAMs59	⁴plo:-si	NA	236.6400	242.3232	"¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro"	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+321	1	ORIGTAMs59	²kjui	NA	236.6400	242.3232	"¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro"	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
+322	1	ORIGTAMs59	²tat-cim-ro	NA	236.6400	242.3232	"¹moktan ⁴meme-se pacar-se ⁴plo:-si, pahara
+            pacar-se ⁴plo:-si, ²kjui ²tat-cim-ro"	l'ancêtre Moktan, perça la montagne avec sa foudre et en fit sortir de l'eau
 323	1	ORIGTAMs60	³joncan	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
 324	1	ORIGTAMs60	⁴meme-se	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
 325	1	ORIGTAMs60	³joncan	NA	242.3232	248.4648	³joncan ⁴meme-se, ³joncan ⁴meme-ca-se, ⁴mar-la ¹chaŋ-ri ²kjui ²ta:-cim-ro	l'ancêtre Yoncan recueillit l'eau dans une hotte d'or
