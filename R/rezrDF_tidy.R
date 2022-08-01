@@ -283,6 +283,7 @@ rez_add_row = function(df, ..., rezrObj = NULL){
     existingIDs = df[[idCol]]
   }
   if(!(idCol %in% names(newVals))){
+    numNewRows = length(newVals[[1]])
     args[[idCol]] = createRezId(numNewRows, existingIDs)
   } else {
     overlaps = intersect(newVals[[idCol]], existingIDs)

@@ -159,7 +159,7 @@ reload.rezrDF = function(df, rezrObj, fields = ""){
     }
   } else {
     #If there are no updateFuncts, then we can't reload anything.
-    warning("Reloading rezrDF with no update functions. The rezrDF was unchanged.")
+    message("Reloading rezrDF with no update functions. The rezrDF was unchanged.")
   }
   df
 }

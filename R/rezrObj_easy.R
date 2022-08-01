@@ -284,13 +284,16 @@ addRow.rezrObj = function(rezrObj, entity, layer, nodeMapArgs = list(), ...){
     oldNRow = nrow(df)
     rezrObj[[entity %+% "DF"]] = rez_add_row(df, ..., layer = layer)
     rezrObj$nodeMap[[entity]] = rezrObj$nodeMap[[entity]] %>% c(assembleNodeFromDF(rezrObj[[entity %+% "DF"]], (oldNRow + 1):(oldNRow + noNewRows), addInfo = nodeMapArgs))
-    rezrObj[[entity %+% "DF"]] = reload(rezrObj[[entity %+% "DF"]], rezrObj)
+    rezrObj[[entity %+% "DF"]] = suppressMessages(reload(rezrObj[[entity %+% "DF"]], rezrObj))
   } else {
     df = rezrObj[[entity %+% "DF"]][[layer]]
     oldNRow = nrow(df)
+    if(layer %in% colnames(df)){
     rezrObj[[entity %+% "DF"]][[layer]] = rez_add_row(df, ..., layer = layer)
+    } else  rezrObj[[entity %+% "DF"]][[layer]] = rez_add_row(df, ...)
+
     rezrObj$nodeMap[[entity]] = rezrObj$nodeMap[[entity]] %>% c(assembleNodeFromDF(rezrObj[[entity %+% "DF"]][[layer]], (oldNRow + 1):(oldNRow + noNewRows), addInfo = nodeMapArgs))
-    rezrObj[[entity %+% "DF"]][[layer]] = reload(rezrObj[[entity %+% "DF"]][[layer]], rezrObj)
+    rezrObj[[entity %+% "DF"]][[layer]] = suppressMessages(reload(rezrObj[[entity %+% "DF"]][[layer]], rezrObj))
   }
 
   rezrObj

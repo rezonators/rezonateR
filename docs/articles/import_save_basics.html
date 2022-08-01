@@ -46,6 +46,9 @@
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
     <a class="dropdown-item" href="../articles/import_save_basics.html">Importing .rez files, saving rezrObjs, and basic data structure</a>
+    <a class="dropdown-item" href="../articles/time_seq.html">Time and sequence</a>
+    <a class="dropdown-item" href="../articles/edit_easyEdit.html">Editing I: Using EasyEdit</a>
+    <a class="dropdown-item" href="../articles/edit_tidyRez.html">Editing II: Using TidyRez</a>
   </div>
 </li>
       </ul>
@@ -78,12 +81,12 @@
 exactly RezonateR works, how to import data into RezonateR and how to
 understand how the data is then structured internally. If this desribes
 your situation, then this tutorial is for you!</p>
-<p>You may or may not have read the introduction (vignette(“overview”))
-that gives an overview to RezonateR, and it’s fine either way -
-everything overed in that introduction that you’ll need will be repeated
-here, in greater detail. The only exception is if you have not installed
-rezonateR at all - in that case, please do install it using the
-instructions from that tutorial first!</p>
+<p>You may or may not have read the introduction
+<code><a href="../articles/overview.html">vignette("overview")</a></code> that gives an overview to RezonateR,
+and it’s fine either way - everything overed in that introduction that
+you’ll need will be repeated here, in greater detail. The only exception
+is if you have not installed rezonateR at all - in that case, please do
+install it using the instructions from that tutorial first!</p>
 <p>In this tutorial, we will: 1. Meet the .rez file that we need to
 import, along with a brief introduction on how Rezonator’s internal JSON
 format, .rez files, are structured 2. Learn how to import files into
@@ -138,10 +141,10 @@ file after importing it into R, and then store it in the variable
 or a ‘word’ (this may be a morpheme or some other unit depending on the
 language and data you’re working with.). Inside the Rezonator interface,
 tokens are the basic unit that you may interact with. Let’s try the word
-‘midnight’. The word ‘midnight’ that you see on the screen has an ID of
-<code>28A862601A235</code>, and that’s the key we access it from the
-node map by. Let’s go ahead and examine some of the information
-embeddded inside the node:</p>
+<em>midnight</em>. The word <em>midnight</em>’* that you see on the
+screen has an ID of <code>28A862601A235</code>, and that’s the key we
+access it from the node map by. Let’s go ahead and examine some of the
+information embeddded inside the node:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">midnight</span> <span class="op">=</span> <span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"28A862601A235"</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"type: "</span>, <span class="va">midnight</span><span class="op">$</span><span class="va">type</span><span class="op">)</span><span class="op">)</span></span>
@@ -696,7 +699,8 @@ operations without resorting to using
 <h2 id="onwards">Onwards!<a class="anchor" aria-label="anchor" href="#onwards"></a>
 </h2>
 <p>Now that you know your way around .rez files, you can go to the next
-tutorial to see how time is handled in Rezonator.</p>
+tutorial to see how time is handled in Rezonator. If you’re up for
+that,go to <code>vignette("time_seq.Rmd")</code>!</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

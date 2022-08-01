@@ -46,6 +46,9 @@
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
     <a class="dropdown-item" href="../articles/import_save_basics.html">Importing .rez files, saving rezrObjs, and basic data structure</a>
+    <a class="dropdown-item" href="../articles/time_seq.html">Time and sequence</a>
+    <a class="dropdown-item" href="../articles/edit_easyEdit.html">Editing I: Using EasyEdit</a>
+    <a class="dropdown-item" href="../articles/edit_tidyRez.html">Editing II: Using TidyRez</a>
   </div>
 </li>
       </ul>
@@ -330,8 +333,8 @@ updateFunct:</p>
 <span><span class="co">#&gt; function (df, rezrObj) </span></span>
 <span><span class="co">#&gt; updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, </span></span>
 <span><span class="co">#&gt;     field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000001ccd45e4228&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000001ccd45cfe90&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x000001e41041a9f8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x000001e41ad115f0&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -341,8 +344,8 @@ updateFunct:</p>
 <span><span class="co">#&gt; function (df, rezrObj) </span></span>
 <span><span class="co">#&gt; updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, </span></span>
 <span><span class="co">#&gt;     field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000001ccd45e6f58&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000001ccd45e7ab8&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x000001e410b06b78&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x000001e4103a0840&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -352,8 +355,8 @@ updateFunct:</p>
 <span><span class="co">#&gt; function (df, rezrObj) </span></span>
 <span><span class="co">#&gt; updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, </span></span>
 <span><span class="co">#&gt;     field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000001ccd45d9b28&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000001ccd45e68c8&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x000001e418e1f760&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x000001e4117a5758&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -363,8 +366,8 @@ updateFunct:</p>
 <span><span class="co">#&gt; function (df, rezrObj) </span></span>
 <span><span class="co">#&gt; updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, </span></span>
 <span><span class="co">#&gt;     field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000001ccd45d8858&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000001ccd45d9498&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x000001e40fefb988&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x000001e40feed528&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -519,7 +522,7 @@ with an updateFunction that will be attached to the table:</p>
 <span><span class="fu"><a href="../reference/getRezrDFAttr.html">updateFunct</a></span><span class="op">(</span><span class="va">myRez</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"orthoLength"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (df) </span></span>
 <span><span class="co">#&gt; updateMutate(df, field, x)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000001ccd12b1070&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x000001e41a9ed280&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -1007,6 +1010,8 @@ a chunk is a combined chunk, a member of a combined chunk, or
 neither.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myRez</span> <span class="op">=</span> <span class="fu"><a href="../reference/mergeChunksWithTree.html">mergeChunksWithTree</a></span><span class="op">(</span><span class="va">myRez</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The following core and flex fields and not present and will have to be supplied later: layer</span></span>
+<span><span class="co">#&gt; The following core and flex fields and not present and will have to be supplied later: layer</span></span>
 <span><span class="va">myRez</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">combinedChunk</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">name</span>, <span class="va">word</span>, <span class="va">combinedChunk</span><span class="op">)</span> <span class="co">#Showing only combined chunks and their members</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   id            name        word                                         combi…¹</span></span>
@@ -1015,13 +1020,15 @@ neither.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2E2B9BB6462BC Chunk 51    དཔེ་སྐྲུན་ ཞུས་པ་ དེ་                              |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 17842C4087863 Chunk 235   ཕྱི་རྒྱལ་ ནུབ་ཕྱོགས་པ འི་ མི་རིགས་ འདི་འདྲས་             |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> EF4325E7D5A9  Chunk 81    བོད་སྐད་ ནང་ བྲིས་པ འི་ རྒྱལ་རབས་ ཀྱི་ དེབ་            |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 08DiSAf7HXKaC New Chunk 1 ཁོང་ ཚོ་ ནས་ དཔེ་སྐྲུན་ ཞུས་པ་ དེ་                   combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> BYcNryZgSuUlL New Chunk 2 ཕྱི་རྒྱལ་ ནུབ་ཕྱོགས་པ འི་ མི་རིགས་ འདི་འདྲས་ བོད་སྐད་ ནང་… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> gODiAaeI61jy0 New Chunk 1 ཁོང་ ཚོ་ ནས་ དཔེ་སྐྲུན་ ཞུས་པ་ དེ་                   combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> scKNy8YHCkbEJ New Chunk 2 ཕྱི་རྒྱལ་ ནུབ་ཕྱོགས་པ འི་ མི་རིགས་ འདི་འདྲས་ བོད་སྐད་ ནང་… combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 <p>You may also augment the trackDF with the merged chunks; the
 combinedChunk column works similarly:</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">myRez</span> <span class="op">=</span> <span class="fu"><a href="../reference/mergedChunksToTrack.html">mergedChunksToTrack</a></span><span class="op">(</span><span class="va">myRez</span>, <span class="st">"refexpr"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">myRez</span> <span class="op">=</span> <span class="fu"><a href="../reference/mergedChunksToTrack.html">mergedChunksToTrack</a></span><span class="op">(</span><span class="va">myRez</span>, <span class="st">"refexpr"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The following core and flex fields and not present and will have to be supplied later: layer</span></span>
+<span><span class="co">#&gt; The following core and flex fields and not present and will have to be supplied later: layer</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

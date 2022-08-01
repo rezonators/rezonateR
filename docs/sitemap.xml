@@ -4,6 +4,12 @@
     <loc>https://rezonators.github.io/rezonateR/404.html</loc>
   </url>
   <url>
+    <loc>https://rezonators.github.io/rezonateR/articles/edit_easyEdit.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/articles/edit_tidyRez.html</loc>
+  </url>
+  <url>
     <loc>https://rezonators.github.io/rezonateR/articles/import_save_basics.html</loc>
   </url>
   <url>
@@ -11,6 +17,9 @@
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/articles/overview.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/articles/time_seq.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/authors.html</loc>

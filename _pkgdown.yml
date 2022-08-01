@@ -100,3 +100,6 @@ articles:
   navbar: Detailed walkthrough
   contents:
   - import_save_basics
+  - time_seq
+  - edit_easyEdit
+  - edit_tidyRez

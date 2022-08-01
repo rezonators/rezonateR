@@ -1,0 +1,86 @@
+---
+title: "Editing II: Using TidyRez"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Editing II: Using TidyRez}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
+library(rezonateR)
+```
+
+## Getting started
+
+This tutorial is about TidyRez, the subset of functions derived from `dplyr` in Tidyverse. We will use the file saved at the end of `vignette("edit_easyEdit")`. As always, you don't have to have read that tutorial beforehand, though it may be helpful if you are new to rezonateR.
+
+```{r}
+library(rezonateR)
+path = system.file("extdata", "rez007_edit2.Rdata", package = "rezonateR", mustWork = T)
+rez007 = rez_load(path)
+```
+
+Unlike most other tutorials, this one will be very brief, because it assumes that you have knowledge of `dplyr`.
+
+## Why TidyRez?
+
+In general, TidyRez functions are called by adding `rez_` in front of a `dplyr` function name, such a `rez_group_by()` or `rez_mutate()`. You might wonder why you'd want to use TidyRez instead of plain `dplyr`. The main reason is that TidyRez functions allow you to keep and/or update your field access values, `inNodeMap` values, and `updateFunctions`. Using base R or classic `dplyr` functions with `rezrDF`s will result in `reload()` fails (unless you add those attributes back yourself).
+
+To see the power of TidyRez, let's try creating an emancipated `rezrDF` with only a subset of the original columns. Here, we take `trackDF$refexpr`, the table of referential expressions. We then damage one of the fields using a classic `dplyr` function. As you can see here, the emancipated `rezrDF` can still be updated using the `rezrObj`, effectively overriding the damage:
+
+```{r}
+refTable = rez007$trackDF$default %>% rez_select(id, token, chain, name, text, tokenOrderLast)
+print("Before:")
+head(refTable %>% select(id, tokenOrderLast))
+refTable = refTable %>% mutate(tokenSeqLast = 1) #Damage refTable with a classic dplyr function
+print("After:")
+refTable = refTable %>% reload(rez007)
+head(refTable %>% select(id, tokenOrderLast))
+```
+
+A warning is in order: TidyRez only updates *the current table*. If other tables have references to the table you're editing, they will not be updated. You must bear this in mind when using rez_select and rez_rename. No problems will arise if you use these functions on emancipated rezrDFs. However, if you use these functions on rezrDFs within rezrObjs, you should manually update any fields in other rezrDFs that refer to the field you've deleted or added. I plan to add a rename feature to EasyEdit in the near future that will update references from other rezrDFs.
+
+
+## What functions are available?
+A few dplyr functions are completely safe to use in rezonateR, mostly those that focus on selecting rows of a table, such as `dplyr::filter()`, `dplyr::arrange()` or `dplyr::slice()`. Currently implemented TidyRez functions include:
+
+* `rez_add_row()` for adding new entries
+
+* `rez_mutate()` for adding and editing columns
+
+* `rez_rename()` for renaming columns
+
+* `rez_bind_rows()` for combining rezrDFs vertically
+
+* `rez_group_split()` for splitting rezrDFs vertically
+
+* `rez_group_by()` and rez_ungroup() for grouping
+
+* `rez_select()` for selecting certain columns inside a rezrDF
+
+* `rez_left_join()` for left joins
+
+Potential future additions include `rez_bind_cols()` and `rez_outer_join()`; suggestions for others are welcome if you have a use for them. The functions `rez_dfop()` and `rez_validate_fieldchange()` are used behind the scenes by TidyRez functions; if you want to create your own, please look through the documentation for these functions (and sent in a pull request when you're done with it!).
+
+## `rez_left_join()`: A special case
+
+Most of the TidyRez functions' syntax deviate from dplyr only minimally in ways that you can read about in the documentation. However, rez_left_join is worth a quick mention. In addition to a fieldaccess field and a rezrObj field, which are self-explanatory, there is a fkey field and a df2Address field. fkey is the name of the field in the first data.frame that corresponds to IDs of the second data.frame. df2Address is a string that tells rez_left_join how to find the source rezrDF next time. If the source rezrDF doesn't belong to a layer, e.g. tokenDF, just type that. If the source rezrDF belongs to a layer, put a '/' between the table and the layer, e.g. 'trackDF/refexpr'.
+
+TODO: Example
+
+## Onwards!
+Using easyEdit or tidyRez, it is not hard to use some rules to add some automatic annotations, and then correct them by hand in a spreadsheet program. The next tutorial, `vignette("edit_external")`, will cover exactly this use case. We will export data to a `.csv`, edit it outside R, and then import it back.
+
+As always, saving is a virtue!
+
+```{r}
+savePath = "rez007.Rdata"
+rez_save(rez007, savePath)
+```
