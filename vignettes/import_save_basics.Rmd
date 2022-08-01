@@ -22,7 +22,7 @@ library(rezonateR)
 
 Hello! If you're reading this tutorial, you're probably wondering how exactly RezonateR works, how to import data into RezonateR and how to understand how the data is then structured internally. If this desribes your situation, then this tutorial is for you!
 
-You may or may not have read the introduction (vignette("overview")) that gives an overview to RezonateR, and it's fine either way - everything overed in that introduction that you'll need will be repeated here, in greater detail. The only exception is if you have not installed rezonateR at all - in that case, please do install it using the instructions from that tutorial first!
+You may or may not have read the introduction `vignette("overview")` that gives an overview to RezonateR, and it's fine either way - everything overed in that introduction that you'll need will be repeated here, in greater detail. The only exception is if you have not installed rezonateR at all - in that case, please do install it using the instructions from that tutorial first!
 
 In this tutorial, we will:
 1. Meet the .rez file that we need to import, along with a brief introduction on how Rezonator's internal JSON format, .rez files, are structured
@@ -54,7 +54,7 @@ rez007_json = rjson::fromJSON(file = path)
 rez007_nm = rez007_json[["ROOT"]][[1]][["nodeMap"]]
 ```
 
-Let's zero on to a single node. The simplest type of node is a token, or a 'word' (this may be a morpheme or some other unit depending on the language and data you're working with.). Inside the Rezonator interface, tokens are the basic unit that you may interact with. Let's try the word 'midnight'. The word 'midnight' that you see on the screen has an ID of `28A862601A235`, and that's the key we access it from the node map by. Let's go ahead and examine some of the information embeddded inside the node:
+Let's zero on to a single node. The simplest type of node is a token, or a 'word' (this may be a morpheme or some other unit depending on the language and data you're working with.). Inside the Rezonator interface, tokens are the basic unit that you may interact with. Let's try the word *midnight*. The word *midnight*'* that you see on the screen has an ID of `28A862601A235`, and that's the key we access it from the node map by. Let's go ahead and examine some of the information embeddded inside the node:
 
 ```{r}
 midnight = rez007_nm[["28A862601A235"]]
@@ -326,4 +326,4 @@ In general, though, it is preferable to minimise this type of extraction. The co
 
 ## Onwards!
 
-Now that you know your way around .rez files, you can go to the next tutorial to see how time is handled in Rezonator.
+Now that you know your way around .rez files, you can go to the next tutorial to see how time is handled in Rezonator. If you're up for that,go to `vignette("time_seq.Rmd")`!
