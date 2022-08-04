@@ -82,7 +82,7 @@
 </h2>
 <p>This tutorial is about TidyRez, the subset of functions derived from
 <code>dplyr</code> in Tidyverse. We will use the file saved at the end
-of <code>vignette("edit_easyRez")</code>. As always, you don’t have to
+of <code><a href="../articles/edit_easyEdit.html">vignette("edit_easyEdit")</a></code>. As always, you don’t have to
 have read that tutorial beforehand, though it may be helpful if you are
 new to rezonateR.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -106,6 +106,15 @@ values, and <code>updateFunctions</code>. Using base R or classic
 <code>dplyr</code> functions with <code>rezrDF</code>s will result in
 <code><a href="../reference/reload.html">reload()</a></code> fails (unless you add those attributes back
 yourself).</p>
+<p>Thus, TidyRez functions that add or change columns, such as
+<code><a href="../reference/rez_mutate.html">rez_mutate()</a></code> or <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code>. will give you
+the option to change the field access value of that field through the
+<code>fieldaccess</code> field. <code>updateFunction</code>s are
+automatically added if you choose <code>auto</code> or
+<code>foreign</code>. Other TidyRez functions do not differ
+substantially from classic <code>dplyr</code>; theu only allow you to
+keep your field access labels, <code>updateFunction</code>s, and
+<code>inNodeMap</code> values.</p>
 <p>To see the power of TidyRez, let’s try creating an emancipated
 <code>rezrDF</code> with only a subset of the original columns. Here, we
 take <code>trackDF$refexpr</code>, the table of referential expressions.
@@ -144,12 +153,17 @@ the damage:</p>
 <p>A warning is in order: TidyRez only updates <em>the current
 table</em>. If other tables have references to the table you’re editing,
 they will not be updated. You must bear this in mind when using
-rez_select and rez_rename. No problems will arise if you use these
-functions on emancipated rezrDFs. However, if you use these functions on
-rezrDFs within rezrObjs, you should manually update any fields in other
-rezrDFs that refer to the field you’ve deleted or added. I plan to add a
-rename feature to EasyEdit in the near future that will update
-references from other rezrDFs.</p>
+<code><a href="../reference/rez_select.html">rez_select()</a></code> and <code><a href="../reference/rez_rename.html">rez_rename()</a></code>. No problems
+will arise if you use these functions on emancipated rezrDFs. However,
+if you use these functions on rezrDFs within <code>rezrObj</code>s, you
+should manually update any fields in other <code>rezrDF</code>s that
+refer to the field you’ve deleted or added. I plan to add a rename
+feature to EasyEdit in the near future that will update references from
+other rezrDFs.</p>
+<p>Another implication is that if you use <code><a href="../reference/rez_mutate.html">rez_mutate()</a></code> and
+create an auto field, any references to other tables will not work.
+Thus, the EasyEdit function <code><a href="../reference/acFieldForeign.html">addFieldForeign()</a></code> should be
+used instead.</p>
 </div>
 <div class="section level2">
 <h2 id="what-functions-are-available">What functions are available?<a class="anchor" aria-label="anchor" href="#what-functions-are-available"></a>
@@ -185,17 +199,52 @@ you’re done with it!).</p>
 <h2 id="rez_left_join-a-special-case">
 <code>rez_left_join()</code>: A special case<a class="anchor" aria-label="anchor" href="#rez_left_join-a-special-case"></a>
 </h2>
-<p>Most of the TidyRez functions’ syntax deviate from dplyr only
-minimally in ways that you can read about in the documentation. However,
-rez_left_join is worth a quick mention. In addition to a fieldaccess
-field and a rezrObj field, which are self-explanatory, there is a fkey
-field and a df2Address field. fkey is the name of the field in the first
-data.frame that corresponds to IDs of the second data.frame. df2Address
-is a string that tells rez_left_join how to find the source rezrDF next
-time. If the source rezrDF doesn’t belong to a layer, e.g. tokenDF, just
-type that. If the source rezrDF belongs to a layer, put a ‘/’ between
-the table and the layer, e.g. ‘trackDF/refexpr’.</p>
-<p>TODO: Example</p>
+<p>Most of the TidyRez functions’ syntax deviate from <code>dplyr</code>
+only minimally in ways that you can read about in the documentation.
+However, <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code> is a notable exception.</p>
+<p>Firstly, by default, if no suffix is specified, the suffixes are
+c(““,”_lower”). That is, if you are joining two data.frames, both with a
+column called ‘name’, then the left data.frame’s column will still be
+called ‘name’ in the new data.frame but the right data.frame’s column
+will get called ‘name_lower’.</p>
+<p>In addition to a <code>fieldaccess</code> field, as we’ve mentioned
+before, you will also need: * <code>rezrObj</code> which is
+self-explanatory * <code>fkey</code> - the name of the field in the
+first rezrDF that corresponds to IDs of the second rezrDF. If this is
+not specified, it will be guessed from the <code>by</code> argument of
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>. * An <code>df2Address</code> field a
+string that tells <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code> how to find the source
+rezrDF from the rezrObj next time.</p>
+<p>Addresses are mostly used by rezonateR under the hood, but in the
+case of <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code>, you do need to be able to use it.
+If the source rezrDF doesn’t belong to a layer, e.g. tokenDF, then the
+DF name is the address. If the source rezrDF belongs to a layer, put a
+‘/’ between the table and the layer, e.g. ‘trackDF/refexpr’. Don’t
+forget that default layers are also layers!</p>
+<p>As an example, we’ll take <code>averageWordLength</code> in the
+<code>unitDF</code>, which we added in
+<code><a href="../articles/edit_easyEdit.html">vignette("edit_easyEdit")</a></code>, and add it back to
+<code>tokenDF</code>, so that when we look at each word, we know the
+average length of the word in its units. Here’s how:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_left_join.html">rez_left_join</a></span><span class="op">(</span></span>
+<span>  y <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">unitDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_select.html">rez_select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">averageWordLength</span><span class="op">)</span>,</span>
+<span>  by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"unit"</span> <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span>,</span>
+<span>  fieldaccess <span class="op">=</span> <span class="st">"foreign"</span>,</span>
+<span>  df2Address <span class="op">=</span> <span class="st">"unitDF"</span>,</span>
+<span>  fkey <span class="op">=</span> <span class="st">"unit"</span>,</span>
+<span>  rezrObj <span class="op">=</span> <span class="va">rez007</span>,</span>
+<span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">averageWordLength</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">head</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
+<span><span class="co">#&gt;   id            text  averageWordLength</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 31F282855E95E (...)              3   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 363C1D373B2F7 God                3   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 3628E4BD4CC05 ,                  3   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 37EFCBECFD691 I                  2.82</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 12D67756890C1 said               2.82</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71D59  I                  2.82</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="onwards">Onwards!<a class="anchor" aria-label="anchor" href="#onwards"></a>
@@ -207,7 +256,7 @@ spreadsheet program. The next tutorial,
 case. We will export data to a <code>.csv</code>, edit it outside R, and
 then import it back.</p>
 <p>As always, saving is a virtue!</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">savePath</span> <span class="op">=</span> <span class="st">"rez007.Rdata"</span></span>
 <span><span class="fu"><a href="../reference/saveload.html">rez_save</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="va">savePath</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Saving rezrObj ...</span></span></code></pre></div>

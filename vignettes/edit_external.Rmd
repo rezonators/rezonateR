@@ -1,0 +1,76 @@
+---
+title: "Editing III: Using external tools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Editing III: Using external tools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
+library(rezonateR)
+```
+
+## Getting started
+
+This tutorial is about editing rezonateR data externally. In many situations, you can use the automatic editing tools that we have discussed in the last two tutorials (`vignette("edit_easyEdit")` and `vignette("edit_tidyRez")`) to prepare an automatic annotation, and then edit it using external tools (such as Microsoft Excel). RezonateR has a number of tools to make this a less painful and error-prone experience.
+
+```{r}
+library(rezonateR)
+path = system.file("extdata", "rez007_edit3.Rdata", package = "rezonateR", mustWork = T)
+rez007 = rez_load(path)
+```
+
+
+## The workflow
+In general, the workflow when working externally is to first finish at least some annotations in Rezonator. You then import it to rezonateR and, typically, use the editing functions from the previous tutorials to add some annotations automatically.
+
+You will then export a `.csv` file from rezonateR. Because rezrDFs often contain a lot of information that will be a distraction when working with a `.csv`, you can export a lighter version of it as a `.csv` file. After working with the `.csv` file, you will import it into Rezonator, then combine the information in the newly imported CSV back to the original rezrDF.
+
+Let's say we want to annotate the person of the referential expressions inside `trackDF$default`.:
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>% rez_mutate()
+```
+
+
+
+## Updating rezonateR using external information
+
+
+Before we export this as a CSV for annotation, I would like to add a column inside the rezrDF that gives us the word of the entire unit. (Since this document currently does not have multi-unit track entries, it will suffice to use unitLast or unitFirst). It will be useful to be able to see this column while making manual annotations:
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>%
+  rez_left_join(rez007$unitDF %>% rez_select(unitSeq, word), by = c(unitSeqLast = "unitSeq"), suffix = c("", "_unit"), df2key = "unitSeq", df2Address = "unitDF", fkey = "unitSeqLast") %>%
+  rez_rename(unitLastWord = word_unit)
+```
+
+The next step is to write the CSV file. rez_write_csv allows us to do this easily. The third argument of rez_write_csv is a vector of field names that we want to export. It is advisable to keep the number of exported fields small to make the spreadsheet more manageable and require less scrolling:
+
+```{r}
+rez_write_csv(rez007$trackDF$default, "refexpr.csv", c("id", "name", "unitLastWord", "unitSeqLast", "word", "docTokenSeqLast", "entityType", "roleType", "person"))
+```
+
+After editing the CSV in a spreadsheet program, let's import it back using rez_read_csv. (I've renamed the edited CSV - in general, I recommend doing this to avoid accidentally overwriting your edited file by running the export code again.) The origDF argument tells rezonateR to look in the original rezrDF that produced the CSV, and determine the data types accordingly:
+
+```{r}
+changeDF = rez_read_csv("refexpr_edited.csv", origDF = rez007$trackDF$default)
+```
+
+Finally, the updateFromDF function allows us to update the original rezrDF using information from the new rezrDF. There are many fancy option you can choose from, such as deciding whether to delete rows, add rows, add columns, etc. We will only use the most vanilla options, and update the 'person' column:
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>% updateFromDF(changeDF, changeCols = 'person')
+head(rez007$trackDF$default %>% select(id, word, person))
+```
+
+## What if I want to go back and change my Rezonator annotations?
+
+## Onwards!

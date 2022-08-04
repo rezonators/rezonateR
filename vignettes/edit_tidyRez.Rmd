@@ -27,11 +27,13 @@ path = system.file("extdata", "rez007_edit2.Rdata", package = "rezonateR", mustW
 rez007 = rez_load(path)
 ```
 
-Unlike most other tutorials, this one will be very brief, because it assumes that you have knowledge of `dplyr`.
+Unlike most other tutorials, this one will be very brief, because it assumes that you have knowledge of `dplyr`, the R package containing functions like `dplyr::mutate()` and `dplyr::select()`. If you are not familiar with `dplyr` beforehand, I suggest using a tutorial like [this](https://jhudatascience.org/tidyversecourse/wrangle-data.html) first, and then coming back to this page.
 
 ## Why TidyRez?
 
 In general, TidyRez functions are called by adding `rez_` in front of a `dplyr` function name, such a `rez_group_by()` or `rez_mutate()`. You might wonder why you'd want to use TidyRez instead of plain `dplyr`. The main reason is that TidyRez functions allow you to keep and/or update your field access values, `inNodeMap` values, and `updateFunctions`. Using base R or classic `dplyr` functions with `rezrDF`s will result in `reload()` fails (unless you add those attributes back yourself).
+
+Thus, TidyRez functions that add or change columns, such as `rez_mutate()` or `rez_left_join()`. will give you the option to change the field access value of that field through the `fieldaccess` field. `updateFunction`s are automatically added if you choose `auto` or `foreign`. Other TidyRez functions do not differ substantially from classic `dplyr`; theu only allow you to keep your field access labels, `updateFunction`s, and `inNodeMap` values.
 
 To see the power of TidyRez, let's try creating an emancipated `rezrDF` with only a subset of the original columns. Here, we take `trackDF$refexpr`, the table of referential expressions. We then damage one of the fields using a classic `dplyr` function. As you can see here, the emancipated `rezrDF` can still be updated using the `rezrObj`, effectively overriding the damage:
 
@@ -45,7 +47,9 @@ refTable = refTable %>% reload(rez007)
 head(refTable %>% select(id, tokenOrderLast))
 ```
 
-A warning is in order: TidyRez only updates *the current table*. If other tables have references to the table you're editing, they will not be updated. You must bear this in mind when using rez_select and rez_rename. No problems will arise if you use these functions on emancipated rezrDFs. However, if you use these functions on rezrDFs within rezrObjs, you should manually update any fields in other rezrDFs that refer to the field you've deleted or added. I plan to add a rename feature to EasyEdit in the near future that will update references from other rezrDFs.
+A warning is in order: TidyRez only updates *the current table*. If other tables have references to the table you're editing, they will not be updated. You must bear this in mind when using `rez_select()` and `rez_rename()`. No problems will arise if you use these functions on emancipated rezrDFs. However, if you use these functions on rezrDFs within `rezrObj`s, you should manually update any fields in other `rezrDF`s that refer to the field you've deleted or added. I plan to add a rename feature to EasyEdit in the near future that will update references from other rezrDFs.
+
+Another implication is that if you use `rez_mutate()` and create an auto field, any references to other tables will not work. Thus, the EasyEdit function `addFieldForeign()` should be used instead. 
 
 
 ## What functions are available?
@@ -71,9 +75,31 @@ Potential future additions include `rez_bind_cols()` and `rez_outer_join()`; sug
 
 ## `rez_left_join()`: A special case
 
-Most of the TidyRez functions' syntax deviate from dplyr only minimally in ways that you can read about in the documentation. However, rez_left_join is worth a quick mention. In addition to a fieldaccess field and a rezrObj field, which are self-explanatory, there is a fkey field and a df2Address field. fkey is the name of the field in the first data.frame that corresponds to IDs of the second data.frame. df2Address is a string that tells rez_left_join how to find the source rezrDF next time. If the source rezrDF doesn't belong to a layer, e.g. tokenDF, just type that. If the source rezrDF belongs to a layer, put a '/' between the table and the layer, e.g. 'trackDF/refexpr'.
+Most of the TidyRez functions' syntax deviate from `dplyr` only minimally in ways that you can read about in the documentation. However, `rez_left_join()` is a notable exception.
 
-TODO: Example
+Firstly, by default, if no suffix is specified, the suffixes are c("", "_lower"). That is, if you are joining two data.frames, both with a column called 'name', then the left data.frame's column will still be called 'name' in the new data.frame but the right data.frame's column will get called 'name_lower'.
+
+In addition to a `fieldaccess` field, as we've mentioned before, you will also need:
+*  `rezrObj` which is self-explanatory
+* `fkey` - the name of the field in the first rezrDF that corresponds to IDs of the second rezrDF. If this is not specified, it will be guessed from the `by` argument of `dplyr::left_join()`.
+* An `df2Address` field a string that tells `rez_left_join()` how to find the source rezrDF from the rezrObj next time.
+
+Addresses are mostly used by rezonateR under the hood, but in the case of `rez_left_join()`, you do need to be able to use it. If the source rezrDF doesn't belong to a layer, e.g. tokenDF, then the DF name is the address. If the source rezrDF belongs to a layer, put a '/' between the table and the layer, e.g. 'trackDF/refexpr'. Don't forget that default layers are also layers!
+
+As an example, we'll take `averageWordLength` in the `unitDF`, which we added in `vignette("edit_easyEdit")`, and add it back to `tokenDF`, so that when we look at each word, we know the average length of the word in its units. Here's how:
+
+```{r}
+rez007$tokenDF = rez007$tokenDF %>% rez_left_join(
+  y = rez007$unitDF %>% rez_select(id, averageWordLength),
+  by = c("unit" = "id"),
+  fieldaccess = "foreign",
+  df2Address = "unitDF",
+  fkey = "unit",
+  rezrObj = rez007,
+)
+rez007$tokenDF %>% select(id, text, averageWordLength) %>% head
+```
+
 
 ## Onwards!
 Using easyEdit or tidyRez, it is not hard to use some rules to add some automatic annotations, and then correct them by hand in a spreadsheet program. The next tutorial, `vignette("edit_external")`, will cover exactly this use case. We will export data to a `.csv`, edit it outside R, and then import it back.
