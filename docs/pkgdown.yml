@@ -1,13 +1,14 @@
-pandoc: '2.18'
-pkgdown: 2.0.6
+pandoc: 2.17.1.1
+pkgdown: 2.0.5
 pkgdown_sha: ~
 articles:
   edit_easyEdit: edit_easyEdit.html
+  edit_external: edit_external.html
   edit_tidyRez: edit_tidyRez.html
   import_save_basics: import_save_basics.html
   overview: overview.html
   time_seq: time_seq.html
-last_built: 2022-08-01T16:23Z
+last_built: 2022-08-04T09:56Z
 urls:
   reference: https://rezonators.github.io/rezonateR/reference
   article: https://rezonators.github.io/rezonateR/articles
