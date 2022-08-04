@@ -1,0 +1,124 @@
+---
+title: "Editing III: Using external tools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Editing III: Using external tools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
+library(rezonateR)
+```
+
+## Getting started
+
+This tutorial discusses trees in `rezonateR`. In the first tutorial `vignette("import_save_basics")`, we took a quick glimpse at trees when discussing the node map, but now it's time to dive a bit deeper! And if you haven't read the previous vignettes, as always, that's fine because each tutorial is self-contained. I won't assume you've read the bit about trees in `vignette("import_save_basics")`.
+
+
+We will be using the same Santa Barbara Corpus as before:
+
+```{r}
+library(rezonateR)
+path = system.file("extdata", "rez007_tree.Rdata", package = "rezonateR", mustWork = T)
+rez007 = rez_load(path)
+```
+
+The file contains predicate-argument structures for the first fifth of the text or so. In practice, trees are often the most time-consuming data structure to process if you have annotated them throughout the whole text. Each tree is a predicate-argument structure with a tree as the root and all its arguments as leaves. In cases of IUs with more than one verb, multiple trees are created, one for each verb.
+
+## The structure of trees: A deeper look
+There are three tree-related entities in Rezonator (and `rezonateR`):
+* `tree`: Stores entire trees.
+* `treeEntry`: The items that are linked together in trees. If you have not combined any tokens inside Rezonator, then the `treeEntry`s are correspond 1:1 to the tokens. This is the case if you are doing UD annotation, for example. If you have combined tokens, then those combined tokens will be entries.
+* `treeLink`: The links between trees. Unlike regular links (such as those in trails or resonances) `treeLink`s *can*, and often are, annotated.
+
+This section will examine each of these in detail.
+
+Let's first take a quick look at our `treeDF`:
+
+```{r}
+head(rez007$treeDF)
+```
+
+The main column of interest that you might not understand is `maxLevel`. You can actually see `maxLevel` by looking at Rezonator. The root of a tree has level `0`, whereas the next one down has a level of `1`. Because of our policy of marking only one predicate-arguments structure per tree, the `maxLevel` always comes out as 1.
+
+Now onto our `treeEntry`s:
+
+```{r}
+head(rez007$treeEntryDF)
+```
+
+* `order`: Gives the order of the entry inside the tree, *regardless* of whether an entry has been used.
+* `level`: Gives the level of the entry inside the tree. Unused entries get the level `-1`. If you want to get all the *used* entries of a particular tree, don't forget to filter these away!
+* `sourceLink`: The link that links the current entry to its 
+* `parent`: The entry that the `sourceLink` points to, i.e. the parent of the entry. Roots and unused parents do not have this.
+
+The column `Relation` (and `subtype`) at the end are automatically generated from `treeLinkDF`:
+
+```{r}
+head(rez007$treeLinkDF)
+```
+
+Here, `source` is the parent entry, `goal` is the child entry, `type` is always `treeLink`, `subtype` is always `tree`. `Relation` is an annotation, manually annotated in Rezonator. Subjects are annotated as `Subj` and others are left blank.
+
+## Linking things up: `getAllTreeCorrespondences()`
+
+The function `getAllTreeCorrespondences()` adds a column `treeEntry` to other `rezrDF`s like `chunkDF` and `trackDF` to indicate corresponding `treeEntry`s. The parameter `entity` determines which entity you're adding the information to. As always, if you set `entity` to a 'higher' entity like `track`, `treeEntry` is added to 'lower' entities like tokens and chunks too. When there are multiple tree entries corresponding to something, the first tree will take precedence. Let's do this to `track`:
+
+
+```{r, cache = TRUE}
+rez007 = getAllTreeCorrespondences(rez007, entity = "track")
+head(rez007$tokenDF %>% select(id, text, treeEntry))
+head(rez007$chunkDF$refexpr %>% select(id, text, treeEntry))
+head(rez007$trackDF$default %>% select(id, text, treeEntry))
+```
+
+Once this step is done, you can use the results to link up information from the trees to other tables. In anticpiation of the coming tutorial, let's merge the `Relation` field's information into `trackDF`:
+
+```{r}
+rez007 = rez007 %>% addFieldForeign("track", "default", "treeEntry", "default", "treeEntry", "gramRelation", "Relation", fieldaccess = "foreign")
+head(rez007$track$default %>% select(id, chain, text, treeEntry, gramRelation))
+```
+
+## Merging chunks with tree entries
+
+The last topic to cover is merging chunks, most useful for creating muti-line chunks. There are several steps to merging chunks:
+
+1. Create constituent chunks that span the entire merged chunk
+
+2. Create a tree leaf that contains all tokens in the merged chunk, and put the leaf in a tree.
+
+3. Use the mergeChunksWithTree command in rezonateR to merge them.
+
+mergeChunksWithTree is very easy to use. After you call this command, the merged chunks will be added to the bottom of the correponding chunk rezrDF.  Chunk tags are taken from the first constituent chunk of each merger by default; see the manual for setting custom conditions. There will in addition be a column called combinedChunk that tells you whether a chunk is a combined chunk, a member of a combined chunk, or neither.
+
+
+```{r}
+myRez = mergeChunksWithTree(myRez)
+myRez$chunkDF$refexpr %>% filter(combinedChunk != "") %>% select(id, name, word, combinedChunk) #Showing only combined chunks and their members
+
+```
+
+You may also augment the trackDF with the merged chunks; the combinedChunk column works similarly:
+
+```{r, cache = TRUE}
+myRez = mergedChunksToTrack(myRez, "refexpr")
+```
+
+## Speaking of tracks ...
+
+
+As usual, let's not forget:
+
+```{r}
+savePath = "rez007.Rdata"
+rez_save(rez007, savePath)
+```
+
+
