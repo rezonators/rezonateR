@@ -107,15 +107,21 @@ one verb, multiple trees are created, one for each verb.</p>
 <h2 id="the-structure-of-trees-a-deeper-look">The structure of trees: A deeper look<a class="anchor" aria-label="anchor" href="#the-structure-of-trees-a-deeper-look"></a>
 </h2>
 <p>There are three tree-related entities in Rezonator (and
-<code>rezonateR</code>): * <code>tree</code>: Stores entire trees. *
-<code>treeEntry</code>: The items that are linked together in trees. If
-you have not combined any tokens inside Rezonator, then the
+<code>rezonateR</code>):</p>
+<ul>
+<li>
+<code>tree</code>: Stores entire trees.</li>
+<li>
+<code>treeEntry</code>: The items that are linked together in trees.
+If you have not combined any tokens inside Rezonator, then the
 <code>treeEntry</code>s are correspond 1:1 to the tokens. This is the
 case if you are doing UD annotation, for example. If you have combined
-tokens, then those combined tokens will be entries. *
+tokens, then those combined tokens will be entries.</li>
+<li>
 <code>treeLink</code>: The links between trees. Unlike regular links
 (such as those in trails or resonances) <code>treeLink</code>s
-<em>can</em>, and often are, annotated.</p>
+<em>can</em>, and often are, annotated.</li>
+</ul>
 <p>This section will examine each of these in detail.</p>
 <p>Let’s first take a quick look at our <code>treeDF</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -324,14 +330,16 @@ addition be a column called <code>combinedChunk</code> that tells you
 whether a chunk is a combined chunk, a member of a combined chunk, or
 neither.</p>
 <p>There are three possible types of values in
-<code>combinedChunk</code>: * If a chunk is a member of a multi-line
-chunk and supplies tag information for the entire chunk, it has the
-<code>combinedChunk</code> value
-<code>|infomember-(ID of combined chunk)</code>. * If a chunk is a
-member of a multi-line chunk and does not supply tag information for the
-entire chunk, it has the <code>combinedChunk</code> value
-<code>|member-(ID of combined chunk)</code>. * The combined chunk is
-simply marked <code>combined</code>.</p>
+<code>combinedChunk</code>:</p>
+<ul>
+<li>If a chunk is a member of a multi-line chunk and supplies tag
+information for the entire chunk, it has the <code>combinedChunk</code>
+value <code>|infomember-(ID of combined chunk)</code>.</li>
+<li>If a chunk is a member of a multi-line chunk and does not supply tag
+information for the entire chunk, it has the <code>combinedChunk</code>
+value <code>|member-(ID of combined chunk)</code>.</li>
+<li>The combined chunk is simply marked <code>combined</code>.</li>
+</ul>
 <p>If you didn’t set <code>addToTrack = T</code>, the function
 <code>mergeChunksToTrack</code> has the same effect:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">

@@ -34,6 +34,7 @@ The file contains predicate-argument structures for the first fifth of the text 
 
 ## The structure of trees: A deeper look
 There are three tree-related entities in Rezonator (and `rezonateR`):
+
 * `tree`: Stores entire trees.
 * `treeEntry`: The items that are linked together in trees. If you have not combined any tokens inside Rezonator, then the `treeEntry`s are correspond 1:1 to the tokens. This is the case if you are doing UD annotation, for example. If you have combined tokens, then those combined tokens will be entries.
 * `treeLink`: The links between trees. Unlike regular links (such as those in trails or resonances) `treeLink`s *can*, and often are, annotated.
@@ -116,6 +117,8 @@ rez007$chunkDF$refexpr %>% filter(combinedChunk != "") %>% select(id, name, text
 After you call this command, the merged chunks will be added to the *bottom* of the correponding chunk `rezrDF`.  Chunk tags are taken from the first constituent chunk of each merger by default; see the manual for setting custom conditions. There will in addition be a column called `combinedChunk` that tells you whether a chunk is a combined chunk, a member of a combined chunk, or neither.
 
 There are three possible types of values in `combinedChunk`:
+
+
 * If a chunk is a member of a multi-line chunk and supplies tag information for the entire chunk, it has the `combinedChunk` value `|infomember-(ID of combined chunk)`.
 * If a chunk is a member of a multi-line chunk and does not supply tag information for the entire chunk, it has the `combinedChunk` value `|member-(ID of combined chunk)`.
 * The combined chunk is simply marked `combined`.
