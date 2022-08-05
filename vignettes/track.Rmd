@@ -1,0 +1,44 @@
+---
+title: "Tracking down coreference phenomena"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tracking down coreference phenomena}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
+library(rezonateR)
+```
+
+## Getting started
+
+This tutorial discusses trees in `rezonateR`. In the first tutorial `vignette("import_save_basics")`, we took a quick glimpse at trees when discussing the node map, but now it's time to dive a bit deeper! And if you haven't read the previous vignettes, as always, that's fine because each tutorial is self-contained. I won't assume you've read the bit about trees in `vignette("import_save_basics")`.
+
+
+We will be using the same Santa Barbara Corpus as before:
+
+```{r}
+library(rezonateR)
+path = system.file("extdata", "rez007_track.Rdata", package = "rezonateR", mustWork = T)
+rez007 = rez_load(path)
+```
+
+The file contains predicate-argument structures for the first fifth of the text or so. In practice, trees are often the most time-consuming data structure to process if you have annotated them throughout the whole text. Each tree is a predicate-argument structure with a tree as the root and all its arguments as leaves. In cases of IUs with more than one verb, multiple trees are created, one for each verb.
+
+## Speaking of tracks ...
+
+As usual, let's not forget:
+
+```{r}
+savePath = "rez007.Rdata"
+rez_save(rez007, savePath)
+```
+
+

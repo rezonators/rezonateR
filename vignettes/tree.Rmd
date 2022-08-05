@@ -1,8 +1,8 @@
 ---
-title: "Editing III: Using external tools"
+title: "Dealing with Trees"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Editing III: Using external tools}
+  %\VignetteIndexEntry{Dealing with Trees}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -88,31 +88,46 @@ head(rez007$track$default %>% select(id, chain, text, treeEntry, gramRelation))
 
 ## Merging chunks with tree entries
 
-The last topic to cover is merging chunks, most useful for creating muti-line chunks. There are several steps to merging chunks:
+The current Rezonator interface only supports chunks within an intonation unit. However, there are often reasons to have chunks that span *across* intonation units. For example, people often start a new intonation unit within a noun phrase after a filler like *uh...*. Or we might want to treat an entire subordinate clause and its dependents as a single chunk.
 
-1. Create constituent chunks that span the entire merged chunk
+There are several steps to merging chunks:
 
-2. Create a tree leaf that contains all tokens in the merged chunk, and put the leaf in a tree.
-
+1. Create constituent chunks, one per each unit that the chunk spansso that, taken together, the chunks span the desired multiline chunk
+2. Create a treeEntry that contains all tokens in the merged chunk, and put the leaf in a tree.
 3. Use the mergeChunksWithTree command in rezonateR to merge them.
 
-mergeChunksWithTree is very easy to use. After you call this command, the merged chunks will be added to the bottom of the correponding chunk rezrDF.  Chunk tags are taken from the first constituent chunk of each merger by default; see the manual for setting custom conditions. There will in addition be a column called combinedChunk that tells you whether a chunk is a combined chunk, a member of a combined chunk, or neither.
+Steps 1 and 2 were already done in Rezonator. Take the following example of a subordinate clause and its dependent clauses:
 
+![An image of the Rezonator interface with the four lines 'when Ron gets home from work , (...) I wanna <0> spend time with Ron, because Ron, (...) usually does n't get home till nine or ten' each entered into a chunk in the same trail, and combined into a single treeEntry.](img/tree-chunkmerge.PNG){width=100%}
+
+The function `mergeChunksWithTree()` helps you create the desired multiline chunks. It has a few arguments, only the first of which is obligatory;
+
+* `rezrObj`: The `rezrObj` to be changed.
+* `treeEntryDF`: The `treeEntry` `rezrDF`, by default `treeEntry$default`.
+* `addToTrack`: Do you want to add the chunks to the `trackDF` too? No by default.
+* `selectCond`; A condition for selecting which chunk is going to provide the values of the tags of the entire chunk. If left blank, the first chunk will be chosen by default.
 
 ```{r}
-myRez = mergeChunksWithTree(myRez)
-myRez$chunkDF$refexpr %>% filter(combinedChunk != "") %>% select(id, name, word, combinedChunk) #Showing only combined chunks and their members
-
+rez007 = mergeChunksWithTree(rez007)
+#Relevant rows only
+rez007$chunkDF$refexpr %>% filter(combinedChunk != "") %>% select(id, name, text, combinedChunk) #Showing only combined chunks and their members
 ```
 
-You may also augment the trackDF with the merged chunks; the combinedChunk column works similarly:
+After you call this command, the merged chunks will be added to the *bottom* of the correponding chunk `rezrDF`.  Chunk tags are taken from the first constituent chunk of each merger by default; see the manual for setting custom conditions. There will in addition be a column called `combinedChunk` that tells you whether a chunk is a combined chunk, a member of a combined chunk, or neither.
+
+There are three possible types of values in `combinedChunk`:
+* If a chunk is a member of a multi-line chunk and supplies tag information for the entire chunk, it has the `combinedChunk` value `|infomember-(ID of combined chunk)`.
+* If a chunk is a member of a multi-line chunk and does not supply tag information for the entire chunk, it has the `combinedChunk` value `|member-(ID of combined chunk)`.
+* The combined chunk is simply marked `combined`.
+
+
+If you didn't set `addToTrack = T`, the function `mergeChunksToTrack` has the same effect:
 
 ```{r, cache = TRUE}
-myRez = mergedChunksToTrack(myRez, "refexpr")
+rez007 = mergedChunksToTrack(rez007, "default")
 ```
 
 ## Speaking of tracks ...
-
 
 As usual, let's not forget:
 
