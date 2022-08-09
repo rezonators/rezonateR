@@ -4,7 +4,13 @@
 \alias{importRez}
 \title{Import a Rez file}
 \usage{
-importRez(paths, docnames = "", concatFields, layerRegex, separator = " ")
+importRez(
+  paths,
+  docnames = "",
+  concatFields,
+  layerRegex = list(),
+  separator = " "
+)
 }
 \arguments{
 \item{paths}{A character vector of paths to the files to be imported. For Windows users, please use / instead of \.}

@@ -25,6 +25,12 @@
     <loc>https://rezonators.github.io/rezonateR/articles/time_seq.html</loc>
   </url>
   <url>
+    <loc>https://rezonators.github.io/rezonateR/articles/track.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/articles/tree.html</loc>
+  </url>
+  <url>
     <loc>https://rezonators.github.io/rezonateR/authors.html</loc>
   </url>
   <url>
@@ -44,6 +50,9 @@
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/acFieldLocal.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/addFrameMatrix.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/addIsWordField.html</loc>
@@ -88,6 +97,9 @@
     <loc>https://rezonators.github.io/rezonateR/reference/deps.html</loc>
   </url>
   <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/findContainingChunk.html</loc>
+  </url>
+  <url>
     <loc>https://rezonators.github.io/rezonateR/reference/getAddresses.html</loc>
   </url>
   <url>
@@ -98,6 +110,12 @@
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/getSeqBounds.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/getSetFrame.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/getTurnFromAnnos.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/grapes-plus-grapes.html</loc>
@@ -131,6 +149,12 @@
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/new_rezrObj.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/obscureUpper.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/reducedFrameMatrix.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/reload.html</loc>
@@ -176,6 +200,12 @@
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/trackPrevContext.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/undupe.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/updateFrameMatrixFromDF.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/updateFromDF.html</loc>

@@ -8,7 +8,8 @@ countMatchingCompetitors(
   matchCol,
   window = Inf,
   tokenOrder = NULL,
-  chain = NULL
+  chain = NULL,
+  between = T
 )
 }
 \arguments{
@@ -17,9 +18,6 @@ countMatchingCompetitors(
 \item{tokenOrder}{The vector of sequence values values where the mentions appeared. Common choices are docTokenSeqFirst, docTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running \link{addIsWordField} on a rezrObj. By default it's docTokenSeqLast.}
 
 \item{chain}{The chain that each mention belongs to.}
-}
-\value{
-
 }
 \description{
 Count the number of competitors intervening between the previous mention and the current mention

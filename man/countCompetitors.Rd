@@ -2,9 +2,15 @@
 % Please edit documentation in R/track.R
 \name{countCompetitors}
 \alias{countCompetitors}
-\title{Count the number of competitors intervening between the previous mention and the current mention}
+\title{Count the number of competing referents to the current mention}
 \usage{
-countCompetitors(cond = NULL, window = Inf, tokenOrder = NULL, chain = NULL)
+countCompetitors(
+  cond = NULL,
+  window = Inf,
+  tokenOrder = NULL,
+  chain = NULL,
+  between = T
+)
 }
 \arguments{
 \item{cond}{The condition under which something counts as a competitor. Leave blank if anything goes.}
@@ -13,9 +19,6 @@ countCompetitors(cond = NULL, window = Inf, tokenOrder = NULL, chain = NULL)
 
 \item{chain}{The chain that each mention belongs to.}
 }
-\value{
-
-}
 \description{
-Count the number of competitors intervening between the previous mention and the current mention
+This may either be counted within a window of units from the current one, or all referents competing with the current one may be counted, or a mix of both conditions. By default, we count referents intervening between the current and previous mention. Despite its name, tokenOrder can be set as unitSeqLast or similar.
 }

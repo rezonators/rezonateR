@@ -8,8 +8,8 @@
 <meta name="description" content="rezonateR">
 <title>Tracking down coreference phenomena • rezonateR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tracking down coreference phenomena">
 <meta property="og:description" content="rezonateR">
@@ -83,34 +83,759 @@
 <div class="section level2">
 <h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
-<p>This tutorial discusses trees in <code>rezonateR</code>. In the first
-tutorial <code><a href="../articles/import_save_basics.html">vignette("import_save_basics")</a></code>, we took a quick
-glimpse at trees when discussing the node map, but now it’s time to dive
-a bit deeper! And if you haven’t read the previous vignettes, as always,
-that’s fine because each tutorial is self-contained. I won’t assume
-you’ve read the bit about trees in
-<code><a href="../articles/import_save_basics.html">vignette("import_save_basics")</a></code>.</p>
+<p>This tutorial discusses the handling of trails and tracks in
+Rezonator using the EasyTrack series of functions. In more general
+linguistic terms, a trail is a coreference chain, and a track is a
+mention or referential expression within a coreference chain.</p>
 <p>We will be using the same Santa Barbara Corpus as before:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rezonators.github.io/rezonateR/">rezonateR</a></span><span class="op">)</span></span>
 <span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"rez007_track.Rdata"</span>, package <span class="op">=</span> <span class="st">"rezonateR"</span>, mustWork <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/saveload.html">rez_load</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading rezrObj ...</span></span></code></pre></div>
-<p>The file contains predicate-argument structures for the first fifth
-of the text or so. In practice, trees are often the most time-consuming
-data structure to process if you have annotated them throughout the
-whole text. Each tree is a predicate-argument structure with a tree as
-the root and all its arguments as leaves. In cases of IUs with more than
-one verb, multiple trees are created, one for each verb.</p>
+<p>The file contains coreference annotations for the first fifth of the
+text or so, and the <code>.Rdata</code> file imported here has been
+processed to include information on trees in
+<code>vignettes("trees")</code>. This tutorial will make use of this
+feature.</p>
 </div>
 <div class="section level2">
-<h2 id="speaking-of-tracks">Speaking of tracks …<a class="anchor" aria-label="anchor" href="#speaking-of-tracks"></a>
+<h2 id="getting-information-from-previous-mentions">Getting information from previous mentions<a class="anchor" aria-label="anchor" href="#getting-information-from-previous-mentions"></a>
 </h2>
-<p>As usual, let’s not forget:</p>
+<div class="section level3">
+<h3 id="anaphoric-and-cataphoric-distance">Anaphoric and cataphoric distance<a class="anchor" aria-label="anchor" href="#anaphoric-and-cataphoric-distance"></a>
+</h3>
+<p>In studying coreference, we often want to know the difference from
+the current mention to the previoue mention. <code>EasyTrack</code>
+takes care of this using a family of functions</p>
+<ul>
+<li>
+<code><a href="../reference/trackPrevContext.html">lastMentionUnit()</a></code> and <code><a href="../reference/trackPrevContext.html">nextMentionUnit()</a></code>:
+Give you the unit ID of the previous and next mention,
+repsectively.</li>
+<li>
+<code><a href="../reference/trackPrevContext.html">lastMentionToken()</a></code> and <code><a href="../reference/trackPrevContext.html">nextMentionToken()</a></code>:
+Give you the token ID of the previous and next mention,
+repsectively.</li>
+<li>
+<code><a href="../reference/trackPrevContext.html">unitsToLastMention()</a></code> and
+<code><a href="../reference/trackPrevContext.html">unitsToNextMention()</a></code>: Give you the number of units from the
+current mention to the last mention and to the next mention,
+respectively.</li>
+<li>
+<code><a href="../reference/trackPrevContext.html">tokensToLastMention()</a></code> and
+<code><a href="../reference/trackPrevContext.html">tokensToNextMention()</a></code>: Give you the number of tokens from
+the current mention to the last mention and to the next mention,
+respectively.</li>
+</ul>
+<p>The first four functions are rarely used in practice, so we will
+focus on the last four, which builds on the first four</p>
+<p>Let’s first find out how many units we are from the previous mention
+of something using <code><a href="../reference/trackPrevContext.html">unitsToLastMention()</a></code>. This is equivalent
+to the <code>gapUnit</code> column that already exists as automatically
+generated by Rezonator. There are two optional arguments:</p>
+<ul>
+<li>
+<code>unitSeq</code>: The unit order values where the mentions
+appeared. Here, we use the <code>unitSeqLast</code> column, which is the
+default value, though <code>unitSeqFirst</code> is also possible.</li>
+<li>
+<code>chain</code>: The column that gives the chain that each track
+belongs to. Typically there is no reason to touch this parameter; just
+leave it blank, and the column <code>chain</code> will be used.</li>
+</ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>unitsToLastMention <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">unitsToLastMention</a></span><span class="op">(</span><span class="va">unitSeqLast</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">gapUnits</span>, <span class="va">unitsToLastMention</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 3</span></span></span>
+<span><span class="co">#&gt;    id            gapUnits unitsToLastMention</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 N/A                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06  0                        <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 7E5BB65072C   N/A                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1F74D2B049FA4 N/A                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2485C4F740FC0 1                         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1BF2260B4AB78 1                         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 6B37B5A80F2A  1                         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 259C2C2979B6C N/A                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1D1F2B7054E32 N/A                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1FA3806680C84 N/A                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4B32FD84BA10  N/A                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 3098AB24A0FA6 2                         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> 2D5885FCA1E15 N/A                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 1C311FD331AC4 2                         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 2E01153F693D3 2                         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 28CFE0272CE1C 2                         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> 24229602BDC4C 2                         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> 1A598AE39592B N/A                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> 38C628AB4DA4D N/A                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> 36B8918BB6E64 8                         8</span></span></code></pre></div>
+<p>Now let’s count the <em>tokens</em> from the last mention using the
+<code><a href="../reference/trackPrevContext.html">tokensToLastMention()</a></code> function instead.. This one has a
+couple of complications. There are more parameters to fill this
+time:</p>
+<ul>
+<li>
+<code>tokenOrder</code>: Similar to <code>unitSeq</code>, but for
+counting tokens. Common choices are <code>docTokenSeqFirst</code>,
+<code>docTokenSeqLast</code>, <code>wordTokenSeqFirst</code> and
+<code>wordTokenseqLast</code> (see <code><a href="../articles/time_seq.html">vignette("time_seq")</a></code> for
+the last two). By default it’s <code>docTokenSeqLast</code>.</li>
+<li>
+<code>chain</code>: As above.</li>
+<li>
+<code>zeroProtocol</code>: How the positions of zero are determined.
+By default, it is <code>"literal"</code>, i.e. the position at which the
+zero was inserted. If <code>unitFinal</code>, zeroes will be treated as
+being located at the end of the unit. If <code>unitFirst</code>, they
+will be treated as the first word.</li>
+<li>
+<code>zeroCond</code>: A condition for determining whether a token
+is zero. Normally, this is <code>(word column) == "&lt;0&gt;"</code> if
+the default Rezonator zero is used, though others may prefer <zero> or
+similar.</zero>
+</li>
+<li>
+<code>unitSeq</code>: As above. Required when using the
+<code>unitFinal</code> and <code>unitFirst</code> protocols.</li>
+<li>
+<code>unitDF</code>: the <code>rezrDF</code> containing the
+unit.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span>  <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>wordsToLastMention <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">tokensToLastMention</a></span><span class="op">(</span></span>
+<span>    <span class="va">docWordSeqLast</span>, <span class="co">#What seq to use</span></span>
+<span>    zeroProtocol <span class="op">=</span> <span class="st">"unitFinal"</span>, <span class="co">#How to treat zeroes</span></span>
+<span>    zeroCond <span class="op">=</span> <span class="op">(</span><span class="va">text</span> <span class="op">==</span> <span class="st">"&lt;0&gt;"</span><span class="op">)</span>,</span>
+<span>    unitDF <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">unitDF</span><span class="op">)</span><span class="op">)</span> <span class="co">#Additional argument for unitFinal protocol</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">wordsToLastMention</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 2</span></span></span>
+<span><span class="co">#&gt;    id            wordsToLastMention</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65                 <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06                  <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 7E5BB65072C                   <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1F74D2B049FA4                 <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2485C4F740FC0                  0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1BF2260B4AB78                  0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 6B37B5A80F2A                   0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 259C2C2979B6C                 <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1D1F2B7054E32                 <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1FA3806680C84                 <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4B32FD84BA10                  <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 3098AB24A0FA6                  0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> 2D5885FCA1E15                 <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 1C311FD331AC4                  0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 2E01153F693D3                  0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 28CFE0272CE1C                  0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> 24229602BDC4C                  0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> 1A598AE39592B                 <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> 38C628AB4DA4D                 <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> 36B8918BB6E64                 13</span></span></code></pre></div>
+<p>Note that <code>unitsToNextMention</code> and
+<code>tokensToNextMention</code> work in the same way.</p>
+</div>
+<div class="section level3">
+<h3 id="extracting-features-from-previous-mentions">Extracting features from previous mentions<a class="anchor" aria-label="anchor" href="#extracting-features-from-previous-mentions"></a>
+</h3>
+<p>In addition to getting the location of a previous mention, we might
+also want to extract a property of it:</p>
+<ul>
+<li>
+<code><a href="../reference/trackPrevContext.html">getPrevMentionField()</a></code> and
+<code><a href="../reference/trackPrevContext.html">getNextMentionField()</a></code>: Extract a feature of the previous or
+next mention.</li>
+</ul>
+<p>Let’s try to extract the subject status (using the
+<code>Relation</code> field annotated on <code>treeLink</code>s).
+Firstly, we have to supplement this <code>Relation</code> field to
+<code>rez007$trackDF$default</code>, then replace the <code>NA</code>
+entries with <code>"NonSubj"</code> so that they missing values are
+treated as meaningful, and not just missing (<code>fieldaccess</code> is
+changed to <code>"flex"</code> to avoid future reloads messing this
+up):</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/acFieldForeign.html">addFieldForeign</a></span><span class="op">(</span>sourceDF <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">treeEntryDF</span><span class="op">$</span><span class="va">default</span>, targetForeignKeyName <span class="op">=</span> <span class="st">"treeEntry"</span>, targetFieldName <span class="op">=</span> <span class="st">"Relation"</span>, sourceFieldName <span class="op">=</span> <span class="st">"Relation"</span>, fieldaccess <span class="op">=</span> <span class="st">"foreign"</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>Relation <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/coalesce.html" class="external-link">coalesce</a></span><span class="op">(</span><span class="va">Relation</span>, <span class="st">"NonSubj"</span><span class="op">)</span>, fieldaccess <span class="op">=</span> <span class="st">"flex"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Note that you are changing a field Relationfrom auto to flex This field will no longer reload.</span></span></code></pre></div>
+<p>The first and obligatory argument of
+<code><a href="../reference/trackPrevContext.html">getPrevMentionField()</a></code> is the name of the column, or
+feature, you’re extracting. The other arguments, <code>tokenOrder</code>
+and <code>chain</code>, work the same way as before.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span>fieldName <span class="op">=</span> <span class="st">"prevRelation"</span>,</span>
+<span>                expression <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">getPrevMentionField</a></span><span class="op">(</span><span class="va">Relation</span><span class="op">)</span>,</span>
+<span>                fieldaccess <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">name</span>, <span class="va">Relation</span>, <span class="va">prevRelation</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
+<span><span class="co">#&gt;   id            text              name            Relation prevRelation</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1096E4AFFFE65 I                 Mary            NonSubj  <span style="color: #BB0000;">NA</span>          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 92F20ACA5F06  I                 Mary            Subj     NonSubj     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 7E5BB65072C   was n't gon na do Trail 87        NonSubj  <span style="color: #BB0000;">NA</span>          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1F74D2B049FA4 this              Staying up late NonSubj  <span style="color: #BB0000;">NA</span>          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2485C4F740FC0 &lt;0&gt;               Mary            Subj     Subj        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1BF2260B4AB78 Stay up late      Staying up late NonSubj  NonSubj</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="tallying-preceding-and-following-mentions">Tallying preceding and following mentions<a class="anchor" aria-label="anchor" href="#tallying-preceding-and-following-mentions"></a>
+</h2>
+<p>Apart from looking only at the previous or next unit, We can also
+count how many mentions of something there were within a window of units
+before or after a mention, optionally with additional conditions. Here
+are the relevant functions:</p>
+<ul>
+<li>
+<code><a href="../reference/trackPrevContext.html">countPrevMentions()</a></code> and
+<code><a href="../reference/trackPrevContext.html">countNextMentions()</a></code>: Get the number of previous or
+following units within a specified window of units.</li>
+<li>
+<code><a href="../reference/trackPrevContext.html">countPrevMentionsIf()</a></code> and
+<code><a href="../reference/trackPrevContext.html">countNextMentionsIf()</a></code>: Get the number of previous or
+following units within a specified window of units given that they
+satisfy certain conditions (which do not depend on the current
+mention).</li>
+<li>
+<code><a href="../reference/trackPrevContext.html">countPrevMentionsMatch()</a></code> and
+<code><a href="../reference/trackPrevContext.html">countNextMentionsMatch()</a></code>: : Get the number of previous or
+following units within a specified window of units given that they have
+the same value as the current mention for some field.</li>
+</ul>
+<p>These functions have the following fields, in order:</p>
+<ul>
+<li>
+<code>windowSize</code>: How many IUs before / after the current one
+do you want to count?</li>
+<li>
+<code>cond</code> (<code>countPrevMentionsIf</code> only): The
+condition that fields must satisfy to count</li>
+<li>
+<code>field</code>(<code>countPrevMentionsMatch</code> only): The
+field whose value is to be matched.</li>
+<li>
+<code>unitSeq</code>: As before.</li>
+<li>
+<code>chain</code>: As before.</li>
+</ul>
+<p>Let’s try all three functions. We will count the number of previous
+mentions in the previous 20 units, the previous subject mentions, and
+the previous mentions whose subject/nonsubject value agrees with the
+present mention:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>noPrevMentionsIn20 <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">countPrevMentions</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>,</span>
+<span>             noPrevSubjMentionsIn20 <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">countPrevMentionsIf</a></span><span class="op">(</span><span class="fl">20</span>, <span class="va">Relation</span> <span class="op">==</span> <span class="st">"Subject"</span><span class="op">)</span>,</span>
+<span>             noPrevSubjMatchMentionsIn20 <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">countPrevMentionsMatch</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"Relation"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">noPrevMentionsIn20</span>, <span class="va">noPrevSubjMentionsIn20</span>, <span class="va">noPrevSubjMatchMentionsIn20</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 4</span></span></span>
+<span><span class="co">#&gt;    id            noPrevMentionsIn20 noPrevSubjMentionsIn20 noPrevSubjMatchMent…¹</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65                  0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06                   0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 7E5BB65072C                    0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1F74D2B049FA4                  0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2485C4F740FC0                  2                      0                     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1BF2260B4AB78                  1                      0                     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 6B37B5A80F2A                   2                      0                     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 259C2C2979B6C                  0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1D1F2B7054E32                  0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1FA3806680C84                  0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4B32FD84BA10                   0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 3098AB24A0FA6                  3                      0                     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> 2D5885FCA1E15                  0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 1C311FD331AC4                  1                      0                     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 2E01153F693D3                  4                      0                     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 28CFE0272CE1C                  2                      0                     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> 24229602BDC4C                  3                      0                     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> 1A598AE39592B                  0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> 38C628AB4DA4D                  0                      0                     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> 36B8918BB6E64                  5                      0                     5</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​noPrevSubjMatchMentionsIn20</span></span></span></code></pre></div>
+<p>If you don’t want a window restriction, you can set the window to
+<code>Inf</code>. Here’s an example where we extract the number of
+future zero mentions, regardless of how far it is from the current
+one:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>noComingZeroes <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">countNextMentionsIf</a></span><span class="op">(</span><span class="cn">Inf</span>, <span class="va">text</span> <span class="op">==</span> <span class="st">"&lt;0&gt;"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">noComingZeroes</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 2</span></span></span>
+<span><span class="co">#&gt;    id            noComingZeroes</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65              1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06               1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 7E5BB65072C                0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1F74D2B049FA4              1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2485C4F740FC0              0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1BF2260B4AB78              1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 6B37B5A80F2A               0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 259C2C2979B6C              0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1D1F2B7054E32              0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1FA3806680C84              0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4B32FD84BA10               7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 3098AB24A0FA6              0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> 2D5885FCA1E15              0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 1C311FD331AC4              7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 2E01153F693D3              0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 28CFE0272CE1C              7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> 24229602BDC4C              7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> 1A598AE39592B              0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> 38C628AB4DA4D              0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> 36B8918BB6E64              0</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="counting-competitors">Counting competitors<a class="anchor" aria-label="anchor" href="#counting-competitors"></a>
+</h2>
+<p>We may also want to count competing mentions, that is, recent
+mentions not coreferential to the current mention. The presence of
+competitors usually suggests that a referential form is more likely to
+be explicit. <code><a href="../reference/countCompetitors.html">countCompetitors()</a></code> tallies the number of
+competitors recently. The following parameters are present, all of which
+are :</p>
+<ul>
+<li>
+<code>cond</code>: The condition under which something counts as a
+competitor (other than being non-coreferential with the present
+mention). By default, anything goes.</li>
+<li>
+<code>window</code>: How many far back (in tokens) do you want to
+look? By default, there is no limit.</li>
+<li>
+<code>tokenOrder</code>: As before.</li>
+<li>
+<code>chain</code>: As before.</li>
+<li>
+<code>between</code>: Do you count only competitors between the
+current mention and the previous mention in the same trail, or do you
+also count mentions from before the previous mention?</li>
+</ul>
+<p>The function <code><a href="../reference/countMatchingCompetitors.html">countMatchingCompetitors()</a></code> is similar, but
+instead of <code>col</code>, there is a field <code>matchCol</code>,
+where you should put the name of a field in which competitors should
+match the current mention in order to be mentioned:</p>
+<p>Here is one example. <code>noCompetitors</code> uses a window of 40
+tokens, and may look beyond the previous mention, whereas
+<code>noMatchingCompetitors</code> is similar, but only looks between
+the current and previous mention, and only counts mentions with matching
+<code>Relation</code> values:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>noCompetitors <span class="op">=</span> <span class="fu"><a href="../reference/countCompetitors.html">countCompetitors</a></span><span class="op">(</span>window <span class="op">=</span> <span class="fl">40</span>, between <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>,</span>
+<span>             noMatchingCompetitors <span class="op">=</span> <span class="fu"><a href="../reference/countMatchingCompetitors.html">countMatchingCompetitors</a></span><span class="op">(</span><span class="va">Relation</span>, window <span class="op">=</span> <span class="fl">40</span>, between <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">noCompetitors</span>, <span class="va">noMatchingCompetitors</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 4</span></span></span>
+<span><span class="co">#&gt;    id            text                                     noCompetitors noMatc…¹</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 I                                                    0        0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06  I                                                    0        0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 7E5BB65072C   was n't gon na do                                    2        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1F74D2B049FA4 this                                                 3        2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2485C4F740FC0 &lt;0&gt;                                                  2        0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1BF2260B4AB78 Stay up late                                         4        2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 6B37B5A80F2A  &lt;0&gt;                                                  4        2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 259C2C2979B6C the purpose of getting up in the morning             7        4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1D1F2B7054E32 getting up in the morning                            7        4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1FA3806680C84 the morning                                          7        4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4B32FD84BA10  I                                                   10        3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 3098AB24A0FA6 it                                                   8        3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> 2D5885FCA1E15 a hard habit to break                               10        6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 1C311FD331AC4 I                                                   10        3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 2E01153F693D3 It                                                   7        3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 28CFE0272CE1C I                                                    7        3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> 24229602BDC4C I                                                    3        2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> 1A598AE39592B midnight                                             6        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> 38C628AB4DA4D What                                                 3        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> 36B8918BB6E64 I                                                    3        1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​noMatchingCompetitors</span></span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="adding-verb-information-to-the-track-table-and-vice-versa">Adding verb information to the track table, and vice versa<a class="anchor" aria-label="anchor" href="#adding-verb-information-to-the-track-table-and-vice-versa"></a>
+</h2>
+<p>We often want to connect information about verbs t o their arguments.
+We may either put verb information in a track table, or put track
+information in a verb table. The former approach can be taken when
+investigating issues like coreference, and the latter for issues like
+argument structure.</p>
+<p>If we want to add verb information to the track table, we can do this
+in two steps:</p>
+<ol style="list-style-type: decimal">
+<li>Add a <code>treeParent</code> column to <code>trackDF$refexpr</code>
+that takes the value of the <code>parent</code> column of
+<code>treeEntryDF</code>.</li>
+<li>Using the <code>treeParent</code> column and, find thw corresponding
+verb in the verb table <code>chunkDF$verb</code> through the
+<code>treeEntry</code> column of <code>chunkDF$verb</code>.</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="va">rez007</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/acFieldForeign.html">addFieldForeign</a></span><span class="op">(</span><span class="st">"track"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"treeParent"</span>, <span class="st">"parent"</span>, fieldaccess <span class="op">=</span> <span class="st">"foreign"</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/rez_left_join.html">rez_left_join</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">verb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">treeEntry</span><span class="op">)</span>,</span>
+<span>                by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>treeParent <span class="op">=</span> <span class="st">"treeEntry"</span><span class="op">)</span>,</span>
+<span>                suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"_verb"</span><span class="op">)</span>,</span>
+<span>                df2Address <span class="op">=</span> <span class="st">"chunkDF/verb"</span>,</span>
+<span>                fkey <span class="op">=</span> <span class="st">"treeParent"</span>,</span>
+<span>                df2key <span class="op">=</span> <span class="st">"treeEntry"</span>,</span>
+<span>                rezrObj <span class="op">=</span> <span class="va">rez007</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>verbID <span class="op">=</span> <span class="va">id_verb</span>, verbText <span class="op">=</span> <span class="va">text_verb</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">treeParent</span>, <span class="va">verbID</span>, <span class="va">verbText</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 4</span></span></span>
+<span><span class="co">#&gt;    id            treeParent    verbID        verbText         </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B ABe614xvgQ7XT said             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06  35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 7E5BB65072C   <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1F74D2B049FA4 35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2485C4F740FC0 27760709F2C9B 15B9BB5D5086C Stay             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1BF2260B4AB78 <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 6B37B5A80F2A  37FF92CF72A49 1A14BB68EDAC9 defeats          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 259C2C2979B6C 37FF92CF72A49 1A14BB68EDAC9 defeats          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1D1F2B7054E32 <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1FA3806680C84 <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4B32FD84BA10  1CC3629361ED5 2CCD5F5A950BE know             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 3098AB24A0FA6 1CAE658BC6B04 1F1135429F347 's               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> 2D5885FCA1E15 1CAE658BC6B04 1F1135429F347 's               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 1C311FD331AC4 3342A614FCFB  30F18BABDB83C do n't           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 2E01153F693D3 BCC81F077D99  94188DEA38BB  is               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 28CFE0272CE1C 6B9C62B7793B  13A37EC5064A2 do n't stay      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> 24229602BDC4C 23BEEC722C8A0 29C877785FC4B 'm               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> 1A598AE39592B <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> 38C628AB4DA4D EC3E7F082CF3  1981C9A8D5DD8 do               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> 36B8918BB6E64 EC3E7F082CF3  1981C9A8D5DD8 do</span></span></code></pre></div>
+<p>Now with the verbID in place, we can do the reverse process of
+putting argument information in the verb table too. The reverse process
+is similar, but a little more dangerous because you could potentially
+create duplicate rows in <code>chunkDF$verb</code> if you are not
+careful! Let’s say we want to add information about the subject to
+<code>chunkDF$verb</code> - say, the number of the subject. You would
+first have to make sure that each verb only has one subject! If you have
+made a lot of annotations, mistakes are likely to happen, so make sure
+to check first. In this code, we extract the verb IDs of each subject,
+and make sure that the verb IDs are unique:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">verbsBySubject</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Relation</span> <span class="op">==</span> <span class="st">"Subj"</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">verbID</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">verbID</span><span class="op">)</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">verbsBySubject</span><span class="op">)</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">verbsBySubject</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Error found!"</span><span class="op">)</span> <span class="kw">else</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"You're good!"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "You're good!"</span></span></code></pre></div>
+<p>Now we can safely move this information to the verb table:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">verb</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">verb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/rez_left_join.html">rez_left_join</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">verbID</span><span class="op">)</span>,</span>
+<span>                by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"verbID"</span><span class="op">)</span>,</span>
+<span>                suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"_subj"</span><span class="op">)</span>,</span>
+<span>                df2Address <span class="op">=</span> <span class="st">"trackDF/default"</span>,</span>
+<span>                fkey <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>                df2key <span class="op">=</span> <span class="st">"verbID"</span>,</span>
+<span>                rezrObj <span class="op">=</span> <span class="va">rez007</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>subjID <span class="op">=</span> <span class="va">id_subj</span>, subjText <span class="op">=</span> <span class="va">text_subj</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">verb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">subjID</span>, <span class="va">subjText</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 163 × 4</span></span></span>
+<span><span class="co">#&gt;    id            text                  subjID        subjText                   </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 210FB26A315A  said                  <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 744AD104FE64  was n't gon na do     92F20ACA5F06  I                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 744AD104FE64  was n't gon na do     1F74D2B049FA4 this                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 15B9BB5D5086C Stay                  2485C4F740FC0 &lt;0&gt;                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 1A14BB68EDAC9 defeats               6B37B5A80F2A  &lt;0&gt;                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1A14BB68EDAC9 defeats               259C2C2979B6C the purpose of getting up …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2CCD5F5A950BE know                  4B32FD84BA10  I                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1F1135429F347 's                    3098AB24A0FA6 it                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1F1135429F347 's                    2D5885FCA1E15 a hard habit to break      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2F857247FD9D5 a hard habit to break <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>                         </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 153 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="bridging">Bridging<a class="anchor" aria-label="anchor" href="#bridging"></a>
+</h2>
+<p>Natively, Rezonator does not yet support bridging annotation.
+<code>rezonateR</code> handles bridging a bit unusually, since it is
+difficult to do direct bridging annotation without an annotation
+interface like Rezonator’s.</p>
+<p>The first step in doing bridging annotation is to create a
+<code>frameMatrix</code>, a data frame which is used to enter framing
+relationships between chains (for example, <em>the car’s engine</em> has
+a part-whole relationship with <em>the car</em>). But before doing that,
+we must ensure that there are no chains with repeat names. We use the
+function <code><a href="../reference/undupe.html">undupeLayers()</a></code>, which has three arguments: the
+<code>rezrObj</code>, the layer you want to undupe, and the field/column
+you want to undupe. This will add numbers next to duplicated chain
+names. Then we can call <code><a href="../reference/addFrameMatrix.html">addFrameMatrix()</a></code> on the
+<code>rezrObj</code>. The following code does these steps, then shows
+the first 10 rows and 12 columns of <code>rez007</code> (the first two
+columns give the IDs and names of the chains):</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/undupe.html">undupeLayers</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"trail"</span>, <span class="st">"name"</span><span class="op">)</span></span>
+<span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/addFrameMatrix.html">addFrameMatrix</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/getSetFrame.html">frameMatrix</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 12</span></span></span>
+<span><span class="co">#&gt;    id      name  the w…¹ right…² The t…³ ànyth…⁴ the t…⁵ Trail…⁶ our p…⁷ All t…⁸</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2053E9… the … <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2DFABF… righ… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 13B30F… The … <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 21E91E… ànyt… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 14CE0A… the … <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2B6707… Trai… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 4D1295… our … <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2A0D42… All … <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 976E7D… hypo… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> C0687A… Tim'… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 2 more variables: `hypothetical Tim complaint` &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   `Tim's first reaction` &lt;chr&gt;, and abbreviated variable names</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ¹​`the way they were feeling`, ²​`right now`, ³​`The two couples`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁴​`ànything positive about Tim's uncomfortable situation that he could do`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁵​`the thing that really scares Alice`, ⁶​`Trail 87`, ⁷​`our parents`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁸​`All this other shit (other than talking to Ben)`</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span></code></pre></div>
+<p>The second step is to export the <code>frameMatrix</code> and
+populate it with actual annotations. Although it does not apply to our
+cases, in many cases the function <code>reduceFrameMatrix()</code> will
+be useful for removing rows and columns that do not actually participate
+in framing relations, or divide them into subparts that don’t have
+framing relationships with each other, so that we end up with a cleaner
+CSV to annotate.</p>
+<p>We use the function <code><a href="../reference/obscureUpper.html">obscureUpper()</a></code> to obscure the upper
+triangular matrix of ‘repeat’ entries so that we don’t duplicate our
+annotation efforts: if we’ve already annotated that ‘the car’s engine’
+and ‘the car’ have a part-whole relationship in the lower triangular
+matrix, we don’t need to annotate that ‘the car’ and ‘the car’s engine’
+have a whole-part relationship! When entering relationships, use the
+format ‘(role of the row entity)-(role of the column entity)’. For
+example, if ‘the car’s engine’ is the row and ‘the car’ is the column,
+type <code>part-whole</code>, not <code>whole-part</code>.</p>
+<p>For this text, we will mainly be annotating individual-group
+relationships.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rw.html">rez_write_csv</a></span><span class="op">(</span><span class="fu"><a href="../reference/obscureUpper.html">obscureUpper</a></span><span class="op">(</span><span class="fu"><a href="../reference/getSetFrame.html">frameMatrix</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span><span class="op">)</span>, <span class="st">"rez007_frame.csv"</span><span class="op">)</span></span>
+<span><span class="va">newFrame</span> <span class="op">=</span> <span class="fu"><a href="../reference/rw.html">rez_read_csv</a></span><span class="op">(</span><span class="st">"rez007_frame_edited.csv"</span>, origDF <span class="op">=</span> <span class="fu"><a href="../reference/getSetFrame.html">frameMatrix</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">newFrame</span><span class="op">[</span><span class="fl">10</span><span class="op">:</span><span class="fl">20</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">12</span><span class="op">:</span><span class="fl">22</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 13</span></span></span>
+<span><span class="co">#&gt;    id    name  Tim's…¹ what …² imper…³ a har…⁴ nine …⁵ self …⁶ Tim   Mary  Ron  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> C068… Tim'… /       /       /       /       /       /       /     /     /    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 1AE4… what… <span style="color: #BB0000;">NA</span>      /       /       /       /       /       /     /     /    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 318B… impe… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      /       /       /       /       /     /     /    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2DAC… a ha… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      /       /       /       /     /     /    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 30AF… nine… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      /       /       /     /     /    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1685… self… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      /       /     /     /    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 5F7A… Tim   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      /     /     /    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 278D… Mary  <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>    /     /    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 29D3… Ron   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    /    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 309A… shit… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 34F8… Tim … <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      grou… <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 2 more variables: `shit (nothing)` &lt;chr&gt;, `Tim and Mandy` &lt;chr&gt;, and</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   abbreviated variable names ¹​`Tim's first reaction`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​`what they don't realize`, ³​`impersonal you 3 (trained by hard times)`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁴​`a hard habit to break`, ⁵​`nine o'clock`, ⁶​`self assertiveness`</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span></code></pre></div>
+<p>Rather than <code><a href="../reference/updateFromDF.html">updateFromDF()</a></code>, we use
+<code><a href="../reference/updateFrameMatrixFromDF.html">updateFrameMatrixFromDF()</a></code> to update the
+<code>frameMatrix</code>. This function will ‘flip’ the relationships
+for the upper triangular matrix. For example, if in the lower triangular
+matrix you annotated ‘the car’s engine’ as having a part-whole
+relationship with ‘the car’, then ‘whole-part’ will show up in the upper
+triangular matrix for the row ‘car’ and the column ‘the car’s
+engine’.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getSetFrame.html">frameMatrix</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../reference/updateFrameMatrixFromDF.html">updateFrameMatrixFromDF</a></span><span class="op">(</span><span class="fu"><a href="../reference/getSetFrame.html">frameMatrix</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span>, <span class="va">newFrame</span><span class="op">)</span></span></code></pre></div>
+<ul>
+<li>
+<code><a href="../reference/bridging.html">lastBridgeUnit()</a></code>: Get the location (in unit) of the
+previous unit with a bridge to this unit.</li>
+<li>
+<code><a href="../reference/bridging.html">lastBridgeToken()</a></code>: Get the location (in tokens) of the
+bridging expression to this unit.</li>
+<li>
+<code><a href="../reference/bridging.html">unitsToLastBridge()</a></code>: Get the number of units between
+the closest unit with a bridge to the current unit, and the current
+unit.</li>
+<li>
+<code><a href="../reference/bridging.html">tokensToLastBridge()</a></code>: Get the number of tokens between
+the bridging expression and this unit.</li>
+<li>
+<code><a href="../reference/trackPrevContext.html">countPrevBridges()</a></code>: Count the number of previous
+bridging expressions in a specified window.</li>
+</ul>
+<p>In practice, we will generally be using
+<code><a href="../reference/bridging.html">unitsToLastBridge()</a></code> and <code><a href="../reference/bridging.html">tokensToLastBridge()</a></code>.
+The arguments needed are very similar to what we saw for
+<code><a href="../reference/trackPrevContext.html">unitsToLastMention()</a></code> and
+<code><a href="../reference/trackPrevContext.html">tokensToLastMention()</a></code>. Here are the arguments for
+<code><a href="../reference/trackPrevContext.html">unitsToLastMention()</a></code>:</p>
+<ul>
+<li>
+<code>frameMatrix</code>: The <code>frameMatrix</code>.</li>
+<li>
+<code>unitSeq</code>: As before.</li>
+<li>
+<code>chain</code>: As before.</li>
+<li>
+<code>tokenOrderLast</code>: The token sequence value for the last
+token in an expression, by default <code>docTokenSeqFirst</code>.</li>
+<li>
+<code>tokenOrderFirst</code>: The token sequence value for the first
+token in an expression, by default <code>docTokenSeqLast</code>.</li>
+<li>
+<code>inclRelations</code>: Vector of relations that will be
+counted. If left blank, everything will be counted.</li>
+</ul>
+<p>The arguments of <code>tokensToTheLastBridge()</code> are again
+mostly things we have seen before:</p>
+<ul>
+<li>
+<code>frameMatrix</code>: As before.</li>
+<li>
+<code>firstOrLast</code>: Do you count the first or last token of
+the previous bridging expression? Either <code>"first"</code> or, by
+default `“last”.</li>
+<li>
+<code>tokenOrderFirst</code>: As before.</li>
+<li>
+<code>tokenOrderLast</code>: As before.</li>
+<li>
+<code>chain</code>: As before.</li>
+<li>
+<code>zeroProtocol</code>: As before.</li>
+<li>
+<code>zeroCond</code>: As before.</li>
+<li>
+<code>unitSeq</code>: As before.</li>
+<li>
+<code>unitDF</code>: As before.</li>
+<li>
+<code>inclRelations</code>: As before.</li>
+</ul>
+<p>Let’s say you want to extract the units and tokens to the previous
+bridge, including only the <code>"individual-group"</code> relation (so
+that it doesn’t count as a bridge of the current mention is a group that
+includes the previous mention, but it does count it the current mention
+is an individual that is included by the previous mention). Here is the
+code:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>bridgeDistUnit <span class="op">=</span> <span class="fu"><a href="../reference/bridging.html">unitsToLastBridge</a></span><span class="op">(</span><span class="fu"><a href="../reference/getSetFrame.html">frameMatrix</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span>,</span>
+<span>                                                     inclRelations <span class="op">=</span> <span class="st">"individual-group"</span><span class="op">)</span>,</span>
+<span>             bridgeDistToken <span class="op">=</span> <span class="fu"><a href="../reference/bridging.html">unitsToLastBridge</a></span><span class="op">(</span><span class="fu"><a href="../reference/getSetFrame.html">frameMatrix</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span>,</span>
+<span>                                                     inclRelations <span class="op">=</span> <span class="st">"individual-group"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">bridgeDistUnit</span>, <span class="va">bridgeDistToken</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">53</span><span class="op">:</span><span class="fl">63</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 4</span></span></span>
+<span><span class="co">#&gt;    id            text                            bridgeDistUnit bridgeDistToken</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 16A52A7994637 Tim                                          8               8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 4A063419D556  he                                          <span style="color: #BB0000;">NA</span>              <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 36C85595E9EA4 every little dime that he makes             <span style="color: #BB0000;">NA</span>              <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1EA9E1A9D3BEE he                                          <span style="color: #BB0000;">NA</span>              <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 290A040DBE92D He                                          <span style="color: #BB0000;">NA</span>              <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 513F50ED54C2  any breaks                                  <span style="color: #BB0000;">NA</span>              <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 382D95A5FE64F Tim                                         15              15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 21B834B5E4F57 salary                                      <span style="color: #BB0000;">NA</span>              <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> CE3A09CF9407  he                                          16              16</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 15C2ADACD3CE5 leave                                       <span style="color: #BB0000;">NA</span>              <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 15408B58961EE he                                          19              19</span></span></code></pre></div>
+<p>Notice that if there has been no preceding bridge, the value is
+<code>NA</code>.</p>
+</div>
+<div class="section level2">
+<h2 id="a-toy-analysis">A toy analysis<a class="anchor" aria-label="anchor" href="#a-toy-analysis"></a>
+</h2>
+<p>Now that we’ve come so far, let’s try to do a mockup of a real
+linguistic analysis! Of course, an actual analysis would take far more
+data than what we have here, as well as a more carefully designed
+annotation scheme. But what we do here should suffice to demonstrate
+<em>how</em> an analysis might be done.</p>
+<p>Let’s try to predict the number of characters inside a referential
+expression from three variables:</p>
+<ul>
+<li>
+<code>noPrevSubjMentionsIn20</code>: The number of coreferent
+subject mentions within the 20 previous units.</li>
+<li>
+<code>noPrevNonSubjMentionsIn20</code>: The number of coreferent
+non-subject mentions within the 20 previous units.</li>
+<li>
+<code>noCompetitors</code>: The number of competitors within the
+five previous units.</li>
+<li>
+<code>Relation</code>: Is the current mention a subject?</li>
+<li>
+<code>number</code>: Is the current mention singular or plural?</li>
+</ul>
+<p>We will use a linear regression for this prediction. (This probably
+isn’t the best model, but let’s keep it simple for this demonstration.)
+First we need to create <code>noPrevNonSubjMentionsIn20</code> (which we
+do un an emancipated <code>rezrDF</code> to avoid clogging up the main
+table), then make the categorical then we’ll use the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>
+function in base R to do the prediction:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">analysis_df</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span></span>
+<span>  noPrevNonSubjMentionsIn20 <span class="op">=</span> <span class="va">noPrevMentionsIn20</span> <span class="op">-</span> <span class="va">noPrevSubjMentionsIn20</span>,</span>
+<span>  Relation <span class="op">=</span> <span class="fu"><a href="../reference/stringToFactor.html">stringToFactor</a></span><span class="op">(</span><span class="va">Relation</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">lm_nochar</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noPrevSubjMentionsIn20</span> <span class="op">+</span> <span class="va">noPrevNonSubjMentionsIn20</span> <span class="op">+</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">Relation</span> <span class="op">+</span> <span class="va">number</span>, data <span class="op">=</span> <span class="va">analysis_df</span><span class="op">)</span></span>
+<span><span class="va">lm_nochar</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = charCount ~ noPrevSubjMentionsIn20 + noPrevNonSubjMentionsIn20 + </span></span>
+<span><span class="co">#&gt;     noCompetitors + Relation + number, data = analysis_df)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;               (Intercept)     noPrevSubjMentionsIn20  </span></span>
+<span><span class="co">#&gt;                   12.0094                         NA  </span></span>
+<span><span class="co">#&gt; noPrevNonSubjMentionsIn20              noCompetitors  </span></span>
+<span><span class="co">#&gt;                   -0.7060                     0.2894  </span></span>
+<span><span class="co">#&gt;              RelationSubj                   numbersg  </span></span>
+<span><span class="co">#&gt;                   -7.3599                    -0.8975</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">lm_nochar</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: charCount</span></span>
+<span><span class="co">#&gt;                            Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span><span class="co">#&gt; noPrevNonSubjMentionsIn20   1  2784.5 2784.47 27.7757 3.165e-07 ***</span></span>
+<span><span class="co">#&gt; noCompetitors               1   370.4  370.42  3.6950   0.05583 .  </span></span>
+<span><span class="co">#&gt; Relation                    1  2804.6 2804.60 27.9765 2.886e-07 ***</span></span>
+<span><span class="co">#&gt; number                      1    27.8   27.84  0.2777   0.59872    </span></span>
+<span><span class="co">#&gt; Residuals                 227 22756.4  100.25                      </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
+<p>As we can see, <code>noPrevSubjMentionsIn20</code>,
+<code>noPrevNonSubjMentionsIn20</code> and <code>Relation</code> emerge
+as very good predictors, with entities mentioned more in the previous 20
+units and which are subjects having a much stronger tendency to be
+light.</p>
+</div>
+<div class="section level2">
+<h2 id="and-so-our-journey-ends-here-">And so our journey ends here.<a class="anchor" aria-label="anchor" href="#and-so-our-journey-ends-here-"></a>
+</h2>
+<p>This concludes our journey through the basic functionality of
+<code>rezonateR</code>. And of course, don’t forget to save:</p>
+<p>As usual, let’s not forget, for one last time:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">savePath</span> <span class="op">=</span> <span class="st">"rez007.Rdata"</span></span>
 <span><span class="fu"><a href="../reference/saveload.html">rez_save</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="va">savePath</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Saving rezrObj ...</span></span></code></pre></div>
+<!--
+Writing findContainingChunk.Rd
+Writing importRez.Rd
+Writing undupeSingle.Rd
+Writing undupeLayers.Rd
+Writing stringToFactor.Rd
+Writing getAddresses.Rd
+Writing countCompetitors.Rd
+Writing countMatchingCompetitors.Rd
+Writing addFrameMatrix.Rd
+Writing getSetFrame.Rd
+Writing reducedFrameMatrix.Rd
+Writing obscureUpper.Rd
+Writing updateFrameMatrixFromDF.Rd
+Writing mergeChunksWithTree.Rd
+Writing getTurnFromAnnos.Rd
+-->
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -125,7 +850,7 @@ one verb, multiple trees are created, one for each verb.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

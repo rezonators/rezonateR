@@ -280,6 +280,40 @@ reloadForeign = function(df, rezrObj, fields = ""){
   df
 }
 
+
+#' De-duplicate a rezrObj entity.
+#'
+#' @rdname undupe
+#' @param rezrObj The rezrObj you would like to de-duplicate.
+#' @param entity The entity you would like to de-duplicate.
+#' @param colname The name of a (character) column.
+#'
+#' @return The rezrObj, with the modified column de-duplicated so that entries with the same name will come with numbers starting from the second appearance.
+#' @export
+#'
+#' @examples
+undupeSingle = function(rezrObj, entity, colname){
+  rezrObj[[entity %+% "DF"]][[colname]] = undupe(rezrObj[[entity %+% "DF"]][[colname]])
+  rezrObj
+}
+
+#' @rdname undupe
+#' @export
+undupeLayers = function(rezrObj, entity, colname){
+  combDF = combineLayers(rezrObj, entity)
+  if(!(colname %in% names(combDF))) stop("Column not found in all layers.")
+  rows = sapply(rezrObj[[entity %+% "DF"]], nrow)
+  newNames = undupe(combDF[[colname]])
+
+  c = 0
+  for(i in 1:length(rows)){
+    rezrObj[[entity %+% "DF"]][[i]][[colname]] = newNames[(c + 1):(c + rows[i])]
+    c = c + rows[i]
+  }
+
+  rezrObj
+}
+
 #' Change the strings in a rezrDF to factors
 #'
 #' @param df The data.frame to be modified.
@@ -328,37 +362,4 @@ killIfPresent = function(df, colnames){
     }
   }
   df
-}
-
-#' De-duplicate a rezrObj entity.
-#'
-#' @rdname dedupe
-#' @param rezrObj The rezrObj you would like to de-duplicate.
-#' @param entity The entity you would like to de-duplicate.
-#' @param colname The name of a (character) column.
-#'
-#' @return The rezrObj, with the modified column de-duplicated so that entries with the same name will come with numbers starting from the second appearance.
-#' @export
-#'
-#' @examples
-undupeSingle = function(rezrObj, entity, colname){
-  rezrObj[[entity %+% "DF"]][[colname]] = undupe(rezrObj[[entity %+% "DF"]][[colname]])
-  rezrObj
-}
-
-#' @rdname dedupe
-#' @export
-undupeLayers = function(rezrObj, entity, colname){
-  combDF = combineLayers(rezrObj, entity)
-  if(!(colname %in% names(combDF))) stop("Column not found in all layers.")
-  rows = sapply(rezrObj[[entity %+% "DF"]], nrow)
-  newNames = undupe(combDF[[colname]])
-
-  c = 0
-  for(i in 1:length(rows)){
-    rezrObj[[entity %+% "DF"]][[i]][[colname]] = newNames[(c + 1):(c + rows[i])]
-    c = c + rows[i]
-  }
-
-  rezrObj
 }

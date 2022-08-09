@@ -28,11 +28,14 @@ reference:
   - getLayerAddresses
   - getRezrDFAttr
   - reload
+  - findContainingChunk
+  - undupeSingle
 - title: "Time and sequence"
   contents:
   - addIsWordField
   - addUnitSeq
   - getSeqBounds
+  - getTurnFromAnnos
 - title: "EasyEdit"
   desc: >
     Functions for editing rezonateR objects.
@@ -67,6 +70,11 @@ reference:
   - countMatchingCompetitors
   - mergedChunksToTrack
   - lastMentionUnit
+  - addFrameMatrix
+  - frameMatrix
+  - reducedFrameMatrix
+  - obscureUpper
+  - updateFrameMatrixFromDF
 - title: "Trees"
   desc: >
      Functions for keeping track of trees.

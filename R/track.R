@@ -311,12 +311,16 @@ countCompetitors = function(cond = NULL, window = Inf, tokenOrder = NULL, chain 
 
   sapply(1:length(tokenOrder), function(x){
     if(between){
-      result = sum(tokenOrder < tokenOrder[x] & tokenOrder > lastMentionPos[x] & condition & tokenOrder > tokenOrder[x] - window & chain[x] != chain)
+      result = sum(tokenOrder < tokenOrder[x] & tokenOrder > lastMentionPos[x] &
+                     condition & tokenOrder > tokenOrder[x] - window &
+                     chain[x] != chain, na.rm = T)
+      result[is.na(result)] = 0
+      result
     } else {
-      result = sum(tokenOrder < tokenOrder[x] & condition & tokenOrder > tokenOrder[x] - window & chain[x] != chain)
+      sum(tokenOrder < tokenOrder[x] & condition &
+                     tokenOrder > tokenOrder[x] - window &
+                     chain[x] != chain, na.rm = T)
     }
-    #if(is.na(result)) result = 0
-    result
   })
 }
 
@@ -326,19 +330,25 @@ countCompetitors = function(cond = NULL, window = Inf, tokenOrder = NULL, chain 
 #' @inheritParams lastMentionToken
 #' @return
 #' @export
-countMatchingCompetitors = function(matchCol, window = Inf, tokenOrder = NULL, chain = NULL){
+countMatchingCompetitors = function(matchCol, window = Inf, tokenOrder = NULL, chain = NULL, between = T){
   grabFromDF(tokenOrder = "docTokenSeqLast", chain = "chain")
   lastMentionPos = lastMentionToken(tokenOrder, chain)
-  if(is.null(cond)){
-    condition = T
+
+  if(between){
+    sapply(1:length(tokenOrder), function(x){
+      result = sum(tokenOrder < tokenOrder[x] & tokenOrder > lastMentionPos[x] &
+                     matchCol[x] == matchCol & tokenOrder > tokenOrder[x] - window  &
+                     chain[x] != chain, na.rm = T)
+      result[is.na(result)] = 0
+      result
+    })
   } else {
-    condition = eval_bare(enexpr(cond), env = env_parent(caller_env()))
+    sapply(1:length(tokenOrder), function(x){
+      sum(tokenOrder < tokenOrder[x] &
+                     matchCol[x] == matchCol & tokenOrder > tokenOrder[x] - window &
+                     chain[x] != chain, na.rm = T)
+    })
   }
-
-  sapply(1:length(tokenOrder), function(x){
-    sum(tokenOrder < tokenOrder[x] & tokenOrder > lastMentionPos[x] & matchCol[x] == matchCol & tokenOrder > tokenOrder[x] - window)
-  })
-
 }
 
 

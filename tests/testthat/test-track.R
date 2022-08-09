@@ -68,7 +68,7 @@ test_that("Bridge functions work", {
   expect("frameMatrix" %in% class(frameMatrix(a)), "addFrameMatrix failed.")
   a$trackDF$discdeix = reloadForeign(a$trackDF$discdeix, a)
 
-  #lastMentionUnit
+  #lastBridgeUnit
   b = a$trackDF$refexpr
   b = b %>% rez_mutate(lastBridgeUnit = lastBridgeUnit(frameMatrix(a)),
                        lastBridgeToken = lastBridgeToken(frameMatrix(a)))

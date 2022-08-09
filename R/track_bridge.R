@@ -2,6 +2,14 @@
 #1) Important, purely internal function: If a certain argument isn't specified, grab it from the DF with the default column name
 #2) Functions related to previous context:
 
+#' Add a frame matrix to `trailDF`.
+#'
+#' @param rezrObj The desired `rezrObj`
+#'
+#' @return A `rezrObj` object, but its `trailDF` now has an attribute which is a `frameMatrix` object.
+#' @export
+#'
+#' @examples
 addFrameMatrix = function(rezrObj){
   attr(rezrObj$trailDF, "frameMatrix") = createFrameMatrix(rezrObj)
   rezrObj
@@ -26,16 +34,37 @@ new_frameMatrix = function(m){
   structure(m, class = c("frameMatrix", "tbl_df", "tbl", "data.frame"))
 }
 
+#' Extract/set a `frameMatrix`.
+#'
+#' @rdname getSetFrame
+#' @param rezrObj
+#'
+#' @return The `frameMatrix` of the `rezrObj`.
+#' @export
+#'
+#' @examples
 frameMatrix = function(rezrObj){
   attr(rezrObj$trailDF, "frameMatrix")
 }
 
+#' @rdname getSetFrame
+#' @param value The new `frameMatrix`.
+#' @export
 `frameMatrix<-` = function(rezrObj, value){
   attr(rezrObj$trailDF, "frameMatrix") = value
   rezrObj
 }
 
 
+#' Extract a frameMatrix, removing rows and columns that do not participate in frame semantics.
+#'
+#' @param rezrObj The `rezrObj` from which the `frameMatrix` is extracted.
+#' @param cond Conditions for reduction.
+#'
+#' @return
+#' @export
+#'
+#' @examples
 reducedFrameMatrix = function(rezrObj, cond){
   frameMatrix = frameMatrix(rezrObj)
   cond = enexpr(cond)
@@ -45,6 +74,14 @@ reducedFrameMatrix = function(rezrObj, cond){
   frameMatrix[keepIDs, c(1, 2, keepIDs + 2)]
 }
 
+#' Obscure the upper triangular portion of a frameMatrix.
+#'
+#' @param frameMatrix
+#'
+#' @return A frameMatrix with the diagonal and all entries above it obscured.
+#' @export
+#'
+#' @examples
 obscureUpper = function(frameMatrix){
   for(i in 3:ncol(frameMatrix)){
     for(j in 1:nrow(frameMatrix)){
@@ -54,6 +91,17 @@ obscureUpper = function(frameMatrix){
   frameMatrix
 }
 
+#' Update `frameMatrix` from an external source.
+#'
+#' @param frameMatrix The `frameMatrix` object to be changed.
+#' @param changeDF The data frame containing new values.
+#'
+#' @return An updated frameMatrix. The lower triangular matrix of `frameMatrix` will be read,
+#' and the values will be flipped (e.g. 'group-inidividual' becomes 'individual-group')
+#' and subsequently added to the upper triangular matrix.
+#' @export
+#'
+#' @examples
 updateFrameMatrixFromDF = function(frameMatrix, changeDF){
   changeDF = changeDF %>% mutate(
     across(all_of(colnames(changeDF) %>% setdiff(c("id", "name"))),

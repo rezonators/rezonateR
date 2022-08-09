@@ -13,9 +13,6 @@ stringToFactor(df, colsToChange = NULL, levels = list())
 
 \item{levels}{Factor levels, as a list with each label being a column name.}
 }
-\value{
-
-}
 \description{
 Change the strings in a rezrDF to factors
 }

@@ -16,8 +16,6 @@ getTokenChunkAddresses(rezrObj)
 }
 \value{
 The desired addresses.
-
-
 }
 \description{
 Get all the addresses of a DF with multiple layers
