@@ -35,6 +35,7 @@ reference:
   - addIsWordField
   - addUnitSeq
   - getSeqBounds
+  - isFinal
   - getTurnFromAnnos
 - title: "EasyEdit"
   desc: >
@@ -44,6 +45,7 @@ reference:
   - addFieldLocal
   - addFieldForeign
   - addRow
+  - removeField
   - concatenateAll
   - "`%+%`"
   - mergeCats

@@ -60,13 +60,15 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">concatenateAll</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">longestLength</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu">longestLength</span><span class="op">(</span><span class="va">x</span>, isWord <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">longest</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu">longest</span><span class="op">(</span><span class="va">x</span>, isWord <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">shortestLength</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu">shortestLength</span><span class="op">(</span><span class="va">x</span>, isWord <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">shortest</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">shortest</span><span class="op">(</span><span class="va">x</span>, isWord <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">inLength</span><span class="op">(</span><span class="va">x</span>, isWord <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -74,13 +76,11 @@
     <dl><dt>x</dt>
 <dd><p>The information from the source rezrDF.</p></dd>
 
-</dl></div>
-    <div class="section level2">
-    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    
 
-<p>The aggregated data, usually a vector with a single value.</p>
-    </div>
+<dt>isWord</dt>
+<dd><p>Name of the column that determines whether a token is a word or not.</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>concatenateAll concatenates everything together. It is not to be confused with <a href="concatStringFields.html">concatStringFields</a>, which is applied on dataFrames. longest and shortest give the longest and shortest strings, and may have multiple entries if there are ties. longestLength and shortestLength give the lengths of the longest and shortest strings in x. Some base R functions that may be used include max, min, mean, range, etc.</p>

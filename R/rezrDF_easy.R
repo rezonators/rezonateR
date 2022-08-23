@@ -212,6 +212,7 @@ validateSimpleForeign = function(targetDF, sourceDF, targetForeignKeyName, targe
 #'
 #' @rdname complexActions
 #' @param x The information from the source rezrDF.
+#' @param isWord Name of the column that determines whether a token is a word or not.
 #' @note concatenateAll concatenates everything together. It is not to be confused with [rezonateR::concatStringFields], which is applied on dataFrames. longest and shortest give the longest and shortest strings, and may have multiple entries if there are ties. longestLength and shortestLength give the lengths of the longest and shortest strings in x. Some base R functions that may be used include max, min, mean, range, etc.
 #'
 #' @note Remember to include only the function name in complexAction fields, and include the 'x' (normally the name of a column inside your rezrDF) in expression fields.
@@ -247,6 +248,33 @@ shortest = function(x, isWord = T){
   xWord = x[isWord]
   xWord[nchar(xWord) == max(nchar(xWord), na.rm = T)][1]
 }
+
+#' @rdname complexActions
+#' @export
+inLength = function(x, isWord = T){
+  length(x[isWord])
+}
+
+
+#' Functions for getting information on whether something is located at the beginning or end of a larger structure.
+#'
+#' @rdname initfin
+#' @inheritparams complexActions
+#' @param seq Name of the column containing the sequence value to be taken into account.
+#'
+#'
+#' @export
+isInitial = function(seq){
+  as.integer(seq) == 1
+}
+
+#' @rdname initfin
+#' @param length Name of the column containing the maximum sequence value.
+#' @export
+isFinal = function(seq, length){
+  as.integer(seq) == length
+}
+
 
 #' Shortcut functions for functions beginning with addField and changeField
 #'

@@ -117,6 +117,7 @@ rez007 = addField(rez007, entity = "token", layer = "",
                  fieldaccess = "auto")
 head(rez007$tokenDF %>% select(id, text, longestWordInUnit))
 ```
+
 `longestLength()` belongs with a short collection of functions useful for extracting information from a bunch of strings:
 
 * `shortestLength()`: Find the shortest token's length.
@@ -124,6 +125,7 @@ head(rez007$tokenDF %>% select(id, text, longestWordInUnit))
 * `shortest()`: Get the shortest token's text.
 * `longest()`: Get the longest token's text.
 * `concatenateAll()`: Concatenate all the tokens together.
+* `inLength()`: Gives the size of the group, possibly with `isWord` information.
 
 Some base R functions that might be useful for numeric values include `max()`, `min()`, `range()`, `mean()`, etc.
 

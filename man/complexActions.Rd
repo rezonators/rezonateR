@@ -6,23 +6,25 @@
 \alias{longest}
 \alias{shortestLength}
 \alias{shortest}
+\alias{inLength}
 \title{Functions for getting summary information about a vector of strings.}
 \usage{
 concatenateAll(x)
 
-longestLength(x)
+longestLength(x, isWord = T)
 
-longest(x)
+longest(x, isWord = T)
 
-shortestLength(x)
+shortestLength(x, isWord = T)
 
-shortest(x)
+shortest(x, isWord = T)
+
+inLength(x, isWord = T)
 }
 \arguments{
 \item{x}{The information from the source rezrDF.}
-}
-\value{
-The aggregated data, usually a vector with a single value.
+
+\item{isWord}{Name of the column that determines whether a token is a word or not.}
 }
 \description{
 These functions may be used for the complexAction field in \link{addFieldForeign} / \link{changeFieldForeign}], or within expressions in functions like \link{addField}.
