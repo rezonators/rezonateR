@@ -276,6 +276,21 @@ changeField.rezrDF = function(rezrDF, ..., foreign = F){
   }
 }
 
+
+#' Remove a field from a rezrDF.
+#'
+#' @rdname rmField
+#' @inheritparams acField
+#' @param fields Vector of column names to be removed.
+#'
+#' @return A rezrDF with the specified fields removed.
+#' @export
+#'
+#' @examples
+removeField.rezrDF = function(rezrDF, fields){
+  rezrDF %>% rez_select(!fields)
+}
+
 #' Merging and renaming categories
 #'
 #' Functions for merging and renaming categories in character or factor columns.

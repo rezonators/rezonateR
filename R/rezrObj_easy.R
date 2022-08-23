@@ -305,3 +305,17 @@ addRow.rezrObj = function(rezrObj, entity, layer, nodeMapArgs = list(), ...){
 
   rezrObj
 }
+
+#' @rdname rmField
+#' @export
+#'
+#' @examples
+removeField.rezrObj = function(rezrObj, entity, layer, fields){
+  if(layer != ""){
+    removeField(rezrObj[[entity %+% "DF"]][[layer]], fields)
+  } else {
+    removeField(rezrObj[[entity %+% "DF"]], fields)
+  }
+
+}
+

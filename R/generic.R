@@ -55,6 +55,12 @@ changeField = function(x, ..., foreign = F){
   UseMethod("changeField")
 }
 
+#' @rdname rmField
+#' @export
+removeField = function(x, ...){
+  UseMethod("removeField")
+}
+
 #' @rdname addIsWordField
 #' @export
 addIsWordField = function(x, ...){
