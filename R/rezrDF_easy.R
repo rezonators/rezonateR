@@ -216,7 +216,6 @@ validateSimpleForeign = function(targetDF, sourceDF, targetForeignKeyName, targe
 #'
 #' @note Remember to include only the function name in complexAction fields, and include the 'x' (normally the name of a column inside your rezrDF) in expression fields.
 #'
-#' @return The aggregated data, usually a vector with a single value.
 #' @export
 concatenateAll = function(x){
   x = sapply(x, function(y) if(is.na(y)) "" else y)
@@ -225,26 +224,28 @@ concatenateAll = function(x){
 
 #' @rdname complexActions
 #' @export
-longestLength = function(x){
-  max(nchar(x), na.rm = T)
+longestLength = function(x, isWord = T){
+  max(nchar(x[isWord]), na.rm = T)
 }
 
 #' @rdname complexActions
 #' @export
-longest = function(x){
-  x[nchar(x) == max(nchar(x), na.rm = T)]
+longest = function(x, isWord = T){
+  xWord = x[isWord]
+  xWord[nchar(xWord) == max(nchar(xWord), na.rm = T)][1]
 }
 
 #' @rdname complexActions
 #' @export
-shortestLength = function(x){
-  min(nchar(x), na.rm = T)
+shortestLength = function(x, isWord = T){
+  min(nchar(x[isWord]), na.rm = T)
 }
 
 #' @rdname complexActions
 #' @export
-shortest = function(x){
-  x[nchar(x) == max(nchar(x), na.rm = T)]
+shortest = function(x, isWord = T){
+  xWord = x[isWord]
+  xWord[nchar(xWord) == max(nchar(xWord), na.rm = T)][1]
 }
 
 #' Shortcut functions for functions beginning with addField and changeField

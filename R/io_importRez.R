@@ -190,14 +190,25 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
         if(type == "track"){
           trackDF = list("default" = trackDF)
           trailDF = list("default" = trailDF)
+
+          trackDF$default = trackDF$default %>% rez_mutate(layer = "default")
+          trailDF$default = trailDF$default %>% rez_mutate(layer = "default")
         } else if(type == "chunk"){
           chunkDF = list("default" = chunkDF)
+
+          chunkDF$default = chunkDF$default %>% rez_mutate(layer = "default")
         } else if(type == "tree"){
           treeDF = list("default" = treeDF)
           treeEntryDF = list("default" = treeEntryDF)
+
+          treeDF$default = treeDF$default %>% rez_mutate(layer = "default")
+          treeEntryDF$default = treeEntryDF$default %>% rez_mutate(layer = "default")
         } else if(type == "rez"){
           rezDF = list("default" = rezDF)
           resonanceDF = list("default" = resonanceDF)
+
+          rezDF$default = rezDF$default %>% rez_mutate(layer = "default")
+          resonanceDF$default = resonanceDF$default %>% rez_mutate(layer = "default")
         }
       }
     }
