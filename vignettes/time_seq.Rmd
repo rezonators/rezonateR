@@ -78,19 +78,16 @@ head(rez007$chunkDF$refexpr %>% select(id, tokenOrderFirst, tokenOrderLast, docT
 ```
 
 ## Unit order
-The ordering of units, `unitSeq`, is not available to `rezrDF`s other than `unitDF` by default. The `addUnitSeq()` function adds `unitSeq` to other fields.  This function allows you to set which entity (and optionally, layer). Whichever entity type you specify, everything 'below' it will also get unit orders. For example, if you specify '`track`' as the level at which you want unit order, then `tokenDF` and `chunkDF`will get it too.
+The ordering of units, `unitSeq`, is not available to `rezrDF`s other than `unitDF` by default. The `addUnitSeq()` function adds `unitSeq` to other fields.  This function allows you to set which entity (and optionally, layer). Whichever entity type you specify, everything 'below' it will also get unit orders. For example, if you specify '`track`' as the level at which you want unit order, then `tokenDF` and `chunkDF` will get it too. Similarly, if you specify '`stack`' as the level, then `cardDF` will also get it.
 
 ```{r}
 rez007 = addUnitSeq(rez007, "track")
+rez007 = addUnitSeq(rez007, "stack")
+head(rez007$trackDF$default)
+head(rez007$stackDF)
 ```
 
 Note that `chunkDF` and layers depend on it get `unitSeqFirst` and `unitSeqLast`, because of a chunk combination feature that will be discussed in the trees chapter.
-
-## Advanced: Using `getSeqBounds` on other orders
-Sometimes, there are other ordered structures in file that you may want to consider, such as prosodic sentences or turns. You may want to get boundary values for these; for example, you might want to know the first and last prosodic sentence numbers inside a stack. At the moment, built-in support for these is limited, but the advanced function `getSeqBounds()` may be used to get upper and lower bounds for these.
-
-TODO: Add an actual example with stacks once stack support is added.
-
 
 ## Onwards!
 

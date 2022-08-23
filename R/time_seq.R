@@ -25,7 +25,6 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
       rezrObj = rezrObj %>% addFieldForeign("chunk", layer, "token", "", "tokenList", "unitSeqLast", "unitSeq", type = "complex", fieldaccess = "foreign", complexAction = max) #add unitSeq column to tokenDF
     }
   } else if(entity %in% c("track", "rez")){
-
     if("chunkDF" %in% names(rezrObj)){
       chunkLayers =  names(rezrObj$chunkDF)
       for(layer in chunkLayers){
@@ -46,6 +45,15 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
         rezrObj[[entity %+% "DF"]][[layer]] = suppressMessages(rezrObj[[entity %+% "DF"]][[layer]] %>% rez_left_join(rezrObj$tokenDF %>% rez_select(id, unitSeqFirst, unitSeqLast), df2Address = sourceAddress, rezrObj = rezrObj, fkey = "token"))
       }
     }
+  } else if (entity == "card"){
+    rezrObj = rezrObj %>% addFieldForeign("card", "", "unit", "", "unit", "unitSeq", "unitSeq", fieldaccess = "foreign")
+  } else if (entity == "stack"){
+    if(!("unitSeq" %in% names(rezrObj$cardDF))){
+      rezrObj = rezrObj %>% addUnitSeq("card")
+    }
+    #FUTURE TODO: After layers are implemented for stacks, rewrite this to take layers into account
+    rezrObj = rezrObj %>% addFieldForeign("stack", "", "card", "", "setIDList", "unitSeqFirst", "unitSeq", type = "complex", fieldaccess = "foreign", complexAction = min)
+    rezrObj = rezrObj %>% addFieldForeign("stack", "", "card", "", "setIDList", "unitSeqLast", "unitSeq", type = "complex", fieldaccess = "foreign", complexAction = max)
   }
   rezrObj
 }

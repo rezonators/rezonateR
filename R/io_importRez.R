@@ -81,6 +81,10 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
       treeEntryDF = nodeToDF(fullNodeMap[["treeEntry"]], treeEntryDFFields)
       treeLinkDF = nodeToDF(fullNodeMap[["treeLink"]], linkDFFields)
     }
+    if("stack" %in% names(fullNodeMap)){
+      stackDF = nodeToDF(fullNodeMap[["stack"]], stackDFFields)
+      cardDF = nodeToDF(fullNodeMap[["card"]], cardDFFields)
+    }
 
     docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
 
@@ -237,6 +241,8 @@ tokenDFFields = c("doc", "unit", "docTokenSeq", "tokenOrder")
 chunkDFFields = c("doc", "name", "nest")
 trackDFFields = c("doc", "chain", "sourceLink", "token")
 trailDFFields = c("doc", "chainCreateSeq", "name")
+cardDFFields = c("doc", "chain", "unit")
+stackDFFields = c("doc", "chainCreateSeq", "name")
 rezDFFields = c("doc", "chain", "sourceLink", "token")
 resonanceDFFields = c("doc", "chainCreateSeq", "name")
 linkDFFields = c("doc", "source", "goal", "type", "subtype")

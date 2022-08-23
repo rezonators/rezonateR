@@ -147,7 +147,7 @@ of the first token.</li>
 </ul>
 <p>You can see these fields in action in the chunkDF:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">doc</span>, <span class="va">name</span>, <span class="va">text</span>, <span class="va">tokenOrderFirst</span>, <span class="va">docTokenSeqFirst</span>, <span class="va">tokenOrderLast</span>, <span class="va">docTokenSeqLast</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">doc</span>, <span class="va">name</span>, <span class="va">text</span>, <span class="va">tokenOrderFirst</span>, <span class="va">docTokenSeqFirst</span>, <span class="va">tokenOrderLast</span>, <span class="va">docTokenSeqLast</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 8</span></span></span>
 <span><span class="co">#&gt;   id            doc    name     text             token…¹ docTo…² token…³ docTo…⁴</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -206,7 +206,7 @@ counterparts, except non-words are give 0 values, and only words are
 counted in determining order.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/addIsWordField.html">addIsWordField</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="va">kind</span> <span class="op">==</span> <span class="st">"Word"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">tokenOrder</span>, <span class="va">docTokenSeq</span>, <span class="va">wordOrder</span>, <span class="va">docWordSeq</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">tokenOrder</span>, <span class="va">docTokenSeq</span>, <span class="va">wordOrder</span>, <span class="va">docWordSeq</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
 <span><span class="co">#&gt;   id            tokenOrder docTokenSeq wordOrder docWordSeq</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -216,7 +216,7 @@ counted in determining order.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 37EFCBECFD691          1           4         1          2</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 12D67756890C1          2           5         2          3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71D59           3           6         3          4</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">tokenOrderFirst</span>, <span class="va">tokenOrderLast</span>, <span class="va">docTokenSeqFirst</span>, <span class="va">docTokenSeqLast</span>, <span class="va">wordOrderFirst</span>, <span class="va">wordOrderLast</span>, <span class="va">docWordSeqFirst</span>, <span class="va">docWordSeqLast</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">tokenOrderFirst</span>, <span class="va">tokenOrderLast</span>, <span class="va">docTokenSeqFirst</span>, <span class="va">docTokenSeqLast</span>, <span class="va">wordOrderFirst</span>, <span class="va">wordOrderLast</span>, <span class="va">docWordSeqFirst</span>, <span class="va">docWordSeqLast</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 9</span></span></span>
 <span><span class="co">#&gt;   id            tokenOrderFirst tokenOrderLast docTokenSeqFirst docTokenSeqLast</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -240,26 +240,36 @@ fields. This function allows you to set which entity (and optionally,
 layer). Whichever entity type you specify, everything ‘below’ it will
 also get unit orders. For example, if you specify ‘<code>track</code>’
 as the level at which you want unit order, then <code>tokenDF</code> and
-<code>chunkDF</code>will get it too.</p>
+<code>chunkDF</code> will get it too. Similarly, if you specify
+‘<code>stack</code>’ as the level, then <code>cardDF</code> will also
+get it.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/addUnitSeq.html">addUnitSeq</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"track"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/addUnitSeq.html">addUnitSeq</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"track"</span><span class="op">)</span></span>
+<span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/addUnitSeq.html">addUnitSeq</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"stack"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 35</span></span></span>
+<span><span class="co">#&gt;   id       doc   chain sourc…¹ token gapWo…² charC…³ token…⁴ gapUn…⁵ kind  place</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1096E4A… sbc0… 278D… <span style="color: #949494;">""</span>      37EF… N/A           1       1 N/A     <span style="color: #949494;">"</span>Wor… <span style="color: #949494;">"</span>1<span style="color: #949494;">"</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 92F20AC… sbc0… 278D… <span style="color: #949494;">"</span>174E6… 9363… 2             1       1 0       <span style="color: #949494;">"</span>Wor… <span style="color: #949494;">"</span>3<span style="color: #949494;">"</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 7E5BB65… sbc0… 2B67… <span style="color: #949494;">""</span>      744A… N/A          17       5 N/A     <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1F74D2B… sbc0… 2A01… <span style="color: #949494;">"</span>52452… 1265… N/A           4       1 N/A     <span style="color: #949494;">"</span>Wor… <span style="color: #949494;">"</span>9<span style="color: #949494;">"</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2485C4F… sbc0… 278D… <span style="color: #949494;">"</span>CB1D9… 2113… 10            3       1 1       <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1BF2260… sbc0… 2A01… <span style="color: #949494;">""</span>      35E3… 5            12       3 1       <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 24 more variables: text &lt;chr&gt;, transcript &lt;chr&gt;, endNote &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   order &lt;chr&gt;, negPlace &lt;chr&gt;, corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   POS_dft &lt;chr&gt;, tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   tokenOrderFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;, docTokenSeqFirst &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   docTokenSeqLast &lt;dbl&gt;, chainCreateSeq &lt;dbl&gt;, name &lt;chr&gt;, chainSize &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   wordOrderFirst &lt;dbl&gt;, wordOrderLast &lt;dbl&gt;, docWordSeqFirst &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   docWordSeqLast &lt;dbl&gt;, unitSeqFirst &lt;dbl&gt;, unitSeqLast &lt;dbl&gt;, and …</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">stackDF</span><span class="op">)</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
 <p>Note that <code>chunkDF</code> and layers depend on it get
 <code>unitSeqFirst</code> and <code>unitSeqLast</code>, because of a
 chunk combination feature that will be discussed in the trees
 chapter.</p>
-</div>
-<div class="section level2">
-<h2 id="advanced-using-getseqbounds-on-other-orders">Advanced: Using <code>getSeqBounds</code> on other orders<a class="anchor" aria-label="anchor" href="#advanced-using-getseqbounds-on-other-orders"></a>
-</h2>
-<p>Sometimes, there are other ordered structures in file that you may
-want to consider, such as prosodic sentences or turns. You may want to
-get boundary values for these; for example, you might want to know the
-first and last prosodic sentence numbers inside a stack. At the moment,
-built-in support for these is limited, but the advanced function
-<code><a href="../reference/getSeqBounds.html">getSeqBounds()</a></code> may be used to get upper and lower bounds
-for these.</p>
-<p>TODO: Add an actual example with stacks once stack support is
-added.</p>
 </div>
 <div class="section level2">
 <h2 id="onwards">Onwards!<a class="anchor" aria-label="anchor" href="#onwards"></a>

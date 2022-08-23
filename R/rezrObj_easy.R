@@ -155,7 +155,14 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
     targetNodeMap = rezrObj[["nodeMap"]][[targetEntity]]
     targetNodeMapAddress = targetEntity
 
-    result = suppressMessages(lowerToHigher(sourceDF, targetDF, complexNodeMap = targetNodeMap, fieldnames = sourceFieldName, higherFieldnames = targetFieldName, action = complexAction, tokenListName = targetForeignKeyName, fieldaccess = fieldaccess, complexNodeMapAddress = targetEntity, simpleDFAddress = sourceDFAddress))
+    if("docTokenSeq" %in% colnames(sourceDF)){
+      seq = "docTokenSeq"
+    } else if("unitSeq" %in% colnames(sourceDF)){
+      seq = "unitSeq"
+    } else {
+      stop("Could not detect sequence in sourceDF. Please file this as a bug with details.")
+    }
+    result = suppressMessages(lowerToHigher(sourceDF, targetDF, complexNodeMap = targetNodeMap, fieldnames = sourceFieldName, higherFieldnames = targetFieldName, action = complexAction, tokenListName = targetForeignKeyName, fieldaccess = fieldaccess, complexNodeMapAddress = targetEntity, simpleDFAddress = sourceDFAddress, seqName = seq))
 
   } else {
     stop("The only available types are simple and complex.")
