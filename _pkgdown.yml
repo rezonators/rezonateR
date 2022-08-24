@@ -30,6 +30,7 @@ reference:
   - reload
   - findContainingChunk
   - undupeSingle
+  - mergeChunksWithIDs
 - title: "Time and sequence"
   contents:
   - addIsWordField

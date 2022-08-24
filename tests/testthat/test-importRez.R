@@ -38,3 +38,9 @@ test_that("Clips", {
   path = "inst/extdata/" %+% discoName %+% ".rez"
   rezEx = importRez(path, layerRegex = list(track = list(field = "name", regex = c("CLAUSEARG_", "DISCDEIX_"), names = c("clausearg", "discdeix", "refexpr")), chunk = list(field = "chunkLayer", regex = c("verb", "adv", "predadj"), names = c("verb", "adv", "predadj", "refexpr"))), concatFields = c("word", "wordWylie"))
 })
+
+test_that("mergeChunksWithIDs", {
+  discoName = "rez007"
+  path = "inst/extdata/" %+% discoName %+% ".Rdata"
+　a = mergeChunksWithIDs(rez007, "largerChunk", selectCond = NULL)
+})

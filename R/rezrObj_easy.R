@@ -295,8 +295,8 @@ addRow.rezrObj = function(rezrObj, entity, layer, nodeMapArgs = list(), ...){
   } else {
     df = rezrObj[[entity %+% "DF"]][[layer]]
     oldNRow = nrow(df)
-    if(layer %in% colnames(df)){
-    rezrObj[[entity %+% "DF"]][[layer]] = rez_add_row(df, ..., layer = layer)
+    if("layer" %in% colnames(df)){
+      rezrObj[[entity %+% "DF"]][[layer]] = rez_add_row(df, ..., layer = layer)
     } else  rezrObj[[entity %+% "DF"]][[layer]] = rez_add_row(df, ...)
 
     rezrObj$nodeMap[[entity]] = rezrObj$nodeMap[[entity]] %>% c(assembleNodeFromDF(rezrObj[[entity %+% "DF"]][[layer]], (oldNRow + 1):(oldNRow + noNewRows), addInfo = nodeMapArgs))

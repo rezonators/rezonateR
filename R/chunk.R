@@ -41,3 +41,83 @@ updateContainingChunk = function(containedDF, rezrObj, containerDFAdd){
   containedDF = suppressWarnings(containedDF %>% rez_mutate(container = findContainingChunk(containedDF, containerDF), fieldaccess = "foreign"))
   containedDF
 }
+
+
+#' Relate table rows to tree entries covering the same tokens.
+#'
+#' @inheritParams addUnitSeq
+#' @param treeEntryDF A treeEntry data.frame, possibly filtered.
+#' @param addToTrack Do you want to add the chunks to the trackDF as well?
+#' @param selectCond The condition for selecting which chunk provides the field values.
+#'
+#' @return The rezrObj with additional rows for merged chunks. Original chunks stay behind. There will be a new column called combinedChunk. Combined chunks will get the value 'combined'. Members of those chunks will get the value '|infomember=COMBINEDCHUNKID' (if they are providing the data for the combined chunk) or '|member=COMBINEDCHUNKID' (if they are not the data-providing chunk). treeEntry (through getAllTreeCorrespondences()) is required to be present in the chunkDF.
+#'
+#' @export
+mergeChunksWithIDs = function(rezrObj, idField, addToTrack = F, selectCond = NULL){
+  tcDF = combineTokenChunk(rezrObj)
+  chunkDF = combineChunks(rezrObj)
+  newChunks = unique(chunkDF[[idField]][!is.na(chunkDF[[idField]])])
+
+  #What number shall we start at? (If no new chunks have been added before, then we'll just start from 1)
+  currNewChunkNames = chunkDF$name[str_detect(chunkDF$name, "New Chunk ")]
+  currNewChunkMax = suppressWarnings(max(max(as.numeric(chompPrefix(currNewChunkNames, "New Chunk ")), na.rm = T), 0))
+  i = currNewChunkMax + 1
+
+  #Adding a combinedDF column to the chunkDFs
+  for(chunkLayer in names(rezrObj$chunkDF)){
+    if(!("combinedChunk" %in% rezrObj$chunkDF[[chunkLayer]])){
+      rezrObj$chunkDF[[chunkLayer]] = rezrObj$chunkDF[[chunkLayer]] %>% rez_mutate(combinedChunk = "")
+    }
+  }
+
+  for(newChunk in newChunks){
+    chunksCombined = chunkDF %>% filter(!!parse_expr(idField) == newChunk) %>% pull(id)
+    rezrObj = mergeGivenChunks(rezrObj, chunkDF, chunksCombined, selectCond)
+  }
+  if(addToTrack){
+    #todo: addToTrack
+  }
+  rezrObj
+}
+
+mergeGivenChunks = function(rezrObj, chunkDF, chunksCombined, selectCond = NULL){
+  if(all(!is.na(chunksCombined))){
+    #Which chunk's annotations represents the whole thing?
+    infoSource = NULL
+
+    if(!is.null(selectCond)){
+      selectCond = enexpr(selectCond)
+      infoSourceCands = chunkDF %>% filter(id %in% chunksCombined & !!selectCond)
+      if(nrow(infoSourceCands) == 1){
+        infoSource = infoSourceCands
+      } else if(nrow(infoSourceCands) > 1){
+        infoSource = infoSourceCands %>% slice(1)
+      }
+    }
+    if(is.null(infoSource)){
+      infoSource = chunkDF %>% filter(id %in% chunksCombined) %>% arrange(docTokenSeqFirst) %>% slice(1)
+    }
+    newRow = infoSource
+    newRow[fieldaccess(chunkDF) %in% c("foreign", "auto")] = NA
+    newRow$name = "New Chunk " %+% i
+    i = i + 1
+    newRow$id = createRezId(1, getIDs(rezrObj))
+    newRow = as.list(newRow)
+    newRow$combinedChunk = "combined"
+    args = newRow
+    args[["entity"]] = "chunk"
+    args[["layer"]] = newRow$layer
+    args[["rezrObj"]] = rezrObj
+    args = args[c(length(args), 1:(length(args) - 1))]
+    args[["nodeMapArgs"]] = list()
+    args$nodeMapArgs[["type"]] = list("chunk")
+    args$nodeMapArgs[["tokenList"]] = list(lapply(rezrObj$nodeMap$chunk[chunksCombined], function(x) x$tokenList) %>% unlist)
+    #args[["x"]] = rezrObj
+    rezrObj = suppressWarnings(exec("addRow", !!!args))
+    rezrObj$chunkDF[[newRow$layer]] = rezrObj$chunkDF[[newRow$layer]] %>%
+      mutate(combinedChunk = case_when(id == infoSource$id ~ combinedChunk %+% "|infomember-" %+% newRow$id,
+                                       id %in% chunksCombined ~ combinedChunk %+% "|member-" %+% newRow$id,
+                                       T ~ combinedChunk))
+  }
+  rezrObj
+}

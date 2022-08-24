@@ -5,9 +5,9 @@
 \alias{isFinal}
 \title{Functions for getting information on whether something is located at the beginning or end of a larger structure.}
 \usage{
-isInitial(x, seq)
+isInitial(seq)
 
-isFinal(x, seq, length)
+isFinal(seq, length)
 }
 \arguments{
 \item{seq}{Name of the column containing the sequence value to be taken into account.}
