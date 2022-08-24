@@ -38,6 +38,8 @@ reference:
   - getSeqBounds
   - isFinal
   - getTurnFromAnnos
+  - getBiluoFromSeq
+  - getSeqFromID
 - title: "EasyEdit"
   desc: >
     Functions for editing rezonateR objects.

@@ -135,3 +135,66 @@ getDiscourseWordSeq = function(isWord, docTokenSeq){
   resultOrdered[isWordOrdered] = 1:noWord
   resultOrdered[rank(docTokenSeq)]
 }
+
+
+#' Functions for getting information on whether something is located at the beginning or end of a larger structure.
+#'
+#' @rdname initfin
+#' @inheritparams complexActions
+#' @param seq Name of the column containing the sequence value to be taken into account.
+#'
+#'
+#' @export
+isInitial = function(seq){
+  as.integer(seq) == 1
+}
+
+#' @rdname initfin
+#' @param length Name of the column containing the maximum sequence value.
+#' @export
+isFinal = function(seq, length){
+  as.integer(seq) == length
+}
+
+
+#' Get BILUO (begin-intermediate-last-unique-outside) values from a sequence value.
+#'
+#' @param seq The sequence number of the entity within a larger structure.
+#' For example, `tokenOrder` for the position of a token within a unit.
+#' @param length The length of the sequence, which you can get from `inLength()`
+#'
+#' @return A vector of BILUO values corresponding to the sequence values. B = beginning of the larger structure,
+#' L = last element of the larger structure, I = intermediate element of the larger structure,
+#' U = only element of the larger structure, O = not within the larger structure.
+#' @export
+#'
+#' @examples
+getBiluoFromSeq = function(seq, length){
+  init = isInitial(seq)
+  fin = isFinal(seq, length)
+  case_when(init & fin ~ "U",
+            init ~ "B",
+            fin ~ "L",
+            as.numeric(seq) == "0" ~ "O",
+            is.na(seq) ~ "O",
+            T ~ "I")
+}
+
+#' Get sequence number (position) within a larger structure (turn, prosodic sentence, etc.) from the ID of that structure
+#'
+#' @param id The ID of the larger structure within which you would like to find the position of an individual component.
+#' For example, if you want to find the position of a word within a prosodic sentence from the prosodic sentence ID.
+#'
+#' @return A vector of sequence values within that structure. For example, if you are working with the tokenDF and `id`
+#' gives the prosodic sentence ID, then this function will return the position of a token within a prosodic sentence.
+#' @export
+#'
+#' @examples
+getSeqFromID = function(id){
+  ids = unique(id[!is.na(id) & id != 0])
+  seq = integer(length(id))
+  for(currID in ids){
+    seq[id == currID] = seq(1,length(id[id == currID]))
+  }
+  seq
+}

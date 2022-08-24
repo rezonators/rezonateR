@@ -256,25 +256,6 @@ inLength = function(x, isWord = T){
 }
 
 
-#' Functions for getting information on whether something is located at the beginning or end of a larger structure.
-#'
-#' @rdname initfin
-#' @inheritparams complexActions
-#' @param seq Name of the column containing the sequence value to be taken into account.
-#'
-#'
-#' @export
-isInitial = function(seq){
-  as.integer(seq) == 1
-}
-
-#' @rdname initfin
-#' @param length Name of the column containing the maximum sequence value.
-#' @export
-isFinal = function(seq, length){
-  as.integer(seq) == length
-}
-
 
 #' Shortcut functions for functions beginning with addField and changeField
 #'
