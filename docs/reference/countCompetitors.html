@@ -63,7 +63,10 @@
 <span>  window <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  tokenOrder <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  chain <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  between <span class="op">=</span> <span class="cn">T</span></span>
+<span>  between <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  exclFrag <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>  combinedChunk <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  nonFragmentMember <span class="op">=</span> <span class="cn">F</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -79,6 +82,18 @@
 
 <dt>chain</dt>
 <dd><p>The chain that each mention belongs to.</p></dd>
+
+
+<dt>exclFrag</dt>
+<dd><p>Exclude 'fragments' (i.e. members of a combined chunk which do not serve as meaningful chunks in their own right)</p></dd>
+
+
+<dt>combinedChunk</dt>
+<dd><p>The <code>combinedChunk</code> column of the rezrDF. By default, named <code>combinedChunk</code>.</p></dd>
+
+
+<dt>nonFragmentMember</dt>
+<dd><p>Vector indicating whether each entry is a non-fragment member, i.e. a member of a combined chunk that also serves as a meaningful chunk in its own right.</p></dd>
 
 </dl></div>
 

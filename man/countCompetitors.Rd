@@ -9,7 +9,10 @@ countCompetitors(
   window = Inf,
   tokenOrder = NULL,
   chain = NULL,
-  between = T
+  between = T,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
 )
 }
 \arguments{
@@ -18,6 +21,12 @@ countCompetitors(
 \item{tokenOrder}{The vector of sequence values values where the mentions appeared. Common choices are docTokenSeqFirst, docTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running \link{addIsWordField} on a rezrObj. By default it's docTokenSeqLast.}
 
 \item{chain}{The chain that each mention belongs to.}
+
+\item{exclFrag}{Exclude 'fragments' (i.e. members of a combined chunk which do not serve as meaningful chunks in their own right)}
+
+\item{combinedChunk}{The \code{combinedChunk} column of the rezrDF. By default, named \code{combinedChunk}.}
+
+\item{nonFragmentMember}{Vector indicating whether each entry is a non-fragment member, i.e. a member of a combined chunk that also serves as a meaningful chunk in its own right.}
 }
 \description{
 This may either be counted within a window of units from the current one, or all referents competing with the current one may be counted, or a mix of both conditions. By default, we count referents intervening between the current and previous mention. Despite its name, tokenOrder can be set as unitSeqLast or similar.

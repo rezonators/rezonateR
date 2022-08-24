@@ -83,3 +83,55 @@ test_that("Bridge functions work", {
   expect(any(!is.na(b$tokensToLastBridgeUF)), "tokensToLastBridgeUF (unit-final) failed.")
   expect(all(b$unitsToLastBridge <= b$tokensToLastBridge, na.rm = T), "tokensToLastBridgeUF failed.")
 })
+
+test_that("Bridge functions work", {
+  load("data/rezEx.rda")
+
+  a = rezEx
+  a = addUnitSeq(rezEx, "track")
+  a = undupeLayers(a, "trail", "name")
+  a = addFrameMatrix(a)
+  expect("frameMatrix" %in% class(frameMatrix(a)), "addFrameMatrix failed.")
+  a$trackDF$discdeix = reloadForeign(a$trackDF$discdeix, a)
+
+  #lastBridgeUnit
+  b = a$trackDF$refexpr
+  b = b %>% rez_mutate(lastBridgeUnit = lastBridgeUnit(frameMatrix(a)),
+                       lastBridgeToken = lastBridgeToken(frameMatrix(a)))
+  expect(any(!is.na(b$lastBridgeUnit)), "lastBridgeUnit failed.")
+  expect(all(b$lastBridgeUnit <= b$lastBridgeToken, na.rm = T), "lastBridgeToken failed.")
+
+  b = b %>% rez_mutate(unitsToLastBridge = unitsToLastBridge(frameMatrix(a)),
+                       tokensToLastBridge = tokensToLastBridge(frameMatrix(a)))
+  expect(any(!is.na(b$unitsToLastBridge)), "unitsToLastBridge failed.")
+  expect(any(!is.na(b$tokensToLastBridge)), "tokensToLastBridge failed.")
+  b = b %>% rez_mutate(tokensToLastBridgeUF = tokensToLastBridge(frameMatrix(a), zeroProtocol = "unitFinal", zeroCond = (word == "<0>"), unitDF = a$unitDF))
+  expect(any(!is.na(b$tokensToLastBridgeUF)), "tokensToLastBridgeUF (unit-final) failed.")
+  expect(all(b$unitsToLastBridge <= b$tokensToLastBridge, na.rm = T), "tokensToLastBridgeUF failed.")
+})
+
+test_that("Member chunks ignored", {
+  discoName = "rez007"
+  path = "inst/extdata/" %+% discoName %+% ".Rdata"
+  a = mergeChunksWithIDs(rez007, "largerChunk", selectCond = NULL)
+  a = getAllTreeCorrespondences(a, entity = "track")
+  a = mergedChunksToTrack(a)
+  a = addUnitSeq(a, "track")
+  b = a$trackDF$default %>% rez_mutate(lastMention = lastMentionUnit(exclFrag = T))
+  b = b %>% rez_mutate(unitsToLastMention = unitsToLastMention(exclFrag = T))
+  b = b %>% rez_mutate(nextMention = nextMentionUnit(exclFrag = T))
+  b = b %>% rez_mutate(unitsToNextMention = unitsToNextMention(exclFrag = T))
+
+  b = b %>% rez_mutate(lastMentionT = lastMentionToken(exclFrag = T))
+  b = b %>% rez_mutate(tokensToLastMention = tokensToLastMention(exclFrag = T, zeroProtocol = "unitInitial", unitDF = a$unitDF, zeroCond = (text == "<0>")))
+  b = b %>% rez_mutate(nextMentionT = nextMentionToken(exclFrag = T))
+  b = b %>% rez_mutate(tokensToNextMention = tokensToNextMention(exclFrag = T))
+  b = b %>% rez_mutate(tokensToNextMention = tokensToNextMention(exclFrag = T, zeroProtocol = "unitInitial", unitDF = a$unitDF, zeroCond = (text == "<0>")))
+
+  b = b %>% rez_mutate(prevMentions = countPrevMentions(10, exclFrag = T))
+  b = b %>% rez_mutate(prevMentions = countPrevMentionsIf(10, exclFrag = T, text != "<0>"))
+  b = b %>% rez_mutate(prevMentions = getNextMentionField(10, exclFrag = T))
+  b = b %>% rez_mutate(competitorsWrong = countCompetitors(window = 10))
+  b = b %>% rez_mutate(competitors = countCompetitors(window = 10, exclFrag = T))
+  b = b %>% rez_mutate(competitors2 = countMatchingCompetitors(matchCol = layer, window = 10, exclFrag = T))
+})

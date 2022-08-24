@@ -20,11 +20,29 @@
 \alias{countPrevBridges}
 \title{Functions related to mentions of the same entity in previous/following context in track chains.}
 \usage{
-lastMentionUnit(unitSeq = NULL, chain = NULL)
+lastMentionUnit(
+  unitSeq = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-unitsToLastMention(unitSeq = NULL, chain = NULL)
+unitsToLastMention(
+  unitSeq = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-lastMentionToken(tokenOrder = NULL, chain = NULL)
+lastMentionToken(
+  tokenOrder = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
 tokensToLastMention(
   tokenOrder = NULL,
@@ -32,22 +50,73 @@ tokensToLastMention(
   zeroProtocol = "literal",
   zeroCond = NULL,
   unitSeq = NULL,
-  unitDF = NULL
+  unitDF = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
 )
 
-countPrevMentions(windowSize, unitSeq = NULL, chain = NULL)
+countPrevMentions(
+  windowSize,
+  unitSeq = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-countPrevMentionsIf(windowSize, cond, unitSeq = NULL, chain = NULL)
+countPrevMentionsIf(
+  windowSize,
+  cond,
+  unitSeq = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-countPrevMentionsMatch(windowSize, field, unitSeq = NULL, chain = NULL)
+countPrevMentionsMatch(
+  windowSize,
+  field,
+  unitSeq = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-getPrevMentionField(field, tokenOrder = NULL, chain = NULL)
+getPrevMentionField(
+  field,
+  tokenOrder = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-nextMentionUnit(unitSeq = NULL, chain = NULL)
+nextMentionUnit(
+  unitSeq = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-unitsToNextMention(unitSeq = NULL, chain = NULL)
+unitsToNextMention(
+  unitSeq = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-nextMentionToken(tokenOrder = NULL, chain = NULL)
+nextMentionToken(
+  tokenOrder = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
 tokensToNextMention(
   tokenOrder = NULL,
@@ -55,16 +124,49 @@ tokensToNextMention(
   zeroProtocol = "literal",
   zeroCond = NULL,
   unitSeq = NULL,
-  unitDF = NULL
+  unitDF = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
 )
 
-countNextMentions(windowSize, unitSeq = NULL, chain = NULL)
+countNextMentions(
+  windowSize,
+  unitSeq = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-countNextMentionsIf(windowSize, cond, unitSeq = NULL, chain = NULL)
+countNextMentionsIf(
+  windowSize,
+  cond,
+  unitSeq = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-countNextMentionsMatch(windowSize, field, unitSeq = NULL, chain = NULL)
+countNextMentionsMatch(
+  windowSize,
+  field,
+  unitSeq = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
-getNextMentionField(field, tokenOrder = NULL, chain = NULL)
+getNextMentionField(
+  field,
+  tokenOrder = NULL,
+  chain = NULL,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
 
 countPrevBridges(
   windowSize,
@@ -78,6 +180,12 @@ countPrevBridges(
 \item{unitSeq}{The vector of tokenOrder values where the mentions appeared. You can choose tokenOrderFirst, tokenOrderFirst, or maybe an average of the two. By default it's tokenOrderFirst.}
 
 \item{chain}{The chain that each mention belongs to.}
+
+\item{exclFrag}{Exclude 'fragments' (i.e. members of a combined chunk which do not serve as meaningful chunks in their own right)}
+
+\item{combinedChunk}{The \code{combinedChunk} column of the rezrDF. By default, named \code{combinedChunk}.}
+
+\item{nonFragmentMember}{Vector indicating whether each entry is a non-fragment member, i.e. a member of a combined chunk that also serves as a meaningful chunk in its own right.}
 
 \item{tokenOrder}{The vector of sequence values values where the mentions appeared. Common choices are docTokenSeqFirst, docTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running \link{addIsWordField} on a rezrObj. By default it's docTokenSeqLast.}
 
