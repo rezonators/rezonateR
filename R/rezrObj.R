@@ -137,7 +137,7 @@ getTokenChunkAddresses = function(rezrObj){
 #'
 #' @return A list of vectors. Each list entry has the ID in the more complex `rezrDF` as its label,
 #' and the content is a vector, each entry of which corresponds to an entry in the lower `rezrDF`.
-#' @example tokenKindByUnit = getLowerFieldList(sbc007, fieldName = "kind", simpleDF = rez007$entryDF, complexDF = rez007$unitDF,
+#' @examples tokenKindByUnit = getLowerFieldList(sbc007, fieldName = "kind", simpleDF = rez007$entryDF, complexDF = rez007$unitDF,
 #' complexNodeMap = rez007$nodeMap$unit, listName = "entryList", complexIDs = c("2AD10A854E6D3", "BDD7D839325A", "2752E3B395FC1"))
 #' tokenKindByTrack = getTrackTokens(sbc007, fieldName = "kind", trackDF = sbc007$trackDF$default)
 #' @export

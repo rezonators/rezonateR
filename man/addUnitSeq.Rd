@@ -19,3 +19,7 @@ The rezrObj object with unit sequences in the entity desired, plus all levels be
 \description{
 Add unit sequence information to different levels of rezrObj.
 }
+\examples{
+sbc007_withunits = addUnitSeq(sbc007, "track")
+sbc007_withunits = addUnitSeq(sbc007, "stack")
+}

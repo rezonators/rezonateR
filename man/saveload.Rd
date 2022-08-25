@@ -15,7 +15,7 @@ rez_load(filename)
 \item{filename}{The filename, ending in \code{.Rdata}, you would like to save to.}
 }
 \value{
-For \code{rez_load()}, the saved \code{rezrObj} or \code{rezrDF.}
+For \code{rez_load()}, the saved \code{rezrObj} or \code{rezrDF}.
 }
 \description{
 Save and load rezrObj and rezrDF objects.

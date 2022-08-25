@@ -7,6 +7,10 @@
 #' @param layers The layers to which unit sequence information is to be added.
 #'
 #' @return The rezrObj object with unit sequences in the entity desired, plus all levels below. For example, if your entity is 'track', you will see unitSeq information on token and chunk too, but not rez.
+#' @examples sbc007_withunits = addUnitSeq(sbc007, "track")
+#' head(sbc007_withunits$trackDF$default %>% select(id, text, unitSeqFirst, unitSeqLast))
+#' sbc007_withunits = addUnitSeq(sbc007, "stack")
+#' head(sbc007_withunits$stackDF %>% select(id, unitSeqFirst, unitSeqLast))
 #' @export
 addUnitSeq = function(rezrObj, entity, layers = ""){
   #If no layers are specified, just grab them all
@@ -66,8 +70,10 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
 #' @param cond The wordhood condition. For example, if your word column is called 'word', and you wish to exclude zeroes, you may write 'x == "<0>"'.
 #' @param addWordSeq If TRUE, the columns wordOrder and docWordSeq will be added.
 #'
-#' @return The modified rezrDF or rezrObj. If addWordSeq is set to TRUE, the columns wordOrder and docWordSeq will be added to tokenDF and entryDF, and the columns wordOrderFirst, wordOrderLast, docWordSeqFirst and docWordSeqLast will be added to unitDF, chunkDF and trackDF.
-#' @note If used on a rezrObj and addWordSeq = T, wordOrder and docWordSeq are automatically added to entry, unit, chunk and track tables. Rez and stack tables coming soon.
+#' @return The modified `rezrDF` or `rezrObj.` If `addWordSeq` is set to `TRUE`, the columns `wordOrder` and `docWordSeq` will be added to `tokenDF` and `entryDF`, and the columns `wordOrderFirst`, `wordOrderLast`, `docWordSeqFirst` and `docWordSeqLast` will be added to `unitDF`, `chunkDF`, `rezDF` and `trackDF.`
+#' @note If used on a `rezrObj` and `addWordSeq = T`, `wordOrder` and `docWordSeq` are automatically added to `entry`, `unit`, `chunk`, `rez` and `track` tables.
+#' @examples sbc007_withword = addIsWordField(sbc007, kind == "Word")
+#' head(sbc007_withword$chunkDF$refexpr %>% select(id, text, tokenOrderFirst, wordOrderFirst, docTokenSeqLast, docWordSeqLast))
 #' @export
 addIsWordField.rezrDF = function(x, cond, addWordSeq = T){
   if("isWord" %in% x) message("This action overrides the original isWord field in your tokenDF.")

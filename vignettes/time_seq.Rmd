@@ -19,9 +19,9 @@ library(rezonateR)
 
 ## Getting started
 
-In this tutorial, we will learn about how time and sequence is handled in rezonateR. More features relating to more fine-grained time may be available later, so watch this space!
+In this tutorial, we will learn about how time and sequence are handled in `rezonateR.` More features relating to more fine-grained time may be available later, so watch this space!
 
-This file will use the file saved at the end of `vignette("import_save_basics")`. You don't have to have read that tutorial beforehand, though it may be helpful if you are new to rezonateR.
+This file will use the file saved at the end of `vignette("import_save_basics")`. You don't have to have read that tutorial beforehand, though it may be helpful if you are new to `rezonateR`.
 
 ```{r}
 library(rezonateR)
@@ -32,8 +32,8 @@ rez007 = rez_load(path)
 ## Token order and sequence
 Rezonator by default provides two fields related to the position of a token, which you will see in `tokenDF` as columns:
 
-* `docTokenSeq` - refers to the order of a token within the entire text/
-* `tokenOrder` -  refers to the position of a token within its intonation unit.
+* `docTokenSeq` - refers to the order of a token within the entire text
+* `tokenOrder` -  refers to the position of a token within its intonation unit
 
 Both orders count all tokens. In the Santa Barbara Corpus text we are using, this includes endnotes (such as `,` and `.`), transcriptions of vocalisms (such as `(H)` for in-breaths and `@@@` for laughter), and so on. You can see these in the `tokenDF` of our sample file here:
 
@@ -48,7 +48,7 @@ head(rez007$tokenDF)
 * `tokenOrderFirst` - refers to the `tokenOrder` of the first token.
 * `tokenOrderLast` - refers to the `tokenOrder` of the first token.
 
-You can see these fields in action in the chunkDF:
+You can see these fields in action in the `chunkDF`:
 
 ```{r}
 head(rez007$chunkDF$refexpr %>% select(id, doc, name, text, tokenOrderFirst, docTokenSeqFirst, tokenOrderLast, docTokenSeqLast))
@@ -66,7 +66,7 @@ However, if you are working with your own texts rather than the Santa Barbara Co
 
 To create something that functions similarly as `place`, you must first define what a word is. For example, if you are dealing with a very 'clean' transcription that ignores elements like breaths and laughter, then you may simple create a regular expression that captures all the punctuation.
 
-The function `addIsWordField` adds a column `isWord` to a rezrDF or rezrObj stating whether a token is a word. For the Santa Barbara Corpus, this is simple since the `Kind` column is set to `"Word"` for actual words. Thus, we can use the expression `Kind == "Word"` for the definition of what counts as a word. This expression is passed to `addIsWordField` as its second parameter (the first parameter being the rezrDF or rezrObj). Note that if `addIsWordField` is called for a rezrObj, then both `tokenDF` and `entryDF` will have this new field.
+The function `addIsWordField` adds a column `isWord` to a `rezrDF` or `rezrObj` stating whether a token is a word. For the Santa Barbara Corpus, this is simple since the `Kind` column is set to `"Word"` for actual words. Thus, we can use the expression `Kind == "Word"` for the definition of what counts as a word. This expression is passed to `addIsWordField` as its second parameter (the first parameter being the `rezrDF` or `rezrObj`). Note that if `addIsWordField` is called for a `rezrObj`, then both `tokenDF` and `entryDF` will have this new field.
 
 By default, `addIsWordField` also adds the fields `docWordSeq` and `wordOrder` (=`place`) to the `tokenDF` and `entryDF`, and the columns `wordOrderFirst`, `wordOrderLast`, `docWordSeqFirst` and `docWordSeqLast` will be added to `unitDF`, `chunkDF` and `trackDF`. These work similarly to their `token` counterparts, except non-words are give 0 values, and only words are counted in determining order.
 
@@ -83,8 +83,8 @@ The ordering of units, `unitSeq`, is not available to `rezrDF`s other than `unit
 ```{r}
 rez007 = addUnitSeq(rez007, "track")
 rez007 = addUnitSeq(rez007, "stack")
-head(rez007$trackDF$default)
-head(rez007$stackDF)
+head(rez007$trackDF$default %>% select(id, text, unitSeqFirst, unitSeqLast))
+head(rez007$stackDF %>% select(id, name, unitSeqFirst, unitSeqLast))
 ```
 
 Note that `chunkDF` and layers depend on it get `unitSeqFirst` and `unitSeqLast`, because of a chunk combination feature that will be discussed in the trees chapter.
@@ -99,4 +99,4 @@ rez_save(rez007, savePath)
 ```
 
 
-Now that you know how to deal with time and sequence, it will be even easier to work with rezonateR. If you're following the whole tutorial series, the next tutorial is `vignette("edit_easyRez")`, where you will start learning to add automatic annotations to `rezrDF`s!
+Now that you know how to deal with time and sequence, it will be even easier to work with rezonateR. If you're following the whole tutorial series, the next tutorial is `vignette("edit_easyEdit")`, where you will start learning to add automatic annotations to `rezrDF`s!

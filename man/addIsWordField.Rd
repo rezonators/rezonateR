@@ -20,11 +20,15 @@ addIsWordField(x, ...)
 \item{addWordSeq}{If TRUE, the columns wordOrder and docWordSeq will be added.}
 }
 \value{
-The modified rezrDF or rezrObj. If addWordSeq is set to TRUE, the columns wordOrder and docWordSeq will be added to tokenDF and entryDF, and the columns wordOrderFirst, wordOrderLast, docWordSeqFirst and docWordSeqLast will be added to unitDF, chunkDF and trackDF.
+The modified \code{rezrDF} or \code{rezrObj.} If \code{addWordSeq} is set to \code{TRUE}, the columns \code{wordOrder} and \code{docWordSeq} will be added to \code{tokenDF} and \code{entryDF}, and the columns \code{wordOrderFirst}, \code{wordOrderLast}, \code{docWordSeqFirst} and \code{docWordSeqLast} will be added to \code{unitDF}, \code{chunkDF}, \code{rezDF} and \code{trackDF.}
 }
 \description{
 Add a field on whether something is a word or not.
 }
 \note{
-If used on a rezrObj and addWordSeq = T, wordOrder and docWordSeq are automatically added to entry, unit, chunk and track tables. Rez and stack tables coming soon.
+If used on a \code{rezrObj} and \code{addWordSeq = T}, \code{wordOrder} and \code{docWordSeq} are automatically added to \code{entry}, \code{unit}, \code{chunk}, \code{rez} and \code{track} tables.
+}
+\examples{
+sbc007_withword = addIsWordField(sbc007, kind == "Word")
+head(sbc007_withword$chunkDF$refexpr \%>\% select(id, text, tokenOrderFirst, wordOrderFirst, docTokenSeqLast, docWordSeqLast))
 }

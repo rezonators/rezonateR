@@ -41,3 +41,8 @@ and the content is a vector, each entry of which corresponds to an entry in the 
 \description{
 Get a list of values from a lower-level table.
 }
+\examples{
+tokenKindByUnit = getLowerFieldList(sbc007, fieldName = "kind", simpleDF = rez007$entryDF, complexDF = rez007$unitDF,
+complexNodeMap = rez007$nodeMap$unit, listName = "entryList", complexIDs = c("2AD10A854E6D3", "BDD7D839325A", "2752E3B395FC1"))
+tokenKindByTrack = getTrackTokens(sbc007, fieldName = "kind", trackDF = sbc007$trackDF$default)
+}
