@@ -3,22 +3,28 @@
 \name{getLayerAddresses}
 \alias{getLayerAddresses}
 \alias{getTokenChunkAddresses}
-\title{Get all the addresses of a DF with multiple layers}
+\title{Get all the addresses of a rezrDF with multiple layers}
 \usage{
 getLayerAddresses(rezrObj, entity)
 
 getTokenChunkAddresses(rezrObj)
 }
 \arguments{
-\item{rezrObj}{The rezrObj object.}
+\item{rezrObj}{The \code{rezrObj} object.}
 
 \item{entity}{The entity with multiple layers - chunk, track, trail, etc.}
 }
 \value{
 The desired addresses.
+
+The addresses of the tokens and all the chunk layers.
 }
 \description{
-Get all the addresses of a DF with multiple layers
+Get all the addresses of a rezrDF with multiple layers
 
-Get combined addressese or token and chunk DFs
+Get combined addressese or token and chunk rezrDFs
+}
+\examples{
+getLayerAddresses(sbc007, "chunk")
+getTokenChunkAddresses(sbc007)
 }

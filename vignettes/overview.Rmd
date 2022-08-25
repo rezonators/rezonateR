@@ -81,7 +81,7 @@ myRez = rez_load(savePath)
 
 ## Introduction to rezrObjs and nodeMaps
 
-###rezrObjs
+### rezrObjs
 
 There are three main kinds of objects in rezonateR that you will interact with directly, namely rezrObj, nodeMap and rezrDF. rezrObjs and nodeMaps will be covered in this section. rezrDFs are relatively complex, and will form the bulk of our discussion in this vignette.
 

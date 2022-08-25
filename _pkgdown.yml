@@ -102,6 +102,11 @@ reference:
   - new_updateFunction
   - updateLeftJoin
   - updateLowerToHigher
+- title: "Datasets"
+  desc: >
+     Sample datasets for demonstration purposes.
+  contents:
+  - sbc007
 articles:
 - title: "Overview"
   desc: An overview of the main capabilities of rezonateR.

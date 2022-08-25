@@ -53,7 +53,7 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Import a Rez file. This returns an object containing, among other things, a nodeMap object containing raw information, and data frames for tokens, units, chunks, track chain entries, track chains, containing only key information likely to be useful for the user.</p>
+    <p>Import a Rez file. This returns an object containing, among other things, a <code>nodeMap</code> object containing raw information, and data frames for tokens, units, chunks, track chain entries, track chains, containing only key information likely to be useful for the user.</p>
     </div>
 
     <div class="section level2">
@@ -74,7 +74,7 @@
 
 
 <dt>docnames</dt>
-<dd><p>A character vector of the document names. If left blank, a docname will be generated according to the filenames of files you import. For example, the document foo/bar.rez will be named 'bar'.</p></dd>
+<dd><p>A character vector of the document names. If left blank, a <code>docname</code> will be generated according to the filenames of files you import. For example, the document foo/bar.rez will be named 'bar'.</p></dd>
 
 
 <dt>concatFields</dt>
@@ -82,7 +82,7 @@
 
 
 <dt>layerRegex</dt>
-<dd><p>A list, each of which is a component (just track or chunk for now; stack and rez to be added later). In each list entry, there are three components: 'field' is the field on which the splitting is based; 'regex' is a vector of regular expressions; 'names' is a vector of layer names. 'regex' should have one fewer entry than 'names', as the last of the 'names' should be the default case.</p></dd>
+<dd><p>A list, each of which is a component (just tree, track, rez, or chunk for now; stack to be added later). In each list entry, there are three components: <code>field</code> is the field on which the splitting is based; <code>regex</code> is a vector of regular expressions; <code>names</code> is a vector of layer names. <code>regex</code> should have one fewer entry than <code>names</code>, as the last of the '<code>names</code>' should be the default case.</p></dd>
 
 
 <dt>separator</dt>
@@ -97,9 +97,30 @@
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>After import, you may consider calling such functions as <a href="addUnitSeq.html">addUnitSeq</a>, <a href="addIsWordField.html">addIsWordField</a> or <a href="getAllTreeCorrespondences.html">getAllTreeCorrespondences</a>, which are excluded from the import because of performane issues.</p>
+    <p>After import, you may consider calling such functions as <a href="addUnitSeq.html">addUnitSeq</a>, <a href="addIsWordField.html">addIsWordField</a> or <a href="getAllTreeCorrespondences.html">getAllTreeCorrespondences</a>, which are excluded from the import because of performance issues.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sbc007.rez"</span>, package <span class="op">=</span> <span class="st">"rezonateR"</span>, mustWork <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">layerRegex</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>chunk <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>field <span class="op">=</span> <span class="st">"chunkType"</span>, regex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"verb"</span><span class="op">)</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"verb"</span>, <span class="st">"refexpr"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">concatFields</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"text"</span>, <span class="st">"transcript"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu">importRez</span><span class="op">(</span><span class="va">path</span>, layerRegex <span class="op">=</span> <span class="va">layerRegex</span>, concatFields <span class="op">=</span> <span class="va">concatFields</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Import starting - please be patient ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating node maps ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating rezrDFs ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding foreign fields to rezrDFs and sorting (this is the slowest step) ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;Adding to unit entry DF ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;Adding to unit DF ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;Adding to chunk DF ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;Adding to track DFs ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;Adding to track DFs ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;Adding to tree DFs ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Splitting rezrDFs into layers ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> A few finishing touches ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Done!</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

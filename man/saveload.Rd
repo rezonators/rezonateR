@@ -12,11 +12,16 @@ rez_load(filename)
 \arguments{
 \item{obj}{The object you would like to save.}
 
-\item{filename}{The filename, ending in .Rdata, you would like to save to.}
+\item{filename}{The filename, ending in \code{.Rdata}, you would like to save to.}
 }
 \value{
-For rez_load, the saved rezrObj or rezrDF.
+For \code{rez_load()}, the saved \code{rezrObj} or \code{rezrDF.}
 }
 \description{
 Save and load rezrObj and rezrDF objects.
+}
+\examples{
+rez007 = rez_load(system.file("extdata", "rez007_edit1.Rdata", package = "rezonateR"))
+rez_save(rez007, "rez007_edit1.Rdata")
+
 }

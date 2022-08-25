@@ -5,13 +5,13 @@
 #3) Add unit sequence to different Rezonator objects: addUnitSeq
 
 
-#' Constructor function for rezrObj.
+#' Constructor function for `rezrObj`.
 #'
 #' Not normally called by users; automatically created in [rezonateR::importRez].
 #'
-#' @param list A node map that has been organised into nodeLists, one for each entity.
+#' @param list A node map that has been organised into `nodeList`s, one for each entity.
 #'
-#' @return The rezrObj, consisting of a series of rezrDFs and a nodeMap.
+#' @return The `rezrObj`, consisting of a series of `rezrDF`s and a `nodeMap`.
 #' @export
 new_rezrObj = function(list){
   stopifnot("nodeMap" %in% names(list))
@@ -26,11 +26,13 @@ new_rezrObj = function(list){
 #'
 #' @rdname combineLayer
 #' @inheritParams rez_bind_rows
-#' @param rezrObj A rezrObj object
+#' @param rezrObj A `rezrObj` object
 #' @param entity The Rezonator entity with multiple layers (e.g. track, rez, chunk) that you want to combine
 #'
-#' @return A rezrDF containing the required material.
-#' @note This is mainly used when you need to draw information from more than one rezrDF for the purpose of functions like [rezonateR::addFieldForeign] or [rezonateR::rez_left_join].
+#' @return A `rezrDF` containing the required material.
+#' @note This is mainly used when you need to draw information from more than one `rezrDF` for the purpose of functions like [rezonateR::addFieldForeign] or [rezonateR::rez_left_join].
+#' @example
+#' combineLayers(sbc007, "chunk", type = "intersect")
 #' @export
 combineLayers = function(rezrObj, entity, type = "intersect"){
   layers = names(rezrObj[[entity %+% "DF"]])
@@ -71,9 +73,13 @@ combineTokenChunk = function(rezrObj, type = "intersect"){
 #'
 #' @rdname saveload
 #' @param obj The object you would like to save.
-#' @param filename The filename, ending in .Rdata, you would like to save to.
+#' @param filename The filename, ending in `.Rdata`, you would like to save to.
 #'
-#' @return For rez_load, the saved rezrObj or rezrDF.
+#' @return For `rez_load()`, the saved `rezrObj` or `rezrDF`.
+#' @examples
+#' rez007 = rez_load(system.file("extdata", "rez007_edit1.Rdata", package = "rezonateR"))
+#' rez_save(rez007, "rez007_edit1.Rdata")
+#'
 #' @export
 rez_save = function(obj, filename){
   stopifnot("rezrObj" %in% class(obj) | "rezrDF" %in% class(obj))
@@ -89,29 +95,29 @@ rez_load = function(filename){
   obj
 }
 
-#' Get all the addresses of a DF with multiple layers
+#' Get all the addresses of a rezrDF with multiple layers
 #'
 #' @rdname getAddresses
-#' @param rezrObj The rezrObj object.
+#' @param rezrObj The `rezrObj` object.
 #' @param entity The entity with multiple layers - chunk, track, trail, etc.
 #'
 #' @return The desired addresses.
 #' @export
 #'
-#' @examples
+#' @examples getLayerAddresses(sbc007, "chunk")
 getLayerAddresses = function(rezrObj, entity){
   entity %+% "DF/" %+% names(rezrObj[[entity %+% "DF"]])
 }
 
 
-#' Get combined addressese or token and chunk DFs
+#' Get combined addressese or token and chunk rezrDFs
 #'
 #' @rdname getAddresses
 #'
-#' @return
+#' @return The addresses of the tokens and all the chunk layers.
 #' @export
 #'
-#' @examples
+#' @examples getTokenChunkAddresses(sbc007)
 getTokenChunkAddresses = function(rezrObj){
   c("tokenDF", getLayerAddresses(rezrObj, "chunk"))
 }
@@ -122,14 +128,18 @@ getTokenChunkAddresses = function(rezrObj){
 #' @rdname lowerList
 #' @param rezrObj The rezrObj object from which information is to be extracted.
 #' @param fieldName The field you would like to extract.
-#' @param simpleDF The lower rezrDF.
-#' @param complexDF The higher rezrDF.
-#' @param complexNodeMap The nodeMap corresponding to the higher rezrDF.
-#' @param listName The name of the list of keys in complexNodeMap.
-#' @param complexIDs The IDs of the rows in the complex rezrDF you would like to extract information on.
-#' @param trackDF The trackDF you would like to extract information for.
+#' @param simpleDF The lower `rezrDF`.
+#' @param complexDF The higher `rezrDF`.
+#' @param complexNodeMap The nodeMap corresponding to the higher `rezrDF`.
+#' @param listName The name of the list of keys in `complexNodeMap`.
+#' @param complexIDs The IDs of the rows in the complex `rezrDF` you would like to extract information on.
+#' @param trackDF The `trackDF` you would like to extract information for.
 #'
-#' @return A list of vectors. Each list entry has the ID in the more complex DF as its label, and the content is a vector, each entry of which corresponds to an entry in the lower rezrDF.
+#' @return A list of vectors. Each list entry has the ID in the more complex `rezrDF` as its label,
+#' and the content is a vector, each entry of which corresponds to an entry in the lower `rezrDF`.
+#' @example tokenKindByUnit = getLowerFieldList(sbc007, fieldName = "kind", simpleDF = rez007$entryDF, complexDF = rez007$unitDF,
+#' complexNodeMap = rez007$nodeMap$unit, listName = "entryList", complexIDs = c("2AD10A854E6D3", "BDD7D839325A", "2752E3B395FC1"))
+#' tokenKindByTrack = getTrackTokens(sbc007, fieldName = "kind", trackDF = sbc007$trackDF$default)
 #' @export
 getLowerFieldList = function(rezrObj, fieldName, simpleDF, complexDF, complexNodeMap, listName, complexIDs = NULL){
   if(is.null(complexIDs)){

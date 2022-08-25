@@ -22,20 +22,21 @@ getTrackTokens(rezrObj, fieldName, trackDF = NULL)
 
 \item{fieldName}{The field you would like to extract.}
 
-\item{simpleDF}{The lower rezrDF.}
+\item{simpleDF}{The lower \code{rezrDF}.}
 
-\item{complexDF}{The higher rezrDF.}
+\item{complexDF}{The higher \code{rezrDF}.}
 
-\item{complexNodeMap}{The nodeMap corresponding to the higher rezrDF.}
+\item{complexNodeMap}{The nodeMap corresponding to the higher \code{rezrDF}.}
 
-\item{listName}{The name of the list of keys in complexNodeMap.}
+\item{listName}{The name of the list of keys in \code{complexNodeMap}.}
 
-\item{complexIDs}{The IDs of the rows in the complex rezrDF you would like to extract information on.}
+\item{complexIDs}{The IDs of the rows in the complex \code{rezrDF} you would like to extract information on.}
 
-\item{trackDF}{The trackDF you would like to extract information for.}
+\item{trackDF}{The \code{trackDF} you would like to extract information for.}
 }
 \value{
-A list of vectors. Each list entry has the ID in the more complex DF as its label, and the content is a vector, each entry of which corresponds to an entry in the lower rezrDF.
+A list of vectors. Each list entry has the ID in the more complex \code{rezrDF} as its label,
+and the content is a vector, each entry of which corresponds to an entry in the lower \code{rezrDF}.
 }
 \description{
 Get a list of values from a lower-level table.

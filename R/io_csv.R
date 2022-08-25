@@ -14,6 +14,10 @@
 #' @param ... Arguments passed onto read_csv and write_csv.
 #'
 #' @return For rez_read_csv, a data.frame for the CSV being imported. This is NOT a rezrDF, so please do not assign it to a rezrObj; use [rezonateR::updateFromDF] to update an existing rezrDF with the imported data.frame.
+#' @examples
+#' #rez_write_csv(rez007$trackDF$default, "rez007_refexpr.csv", c("id", "unitLastText", "tokenOrderLast", "text", "name", "number"))
+#' #inpath = system.file("extdata", "rez007_refexpr_edited.csv", package = "rezonateR")
+#' #changeDF = rez_read_csv(inpath, origDF = rez007$trackDF$default)
 #' @export
 rez_write_csv = function(df, path, inclCols = character(0), exclCols = character(0), ...){
   if(length(inclCols) > 0){

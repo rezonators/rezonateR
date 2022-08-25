@@ -13,7 +13,7 @@ combineChunks(rezrObj, ...)
 combineTokenChunk(rezrObj, type = "intersect")
 }
 \arguments{
-\item{rezrObj}{A rezrObj object}
+\item{rezrObj}{A \code{rezrObj} object}
 
 \item{entity}{The Rezonator entity with multiple layers (e.g. track, rez, chunk) that you want to combine}
 
@@ -22,11 +22,11 @@ combineTokenChunk(rezrObj, type = "intersect")
 \item{...}{The rezrDF objects to be combined}
 }
 \value{
-A rezrDF containing the required material.
+A \code{rezrDF} containing the required material.
 }
 \description{
 Combine different layers of an entity, and similar entities
 }
 \note{
-This is mainly used when you need to draw information from more than one rezrDF for the purpose of functions like \link{addFieldForeign} or \link{rez_left_join}.
+This is mainly used when you need to draw information from more than one \code{rezrDF} for the purpose of functions like \link{addFieldForeign} or \link{rez_left_join}.
 }

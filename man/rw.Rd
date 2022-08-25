@@ -37,3 +37,8 @@ For rez_read_csv, a data.frame for the CSV being imported. This is NOT a rezrDF,
 \description{
 Replacement of readr read_csv and write_csv, but contains added functionality for dealing with rezrDFs more easily.
 }
+\examples{
+#rez_write_csv(rez007$trackDF$default, "rez007_refexpr.csv", c("id", "unitLastText", "tokenOrderLast", "text", "name", "number"))
+#inpath = system.file("extdata", "rez007_refexpr_edited.csv", package = "rezonateR")
+#changeDF = rez_read_csv(inpath, origDF = rez007$trackDF$default)
+}

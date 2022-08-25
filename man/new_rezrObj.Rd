@@ -2,15 +2,15 @@
 % Please edit documentation in R/rezrObj.R
 \name{new_rezrObj}
 \alias{new_rezrObj}
-\title{Constructor function for rezrObj.}
+\title{Constructor function for \code{rezrObj}.}
 \usage{
 new_rezrObj(list)
 }
 \arguments{
-\item{list}{A node map that has been organised into nodeLists, one for each entity.}
+\item{list}{A node map that has been organised into \code{nodeList}s, one for each entity.}
 }
 \value{
-The rezrObj, consisting of a series of rezrDFs and a nodeMap.
+The \code{rezrObj}, consisting of a series of \code{rezrDF}s and a \code{nodeMap}.
 }
 \description{
 Not normally called by users; automatically created in \link{importRez}.
