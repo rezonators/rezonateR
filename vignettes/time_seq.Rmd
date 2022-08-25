@@ -29,6 +29,9 @@ path = system.file("extdata", "rez007_time.Rdata", package = "rezonateR", mustWo
 rez007 = rez_load(path)
 ```
 
+```{r, echo = FALSE}
+rez007$tokenDF$pSentOrder[1:14] = 1:14
+```
 ## Token order and sequence
 Rezonator by default provides two fields related to the position of a token, which you will see in `tokenDF` as columns:
 
@@ -89,6 +92,69 @@ head(rez007$stackDF %>% select(id, name, unitSeqFirst, unitSeqLast))
 
 Note that `chunkDF` and layers depend on it get `unitSeqFirst` and `unitSeqLast`, because of a chunk combination feature that will be discussed in the trees chapter.
 
+The function `getSeqBounds()` is mostly used `rezonateR`-internally, though more advanced users may use it to create functions similar to `addIsWordField()` and `addUnitSeq()`.
+
+
+## Advanced sequence operations
+
+In addition to the two most common operations we covered above, `rezonateR` also has other functions to deal with common problems related to time and sequence. These require knowledge of editing, so if you want to learn more about these functions, you can skip this for now and come back after having read `vignette("edit_easyEdit")`.
+
+Generally, when elements in a file belong to a larger structure, there are three ways of representing them inside the rezrDF that houses the smaller structure:
+* Sequence of the larger structure: `unitSeq` in `tokenDF` is an example.
+* Order (position) of the smaller element within the larger structure: `tokenOrder` in `tokenDF` is an example.
+* BILUO: Is the current element the beginning (B) of the larger structure, an intermediate (I) element, the last (L) element, the only (U) element, or not within the larger structure (O)? Generally used for artificial intelligence applications.
+
+The following functions are currently available for dealing with these and related issues:
+
+* `getOrderFromSeq()`: Converts from the first representation to the second one.
+* `getSeqFromOrder()`: Converts from the second representation to the first one.
+* `isInitial()`: Is the current element the initial member of a larger structure?
+* `isFinal()`: Is the current element the final member of a larger structure? Used after `inLength()`.
+* `getBiluoFromOrder()`: Converts from the second representation to the third one.
+
+`getOrderFromseq()` is straightforward. For example, if we want to replicate `tokenOrder` from `unitSeq`, we can do this:
+
+```{r}
+rez007$tokenDF = addFieldLocal(rez007$tokenDF, "tokenOrder2", getOrderFromSeq(unitSeq))
+#Check that tokenOrder and tokenOrder2 are identical
+all(rez007$tokenDF$tokenOrder == rez007$tokenDF$tokenOrder2)
+```
+
+`getSeqFromOrder()` is also straightforward. If we want to get the prosodic sentence in which a token is found, which is not given in the Rezonator version of the Santa Barbara Corpus, we can get it from the place within the prosodic sentence (`pSentOrder`):
+
+```{r}
+rez007$tokenDF = addFieldLocal(rez007$tokenDF, "pSent", getSeqFromOrder(pSentOrder))
+head(rez007$tokenDF %>% select(id, text, pSent, pSentOrder))
+```
+
+
+
+
+`isInitial()` and `isFinal()` tell us whether something is the initial or final member of a larger unit. `isInitial()` is simple: Its only parameter is the order (i.e. second representation).
+
+For example, the following code determines whether a token is the start of the prosodic sentence:
+
+```{r}
+rez007$tokenDF = addFieldLocal(rez007$tokenDF, "isPSentInitial", isInitial(pSentOrder))
+head(rez007$tokenDF %>% select(id, text, pSentOrder, isPSentInitial))
+```
+
+ `inLength()` gives the length of the larger unit and its result is used by `isFinal()`, which takes the length of the larger unit in addition to the order value. (Note that for `pSentLength`, `isWord` is set to simply text not being zeroes, since we count non-words like breaths, endnotes, etc., as part of the prosodic sentence.)
+ 
+```{r}
+rez007$tokenDF = addFieldLocal(rez007$tokenDF, "pSentLength", inLength(pSentOrder, isWord = (text != "<0>")), type = "complex", groupField = "pSent")
+rez007$tokenDF = addFieldLocal(rez007$tokenDF, "isPSentFinal", isFinal(pSentOrder, pSentLength))
+head(rez007$tokenDF %>% select(id, text, pSentOrder, pSentLength, isPSentFinal))
+```
+
+`getBiluoFromOrder()` is similar in requiring order and length. Let's get the BILUO values for prosodic sentences:
+
+```{r}
+rez007$tokenDF = changeFieldLocal(rez007$tokenDF, "pSentBiluo", getBiluoFromOrder(pSentOrder, pSentLength))
+head(rez007$tokenDF %>% select(id, text, pSentOrder, pSentLength, pSentBiluo))
+```
+
+
 ## Onwards!
 
 Let's practice saving our data again:
@@ -99,4 +165,4 @@ rez_save(rez007, savePath)
 ```
 
 
-Now that you know how to deal with time and sequence, it will be even easier to work with rezonateR. If you're following the whole tutorial series, the next tutorial is `vignette("edit_easyEdit")`, where you will start learning to add automatic annotations to `rezrDF`s!
+Now that you know how to deal with time and sequence, it will be even easier to work with `rezonateR.` If you're following the whole tutorial series, the next tutorial is `vignette("edit_easyEdit")`, where you will start learning to add automatic annotations to `rezrDF`s!

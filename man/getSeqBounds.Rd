@@ -27,6 +27,10 @@ getSeqBounds(
 
 \item{simpleIsAtom}{If set to T, that means the simpleDF only contains single values, not a range. If set to F, that means the simpleDF contains a range, i.e. somethingFirst and somethingLast.}
 
+\item{seqName}{The name of the sequence in the lower table. By default it's \code{docTokenseq} or \code{docTokenSeqFirst}.}
+
+\item{tokenListName}{Name of the token list.}
+
 \item{...}{Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from \code{\link[=lowerToHigher]{lowerToHigher()}}. Needed if you want automatically generated update functions.}
 }
 \value{

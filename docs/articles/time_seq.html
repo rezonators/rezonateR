@@ -83,13 +83,13 @@
 <div class="section level2">
 <h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
-<p>In this tutorial, we will learn about how time and sequence is
-handled in rezonateR. More features relating to more fine-grained time
-may be available later, so watch this space!</p>
+<p>In this tutorial, we will learn about how time and sequence are
+handled in <code>rezonateR.</code> More features relating to more
+fine-grained time may be available later, so watch this space!</p>
 <p>This file will use the file saved at the end of
 <code><a href="../articles/import_save_basics.html">vignette("import_save_basics")</a></code>. You don’t have to have read
 that tutorial beforehand, though it may be helpful if you are new to
-rezonateR.</p>
+<code>rezonateR</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rezonators.github.io/rezonateR/">rezonateR</a></span><span class="op">)</span></span>
 <span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"rez007_time.Rdata"</span>, package <span class="op">=</span> <span class="st">"rezonateR"</span>, mustWork <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
@@ -104,10 +104,10 @@ token, which you will see in <code>tokenDF</code> as columns:</p>
 <ul>
 <li>
 <code>docTokenSeq</code> - refers to the order of a token within the
-entire text/</li>
+entire text</li>
 <li>
 <code>tokenOrder</code> - refers to the position of a token within
-its intonation unit.</li>
+its intonation unit</li>
 </ul>
 <p>Both orders count all tokens. In the Santa Barbara Corpus text we are
 using, this includes endnotes (such as <code>,</code> and
@@ -116,7 +116,7 @@ for in-breaths and <code>@@@</code> for laughter), and so on. You can
 see these in the <code>tokenDF</code> of our sample file here:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 18</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 19</span></span></span>
 <span><span class="co">#&gt;   id         doc   unit  docTo…¹ token…² kind  place text  trans…³ endNote order</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 31F282855… sbc0… 2AD1…       1       1 Pause <span style="color: #949494;">""</span>    (...) (...)   <span style="color: #949494;">""</span>      1    </span></span>
@@ -125,9 +125,10 @@ see these in the <code>tokenDF</code> of our sample file here:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 37EFCBECF… sbc0… BDD7…       4       1 Word  <span style="color: #949494;">"</span>1<span style="color: #949494;">"</span>   I     I       <span style="color: #949494;">""</span>      1    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 12D677568… sbc0… BDD7…       5       2 Word  <span style="color: #949494;">"</span>2<span style="color: #949494;">"</span>   said  said    <span style="color: #949494;">""</span>      2    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71… sbc0… BDD7…       6       3 Word  <span style="color: #949494;">"</span>3<span style="color: #949494;">"</span>   I     I       <span style="color: #949494;">""</span>      3    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 7 more variables: negPlace &lt;chr&gt;, corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   POS_dft &lt;chr&gt;, tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, and</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   abbreviated variable names ¹​docTokenSeq, ²​tokenOrder, ³​transcript</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 8 more variables: negPlace &lt;chr&gt;, corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   POS_dft &lt;chr&gt;, tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   largerChunk &lt;chr&gt;, and abbreviated variable names ¹​docTokenSeq,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​tokenOrder, ³​transcript</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span></code></pre></div>
 <p>‘Larger’ elements that span multiple tokens have four token
 sequence-related fields:</p>
@@ -145,7 +146,7 @@ of the first token.</li>
 <code>tokenOrderLast</code> - refers to the <code>tokenOrder</code>
 of the first token.</li>
 </ul>
-<p>You can see these fields in action in the chunkDF:</p>
+<p>You can see these fields in action in the <code>chunkDF</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">doc</span>, <span class="va">name</span>, <span class="va">text</span>, <span class="va">tokenOrderFirst</span>, <span class="va">docTokenSeqFirst</span>, <span class="va">tokenOrderLast</span>, <span class="va">docTokenSeqLast</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 8</span></span></span>
@@ -186,14 +187,15 @@ with a very ‘clean’ transcription that ignores elements like breaths and
 laughter, then you may simple create a regular expression that captures
 all the punctuation.</p>
 <p>The function <code>addIsWordField</code> adds a column
-<code>isWord</code> to a rezrDF or rezrObj stating whether a token is a
-word. For the Santa Barbara Corpus, this is simple since the
-<code>Kind</code> column is set to <code>"Word"</code> for actual words.
-Thus, we can use the expression <code>Kind == "Word"</code> for the
-definition of what counts as a word. This expression is passed to
-<code>addIsWordField</code> as its second parameter (the first parameter
-being the rezrDF or rezrObj). Note that if <code>addIsWordField</code>
-is called for a rezrObj, then both <code>tokenDF</code> and
+<code>isWord</code> to a <code>rezrDF</code> or <code>rezrObj</code>
+stating whether a token is a word. For the Santa Barbara Corpus, this is
+simple since the <code>Kind</code> column is set to <code>"Word"</code>
+for actual words. Thus, we can use the expression
+<code>Kind == "Word"</code> for the definition of what counts as a word.
+This expression is passed to <code>addIsWordField</code> as its second
+parameter (the first parameter being the <code>rezrDF</code> or
+<code>rezrObj</code>). Note that if <code>addIsWordField</code> is
+called for a <code>rezrObj</code>, then both <code>tokenDF</code> and
 <code>entryDF</code> will have this new field.</p>
 <p>By default, <code>addIsWordField</code> also adds the fields
 <code>docWordSeq</code> and <code>wordOrder</code> (=<code>place</code>)
@@ -218,16 +220,17 @@ counted in determining order.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71D59           3           6         3          4</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">tokenOrderFirst</span>, <span class="va">tokenOrderLast</span>, <span class="va">docTokenSeqFirst</span>, <span class="va">docTokenSeqLast</span>, <span class="va">wordOrderFirst</span>, <span class="va">wordOrderLast</span>, <span class="va">docWordSeqFirst</span>, <span class="va">docWordSeqLast</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 9</span></span></span>
-<span><span class="co">#&gt;   id            tokenOrderFirst tokenOrderLast docTokenSeqFirst docTokenSeqLast</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 35E3E0AB6803A               3              5               17              19</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1F6B5F0B3FF59               5             12               25              32</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 24FE2B219BD21               8             12               28              32</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 158B579C1BA49              11             12               31              32</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2B6521E881365               2              5              144             147</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 5B854594DD34                5             10              156             161</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 4 more variables: wordOrderFirst &lt;dbl&gt;, wordOrderLast &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   docWordSeqFirst &lt;dbl&gt;, docWordSeqLast &lt;dbl&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   id            tokenO…¹ token…² docTo…³ docTo…⁴ wordO…⁵ wordO…⁶ docWo…⁷ docWo…⁸</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 35E3E0AB6803A        3       5      17      19       1       3      12      14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1F6B5F0B3FF59        5      12      25      32       3      10      17      24</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 24FE2B219BD21        8      12      28      32       6      10      20      24</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 158B579C1BA49       11      12      31      32       9      10      23      24</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2B6521E881365        2       5     144     147       2       5      96      99</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 5B854594DD34         5      10     156     161       2       6     103     107</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable names ¹​tokenOrderFirst, ²​tokenOrderLast,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ³​docTokenSeqFirst, ⁴​docTokenSeqLast, ⁵​wordOrderFirst, ⁶​wordOrderLast,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁷​docWordSeqFirst, ⁸​docWordSeqLast</span></span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -246,44 +249,162 @@ get it.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/addUnitSeq.html">addUnitSeq</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"track"</span><span class="op">)</span></span>
 <span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/addUnitSeq.html">addUnitSeq</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"stack"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 35</span></span></span>
-<span><span class="co">#&gt;   id       doc   chain sourc…¹ token gapWo…² charC…³ token…⁴ gapUn…⁵ kind  place</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1096E4A… sbc0… 278D… <span style="color: #949494;">""</span>      37EF… N/A           1       1 N/A     <span style="color: #949494;">"</span>Wor… <span style="color: #949494;">"</span>1<span style="color: #949494;">"</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 92F20AC… sbc0… 278D… <span style="color: #949494;">"</span>174E6… 9363… 2             1       1 0       <span style="color: #949494;">"</span>Wor… <span style="color: #949494;">"</span>3<span style="color: #949494;">"</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 7E5BB65… sbc0… 2B67… <span style="color: #949494;">""</span>      744A… N/A          17       5 N/A     <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1F74D2B… sbc0… 2A01… <span style="color: #949494;">"</span>52452… 1265… N/A           4       1 N/A     <span style="color: #949494;">"</span>Wor… <span style="color: #949494;">"</span>9<span style="color: #949494;">"</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2485C4F… sbc0… 278D… <span style="color: #949494;">"</span>CB1D9… 2113… 10            3       1 1       <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1BF2260… sbc0… 2A01… <span style="color: #949494;">""</span>      35E3… 5            12       3 1       <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 24 more variables: text &lt;chr&gt;, transcript &lt;chr&gt;, endNote &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   order &lt;chr&gt;, negPlace &lt;chr&gt;, corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   POS_dft &lt;chr&gt;, tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   tokenOrderFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;, docTokenSeqFirst &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   docTokenSeqLast &lt;dbl&gt;, chainCreateSeq &lt;dbl&gt;, name &lt;chr&gt;, chainSize &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   wordOrderFirst &lt;dbl&gt;, wordOrderLast &lt;dbl&gt;, docWordSeqFirst &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   docWordSeqLast &lt;dbl&gt;, unitSeqFirst &lt;dbl&gt;, unitSeqLast &lt;dbl&gt;, and …</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">stackDF</span><span class="op">)</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">unitSeqFirst</span>, <span class="va">unitSeqLast</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;   id            text              unitSeqFirst unitSeqLast</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1096E4AFFFE65 I                            2           2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 92F20ACA5F06  I                            2           2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 7E5BB65072C   was n't gon na do            2           2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1F74D2B049FA4 this                         2           2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2485C4F740FC0 &lt;0&gt;                          3           3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1BF2260B4AB78 Stay up late                 3           3</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">stackDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">name</span>, <span class="va">unitSeqFirst</span>, <span class="va">unitSeqLast</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;   id            name      unitSeqFirst unitSeqLast</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 16CE3C9693F60 Stack 91           391         392</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> AC5AC90A6E65  Stack 175          689         690</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1A87960035B5A Stack 38           225         225</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 31A9F84B7EE07 Stack 133          540         541</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1E013C5A85CA9 Stack 47           247         251</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 3872B2E956219 Stack 154          609         609</span></span></code></pre></div>
 <p>Note that <code>chunkDF</code> and layers depend on it get
 <code>unitSeqFirst</code> and <code>unitSeqLast</code>, because of a
 chunk combination feature that will be discussed in the trees
 chapter.</p>
+<p>The function <code><a href="../reference/getSeqBounds.html">getSeqBounds()</a></code> is mostly used
+<code>rezonateR</code>-internally, though more advanced users may use it
+to create functions similar to <code><a href="../reference/addIsWordField.html">addIsWordField()</a></code> and
+<code><a href="../reference/addUnitSeq.html">addUnitSeq()</a></code>.</p>
+</div>
+<div class="section level2">
+<h2 id="advanced-sequence-operations">Advanced sequence operations<a class="anchor" aria-label="anchor" href="#advanced-sequence-operations"></a>
+</h2>
+<p>In addition to the two most common operations we covered above,
+<code>rezonateR</code> also has other functions to deal with common
+problems related to time and sequence. These require knowledge of
+editing, so if you want to learn more about these functions, you can
+skip this for now and come back after having read
+<code><a href="../articles/edit_easyEdit.html">vignette("edit_easyEdit")</a></code>.</p>
+<p>Generally, when elements in a file belong to a larger structure,
+there are three ways of representing them inside the rezrDF that houses
+the smaller structure: * Sequence of the larger structure:
+<code>unitSeq</code> in <code>tokenDF</code> is an example. * Order
+(position) of the smaller element within the larger structure:
+<code>tokenOrder</code> in <code>tokenDF</code> is an example. * BILUO:
+Is the current element the beginning (B) of the larger structure, an
+intermediate (I) element, the last (L) element, the only (U) element, or
+not within the larger structure (O)? Generally used for artificial
+intelligence applications.</p>
+<p>The following functions are currently available for dealing with
+these and related issues:</p>
+<ul>
+<li>
+<code><a href="../reference/getOrderFromSeq.html">getOrderFromSeq()</a></code>: Converts from the first
+representation to the second one.</li>
+<li>
+<code>getSeqFromOrder()</code>: Converts from the second
+representation to the first one.</li>
+<li>
+<code><a href="../reference/initfin.html">isInitial()</a></code>: Is the current element the initial member
+of a larger structure?</li>
+<li>
+<code><a href="../reference/initfin.html">isFinal()</a></code>: Is the current element the final member of a
+larger structure? Used after <code><a href="../reference/complexActions.html">inLength()</a></code>.</li>
+<li>
+<code><a href="../reference/getBiluoFromOrder.html">getBiluoFromOrder()</a></code>: Converts from the second
+representation to the third one.</li>
+</ul>
+<p><code>getOrderFromseq()</code> is straightforward. For example, if we
+want to replicate <code>tokenOrder</code> from <code>unitSeq</code>, we
+can do this:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"tokenOrder2"</span>, <span class="fu"><a href="../reference/getOrderFromSeq.html">getOrderFromSeq</a></span><span class="op">(</span><span class="va">unitSeq</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#Check that tokenOrder and tokenOrder2 are identical</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span><span class="op">$</span><span class="va">tokenOrder</span> <span class="op">==</span> <span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span><span class="op">$</span><span class="va">tokenOrder2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p><code>getSeqFromOrder()</code> is also straightforward. If we want to
+get the prosodic sentence in which a token is found, which is not given
+in the Rezonator version of the Santa Barbara Corpus, we can get it from
+the place within the prosodic sentence (<code>pSentOrder</code>):</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"pSent"</span>, <span class="fu">getSeqFromOrder</span><span class="op">(</span><span class="va">pSentOrder</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSent</span>, <span class="va">pSentOrder</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;   id            text  pSent pSentOrder</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 31F282855E95E (...)     1 1         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 363C1D373B2F7 God       1 2         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 3628E4BD4CC05 ,         1 3         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 37EFCBECFD691 I         1 4         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 12D67756890C1 said      1 5         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71D59  I         1 6</span></span></code></pre></div>
+<p><code><a href="../reference/initfin.html">isInitial()</a></code> and <code><a href="../reference/initfin.html">isFinal()</a></code> tell us whether
+something is the initial or final member of a larger unit.
+<code><a href="../reference/initfin.html">isInitial()</a></code> is simple: Its only parameter is the order
+(i.e. second representation).</p>
+<p>For example, the following code determines whether a token is the
+start of the prosodic sentence:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"isPSentInitial"</span>, <span class="fu"><a href="../reference/initfin.html">isInitial</a></span><span class="op">(</span><span class="va">pSentOrder</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSentOrder</span>, <span class="va">isPSentInitial</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;   id            text  pSentOrder isPSentInitial</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 31F282855E95E (...) 1          TRUE          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 363C1D373B2F7 God   2          FALSE         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 3628E4BD4CC05 ,     3          FALSE         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 37EFCBECFD691 I     4          FALSE         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 12D67756890C1 said  5          FALSE         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71D59  I     6          FALSE</span></span></code></pre></div>
+<p><code><a href="../reference/complexActions.html">inLength()</a></code> gives the length of the larger unit and its
+result is used by <code><a href="../reference/initfin.html">isFinal()</a></code>, which takes the length of the
+larger unit in addition to the order value. (Note that for
+<code>pSentLength</code>, <code>isWord</code> is set to simply text not
+being zeroes, since we count non-words like breaths, endnotes, etc., as
+part of the prosodic sentence.)</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"pSentLength"</span>, <span class="fu"><a href="../reference/complexActions.html">inLength</a></span><span class="op">(</span><span class="va">pSentOrder</span>, isWord <span class="op">=</span> <span class="op">(</span><span class="va">text</span> <span class="op">!=</span> <span class="st">"&lt;0&gt;"</span><span class="op">)</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"complex"</span>, groupField <span class="op">=</span> <span class="st">"pSent"</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"isPSentFinal"</span>, <span class="fu"><a href="../reference/initfin.html">isFinal</a></span><span class="op">(</span><span class="va">pSentOrder</span>, <span class="va">pSentLength</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSentOrder</span>, <span class="va">pSentLength</span>, <span class="va">isPSentFinal</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
+<span><span class="co">#&gt;   id            text  pSentOrder pSentLength isPSentFinal</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 31F282855E95E (...) 1                   14 FALSE       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 363C1D373B2F7 God   2                   14 FALSE       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 3628E4BD4CC05 ,     3                   14 FALSE       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 37EFCBECFD691 I     4                   14 FALSE       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 12D67756890C1 said  5                   14 FALSE       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71D59  I     6                   14 FALSE</span></span></code></pre></div>
+<p><code><a href="../reference/getBiluoFromOrder.html">getBiluoFromOrder()</a></code> is similar in requiring order and
+length. Let’s get the BILUO values for prosodic sentences:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">changeFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"pSentBiluo"</span>, <span class="fu"><a href="../reference/getBiluoFromOrder.html">getBiluoFromOrder</a></span><span class="op">(</span><span class="va">pSentOrder</span>, <span class="va">pSentLength</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSentOrder</span>, <span class="va">pSentLength</span>, <span class="va">pSentBiluo</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
+<span><span class="co">#&gt;   id            text  pSentOrder pSentLength pSentBiluo</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 31F282855E95E (...) 1                   14 B         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 363C1D373B2F7 God   2                   14 I         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 3628E4BD4CC05 ,     3                   14 I         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 37EFCBECFD691 I     4                   14 I         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 12D67756890C1 said  5                   14 I         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71D59  I     6                   14 I</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="onwards">Onwards!<a class="anchor" aria-label="anchor" href="#onwards"></a>
 </h2>
 <p>Let’s practice saving our data again:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">savePath</span> <span class="op">=</span> <span class="st">"rez007.Rdata"</span></span>
 <span><span class="fu"><a href="../reference/saveload.html">rez_save</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="va">savePath</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Saving rezrObj ...</span></span></code></pre></div>
 <p>Now that you know how to deal with time and sequence, it will be even
-easier to work with rezonateR. If you’re following the whole tutorial
-series, the next tutorial is <code>vignette("edit_easyRez")</code>,
-where you will start learning to add automatic annotations to
-<code>rezrDF</code>s!</p>
+easier to work with <code>rezonateR.</code> If you’re following the
+whole tutorial series, the next tutorial is
+<code><a href="../articles/edit_easyEdit.html">vignette("edit_easyEdit")</a></code>, where you will start learning to
+add automatic annotations to <code>rezrDF</code>s!</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

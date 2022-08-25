@@ -121,12 +121,17 @@ concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, t
 #' @param simpleDF The lower-level dataframe, for example the token dataframe for chunks and units, or the unit dataframe for stacks. There should either be an integer field that contains the sequence in question, or two integer fields containing the first and last (see simpleIsAtom).
 #' @param complexDF The dataframe that you're trying to add the concatenated fields to. We will create two integer fields, one for the first and one for the last integer.
 #' @param complexNodeMap The node map corresponding to the simpleDF.
-#' @param simpleIsAtom If set to T, that means the simpleDF only contains single values, not a range. If set to F, that means the simpleDF contains a range, i.e. somethingFirst and somethingLast.
 #' @param fieldnames The fields to be concatenated.
+#' @param simpleIsAtom If set to T, that means the simpleDF only contains single values, not a range. If set to F, that means the simpleDF contains a range, i.e. somethingFirst and somethingLast.
+#' @param seqName The name of the sequence in the lower table. By default it's `docTokenseq` or `docTokenSeqFirst`.
+#' @param tokenListName Name of the token list.
 #' @param ... Additional fields 'simpleDFAddress', 'complexNodeMapAddress', 'fieldaccess' (foreign by default) from [rezonateR::lowerToHigher()]. Needed if you want automatically generated update functions.
 #'
 #' @return A complex DF.
 #' @note Most use cases should be handled by other functions like [rezonateR::addUnitSeq] and [rezonateR::addIsWordField]. If you do call this function, do note that the rezrDF you are changing is the second parameter, not the first. As such, piping should be done like this: someDF %>% getSeqBounds(simpleDF, ., complexNodeMap, ...)
+#' @examples sbc007_stackWithSeq = sbc007
+#' sbc007_stackWithSeq$cardDF = sbc007$cardDF %>% rez_left_join(select(sbc007$unitDF, id, docTokenSeqFirst, docTokenSeqLast), by = c("unit" = "id"), fkey = "unit", df2Address = "unit")
+#' sbc007_stackWithSeq$stackDF = getSeqBounds(sbc007_stackWithSeq$cardDF, sbc007_stackWithSeq$stackDF, sbc007$nodeMap$stack, tokenListName = "setIDList", fieldnames = c("docTokenSeq"), simpleIsAtom = F, simpleDFAddress = "cardDF", complexNodeMapAddress = "stackDF)
 #' @export
 getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleIsAtom = T, seqName = "", tokenListName = "tokenList", exclude0 =  T, ...){
   if(seqName == ""){

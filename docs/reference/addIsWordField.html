@@ -85,13 +85,32 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>The modified rezrDF or rezrObj. If addWordSeq is set to TRUE, the columns wordOrder and docWordSeq will be added to tokenDF and entryDF, and the columns wordOrderFirst, wordOrderLast, docWordSeqFirst and docWordSeqLast will be added to unitDF, chunkDF and trackDF.</p>
+<p>The modified <code>rezrDF</code> or <code>rezrObj.</code> If <code>addWordSeq</code> is set to <code>TRUE</code>, the columns <code>wordOrder</code> and <code>docWordSeq</code> will be added to <code>tokenDF</code> and <code>entryDF</code>, and the columns <code>wordOrderFirst</code>, <code>wordOrderLast</code>, <code>docWordSeqFirst</code> and <code>docWordSeqLast</code> will be added to <code>unitDF</code>, <code>chunkDF</code>, <code>rezDF</code> and <code>trackDF.</code></p>
+
+
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>If used on a rezrObj and addWordSeq = T, wordOrder and docWordSeq are automatically added to entry, unit, chunk and track tables. Rez and stack tables coming soon.</p>
+    <p>If used on a <code>rezrObj</code> and <code>addWordSeq = T</code>, <code>wordOrder</code> and <code>docWordSeq</code> are automatically added to <code>entry</code>, <code>unit</code>, <code>chunk</code>, <code>rez</code> and <code>track</code> tables.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007_withword</span> <span class="op">=</span> <span class="fu">addIsWordField</span><span class="op">(</span><span class="va">sbc007</span>, <span class="va">kind</span> <span class="op">==</span> <span class="st">"Word"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sbc007_withword</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">tokenOrderFirst</span>, <span class="va">wordOrderFirst</span>, <span class="va">docTokenSeqLast</span>, <span class="va">docWordSeqLast</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   id            text                             token…¹ wordO…² docTo…³ docWo…⁴</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 35E3E0AB6803A Stay up late                           3       1      19      14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 1F6B5F0B3FF59 the purpose of getting up in th…       5       3      32      24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 24FE2B219BD21 getting up in the morning              8       6      32      24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 158B579C1BA49 the morning                           11       9      32      24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2B6521E881365 all this other shit                    2       2     147      99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 5B854594DD34  the way (...) they were feeling        5       2     161     107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​tokenOrderFirst, ²​wordOrderFirst,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ³​docTokenSeqLast, ⁴​docWordSeqLast</span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

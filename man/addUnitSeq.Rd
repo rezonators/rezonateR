@@ -21,5 +21,7 @@ Add unit sequence information to different levels of rezrObj.
 }
 \examples{
 sbc007_withunits = addUnitSeq(sbc007, "track")
+head(sbc007_withunits$trackDF$default \%>\% select(id, text, unitSeqFirst, unitSeqLast))
 sbc007_withunits = addUnitSeq(sbc007, "stack")
+head(sbc007_withunits$stackDF \%>\% select(id, unitSeqFirst, unitSeqLast))
 }

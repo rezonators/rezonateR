@@ -99,7 +99,6 @@ addIsWordField.rezrObj = function(x, cond, addWordSeq = T){
       }
     }
 
-
     for(layer in names(x$trackDF)){
       x$trackDF[[layer]] = suppressMessages(x$trackDF[[layer]] %>% rez_left_join(combineTokenChunk(x) %>% rez_select(id, wordOrderFirst, wordOrderLast, docWordSeqFirst, docWordSeqLast), df2Address = "tokenChunkDF", rezrObj = x, fkey = "token"))
     }
@@ -175,19 +174,19 @@ isFinal = function(seq, length){
 #' @export
 #'
 #' @examples
-getBiluoFromSeq = function(seq, length){
+getBiluoFromOrder = function(seq, length){
   init = isInitial(seq)
   fin = isFinal(seq, length)
   case_when(init & fin ~ "U",
             init ~ "B",
             fin ~ "L",
             as.numeric(seq) == "0" ~ "O",
-            is.na(seq) ~ "O",
+            is.na(seq) | seq == 0 | seq == "" ~ "O",
             T ~ "I")
 }
 
-#' Get sequence number (position) within a larger structure (turn, prosodic sentence, etc.) from the ID of that structure
-#'
+#' Get sequence number (position) within a larger structure (turn, prosodic sentence, etc.) from the ID of that structure, or the other way around
+#' @rdname orderseq
 #' @param id The ID of the larger structure within which you would like to find the position of an individual component.
 #' For example, if you want to find the position of a word within a prosodic sentence from the prosodic sentence ID.
 #'
@@ -196,11 +195,35 @@ getBiluoFromSeq = function(seq, length){
 #' @export
 #'
 #' @examples
-getSeqFromID = function(id){
+getOrderFromSeq = function(id){
   ids = unique(id[!is.na(id) & id != 0])
-  seq = integer(length(id))
+  ord = integer(length(id))
   for(currID in ids){
-    seq[id == currID] = seq(1,length(id[id == currID]))
+    ord[id == currID] = seq(1,length(id[id == currID]))
   }
-  seq
+  ord
 }
+
+
+#' @rdname orderseq
+#' @param id The ID of the larger structure within which you would like to find the position of an individual component.
+#' For example, if you want to find the position of a word within a prosodic sentence from the prosodic sentence ID.
+#' @param order The position of an individual component within a larger structure.
+#'
+#' @return A vector of either order values within the structure . For example, if you are working with the `tokenDF` and `id`
+#' gives the prosodic sentence ID, then `getOrderFormSeq` will return the position of a token within a prosodic sentence. If `order` gives the position within the prosodic sentence, then `getSeqFromOrder` will return the prosodic sentence sequence.
+#' @export
+#'
+#' @examples
+getSeqFromOrder = function(order){
+  structBegins = which(order == 1)
+  result = integer(length(order))
+
+  for(i in 1:(length(structBegins) - 1)){
+    result[structBegins[i]:(structBegins[i+1]-1)] = i
+  }
+  result[structBegins[length(structBegins)]:length(order)] = i + 1
+  result[order==0 | order == "" | is.na(order)] = 0
+  result
+}
+
