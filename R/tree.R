@@ -78,10 +78,12 @@ getTreeEntryForToken = function(tokenDF, tokenNodeMap, treeEntryDF, treeEntryNod
 #' @inheritParams addUnitSeq
 #'
 #' @return The rezrObj with a new column called 'treeEntry' added to rows that correspond to tree entries. If called on 'track', treeEntry is added to token and chunk as well. Not available for units.
+#' @examples sbc007 = getAllTreeCorrespondences(sbc007, entity = "track")
 #' @export
 getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
   #TODO: Tree into layers
   if(entity == "chunk"){
+    if(!("treeEntry" %in% names(rezrObj$tokenDF))) rezrObj = getAllTreeCorrespondences(rezrObj, entity = "token")
     for(chunkLayer in names(rezrObj$chunkDF)){
       rezrObj$chunkDF[[chunkLayer]] = rezrObj$chunkDF[[chunkLayer]] %>% getTreeEntryForChunk(rezrObj$nodeMap$chunk, combineLayers(rezrObj, "treeEntry"), rezrObj$nodeMap$treeEntry)
     }
@@ -114,12 +116,12 @@ getAllTreeCorrespondences = function(rezrObj, entity = "chunk"){
 #' Relate table rows to tree entries covering the same tokens.
 #'
 #' @inheritParams addUnitSeq
-#' @param treeEntryDF A treeEntry data.frame, possibly filtered.
+#' @param treeEntryDF A `treeEntry` data.frame, possibly filtered.
 #' @param addToTrack Do you want to add the chunks to the trackDF as well?
 #' @param selectCond The condition for selecting which chunk provides the field values.
 #'
-#' @return The rezrObj with additional rows for merged chunks. Original chunks stay behind. There will be a new column called combinedChunk. Combined chunks will get the value 'combined'. Members of those chunks will get the value '|infomember=COMBINEDCHUNKID' (if they are providing the data for the combined chunk) or '|member=COMBINEDCHUNKID' (if they are not the data-providing chunk). treeEntry (through getAllTreeCorrespondences()) is required to be present in the chunkDF.
-#'
+#' @return The rezrObj with additional rows for merged chunks. Original chunks stay behind. There will be a new column called combinedChunk. Combined chunks will get the value `combined`. Members of those chunks will get the value `|infomember=COMBINEDCHUNKID` (if they are providing the data for the combined chunk) or `|member=COMBINEDCHUNKID` (if they are not the data-providing chunk). `treeEntry` (through `getAllTreeCorrespondences()`) is required to be present in the `chunkDF`.
+#' @examples sbc007 = sbc007 %>% getAllTreeCorrespondences %>% mergeChunksWithTree
 #' @export
 mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, selectCond = NULL){
   if(is.null(treeEntryDF)){
@@ -213,12 +215,13 @@ getNextChunks = function(chunkDF, currDoc, p, currDTSL, currVec = character(0)){
   result
 }
 
-#' Add merged chunks in the chunkDF to the trackDF
+#' Add merged chunks in the chunkDF to the `trackDF`
 #'
-#' @param rezrObj A rezrObj that has had chunked merged using [rezonateR::mergeChunksWithTree].
+#' @param rezrObj A `rezrObj` that has had chunked merged using [rezonateR::mergeChunksWithTree].
 #' @param trackLayers Track chain layers on which this is going to be performed. If NULL, the action will be performed on all layers.
 #'
-#' @return A rezrObj with the trackDF augmented with a combined chunks from the chunkDF.
+#' @return A `rezrObj` with the `trackDF` augmented with a combined chunks from the `chunkDF.`
+#' @examples sbc007 = sbc007 %>% getAllTreeCorrespondences %>% mergeChunksWithTree %>% mergedChunksToTrack("default")
 #' @export
 mergedChunksToTrack = function(rezrObj, trackLayers = NULL){
   chunkDF = combineChunks(rezrObj)
@@ -260,16 +263,34 @@ mergedChunksToTrack = function(rezrObj, trackLayers = NULL){
   rezrObj
 }
 
+#' Get children and siblings of tree entries and chunks.
+#'
+#' @rdname chunkfam
+#' @param treeEntry A `treeEntry` ID.
+#' @param treeEntryDF A `treeEntryDF` from a `rezrObj`. Must be a `rezrDF`, not a list; `combineLayers()` can be used to combine multiple `rezrDF`s.
+#' @param chunkID A chunk ID.
+#' @param chunkDF A `chunkDF`from a `rezrObj`,  Must be a `rezrDF`, not a list; `combineChunks()` or `combineTokenChunk()` can be used to combine multiple `rezrDF`s. You must have run `getAllTreeCorrespondences()` on it beforehand, i.e. a `treeEntry` column must exist. Also, both parents and children (for child-related functions) and all relevant siblings (for sibling-related functions) must reside in the `chunkDF`.
+#' @param cond A condition using columns from the `chunkDF`.
+#'
+#' @return A list of IDs of siblings or children
+#' @examples sbc007 = getAllTreeCorrespondences(sbc007, "chunk")
+#' getSiblingsOfChunk("33EAD4C986974", sbc007$chunkDF$refexpr, sbc007$treeEntryDF$default)
+#' getChildrenOfChunk("13AACBE0BB38A", combineTokenChunk(sbc007), sbc007$treeEntryDF$default)
+#' @export
 getChildrenOfEntry = function(treeEntry, treeEntryDF){
   treeEntryDF %>% filter(parent == treeEntry) %>% pull(id)
 }
 
+#' @rdname chunkfam
+#' @export
 getChildrenOfChunk = function(chunkID, chunkDF, treeEntryDF){
   parentEntryID = chunkDF %>% filter(id == chunkID) %>% slice(1) %>% pull(treeEntry)
   childrenEntryIDs = getChildrenOfEntry(parentEntryID, treeEntryDF)
   chunkDF %>% filter(treeEntry %in% childrenEntryIDs) %>% arrange(tokenOrderFirst) %>% pull(id)
 }
 
+#' @rdname chunkfam
+#' @export
 getChildrenOfChunkIf = function(chunkID, chunkDF, treeEntryDF, cond = expr(TRUE)){
   cond = enexpr(cond)
   parentEntryID = chunkDF %>% filter(id == chunkID) %>% slice(1) %>% pull(treeEntry)
@@ -277,11 +298,15 @@ getChildrenOfChunkIf = function(chunkID, chunkDF, treeEntryDF, cond = expr(TRUE)
   chunkDF %>% filter(treeEntry %in% childrenEntryIDs, !!cond) %>% arrange(tokenOrderFirst) %>% pull(id)
 }
 
+#' @rdname chunkfam
+#' @export
 getSiblingsOfEntry = function(treeEntry, treeEntryDF){
   parentID = treeEntryDF %>% filter(id == treeEntry) %>% slice(1) %>% pull(parent)
   getChildrenOfEntry(parentID, treeEntryDF) %>% setdiff(treeEntry)
 }
 
+#' @rdname chunkfam
+#' @export
 getSiblingsOfChunk = function(chunkID, chunkDF, treeEntryDF){
   entryID = chunkDF %>% filter(id == chunkID) %>% slice(1) %>% pull(treeEntry)
   if(!any(entryID == "") & length(entryID) > 0){
@@ -290,7 +315,9 @@ getSiblingsOfChunk = function(chunkID, chunkDF, treeEntryDF){
   } else character(0)
 }
 
-getChunkSiblingIf = function(chunkID, chunkDF, treeEntryDF, cond = expr(TRUE)){
+#' @rdname chunkfam
+#' @export
+getSiblingOfChunkIf = function(chunkID, chunkDF, treeEntryDF, cond = expr(TRUE)){
   cond = enexpr(cond)
   cand = chunkDF %>% filter(id %in% getSiblingsOfChunk(chunkID, chunkDF, treeEntryDF), !!cond) %>% arrange(tokenOrderFirst) %>% pull(id)
   if(length(cand) == 0) cand = NA
@@ -299,9 +326,12 @@ getChunkSiblingIf = function(chunkID, chunkDF, treeEntryDF, cond = expr(TRUE)){
 
 getPositionAmongSiblings = function(currChunkDF, rezrObj, treeEntryDF = NULL, cond = expr(TRUE)){
   cond = enexpr(cond)
-  chunkDF = combineTokenChunk(rezrObj)
+  chunkDF = combineTokenChunk(rezrObj, type = "union")
   allChunkIDs = chunkDF$id
-  if(is.null(treeEntryDF)) treeEntryDF = combineLayers(rezrObj, "treeEntry")
+  if(is.null(treeEntryDF)){
+    treeEntryDF = combineLayers(rezrObj, "treeEntry")
+  }
+
   parentChildDict = lapply(allChunkIDs, function(x) getChildrenOfChunkIf(x, chunkDF, treeEntryDF, !!cond))
   result = numeric(nrow(currChunkDF))
   for(i in 1:nrow(currChunkDF)){
@@ -316,9 +346,23 @@ getPositionAmongSiblings = function(currChunkDF, rezrObj, treeEntryDF = NULL, co
   result
 }
 
+#' Find the position of a chunk among its siblings in a tree.
+#'
+#' @param chunkDF The `chunkDF` to be edited.
+#' @param rezrObj The `rezrObj` containing the `chunkDF`.
+#' @param treeEntryDFAddress The address to the `treeEntryDF` layer that will be used. If left blank, all layers will be used.
+#' @param cond A condition for excluding siblings (for example, adjuncts and auxiliaries).
+#'
+#' @return The `chunkDF` with a column `siblingPos` giving the position of the chunk among its siblings in the tree.
+#' @export
+#'
+#' @examples sbc007 = getAllTreeCorrespondences(sbc007)
+#' sbc007$chunkDF$refexpr = addPositionAmongSiblings(sbc007$chunkDF$refexpr, sbc007)
 addPositionAmongSiblings = function(chunkDF, rezrObj, treeEntryDFAddress = NULL, cond = expr(TRUE)){
   cond = enexpr(cond)
-  if(is.null(treeEntryDFAddress)) treeEntryDFAdress = getLayerAddresses(rezrObj, "treeEntry")
+  if(is.null(treeEntryDFAddress)){
+    treeEntryDFAdress = getLayerAddresses(rezrObj, "treeEntry")
+  }
 
   chunkDF = suppressWarnings(chunkDF %>% rez_mutate(siblingPos = getPositionAmongSiblings(chunkDF, rezrObj, cond = !!cond), fieldaccess = "foreign"))
   updateFunct(chunkDF, "siblingPos") = new_updateFunction(function(df, rezrObj) updatePositionAmongSiblings(df, rezrObj, treeEntryDFAddress, cond = !!cond), c(treeEntryDFAddress, getTokenChunkAddresses(rezrObj)))

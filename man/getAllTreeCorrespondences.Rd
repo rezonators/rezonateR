@@ -17,3 +17,6 @@ The rezrObj with a new column called 'treeEntry' added to rows that correspond t
 \description{
 Relate table rows to tree entries covering the same tokens.
 }
+\examples{
+sbc007 = getAllTreeCorrespondences(sbc007, entity = "track")
+}

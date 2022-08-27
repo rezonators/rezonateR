@@ -2,18 +2,21 @@
 % Please edit documentation in R/tree.R
 \name{mergedChunksToTrack}
 \alias{mergedChunksToTrack}
-\title{Add merged chunks in the chunkDF to the trackDF}
+\title{Add merged chunks in the chunkDF to the \code{trackDF}}
 \usage{
 mergedChunksToTrack(rezrObj, trackLayers = NULL)
 }
 \arguments{
-\item{rezrObj}{A rezrObj that has had chunked merged using \link{mergeChunksWithTree}.}
+\item{rezrObj}{A \code{rezrObj} that has had chunked merged using \link{mergeChunksWithTree}.}
 
 \item{trackLayers}{Track chain layers on which this is going to be performed. If NULL, the action will be performed on all layers.}
 }
 \value{
-A rezrObj with the trackDF augmented with a combined chunks from the chunkDF.
+A \code{rezrObj} with the \code{trackDF} augmented with a combined chunks from the \code{chunkDF.}
 }
 \description{
-Add merged chunks in the chunkDF to the trackDF
+Add merged chunks in the chunkDF to the \code{trackDF}
+}
+\examples{
+sbc007 = sbc007 \%>\% getAllTreeCorrespondences \%>\% mergeChunksWithTree \%>\% mergedChunksToTrack("default")
 }

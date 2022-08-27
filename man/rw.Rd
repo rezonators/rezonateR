@@ -37,6 +37,9 @@ For \code{rez_read_csv()}, a data.frame for the CSV being imported. This is NOT 
 \description{
 Replacement of readr \code{\link[readr:read_delim]{readr::read_csv()}} and \code{\link[readr:write_delim]{readr::write_csv()}}, but contains added functionality for dealing with \code{rezrDF}s more easily.
 }
+\note{
+Includes a UTF-8 byte mark by default, so you can open the CSV directly in Excel. Whenever you export a .csv with the intention of importing it back, you must export the \code{id} column so that the resulting table can be merged back.
+}
 \examples{
 #rez_write_csv(sbc007$trackDF$default, "rez007_refexpr.csv", c("id", "tokenOrderLast", "text", "name"))
 inpath = system.file("extdata", "rez007_refexpr_edited.csv", package = "rezonateR")

@@ -90,7 +90,8 @@ a bit deeper! And if you haven’t read the previous vignettes, as always,
 that’s fine because each tutorial is self-contained. I won’t assume
 you’ve read the bit about trees in
 <code><a href="../articles/import_save_basics.html">vignette("import_save_basics")</a></code>.</p>
-<p>We will be using the same Santa Barbara Corpus as before:</p>
+<p>We will be using the same Santa Barbara Corpus annotation as
+before:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rezonators.github.io/rezonateR/">rezonateR</a></span><span class="op">)</span></span>
 <span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"rez007_tree.Rdata"</span>, package <span class="op">=</span> <span class="st">"rezonateR"</span>, mustWork <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
@@ -113,10 +114,10 @@ one verb, multiple trees are created, one for each verb.</p>
 <code>tree</code>: Stores entire trees.</li>
 <li>
 <code>treeEntry</code>: The items that are linked together in trees.
-If you have not combined any tokens inside Rezonator, then the
-<code>treeEntry</code>s are correspond 1:1 to the tokens. This is the
-case if you are doing UD annotation, for example. If you have combined
-tokens, then those combined tokens will be entries.</li>
+If you have not combined any tokens into tree entries inside Rezonator,
+then the <code>treeEntry</code>s are correspond 1:1 to the tokens. This
+is the case if you are doing UD annotation, for example. If you have
+combined tokens, then those combined tokens will be entries.</li>
 <li>
 <code>treeLink</code>: The links between trees. Unlike regular links
 (such as those in trails or resonances) <code>treeLink</code>s
@@ -125,25 +126,18 @@ tokens, then those combined tokens will be entries.</li>
 <p>This section will examine each of these in detail.</p>
 <p>Let’s first take a quick look at our <code>treeDF</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">treeDF</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $default</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 114 × 10</span></span></span>
-<span><span class="co">#&gt;    id          doc   name  maxLe…¹ token…² docTo…³ token…⁴ docTo…⁵ text  trans…⁶</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 123586E4BA… sbc0… Tree…       1       1       1      19    <span style="text-decoration: underline;">1</span>030 (...… (...) …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 79D2B436E3… sbc0… Tree…       1       1       4      11      14 I sa… I said…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 36F1EB5B40… sbc0… Tree…       1       1       4      11      14 I sa… I said…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 13085887E9… sbc0… Tree…       1       1      15       6      20 (...… (...) …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 1B81715C6D… sbc0… Tree…       1       1      21      13      33 (...… (...) …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 8A717C8581… sbc0… Tree…       1       1      34       4      37 (...… (...) …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 345C263662… sbc0… Tree…       1       1      38      10      47 (.) … (.) An…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 24D50AF283… sbc0… Tree…       1       1      48       5      52 Usua… [Usual…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 35E1362803… sbc0… Tree…       1       1      53       3      55 It i… [It i:…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1301FAB93F… sbc0… Tree…       1       1      56      10      65 s (%… s– (%)…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 104 more rows, and abbreviated variable names ¹​maxLevel,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ²​tokenOrderFirst, ³​docTokenSeqFirst, ⁴​tokenOrderLast, ⁵​docTokenSeqLast,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ⁶​transcript</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">treeDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 10</span></span></span>
+<span><span class="co">#&gt;   id           doc   name  maxLe…¹ token…² docTo…³ token…⁴ docTo…⁵ text  trans…⁶</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 123586E4BA4… sbc0… Tree…       1       1       1      19    <span style="text-decoration: underline;">1</span>029 (...… (...) …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 79D2B436E3F3 sbc0… Tree…       1       1       4      11      14 I sa… I said…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 36F1EB5B40F… sbc0… Tree…       1       1       4      11      14 I sa… I said…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 13085887E9F… sbc0… Tree…       1       1      15       6      20 (...… (...) …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1B81715C6D0… sbc0… Tree…       1       1      21      13      33 (...… (...) …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 8A717C858193 sbc0… Tree…       1       1      34       4      37 (...… (...) …</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable names ¹​maxLevel, ²​tokenOrderFirst,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ³​docTokenSeqFirst, ⁴​tokenOrderLast, ⁵​docTokenSeqLast, ⁶​transcript</span></span></span></code></pre></div>
 <p>The main column of interest that you might not understand is
 <code>maxLevel</code>. You can actually see <code>maxLevel</code> by
 looking at Rezonator. The root of a tree has level <code>0</code>,
@@ -152,25 +146,21 @@ policy of marking only one predicate-arguments structure per tree, the
 <code>maxLevel</code> always comes out as 1.</p>
 <p>Now onto our <code>treeEntry</code>s:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">treeEntryDF</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $default</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,525 × 15</span></span></span>
-<span><span class="co">#&gt;    id      doc   tree  order sourc…¹ level token…² docTo…³ token…⁴ docTo…⁵ text </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 3419C1… sbc0… 1235…     0 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       1       1       1       1 (...)</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 272B7E… sbc0… 1235…     1 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       2       2       2       2 God  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 9403F1… sbc0… 1235…     2 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       3       3       3       3 ,    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1FA817… sbc0… 36F1…     0 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       1       4       1       4 I    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> E5564F… sbc0… 1235…     3 <span style="color: #949494;">"</span>D98B0…     1       1       4       1       4 I    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 87560F… sbc0… 79D2…     0 <span style="color: #949494;">"</span>D4796…     1       1       4       1       4 I    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 219869… sbc0… 36F1…     1 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       2       5       2       5 said </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 29A7D8… sbc0… 79D2…     1 <span style="color: #949494;">""</span>          0       2       5       2       5 said </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 300526… sbc0… 1235…     4 <span style="color: #949494;">""</span>          0       2       5       2       5 said </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 163E21… sbc0… 36F1…     2 <span style="color: #949494;">"</span>2234E…     1       3       6       3       6 I    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 1,515 more rows, 4 more variables: transcript &lt;chr&gt;, parent &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   subtype &lt;chr&gt;, Relation &lt;chr&gt;, and abbreviated variable names ¹​sourceLink,</span></span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">treeEntryDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 15</span></span></span>
+<span><span class="co">#&gt;   id       doc   tree  order sourc…¹ level token…² docTo…³ token…⁴ docTo…⁵ text </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 3419C1E… sbc0… 1235…     0 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       1       1       1       1 (...)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 272B7E4… sbc0… 1235…     1 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       2       2       2       2 God  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 9403F19… sbc0… 1235…     2 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       3       3       3       3 ,    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1FA8175… sbc0… 36F1…     0 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       1       4       1       4 I    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> E5564F0… sbc0… 1235…     3 <span style="color: #949494;">"</span>D98B0…     1       1       4       1       4 I    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 87560FE… sbc0… 79D2…     0 <span style="color: #949494;">"</span>D4796…     1       1       4       1       4 I    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 4 more variables: transcript &lt;chr&gt;, parent &lt;chr&gt;, subtype &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Relation &lt;chr&gt;, and abbreviated variable names ¹​sourceLink,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ²​tokenOrderFirst, ³​docTokenSeqFirst, ⁴​tokenOrderLast, ⁵​docTokenSeqLast</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span></code></pre></div>
+<p>Here are some explanations of the unfamiliar entries:</p>
 <ul>
 <li>
 <code>order</code>: Gives the order of the entry inside the tree,
@@ -182,10 +172,10 @@ Unused entries get the level <code>-1</code>. If you want to get all the
 away!</li>
 <li>
 <code>sourceLink</code>: The link that links the current entry to
-its</li>
+its parent.</li>
 <li>
 <code>parent</code>: The entry that the <code>sourceLink</code>
-points to, i.e. the parent of the entry. Roots and unused parents do not
+points to, i.e. the parent of the entry. Roots and unused entries do not
 have this.</li>
 </ul>
 <p>The column <code>Relation</code> (and <code>subtype</code>) at the
@@ -227,7 +217,7 @@ something, the first tree will take precedence. Let’s do this to
 <span><span class="co">#&gt; There is more than one tree entry match for the token 152560A5DE6AC. I will take the first match.</span></span>
 <span><span class="co">#&gt; There is more than one tree entry match for the chunk 210FB26A315A. I will take the first match.</span></span>
 <span><span class="co">#&gt; There is more than one tree entry match for the chunk 22273255D825D. I will take the first match.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">treeEntry</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">treeEntry</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
 <span><span class="co">#&gt;   id            text  treeEntry      </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
@@ -237,7 +227,7 @@ something, the first tree will take precedence. Let’s do this to
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 37EFCBECFD691 I     <span style="color: #949494;">"</span>E5564F08F4F8<span style="color: #949494;">"</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 12D67756890C1 said  <span style="color: #949494;">"</span>29A7D8B395830<span style="color: #949494;">"</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71D59  I     <span style="color: #949494;">"</span>163E211526284<span style="color: #949494;">"</span></span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">treeEntry</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">treeEntry</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
 <span><span class="co">#&gt;   id            text                                     treeEntry     </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
@@ -247,7 +237,7 @@ something, the first tree will take precedence. Let’s do this to
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 158B579C1BA49 the morning                              <span style="color: #949494;">""</span>            </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2B6521E881365 all this other shit                      <span style="color: #949494;">""</span>            </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 5B854594DD34  the way (...) they were feeling          <span style="color: #949494;">""</span></span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">treeEntry</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">treeEntry</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
 <span><span class="co">#&gt;   id            text              treeEntry      </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
@@ -258,12 +248,14 @@ something, the first tree will take precedence. Let’s do this to
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2485C4F740FC0 &lt;0&gt;               <span style="color: #949494;">"</span>277C335C33462<span style="color: #949494;">"</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1BF2260B4AB78 Stay up late      <span style="color: #949494;">""</span></span></span></code></pre></div>
 <p>Once this step is done, you can use the results to link up
-information from the trees to other tables. In anticpiation of the
-coming tutorial, let’s merge the <code>Relation</code> field’s
-information into <code>trackDF</code>:</p>
+information from the trees to other tables using
+<code><a href="../reference/acFieldForeign.html">addFieldForeign()</a></code> or <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code>. In
+anticpiation of the coming tutorial, let’s merge the
+<code>Relation</code> field’s information into <code>trackDF</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="va">rez007</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/acFieldForeign.html">addFieldForeign</a></span><span class="op">(</span><span class="st">"track"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"gramRelation"</span>, <span class="st">"Relation"</span>, fieldaccess <span class="op">=</span> <span class="st">"foreign"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">track</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">chain</span>, <span class="va">text</span>, <span class="va">treeEntry</span>, <span class="va">gramRelation</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="va">rez007</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="../reference/acFieldForeign.html">addFieldForeign</a></span><span class="op">(</span><span class="st">"track"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"gramRelation"</span>, <span class="st">"Relation"</span>, fieldaccess <span class="op">=</span> <span class="st">"foreign"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">track</span><span class="op">$</span><span class="va">default</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">chain</span>, <span class="va">text</span>, <span class="va">treeEntry</span>, <span class="va">gramRelation</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
 <span><span class="co">#&gt;   id            chain         text              treeEntry       gramRelation</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span></span>
@@ -283,22 +275,24 @@ span <em>across</em> intonation units. For example, people often start a
 new intonation unit within a noun phrase after a filler like
 <em>uh…</em>. Or we might want to treat an entire subordinate clause and
 its dependents as a single chunk.</p>
-<p>There are several steps to merging chunks:</p>
+<p>There are two ways to merge chunks, but one way to do it is through
+tree entries. The steps are as follows:</p>
 <ol style="list-style-type: decimal">
-<li>Create constituent chunks, one per each unit that the chunk spansso
+<li>Create constituent chunks, one per each unit that the chunk spans so
 that, taken together, the chunks span the desired multiline chunk</li>
-<li>Create a treeEntry that contains all tokens in the merged chunk, and
-put the leaf in a tree.</li>
-<li>Use the mergeChunksWithTree command in rezonateR to merge them.</li>
+<li>Create a <code>treeEntry</code> that contains all tokens in the
+merged chunk, and put the leaf in a tree.</li>
+<li>Use the <code><a href="../reference/mergeChunksWithTree.html">mergeChunksWithTree()</a></code> command in
+<code>rezonateR</code> to merge them.</li>
 </ol>
 <p>Steps 1 and 2 were already done in Rezonator. Take the following
 example of a subordinate clause and its dependent clauses:</p>
 <div class="figure">
-<img src="img/tree-chunkmerge.PNG" style="width:100.0%" alt=""><p class="caption">An image of the Rezonator interface with the four
-lines ‘when Ron gets home from work , (…) I wanna &lt;0&gt; spend time
-with Ron, because Ron, (…) usually does n’t get home till nine or ten’
-each entered into a chunk in the same trail, and combined into a single
-treeEntry.</p>
+<img src="img/tree-chunkmerge.PNG" style="width:100.0%" alt=""><p class="caption">Figure 1: An image of the Rezonator interface with
+the four lines ‘when Ron gets home from work , (…) I wanna &lt;0&gt;
+spend time with Ron, because Ron, (…) usually does n’t get home till
+nine or ten’ each entered into a chunk in the same trail, and combined
+into a single treeEntry.</p>
 </div>
 <p>The function <code><a href="../reference/mergeChunksWithTree.html">mergeChunksWithTree()</a></code> helps you create the
 desired multiline chunks. It has a few arguments, only the first of
@@ -313,16 +307,17 @@ which is obligatory;</p>
 <code>addToTrack</code>: Do you want to add the chunks to the
 <code>trackDF</code> too? No by default.</li>
 <li>
-<code>selectCond</code>; A condition for selecting which chunk is
+<code>selectCond</code>: A condition for selecting which chunk is
 going to provide the values of the tags of the entire chunk. If left
-blank, the first chunk will be chosen by default.</li>
+blank, the first chunk will be chosen by default, which is the case
+here.</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/mergeChunksWithTree.html">mergeChunksWithTree</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The following core and flex fields and not present and will have to be supplied later: layer</span></span>
-<span><span class="co">#&gt; The following core and flex fields and not present and will have to be supplied later: layer</span></span>
 <span><span class="co">#Relevant rows only</span></span>
-<span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">combinedChunk</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">name</span>, <span class="va">text</span>, <span class="va">combinedChunk</span><span class="op">)</span> <span class="co">#Showing only combined chunks and their members</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">combinedChunk</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">name</span>, <span class="va">text</span>, <span class="va">combinedChunk</span><span class="op">)</span> <span class="co">#Showing only combined chunks and their members</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 4</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 4 variables: id &lt;chr&gt;, name &lt;chr&gt;, text &lt;chr&gt;, combinedChunk &lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span></code></pre></div>
@@ -338,7 +333,10 @@ neither.</p>
 <ul>
 <li>If a chunk is a member of a multi-line chunk and supplies tag
 information for the entire chunk, it has the <code>combinedChunk</code>
-value <code>|infomember-(ID of combined chunk)</code>.</li>
+value <code>|infomember-(ID of combined chunk)</code>. Usually this is
+the first chunk of the constituent chunks, unless you filled the
+<code>selectCond</code> argument of
+<code><a href="../reference/mergeChunksWithTree.html">mergeChunksWithTree()</a></code>.</li>
 <li>If a chunk is a member of a multi-line chunk and does not supply tag
 information for the entire chunk, it has the <code>combinedChunk</code>
 value <code>|member-(ID of combined chunk)</code>.</li>
@@ -350,10 +348,133 @@ value <code>|member-(ID of combined chunk)</code>.</li>
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/mergedChunksToTrack.html">mergedChunksToTrack</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"default"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="looking-for-family">Looking for family<a class="anchor" aria-label="anchor" href="#looking-for-family"></a>
+</h2>
+<p>In many applications, we may want to navigate tree using a chunk (or
+token, track, or rez) as a starting point, such as finding the arguments
+of a verb (its children), or the verb that a referential expression is
+an argument of (its parent). Finding the parent is easy, because you can
+just look up the <code>parent</code> column in <code>treeEntryDF</code>.
+<code>rezonateR</code> provides some functions for finding siblings and
+children as well.</p>
+<div class="section level3">
+<h3 id="addpositionamongsiblings-finding-the-relative-position-of-an-element-among-its-siblings">
+<code>addPositionAmongSiblings()</code>: Finding the relative
+position of an element among its siblings<a class="anchor" aria-label="anchor" href="#addpositionamongsiblings-finding-the-relative-position-of-an-element-among-its-siblings"></a>
+</h3>
+<p>One common thing we may want to do when investigating word order is
+to find the position of an element among its siblings. It has four :</p>
+<ul>
+<li>
+<code>chunkDF</code>: The <code>chunkDF</code> you would like to
+find sibling position for.</li>
+<li>
+<code>rezrObj</code>: The <code>rezrObj</code> you’re working
+with.</li>
+<li>
+<code>treeEntryDFAddress</code>: An address to the
+<code>treeEntryDF</code> (see <code><a href="../articles/edit_tidyRez.html">vignette("edit_tidyRez")</a></code> for
+addresses). This can usually be left blank; by default it will be the
+union of all the tree entries. You only need to worry about this if you
+have multiple tree types.</li>
+<li>
+<code>cond</code>: Is there any condition for a chunk to be counted
+as a sibling? This can be useful for, for example, excluding
+adjuncts.</li>
+</ul>
+<p>Here is how we would apply this function to referential
+expressions:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">=</span> <span class="fu"><a href="../reference/addPositionAmongSiblings.html">addPositionAmongSiblings</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span>, <span class="va">rez007</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="advanced-finding-siblings-and-children-of-a-chunk">Advanced: Finding siblings and children of a chunk<a class="anchor" aria-label="anchor" href="#advanced-finding-siblings-and-children-of-a-chunk"></a>
+</h3>
+<p>For more advanced operations, there are several ways of finding the
+children and siblings of an entry or chunk:</p>
+<ul>
+<li>
+<code><a href="../reference/chunkfam.html">getChildrenOfEntry()</a></code>: Get the children of a tree
+entry.</li>
+<li>
+<code><a href="../reference/chunkfam.html">getChildrenOfChunk()</a></code>: Get the children of a chunk (or
+token).</li>
+<li>
+<code><a href="../reference/chunkfam.html">getChildrenOfChunkIf()</a></code>: Get the children of a chunk
+given a certain condition.</li>
+<li>
+<code><a href="../reference/chunkfam.html">getSiblingsOfEntry()</a></code>: Get the siblings of a tree
+entry.</li>
+<li>
+<code><a href="../reference/chunkfam.html">getSiblingsOfChunk()</a></code>: Get the siblings of a chunk (or
+token)</li>
+<li>
+<code>getSiblingsOfChunkIf()</code>: Get the siblings of a chunk
+given a certain condition.</li>
+</ul>
+<p>Because <code>rezrDF</code>s discourage columns where each cell is a
+vector, and you can have multiple siblings or children, it is not
+encouraged to use these functions directly in <code><a href="../reference/rez_mutate.html">rez_mutate()</a></code>
+or <code><a href="../reference/acField.html">addField()</a></code>, unless you can be confident that the result
+is unique (e.g. if you are only looking for the subject of a clause, and
+there can only be one subject in the data you’re working with).</p>
+<p>The arguments of these functions are relatively straightforward: *
+<code>treeEntry</code>: A <code>treeEntry</code> ID that you’re starting
+from. * <code>chunkID</code>: A chunk ID that you’re starting from. *
+<code>treeEntryDF</code>: A <code>treeEntryDF</code> from a
+<code>rezrObj</code>. Must be a <code>rezrDF</code>, not a list;
+<code><a href="../reference/combineLayer.html">combineLayers()</a></code> can be used to combine multiple
+<code>rezrDF</code>s. * <code>chunkDF</code>: A <code>chunkDF</code>
+from a <code>rezrObj</code>, * <code>cond</code>: A condition using
+columns from the <code>chunkDF</code>.</p>
+<p>The only tricky thing about using these is the two
+<code>rezrDF</code> arguments. They must be a single
+<code>rezrDF</code>, not a list, and the <code>chunkDF</code> must
+contain both parents and children (for child-related functions) and all
+relevant siblings (for sibling-related functions). And of course, the
+<code>chunkDF</code> must have a <code>treeEntry</code> column from
+<code><a href="../reference/getAllTreeCorrespondences.html">getAllTreeCorrespondences()</a></code>. The functions
+<code><a href="../reference/combineLayer.html">combineLayers()</a></code>, <code><a href="../reference/combineLayer.html">combineChunks()</a></code> or
+<code><a href="../reference/combineLayer.html">combineTokenChunk()</a></code> that we have discussed before in
+<code><a href="../articles/import_save_basics.html">vignette("import_save_basics")</a></code> can be used to combine
+multiple <code>rezrDF</code>s.</p>
+<p>Here are two examples: First to find the siblings of the chunk
+<code>33EAD4C986974</code> <em>mutual r respect</em>, and then to find
+the subject of the verb <code>388D9A04E5559</code> <em>do
+train</em>:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">siblings</span> <span class="op">=</span> <span class="fu"><a href="../reference/chunkfam.html">getSiblingsOfChunk</a></span><span class="op">(</span>chunkID <span class="op">=</span> <span class="st">"33EAD4C986974"</span>,</span>
+<span>                   chunkDF <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span>,</span>
+<span>                   treeEntryDF <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">treeEntryDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span></span>
+<span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">siblings</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 31</span></span></span>
+<span><span class="co">#&gt;   id           doc   name   nest kind  place text  trans…¹ endNote order negPl…²</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1FD903B61D7… sbc0… Chun…     2 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    what… what i… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 20 more variables: corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, tokenOrderFirst &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   docTokenSeqFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;, docTokenSeqLast &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   layer &lt;chr&gt;, wordOrderFirst &lt;dbl&gt;, docWordSeqFirst &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   wordOrderLast &lt;dbl&gt;, docWordSeqLast &lt;dbl&gt;, unitSeqFirst &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   unitSeqLast &lt;dbl&gt;, treeEntry &lt;chr&gt;, combinedChunk &lt;chr&gt;, siblingPos &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   and abbreviated variable names ¹​transcript, ²​negPlace</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span>
+<span><span class="va">rez007</span> <span class="op">=</span> <span class="va">rez007</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="../reference/acFieldForeign.html">addFieldForeign</a></span><span class="op">(</span><span class="st">"chunk"</span>, <span class="st">"refexpr"</span>, <span class="st">"treeEntry"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"gramRelation"</span>, <span class="st">"Relation"</span>, fieldaccess <span class="op">=</span> <span class="st">"foreign"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="../reference/acFieldForeign.html">addFieldForeign</a></span><span class="op">(</span><span class="st">"chunk"</span>, <span class="st">"verb"</span>, <span class="st">"treeEntry"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"gramRelation"</span>, <span class="st">"Relation"</span>, fieldaccess <span class="op">=</span> <span class="st">"foreign"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="../reference/acFieldForeign.html">addFieldForeign</a></span><span class="op">(</span><span class="st">"token"</span>, <span class="st">""</span>, <span class="st">"treeEntry"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"gramRelation"</span>, <span class="st">"Relation"</span>, fieldaccess <span class="op">=</span> <span class="st">"foreign"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/chunkfam.html">getChildrenOfChunkIf</a></span><span class="op">(</span>chunkID <span class="op">=</span> <span class="st">"388D9A04E5559"</span>,</span>
+<span>                     chunkDF <span class="op">=</span> <span class="fu"><a href="../reference/combineLayer.html">combineTokenChunk</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span>,</span>
+<span>                     treeEntryDF <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">treeEntryDF</span><span class="op">$</span><span class="va">default</span>,</span>
+<span>                     cond <span class="op">=</span> <span class="op">(</span><span class="va">gramRelation</span> <span class="op">==</span> <span class="st">"Subj"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "348254E9E5413"</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
 <h2 id="speaking-of-tracks">Speaking of tracks …<a class="anchor" aria-label="anchor" href="#speaking-of-tracks"></a>
 </h2>
 <p>As usual, let’s not forget:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">savePath</span> <span class="op">=</span> <span class="st">"rez007.Rdata"</span></span>
 <span><span class="fu"><a href="../reference/saveload.html">rez_save</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="va">savePath</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Saving rezrObj ...</span></span></code></pre></div>

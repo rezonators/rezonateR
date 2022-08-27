@@ -47,13 +47,13 @@
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Add merged chunks in the chunkDF to the trackDF</h1>
+      <img src="" class="logo" alt=""><h1>Add merged chunks in the chunkDF to the <code>trackDF</code></h1>
       
       <div class="d-none name"><code>mergedChunksToTrack.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p>Add merged chunks in the chunkDF to the trackDF</p>
+    <p>Add merged chunks in the chunkDF to the <code>trackDF</code></p>
     </div>
 
     <div class="section level2">
@@ -64,7 +64,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>rezrObj</dt>
-<dd><p>A rezrObj that has had chunked merged using <a href="mergeChunksWithTree.html">mergeChunksWithTree</a>.</p></dd>
+<dd><p>A <code>rezrObj</code> that has had chunked merged using <a href="mergeChunksWithTree.html">mergeChunksWithTree</a>.</p></dd>
 
 
 <dt>trackLayers</dt>
@@ -75,9 +75,26 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A rezrObj with the trackDF augmented with a combined chunks from the chunkDF.</p>
+<p>A <code>rezrObj</code> with the <code>trackDF</code> augmented with a combined chunks from the <code>chunkDF.</code></p>
+
+
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007</span> <span class="op">=</span> <span class="va">sbc007</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">getAllTreeCorrespondences</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">mergeChunksWithTree</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">mergedChunksToTrack</span><span class="op">(</span><span class="st">"default"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> There is more than one tree entry match for the chunk 210FB26A315A. I will take the first match.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> There is more than one tree entry match for the chunk 22273255D825D. I will take the first match.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in .f(df, ...) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Problem while computing `siblingPos = getPositionAmongSiblings(...)`.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `strsplit()`:</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> non-character argument</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in updating the following field: siblingPos. Field skipped.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in getSourceTableInfo(rezrObj, address, df2key, field) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   object 'df2keys' not found</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in updating the following field: treeEntry. Field skipped.</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

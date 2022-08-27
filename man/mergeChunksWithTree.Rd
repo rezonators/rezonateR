@@ -14,15 +14,18 @@ mergeChunksWithTree(
 \arguments{
 \item{rezrObj}{The rezrObj object}
 
-\item{treeEntryDF}{A treeEntry data.frame, possibly filtered.}
+\item{treeEntryDF}{A \code{treeEntry} data.frame, possibly filtered.}
 
 \item{addToTrack}{Do you want to add the chunks to the trackDF as well?}
 
 \item{selectCond}{The condition for selecting which chunk provides the field values.}
 }
 \value{
-The rezrObj with additional rows for merged chunks. Original chunks stay behind. There will be a new column called combinedChunk. Combined chunks will get the value 'combined'. Members of those chunks will get the value '|infomember=COMBINEDCHUNKID' (if they are providing the data for the combined chunk) or '|member=COMBINEDCHUNKID' (if they are not the data-providing chunk). treeEntry (through getAllTreeCorrespondences()) is required to be present in the chunkDF.
+The rezrObj with additional rows for merged chunks. Original chunks stay behind. There will be a new column called combinedChunk. Combined chunks will get the value \code{combined}. Members of those chunks will get the value \verb{|infomember=COMBINEDCHUNKID} (if they are providing the data for the combined chunk) or \verb{|member=COMBINEDCHUNKID} (if they are not the data-providing chunk). \code{treeEntry} (through \code{getAllTreeCorrespondences()}) is required to be present in the \code{chunkDF}.
 }
 \description{
 Relate table rows to tree entries covering the same tokens.
+}
+\examples{
+sbc007 = sbc007 \%>\% getAllTreeCorrespondences \%>\% mergeChunksWithTree
 }

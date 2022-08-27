@@ -86,6 +86,8 @@ reference:
   contents:
   - getAllTreeCorrespondences
   - mergeChunksWithTree
+  - addPositionAmongSiblings
+  - getChildrenOfEntry
 - title: "Other editing functions"
   desc: >
      Functions not ordinarily called by users, but may be used by advanced users. Subject to change without wwarning. Many are related to update functions.

@@ -49,7 +49,7 @@ combineChunks = function(rezrObj, ...){
 #' @export
 combineTokenChunk = function(rezrObj, type = "intersect"){
   if("chunkDF" %in% names(rezrObj)){
-      chunkDF = combineChunks(rezrObj, type)
+      chunkDF = combineChunks(rezrObj, type = type)
 
       tokenDF = rezrObj$tokenDF %>% rez_mutate(tokenOrderFirst = tokenOrder, tokenOrderLast = tokenOrder, docTokenSeqFirst = docTokenSeq, docTokenSeqLast = docTokenSeq)
 
@@ -62,7 +62,7 @@ combineTokenChunk = function(rezrObj, type = "intersect"){
         }
       }
 
-      rez_bind_rows(tokenDF, chunkDF)
+      rez_bind_rows(tokenDF, chunkDF, type = type)
   } else {
     rezrObj$tokenDF
   }

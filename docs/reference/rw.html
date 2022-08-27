@@ -106,6 +106,10 @@
 
 <p>For <code>rez_read_csv()</code>, a data.frame for the CSV being imported. This is NOT a <code>rezrDF</code>, so please do not assign it to a <code>rezrObj</code>; use <code><a href="updateFromDF.html">updateFromDF()</a></code> to update an existing rezrDF with the imported data.frame.</p>
     </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>Includes a UTF-8 byte mark by default, so you can open the CSV directly in Excel. Whenever you export a .csv with the intention of importing it back, you must export the <code>id</code> column so that the resulting table can be merged back.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

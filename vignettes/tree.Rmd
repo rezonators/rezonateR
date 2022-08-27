@@ -22,7 +22,7 @@ library(rezonateR)
 This tutorial discusses trees in `rezonateR`. In the first tutorial `vignette("import_save_basics")`, we took a quick glimpse at trees when discussing the node map, but now it's time to dive a bit deeper! And if you haven't read the previous vignettes, as always, that's fine because each tutorial is self-contained. I won't assume you've read the bit about trees in `vignette("import_save_basics")`.
 
 
-We will be using the same Santa Barbara Corpus as before:
+We will be using the same Santa Barbara Corpus annotation as before:
 
 ```{r}
 library(rezonateR)
@@ -36,7 +36,7 @@ The file contains predicate-argument structures for the first fifth of the text 
 There are three tree-related entities in Rezonator (and `rezonateR`):
 
 * `tree`: Stores entire trees.
-* `treeEntry`: The items that are linked together in trees. If you have not combined any tokens inside Rezonator, then the `treeEntry`s are correspond 1:1 to the tokens. This is the case if you are doing UD annotation, for example. If you have combined tokens, then those combined tokens will be entries.
+* `treeEntry`: The items that are linked together in trees. If you have not combined any tokens into tree entries inside Rezonator, then the `treeEntry`s are correspond 1:1 to the tokens. This is the case if you are doing UD annotation, for example. If you have combined tokens, then those combined tokens will be entries.
 * `treeLink`: The links between trees. Unlike regular links (such as those in trails or resonances) `treeLink`s *can*, and often are, annotated.
 
 This section will examine each of these in detail.
@@ -44,7 +44,7 @@ This section will examine each of these in detail.
 Let's first take a quick look at our `treeDF`:
 
 ```{r}
-head(rez007$treeDF)
+head(rez007$treeDF$default)
 ```
 
 The main column of interest that you might not understand is `maxLevel`. You can actually see `maxLevel` by looking at Rezonator. The root of a tree has level `0`, whereas the next one down has a level of `1`. Because of our policy of marking only one predicate-arguments structure per tree, the `maxLevel` always comes out as 1.
@@ -52,13 +52,14 @@ The main column of interest that you might not understand is `maxLevel`. You can
 Now onto our `treeEntry`s:
 
 ```{r}
-head(rez007$treeEntryDF)
+head(rez007$treeEntryDF$default)
 ```
+Here are some explanations of the unfamiliar entries:
 
 * `order`: Gives the order of the entry inside the tree, *regardless* of whether an entry has been used.
 * `level`: Gives the level of the entry inside the tree. Unused entries get the level `-1`. If you want to get all the *used* entries of a particular tree, don't forget to filter these away!
-* `sourceLink`: The link that links the current entry to its 
-* `parent`: The entry that the `sourceLink` points to, i.e. the parent of the entry. Roots and unused parents do not have this.
+* `sourceLink`: The link that links the current entry to its parent.
+* `parent`: The entry that the `sourceLink` points to, i.e. the parent of the entry. Roots and unused entries do not have this.
 
 The column `Relation` (and `subtype`) at the end are automatically generated from `treeLinkDF`:
 
@@ -80,10 +81,11 @@ head(rez007$chunkDF$refexpr %>% select(id, text, treeEntry))
 head(rez007$trackDF$default %>% select(id, text, treeEntry))
 ```
 
-Once this step is done, you can use the results to link up information from the trees to other tables. In anticpiation of the coming tutorial, let's merge the `Relation` field's information into `trackDF`:
+Once this step is done, you can use the results to link up information from the trees to other tables using `addFieldForeign()` or `rez_left_join()`. In anticpiation of the coming tutorial, let's merge the `Relation` field's information into `trackDF`:
 
 ```{r}
-rez007 = rez007 %>% addFieldForeign("track", "default", "treeEntry", "default", "treeEntry", "gramRelation", "Relation", fieldaccess = "foreign")
+rez007 = rez007 %>%
+  addFieldForeign("track", "default", "treeEntry", "default", "treeEntry", "gramRelation", "Relation", fieldaccess = "foreign")
 head(rez007$track$default %>% select(id, chain, text, treeEntry, gramRelation))
 ```
 
@@ -91,27 +93,29 @@ head(rez007$track$default %>% select(id, chain, text, treeEntry, gramRelation))
 
 The current Rezonator interface only supports chunks within an intonation unit. However, there are often reasons to have chunks that span *across* intonation units. For example, people often start a new intonation unit within a noun phrase after a filler like *uh...*. Or we might want to treat an entire subordinate clause and its dependents as a single chunk.
 
-There are several steps to merging chunks:
+There are two ways to merge chunks, but one way to do it is through tree entries. The steps are as follows:
 
-1. Create constituent chunks, one per each unit that the chunk spansso that, taken together, the chunks span the desired multiline chunk
-2. Create a treeEntry that contains all tokens in the merged chunk, and put the leaf in a tree.
-3. Use the mergeChunksWithTree command in rezonateR to merge them.
+1. Create constituent chunks, one per each unit that the chunk spans so that, taken together, the chunks span the desired multiline chunk
+2. Create a `treeEntry` that contains all tokens in the merged chunk, and put the leaf in a tree.
+3. Use the `mergeChunksWithTree()` command in `rezonateR` to merge them.
 
 Steps 1 and 2 were already done in Rezonator. Take the following example of a subordinate clause and its dependent clauses:
 
-![An image of the Rezonator interface with the four lines 'when Ron gets home from work , (...) I wanna <0> spend time with Ron, because Ron, (...) usually does n't get home till nine or ten' each entered into a chunk in the same trail, and combined into a single treeEntry.](img/tree-chunkmerge.PNG){width=100%}
+![Figure 1: An image of the Rezonator interface with the four lines 'when Ron gets home from work , (...) I wanna <0> spend time with Ron, because Ron, (...) usually does n't get home till nine or ten' each entered into a chunk in the same trail, and combined into a single treeEntry.](img/tree-chunkmerge.PNG){width=100%}
 
 The function `mergeChunksWithTree()` helps you create the desired multiline chunks. It has a few arguments, only the first of which is obligatory;
 
 * `rezrObj`: The `rezrObj` to be changed.
 * `treeEntryDF`: The `treeEntry` `rezrDF`, by default `treeEntry$default`.
 * `addToTrack`: Do you want to add the chunks to the `trackDF` too? No by default.
-* `selectCond`; A condition for selecting which chunk is going to provide the values of the tags of the entire chunk. If left blank, the first chunk will be chosen by default.
+* `selectCond`: A condition for selecting which chunk is going to provide the values of the tags of the entire chunk. If left blank, the first chunk will be chosen by default, which is the case here.
 
 ```{r}
 rez007 = mergeChunksWithTree(rez007)
 #Relevant rows only
-rez007$chunkDF$refexpr %>% filter(combinedChunk != "") %>% select(id, name, text, combinedChunk) #Showing only combined chunks and their members
+rez007$chunkDF$refexpr %>%
+  filter(combinedChunk != "") %>%
+  select(id, name, text, combinedChunk) #Showing only combined chunks and their members
 ```
 
 After you call this command, the merged chunks will be added to the *bottom* of the correponding chunk `rezrDF`.  Chunk tags are taken from the first constituent chunk of each merger by default; see the manual for setting custom conditions. There will in addition be a column called `combinedChunk` that tells you whether a chunk is a combined chunk, a member of a combined chunk, or neither.
@@ -119,7 +123,7 @@ After you call this command, the merged chunks will be added to the *bottom* of 
 There are three possible types of values in `combinedChunk`:
 
 
-* If a chunk is a member of a multi-line chunk and supplies tag information for the entire chunk, it has the `combinedChunk` value `|infomember-(ID of combined chunk)`.
+* If a chunk is a member of a multi-line chunk and supplies tag information for the entire chunk, it has the `combinedChunk` value `|infomember-(ID of combined chunk)`. Usually this is the first chunk of the constituent chunks, unless you filled the `selectCond` argument of `mergeChunksWithTree()`.
 * If a chunk is a member of a multi-line chunk and does not supply tag information for the entire chunk, it has the `combinedChunk` value `|member-(ID of combined chunk)`.
 * The combined chunk is simply marked `combined`.
 
@@ -129,6 +133,66 @@ If you didn't set `addToTrack = T`, the function `mergeChunksToTrack` has the sa
 ```{r, cache = TRUE}
 rez007 = mergedChunksToTrack(rez007, "default")
 ```
+
+## Looking for family
+
+In many applications, we may want to navigate tree using a chunk (or token, track, or rez) as a starting point, such as finding the arguments of a verb (its children), or the verb that a referential expression is an argument of (its parent). Finding the parent is easy, because you can just look up the `parent` column in `treeEntryDF`. `rezonateR` provides some functions for finding siblings and children as well.
+
+### `addPositionAmongSiblings()`: Finding the relative position of an element among its siblings
+
+One common thing we may want to do when investigating word order is to find the position of an element among its siblings. It has four :
+
+* `chunkDF`: The `chunkDF` you would like to find sibling position for.
+* `rezrObj`: The `rezrObj` you're working with.
+* `treeEntryDFAddress`: An address to the `treeEntryDF` (see `vignette("edit_tidyRez")` for addresses). This can usually be left blank; by default it will be the union of all the tree entries. You only need to worry about this if you have multiple tree types.
+* `cond`: Is there any condition for a chunk to be counted as a sibling? This can be useful for, for example, excluding adjuncts.
+
+Here is how we would apply this function to referential expressions:
+
+```{r}
+rez007$chunkDF$refexpr = addPositionAmongSiblings(rez007$chunkDF$refexpr, rez007)
+```
+
+
+### Advanced: Finding siblings and children of a chunk
+For more advanced operations, there are several ways of finding the children and siblings of an entry or chunk:
+
+* `getChildrenOfEntry()`: Get the children of a tree entry. 
+* `getChildrenOfChunk()`: Get the children of a chunk (or token).
+* `getChildrenOfChunkIf()`: Get the children of a chunk given a certain condition.
+* `getSiblingsOfEntry()`: Get the siblings of a tree entry.
+* `getSiblingsOfChunk()`: Get the siblings of a chunk (or token)
+* `getSiblingsOfChunkIf()`: Get the siblings of a chunk given a certain condition.
+
+Because `rezrDF`s discourage columns where each cell is a vector, and you can have multiple siblings or children, it is not encouraged to use these functions directly in `rez_mutate()` or `addField()`, unless you can be confident that the result is unique (e.g. if you are only looking for the subject of a clause, and there can only be one subject in the data you're working with).
+
+The arguments of these functions are relatively straightforward:
+* `treeEntry`: A `treeEntry` ID that you're starting from.
+* `chunkID`: A chunk ID that you're starting from.
+* `treeEntryDF`: A `treeEntryDF` from a `rezrObj`. Must be a `rezrDF`, not a list; `combineLayers()` can be used to combine multiple `rezrDF`s.
+* `chunkDF`: A `chunkDF` from a `rezrObj`, 
+* `cond`: A condition using columns from the `chunkDF`.
+
+The only tricky thing about using these is the two `rezrDF` arguments. They must be a single `rezrDF`, not a list, and the `chunkDF` must contain both parents and children (for child-related functions) and all relevant siblings (for sibling-related functions). And of course, the `chunkDF` must have a `treeEntry` column from `getAllTreeCorrespondences()`. The functions `combineLayers()`, `combineChunks()` or `combineTokenChunk()` that we have discussed before in `vignette("import_save_basics")` can be used to combine multiple `rezrDF`s.
+
+Here are two examples: First to find the siblings of the chunk `33EAD4C986974` *mutual r respect*, and then to find the subject of the verb `388D9A04E5559` *do train*:
+
+```{r}
+siblings = getSiblingsOfChunk(chunkID = "33EAD4C986974",
+                   chunkDF = rez007$chunkDF$refexpr,
+                   treeEntryDF = rez007$treeEntryDF$default)
+rez007$chunkDF$refexpr %>% filter(id %in% siblings)
+rez007 = rez007 %>%
+  addFieldForeign("chunk", "refexpr", "treeEntry", "default", "treeEntry", "gramRelation", "Relation", fieldaccess = "foreign") %>%
+  addFieldForeign("chunk", "verb", "treeEntry", "default", "treeEntry", "gramRelation", "Relation", fieldaccess = "foreign") %>%
+  addFieldForeign("token", "", "treeEntry", "default", "treeEntry", "gramRelation", "Relation", fieldaccess = "foreign")
+getChildrenOfChunkIf(chunkID = "388D9A04E5559",
+                     chunkDF = combineTokenChunk(rez007),
+                     treeEntryDF = rez007$treeEntryDF$default,
+                     cond = (gramRelation == "Subj"))
+```
+
+
 
 ## Speaking of tracks ...
 

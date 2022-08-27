@@ -23,7 +23,7 @@ updateFromDF(
 
 \item{changeDF}{A data frame, not necessarily a rezrDF, from which changes will be pulled.}
 
-\item{changeCols}{Columns to be changed.}
+\item{changeCols}{Columns to be changed. This should include names of columns to be added.}
 
 \item{changeType}{Which types of columns (in field access terms) will you change?}
 
@@ -53,5 +53,5 @@ Most often used for updating a rezrDF using data from a CSV used for manual anno
 \examples{
 inpath = system.file("extdata", "rez007_refexpr_edited.csv", package = "rezonateR")
 changeDF = rez_read_csv(inpath, origDF = rez007$trackDF$default)
-sbc007$trackDF$default = sbc007$trackDF$default \%>\% updateFromDF(changeDF, addCols = T, changeCols = c()) #Only adds columns.
+sbc007$trackDF$default = sbc007$trackDF$default \%>\% updateFromDF(changeDF, addCols = T)
 }

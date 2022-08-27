@@ -73,7 +73,7 @@
 
 
 <dt>treeEntryDF</dt>
-<dd><p>A treeEntry data.frame, possibly filtered.</p></dd>
+<dd><p>A <code>treeEntry</code> data.frame, possibly filtered.</p></dd>
 
 
 <dt>addToTrack</dt>
@@ -88,9 +88,21 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>The rezrObj with additional rows for merged chunks. Original chunks stay behind. There will be a new column called combinedChunk. Combined chunks will get the value 'combined'. Members of those chunks will get the value '|infomember=COMBINEDCHUNKID' (if they are providing the data for the combined chunk) or '|member=COMBINEDCHUNKID' (if they are not the data-providing chunk). treeEntry (through getAllTreeCorrespondences()) is required to be present in the chunkDF.</p>
+<p>The rezrObj with additional rows for merged chunks. Original chunks stay behind. There will be a new column called combinedChunk. Combined chunks will get the value <code>combined</code>. Members of those chunks will get the value <code>|infomember=COMBINEDCHUNKID</code> (if they are providing the data for the combined chunk) or <code>|member=COMBINEDCHUNKID</code> (if they are not the data-providing chunk). <code>treeEntry</code> (through <code><a href="getAllTreeCorrespondences.html">getAllTreeCorrespondences()</a></code>) is required to be present in the <code>chunkDF</code>.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007</span> <span class="op">=</span> <span class="va">sbc007</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">getAllTreeCorrespondences</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">mergeChunksWithTree</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> There is more than one tree entry match for the chunk 210FB26A315A. I will take the first match.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> There is more than one tree entry match for the chunk 22273255D825D. I will take the first match.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in .f(df, ...) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Problem while computing `siblingPos = getPositionAmongSiblings(...)`.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `strsplit()`:</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> non-character argument</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in updating the following field: siblingPos. Field skipped.</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
