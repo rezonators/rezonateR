@@ -17,3 +17,8 @@ isFinal(seq, length)
 \description{
 Functions for getting information on whether something is located at the beginning or end of a larger structure.
 }
+\examples{
+sbc007$tokenDF = addFieldLocal(sbc007$tokenDF, "isPSentInitial", isInitial(pSentOrder)
+rez007$tokenDF = addFieldLocal(rez007$tokenDF, "pSentLength", inLength(pSentOrder, isWord = (text != "<0>")), type = "complex", groupField = "pSent")
+rez007$tokenDF = addFieldLocal(rez007$tokenDF, "isPSentFinal", isFinal(pSentOrder, pSentLength))
+}

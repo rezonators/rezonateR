@@ -47,9 +47,13 @@ new_rezrDF = function(df, fieldaccess, updateFunct, inNodeMap){
 #' @param df The data.frame whose field access attributes you want to see.
 #' @param attr The attribute that you want to extract.
 #' @param fields The field whose access attribute you want to see. If left blank, a vector containing all the attributes is output.
-#' @param value The value you want to set it to.
+#' @param value The value that you want to set it to.
 #'
 #' @return The value of the attribute you want to extract (for extract functions), and the DF with the value set (for set functions).
+#' @examples updateFunct(sbc007$unitDF, "docTokenSeqLast")
+#' #If you want to be able to edit the timestamps manually
+#' fieldaccess(sbc007$unitDF, c("unitEnd", "unitStart")) = c("flex", "flex")
+#' inNodeMap(sbc007$unitDF)
 #' @export
 getRezrDFAttr = function(df, attr, fields = ""){
   if(all(fields == "")){
@@ -129,6 +133,7 @@ new_updateFunction = function(f, deps){
 #' @rdname deps
 #' @param updateFunct An updateFunction object.
 #' @param value The value you want to set the function to.
+#' @examples deps(updateFunct(sbc007$entryDF, "wordOrder"))
 #' @export
 deps = function(updateFunct){
   attr(updateFunct, "deps")

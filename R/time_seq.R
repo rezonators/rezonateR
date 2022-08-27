@@ -108,9 +108,8 @@ addIsWordField.rezrObj = function(x, cond, addWordSeq = T){
     }
 
 
-
     #Entry and dependencies
-    x$entryDF = x$entryDF %>% rez_left_join(x$tokenDF %>% select(id, wordOrder, docWordSeq), by = c(token = "id"), df2Address = "token", fkey = "token", rezrObj = x)
+    x$entryDF = x$entryDF %>% rez_left_join(x$tokenDF %>% select(id, wordOrder, docWordSeq), by = c("token" = "id"), df2Address = "tokenDF", fkey = "token", rezrObj = x)
     x$unitDF = suppressWarnings(getSeqBounds(x$entryDF, x$unitDF, x$nodeMap$unit, "docWordSeq", tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit"))
 
   }
@@ -148,7 +147,9 @@ getDiscourseWordSeq = function(isWord, docTokenSeq){
 #' @inheritparams complexActions
 #' @param seq Name of the column containing the sequence value to be taken into account.
 #'
-#'
+#' @examples sbc007$tokenDF = addFieldLocal(sbc007$tokenDF, "isPSentInitial", isInitial(pSentOrder)
+#' rez007$tokenDF = addFieldLocal(rez007$tokenDF, "pSentLength", inLength(pSentOrder, isWord = (text != "<0>")), type = "complex", groupField = "pSent")
+#' rez007$tokenDF = addFieldLocal(rez007$tokenDF, "isPSentFinal", isFinal(pSentOrder, pSentLength))
 #' @export
 isInitial = function(seq){
   as.integer(seq) == 1
@@ -173,7 +174,8 @@ isFinal = function(seq, length){
 #' U = only element of the larger structure, O = not within the larger structure.
 #' @export
 #'
-#' @examples
+#' @examples sbc007$tokenDF = addFieldLocal(sbc007$tokenDF, "pSentLength", inLength(pSentOrder, isWord = (text != "<0>")), type = "complex", groupField = "pSent")
+#' sbc007$tokenDF = changeFieldLocal(sbc007$tokenDF, "pSentBiluo", getBiluoFromOrder(pSentOrder, pSentLength))
 getBiluoFromOrder = function(seq, length){
   init = isInitial(seq)
   fin = isFinal(seq, length)
@@ -194,7 +196,7 @@ getBiluoFromOrder = function(seq, length){
 #' gives the prosodic sentence ID, then this function will return the position of a token within a prosodic sentence.
 #' @export
 #'
-#' @examples
+#' @examples sbc007$tokenDF = addFieldLocal(sbc007$tokenDF, "tokenOrder2", getOrderFromSeq(unitSeq))
 getOrderFromSeq = function(id){
   ids = unique(id[!is.na(id) & id != 0])
   ord = integer(length(id))
@@ -214,7 +216,7 @@ getOrderFromSeq = function(id){
 #' gives the prosodic sentence ID, then `getOrderFormSeq` will return the position of a token within a prosodic sentence. If `order` gives the position within the prosodic sentence, then `getSeqFromOrder` will return the prosodic sentence sequence.
 #' @export
 #'
-#' @examples
+#' @examples sbc007$tokenDF = addFieldLocal(sbc007$tokenDF, "pSent", getSeqFromOrder(pSentOrder))
 getSeqFromOrder = function(order){
   structBegins = which(order == 1)
   result = integer(length(order))

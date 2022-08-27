@@ -151,12 +151,19 @@ rbind_list = function(dfs){
 }
 
 min_no0 = function(x){
-  min(x[x != 0], na.rm = T)
+  suppressWarnings(min(x[x != 0], na.rm = T))
 }
 
+min = function(x, ...){
+  suppressWarnings(base::min(x, ...))
+}
+
+max = function(x, ...){
+  suppressWarnings(base::max(x, ...))
+}
 
 max_no0 = function(x){
-  max(x[x != 0], na.rm = T)
+  suppressWarnings(max(x[x != 0], na.rm = T))
 }
 
 ViewReturn = function(x){

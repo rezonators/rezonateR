@@ -24,3 +24,11 @@ A column or vector with the desired changes.
 \description{
 Functions for merging and renaming categories in character or factor columns.
 }
+\examples{
+sbc007 = changeField(sbc007, entity = "token", layer = "",
+                              fieldName = "kind",
+                              expression = mergeCats(kind, Vocalism = c("Laugh", "Vocalism")))
+          sbc007 = changeField(sbc007, entity = "token", layer = "",
+                               fieldName = "kind",
+                               expression = renameCats(kind, Voc = "Vocalism"))
+}

@@ -33,9 +33,9 @@ Unlike most other tutorials, this one will be very brief, because it assumes tha
 
 In general, TidyRez functions are called by adding `rez_` in front of a `dplyr` function name, such a `rez_group_by()` or `rez_mutate()`. You might wonder why you'd want to use TidyRez instead of plain `dplyr`. The main reason is that TidyRez functions allow you to keep and/or update your field access values, `inNodeMap` values, and `updateFunctions`. Using base R or classic `dplyr` functions with `rezrDF`s will result in `reload()` fails (unless you add those attributes back yourself).
 
-Thus, TidyRez functions that add or change columns, such as `rez_mutate()` or `rez_left_join()`. will give you the option to change the field access value of that field through the `fieldaccess` field. `updateFunction`s are automatically added if you choose `auto` or `foreign`. Other TidyRez functions do not differ substantially from classic `dplyr`; theu only allow you to keep your field access labels, `updateFunction`s, and `inNodeMap` values.
+Thus, TidyRez functions that add or change columns, such as `rez_mutate()` or `rez_left_join()`. will give you the option to change the field access value of that field through the `fieldaccess` field. `updateFunction`s are automatically added if you choose `auto` or `foreign`. Other TidyRez functions do not differ substantially from classic `dplyr`; they only allow you to keep your field access labels, `updateFunction`s, and `inNodeMap` values.
 
-To see the power of TidyRez, let's try creating an emancipated `rezrDF` with only a subset of the original columns. Here, we take `trackDF$refexpr`, the table of referential expressions. We then damage one of the fields using a classic `dplyr` function. As you can see here, the emancipated `rezrDF` can still be updated using the `rezrObj`, effectively overriding the damage:
+To see the power of TidyRez, let's try creating an emancipated `rezrDF` with only a subset of the original columns with `rez_select()`. Here, we take `trackDF$refexpr`, the table of referential expressions. We then damage one of the `auto` fields using a classic `dplyr` function. As you can see here, the emancipated `rezrDF` can still be updated using the `rezrObj`, effectively overriding the damage:
 
 ```{r}
 refTable = rez007$trackDF$default %>% rez_select(id, token, chain, name, text, tokenOrderLast)
@@ -65,7 +65,7 @@ A few dplyr functions are completely safe to use in rezonateR, mostly those that
 
 * `rez_group_split()` for splitting rezrDFs vertically
 
-* `rez_group_by()` and rez_ungroup() for grouping
+* `rez_group_by()` and `rez_ungroup()` for grouping
 
 * `rez_select()` for selecting certain columns inside a rezrDF
 

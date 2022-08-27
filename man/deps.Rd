@@ -17,3 +17,6 @@ deps(updateFunct) <- value
 \description{
 Extract dependency information from an updateFunction, or set it.
 }
+\examples{
+deps(updateFunct(sbc007$entryDF, "wordOrder"))
+}

@@ -49,7 +49,7 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
     }
   }
 
-  #b) Figuring out foreign key from the by-line
+  #b) Figuring out by-line from the foreign key
   autoBy = character(0)
   if(is.null(list(...)[["by"]])){
     if(!all(fkey == "")){
@@ -62,11 +62,21 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
     }
   }
 
-  #c) Figuring out by-line from the foreign key
+  #c) Figuring out foreign key from by-line
   if(all(fkey == "")){
     if(!is.null(list(...)[["by"]])){
       fkey = names(list(...)[["by"]])[1]
       message("You didn't give me a foreign key for future updates, so I'm assuming it's the first of your by-fields.")
+    }
+  }
+
+  #and the df2key from the by-line if this is available, or else through fieldaccess
+  if(all(df2key == "")){
+    if(!is.null(list(...)[["by"]])){
+      df2key = list(...)[["by"]]
+      names(df2key) = ""
+    } else {
+      df2key = names(fieldaccess(df2)[fieldaccess(df2) == "key"])
     }
   }
 
@@ -146,7 +156,7 @@ updateLeftJoin = function(df1, rezrObj, address, fkey, df2key = "", field = ""){
 
   #Create the by-line
   if(length(fkey) != length(df2key)){
-    stop("Number of foreign keys (" %+% paste(fkey, collapse = ", ") %+% " does not match the number of primary keys in df1 (" %+% paste(fkey, collapse = ", ") %+% ").")
+    stop("Number of foreign keys (" %+% paste(fkey, collapse = ", ") %+% ") does not match the number of primary keys in df1 (" %+% paste(fkey, collapse = ", ") %+% ").")
   }
   by = character()
   for(i in 1:length(fkey)){

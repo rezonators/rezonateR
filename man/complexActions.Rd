@@ -34,3 +34,14 @@ concatenateAll concatenates everything together. It is not to be confused with \
 
 Remember to include only the function name in complexAction fields, and include the 'x' (normally the name of a column inside your rezrDF) in expression fields.
 }
+\examples{
+sbc007 = addField(sbc007, entity = "token", layer = "",
+                 fieldName = "longestWordInUnit",
+                 expression = longestLength(text),
+                 type = "complex",
+                 groupField = "unit",
+                 fieldaccess = "auto")
+sbc007$tokenDF = sbc007$tokenDF \%>\%
+rez_group_by(unit) \%>\%
+summarise(lenWords = inLength(text, isWord = (kind == "Word")))
+}

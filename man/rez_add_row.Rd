@@ -9,7 +9,7 @@ rez_add_row(df, ..., rezrObj = NULL)
 \arguments{
 \item{df}{The rezrDF to be updated.}
 
-\item{...}{Argument names are column names, and argument values are vectors of values of the rows you are adding. If a primary key is not supplied, I will generate one for you. Auto fields are automatically updated and do not need to be supplied; foreign fields are updated if a rezrObj is supplied.}
+\item{...}{Argument names are column names, and argument values are vectors of values of the rows you are adding. If a primary key is not supplied, I will generate one for you. Auto fields are automatically updated and do not need to be supplied.}
 
 \item{rezrObj}{A rezrObj, if you want to ensure that the primary key doesn't overlap with any other node in the nodeMap.}
 }
@@ -20,5 +20,5 @@ The rezrDF with the new row(s).
 Add new rows to a rezrDF.
 }
 \note{
-Does not update foreign fields If you want to update foreign fields, use \link{addRow.rezrDF}. If you call this function on a rezrDF with complex foreign fields, use \link{addRow.rezrDF} instead; otherwise, you cannot update those fields in the future.
+Does not update foreign fields. If you want to update foreign fields, use \link{addRow.rezrDF}. If you call this function on a rezrDF with complex foreign fields, use \link{addRow.rezrDF} instead; otherwise, you cannot update those fields in the future.
 }

@@ -31,8 +31,7 @@ new_rezrObj = function(list){
 #'
 #' @return A `rezrDF` containing the required material.
 #' @note This is mainly used when you need to draw information from more than one `rezrDF` for the purpose of functions like [rezonateR::addFieldForeign] or [rezonateR::rez_left_join].
-#' @example
-#' combineLayers(sbc007, "chunk", type = "intersect")
+#' @examples combineLayers(sbc007, "chunk", type = "intersect")
 #' @export
 combineLayers = function(rezrObj, entity, type = "intersect"){
   layers = names(rezrObj[[entity %+% "DF"]])

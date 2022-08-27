@@ -21,3 +21,6 @@ The rezrObj with additional rows for merged chunks. Original chunks stay behind.
 \description{
 Relate table rows to tree entries covering the same tokens.
 }
+\examples{
+sbc007 = mergeChunksWithIDs(sbc007, "largerChunk", selectCond = NULL)
+}

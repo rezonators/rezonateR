@@ -30,3 +30,6 @@ Combine different layers of an entity, and similar entities
 \note{
 This is mainly used when you need to draw information from more than one \code{rezrDF} for the purpose of functions like \link{addFieldForeign} or \link{rez_left_join}.
 }
+\examples{
+combineLayers(sbc007, "chunk", type = "intersect")
+}

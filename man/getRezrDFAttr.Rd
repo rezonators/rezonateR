@@ -34,11 +34,17 @@ inNodeMap(df, fields = "") <- value
 
 \item{fields}{The field whose access attribute you want to see. If left blank, a vector containing all the attributes is output.}
 
-\item{value}{The value you want to set it to.}
+\item{value}{The value that you want to set it to.}
 }
 \value{
 The value of the attribute you want to extract (for extract functions), and the DF with the value set (for set functions).
 }
 \description{
 Extract an attribute of a data.frame (inNodeMap, fieldaccess, updateFunct), or set it.
+}
+\examples{
+updateFunct(sbc007$unitDF, "docTokenSeqLast")
+#If you want to be able to edit the timestamps manually
+fieldaccess(sbc007$unitDF, c("unitEnd", "unitStart")) = c("flex", "flex")
+inNodeMap(sbc007$unitDF)
 }

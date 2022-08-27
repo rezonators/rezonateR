@@ -9,7 +9,7 @@
 #' @return A vector of container chunks, each of which corresponds to one row in the containedDF (the first one is chosen in the case of multiple parents). Right now, we do not support criteria for choosing container chunk.
 #' @export
 #'
-#' @examples
+#' @examples sbc007$chunkDF$verb = sbc007$chunkDF$verb %>% rez_mutate(containingRefexpr = findContainingChunk(sbc007$chunkDF$verb, sbc007$chunkDF$refexpr, proper = T))
 findContainingChunk = function(containedDF, containerDF, proper = F){
   #Will have to be modified when I have multiple docs
   sapply(1:nrow(containedDF), function(x){
@@ -51,7 +51,7 @@ updateContainingChunk = function(containedDF, rezrObj, containerDFAdd){
 #' @param selectCond The condition for selecting which chunk provides the field values.
 #'
 #' @return The rezrObj with additional rows for merged chunks. Original chunks stay behind. There will be a new column called combinedChunk. Combined chunks will get the value 'combined'. Members of those chunks will get the value '|infomember=COMBINEDCHUNKID' (if they are providing the data for the combined chunk) or '|member=COMBINEDCHUNKID' (if they are not the data-providing chunk). treeEntry (through getAllTreeCorrespondences()) is required to be present in the chunkDF.
-#'
+#' @examples sbc007 = mergeChunksWithIDs(sbc007, "largerChunk", selectCond = NULL)
 #' @export
 mergeChunksWithIDs = function(rezrObj, idField, addToTrack = F, selectCond = NULL){
   tcDF = combineTokenChunk(rezrObj)
@@ -72,7 +72,8 @@ mergeChunksWithIDs = function(rezrObj, idField, addToTrack = F, selectCond = NUL
 
   for(newChunk in newChunks){
     chunksCombined = chunkDF %>% filter(!!parse_expr(idField) == newChunk) %>% pull(id)
-    rezrObj = mergeGivenChunks(rezrObj, chunkDF, chunksCombined, selectCond)
+    rezrObj = mergeGivenChunks(rezrObj, chunkDF, chunksCombined, selectCond, i)
+    i = i + 1
   }
   if(addToTrack){
     #todo: addToTrack
@@ -80,7 +81,7 @@ mergeChunksWithIDs = function(rezrObj, idField, addToTrack = F, selectCond = NUL
   rezrObj
 }
 
-mergeGivenChunks = function(rezrObj, chunkDF, chunksCombined, selectCond = NULL){
+mergeGivenChunks = function(rezrObj, chunkDF, chunksCombined, selectCond = NULL, i){
   if(all(!is.na(chunksCombined))){
     #Which chunk's annotations represents the whole thing?
     infoSource = NULL
@@ -100,7 +101,6 @@ mergeGivenChunks = function(rezrObj, chunkDF, chunksCombined, selectCond = NULL)
     newRow = infoSource
     newRow[fieldaccess(chunkDF) %in% c("foreign", "auto")] = NA
     newRow$name = "New Chunk " %+% i
-    i = i + 1
     newRow$id = createRezId(1, getIDs(rezrObj))
     newRow = as.list(newRow)
     newRow$combinedChunk = "combined"

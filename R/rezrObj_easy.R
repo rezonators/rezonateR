@@ -20,6 +20,8 @@
 #'
 #' @return When used on rezrObjs, a rezrObj with the changed rezrDF.
 #' @note There are no major differences between rezrDFs and rezrObjs. However, only the rezrDF variant can be applied on emancipated rezrDFs (rezrDFs that do not belong to a rezrObj), whereas the rezrObj variant is more elegant when working with rezrDFs within a rezrObj.
+#' @example
+#'
 #' @export
 addFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, type = "simple", fieldaccess = "flex", groupField = ""){
   entity = chompSuffix(entity, "DF")
@@ -279,6 +281,11 @@ addRow.rezrDF = function(rezrDF, ...){
 #' @param ... Arguments to be passed on to [rezonateR::rez_add_row]
 #'
 #' @return If applied on a rezrObj, a rezrObj with both the rezrDF and the associated nodeMap updated.
+#' @examples sbc007 = addRow(sbc007, "trail", "default",
+#'                           doc = "sbc007",
+#'                           chainCreateSeq = max(sbc007$trailDF$default$chainCreateSeq) + 1,
+#'                           name = "Danae",
+#'                           chainSize = 1)
 #' @export
 addRow.rezrObj = function(rezrObj, entity, layer, nodeMapArgs = list(), ...){
   args = list(...)
@@ -316,6 +323,7 @@ removeField.rezrObj = function(rezrObj, entity, layer, fields){
   } else {
     removeField(rezrObj[[entity %+% "DF"]], fields)
   }
+  rezrObj
 
 }
 

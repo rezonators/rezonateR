@@ -127,9 +127,6 @@ rez007$tokenDF = addFieldLocal(rez007$tokenDF, "pSent", getSeqFromOrder(pSentOrd
 head(rez007$tokenDF %>% select(id, text, pSent, pSentOrder))
 ```
 
-
-
-
 `isInitial()` and `isFinal()` tell us whether something is the initial or final member of a larger unit. `isInitial()` is simple: Its only parameter is the order (i.e. second representation).
 
 For example, the following code determines whether a token is the start of the prosodic sentence:

@@ -216,7 +216,16 @@ validateSimpleForeign = function(targetDF, sourceDF, targetForeignKeyName, targe
 #' @note concatenateAll concatenates everything together. It is not to be confused with [rezonateR::concatStringFields], which is applied on dataFrames. longest and shortest give the longest and shortest strings, and may have multiple entries if there are ties. longestLength and shortestLength give the lengths of the longest and shortest strings in x. Some base R functions that may be used include max, min, mean, range, etc.
 #'
 #' @note Remember to include only the function name in complexAction fields, and include the 'x' (normally the name of a column inside your rezrDF) in expression fields.
-#'
+#' @examples
+#' sbc007 = addField(sbc007, entity = "token", layer = "",
+#'                  fieldName = "longestWordInUnit",
+#'                  expression = longestLength(text),
+#'                  type = "complex",
+#'                  groupField = "unit",
+#'                  fieldaccess = "auto")
+#' sbc007$tokenDF = sbc007$tokenDF %>%
+#' rez_group_by(unit) %>%
+#' summarise(lenWords = inLength(text, isWord = (kind == "Word")))
 #' @export
 concatenateAll = function(x){
   x = sapply(x, function(y) if(is.na(y)) "" else y)
@@ -312,6 +321,12 @@ removeField.rezrDF = function(rezrDF, fields){
 #' @param levels If asFactor = T, you an use this to set the levels of the factor.
 #'
 #' @return A column or vector with the desired changes.
+#' @examples sbc007 = changeField(sbc007, entity = "token", layer = "",
+#'                               fieldName = "kind",
+#'                               expression = mergeCats(kind, Vocalism = c("Laugh", "Vocalism")))
+#'           sbc007 = changeField(sbc007, entity = "token", layer = "",
+#'                                fieldName = "kind",
+#'                                expression = renameCats(kind, Voc = "Vocalism"))
 #' @export
 mergeCats = function(x, ..., asFactor = F, levels = NULL){
   x = as.character(x)

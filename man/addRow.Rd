@@ -33,3 +33,10 @@ If applied on a rezrObj, a rezrObj with both the rezrDF and the associated nodeM
 \description{
 Add rows to a certain data.frame
 }
+\examples{
+sbc007 = addRow(sbc007, "trail", "default",
+                          doc = "sbc007",
+                          chainCreateSeq = max(sbc007$trailDF$default$chainCreateSeq) + 1,
+                          name = "Danae",
+                          chainSize = 1)
+}

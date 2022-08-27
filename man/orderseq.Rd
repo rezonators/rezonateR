@@ -25,3 +25,7 @@ gives the prosodic sentence ID, then \code{getOrderFormSeq} will return the posi
 \description{
 Get sequence number (position) within a larger structure (turn, prosodic sentence, etc.) from the ID of that structure, or the other way around
 }
+\examples{
+sbc007$tokenDF = addFieldLocal(sbc007$tokenDF, "tokenOrder2", getOrderFromSeq(unitSeq))
+sbc007$tokenDF = addFieldLocal(sbc007$tokenDF, "pSent", getSeqFromOrder(pSentOrder))
+}

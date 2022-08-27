@@ -19,3 +19,6 @@ A vector of container chunks, each of which corresponds to one row in the contai
 \description{
 Find chunks containing other chunks
 }
+\examples{
+sbc007$chunkDF$verb = sbc007$chunkDF$verb \%>\% rez_mutate(containingRefexpr = findContainingChunk(sbc007$chunkDF$verb, sbc007$chunkDF$refexpr, proper = T))
+}

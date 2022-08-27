@@ -81,6 +81,15 @@ L = last element of the larger structure, I = intermediate element of the larger
 U = only element of the larger structure, O = not within the larger structure.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="acFieldLocal.html">changeFieldLocal</a></span><span class="op">(</span><span class="va">sbc007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"pSentBiluo"</span>, <span class="fu">getBiluoFromOrder</span><span class="op">(</span><span class="va">pSentOrder</span>, <span class="va">pSentLength</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .f(df, ...):</span> Problem while computing `pSentBiluo = getBiluoFromOrder(pSentOrder,</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> pSentLength)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `isFinal()`:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> object 'pSentLength' not found</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -65,6 +65,7 @@ rez_dfop = function(df, .f, ..., fieldaccess = "flex", updateFunct = NA, oldName
 #field: The field name in the TARGET rezrDF in case we need to figure it out
 #df2key: Key field in the source table, if empty then we take the primary key
 getSourceTableInfo = function(rezrObj, address, df2key, field){
+
   if(length(address) == 1){
     #When there's only one address ...
     splitAdd = strsplit(address, "/")[[1]] #Split the address up
@@ -176,7 +177,7 @@ rez_rename = function(df, ...){
 
 #' Group / ungroup rezrDFs.
 #'
-#' A replacement for dplyr group_by and ungroup.
+#' A replacement for [dplyr::group_by()] and [dplyr::ungroup()].
 #'
 #' @rdname gug
 #' @inheritParams rez_mutate
@@ -264,12 +265,12 @@ rez_bind_rows = function(..., type = "intersect"){
 #' Add new rows to a rezrDF.
 #'
 #' @param df The rezrDF to be updated.
-#' @param ... Argument names are column names, and argument values are vectors of values of the rows you are adding. If a primary key is not supplied, I will generate one for you. Auto fields are automatically updated and do not need to be supplied; foreign fields are updated if a rezrObj is supplied.
+#' @param ... Argument names are column names, and argument values are vectors of values of the rows you are adding. If a primary key is not supplied, I will generate one for you. Auto fields are automatically updated and do not need to be supplied.
 #' @param rezrObj A rezrObj, if you want to ensure that the primary key doesn't overlap with any other node in the nodeMap.
 #'
 #'
 #' @return The rezrDF with the new row(s).
-#' @note Does not update foreign fields If you want to update foreign fields, use [rezonateR::addRow.rezrDF]. If you call this function on a rezrDF with complex foreign fields, use [rezonateR::addRow.rezrDF] instead; otherwise, you cannot update those fields in the future.
+#' @note Does not update foreign fields. If you want to update foreign fields, use [rezonateR::addRow.rezrDF]. If you call this function on a rezrDF with complex foreign fields, use [rezonateR::addRow.rezrDF] instead; otherwise, you cannot update those fields in the future.
 #' @export
 rez_add_row = function(df, ..., rezrObj = NULL){
   args = list(...)

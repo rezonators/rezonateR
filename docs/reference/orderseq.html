@@ -90,6 +90,15 @@ For example, if you want to find the position of a word within a prosodic senten
 <p>gives the prosodic sentence ID, then <code>getOrderFormSeq</code> will return the position of a token within a prosodic sentence. If <code>order</code> gives the position within the prosodic sentence, then <code>getSeqFromOrder</code> will return the prosodic sentence sequence.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">sbc007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"tokenOrder2"</span>, <span class="fu">getOrderFromSeq</span><span class="op">(</span><span class="va">unitSeq</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .f(df, ...):</span> Problem while computing `tokenOrder2 = getOrderFromSeq(unitSeq)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `unique()`:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> object 'unitSeq' not found</span>
+<span class="r-in"><span><span class="va">sbc007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">sbc007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"pSent"</span>, <span class="fu">getSeqFromOrder</span><span class="op">(</span><span class="va">pSentOrder</span><span class="op">)</span><span class="op">)</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

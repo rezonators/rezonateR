@@ -20,3 +20,7 @@ U = only element of the larger structure, O = not within the larger structure.
 \description{
 Get BILUO (begin-intermediate-last-unique-outside) values from a sequence value.
 }
+\examples{
+sbc007$tokenDF = addFieldLocal(sbc007$tokenDF, "pSentLength", inLength(pSentOrder, isWord = (text != "<0>")), type = "complex", groupField = "pSent")
+sbc007$tokenDF = changeFieldLocal(sbc007$tokenDF, "pSentBiluo", getBiluoFromOrder(pSentOrder, pSentLength))
+}
