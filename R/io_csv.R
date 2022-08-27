@@ -1,23 +1,24 @@
 #A series of functions for handling export to and from CSVs.
 
-#' Read and write rezrDFs as CSV files
+#' Read and write `rezrDF`s as CSV files
 #'
-#' Replacement of readr read_csv and write_csv, but contains added functionality for dealing with rezrDFs more easily.
+#' Replacement of readr [readr::read_csv()] and [readr::write_csv()], but contains added functionality for dealing with `rezrDF`s more easily.
 #'
 #' @rdname rw
-#' @param df The rezrDF to be exported.
+#' @param df The `rezrDF` to be exported.
 #' @param path The path from which a CSV is to be imported / exported.
 #' @param inclCols Columns to be included from the import / export.
 #' @param exclCols Columns to be excluded from the import / export.
 #' @param lubridate Are you using the lubridate package?
-#' @param origDF The rezrDF that originally produced this CSV, used to identify data types of the columns.
-#' @param ... Arguments passed onto read_csv and write_csv.
+#' @param origDF The `rezrDF` that originally produced this CSV, used to identify data types of the columns.
+#' @param ... Arguments passed onto [readr::read_csv()] and [readr::write_csv()]
 #'
-#' @return For rez_read_csv, a data.frame for the CSV being imported. This is NOT a rezrDF, so please do not assign it to a rezrObj; use [rezonateR::updateFromDF] to update an existing rezrDF with the imported data.frame.
+#' @return For `rez_read_csv()`, a data.frame for the CSV being imported. This is NOT a `rezrDF`, so please do not assign it to a `rezrObj`; use [rezonateR::updateFromDF()] to update an existing rezrDF with the imported data.frame.
 #' @examples
-#' #rez_write_csv(rez007$trackDF$default, "rez007_refexpr.csv", c("id", "unitLastText", "tokenOrderLast", "text", "name", "number"))
-#' #inpath = system.file("extdata", "rez007_refexpr_edited.csv", package = "rezonateR")
-#' #changeDF = rez_read_csv(inpath, origDF = rez007$trackDF$default)
+#' #rez_write_csv(sbc007$trackDF$default, "rez007_refexpr.csv", c("id", "tokenOrderLast", "text", "name"))
+#' inpath = system.file("extdata", "rez007_refexpr_edited.csv", package = "rezonateR")
+#' changeDF = rez_read_csv(inpath, origDF = rez007$trackDF$default)
+#' @note Includes a UTF-8 byte mark by default, so you can open the CSV directly in Excel. Whenever you export a .csv with the intention of importing it back, you must export the `id` column so that the resulting table can be merged back.
 #' @export
 rez_write_csv = function(df, path, inclCols = character(0), exclCols = character(0), ...){
   if(length(inclCols) > 0){
@@ -95,7 +96,7 @@ rez_read_csv = function(path, origDF = NULL, lubridate = F, inclCols = character
 #'
 #' @param targetDF The target rezrDF.
 #' @param changeDF A data frame, not necessarily a rezrDF, from which changes will be pulled.
-#' @param changeCols Columns to be changed.
+#' @param changeCols Columns to be changed. This should include names of columns to be added.
 #' @param changeType Which types of columns (in field access terms) will you change?
 #' @param renameCols Will you rename columns according to the new data frame?
 #' @param colCorr If renameCols = T, then a list where names are the new names and values are the old names. If renameCols = F, then the opposite.
@@ -107,7 +108,10 @@ rez_read_csv = function(path, origDF = NULL, lubridate = F, inclCols = character
 #'
 #' @return The updated rezrDF.
 #' @export
-#'
+#' @examples
+#' inpath = system.file("extdata", "rez007_refexpr_edited.csv", package = "rezonateR")
+#' changeDF = rez_read_csv(inpath, origDF = rez007$trackDF$default)
+#' sbc007$trackDF$default = sbc007$trackDF$default %>% updateFromDF(changeDF, addCols = T)
 #' @note Most often used for updating a rezrDF using data from a CSV used for manual annotation.
 updateFromDF = function(targetDF, changeDF, changeCols = NULL, changeType = "flex", renameCols = F, colCorr = list(), delRows = F, addRows = F, addCols = F, reloadAfterCorr = T, rezrObj = NULL){
   #TODO: Test column name changes
@@ -125,7 +129,7 @@ updateFromDF = function(targetDF, changeDF, changeCols = NULL, changeType = "fle
     if(!addCols){
       changeCols = colnames(changeDF) %>% intersect(colnames(targetDF)) %>% setdiff(getKey(targetDF))
     } else {
-      changeCols = colnames(changeDF) %>% setdiff(getKey(targetDF)) %>% intersect(getFieldsOfType(targetDF, changeType))
+      changeCols = colnames(changeDF) %>% setdiff(getKey(targetDF)) %>% intersect(getFieldsOfType(targetDF, changeType)) %>% union(setdiff(colnames(changeDF), colnames(targetDF)))
     }
   } else {
     if(getKey(targetDF) %in% changeCols) stop("You cannot change a key field.")

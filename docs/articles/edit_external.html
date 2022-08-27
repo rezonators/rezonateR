@@ -101,23 +101,24 @@ error-prone experience.</p>
 <h2 id="the-workflow">The workflow<a class="anchor" aria-label="anchor" href="#the-workflow"></a>
 </h2>
 <p>In general, the workflow when working externally is to first finish
-at least some annotations in Rezonator. You then import it to rezonateR
-and, typically, use the editing functions from the previous tutorials to
-add some annotations automatically.</p>
-<p>You will then export a <code>.csv</code> file from rezonateR. Because
-rezrDFs often contain a lot of information that will be a distraction
-when working with a <code>.csv</code>, you can export a lighter version
-of it as a <code>.csv</code> file. After working with the
-<code>.csv</code> file, you will import it into Rezonator, then combine
-the information in the newly imported <code>.CSV</code> back to the
-original <code>rezrDF</code>.</p>
+at least some annotations in Rezonator. You then import it to
+<code>rezonateR</code> and, typically, use the editing functions from
+the previous tutorials to add some annotations automatically.</p>
+<p>You will then export a <code>.csv</code> file from
+<code>rezonateR.</code> Because <code>rezrDF</code>s often contain a lot
+of information that will be a distraction when working with a
+<code>.csv</code>, you can export a lighter version of it as a
+<code>.csv</code> file. After working with the <code>.csv</code> file,
+you will import it into Rezonator, then combine the information in the
+newly imported <code>.CSV</code> back to the original
+<code>rezrDF</code>.</p>
 <p>Let’s say we want to annotate the number of the referential
 expressions inside <code>trackDF$default</code>. A good approximation
 will be to mark everything that ends with &lt;s&gt; as plural, along
 with common plural pronouns and demonstratives, mark coordinate noun
 phrases as plural, mark noun phrases with singular demonstratives as
 singular, mark <em>you</em> as uncertain, and then mark the rest as
-singular. Here is how it may be done with tidyRez:</p>
+singular. Here is how it may be done with TidyRez:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>number <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">text</span>, <span class="st">" and "</span><span class="op">)</span> <span class="op">~</span> <span class="st">"pl"</span>,</span>
@@ -143,10 +144,11 @@ singular. Here is how it may be done with tidyRez:</p>
 <h2 id="updating-rezonater-using-external-information">Updating rezonateR using external information<a class="anchor" aria-label="anchor" href="#updating-rezonater-using-external-information"></a>
 </h2>
 <p>Before we export this as a CSV for annotation, I would like to add a
-column inside the rezrDF that gives us the word of the entire unit.
-(Since this document currently does not have multi-unit track entries,
-it will suffice to use unitLast or unitFirst). It will be useful to be
-able to see this column while making manual annotations:</p>
+column inside the <code>rezrDF</code> that gives us the word of the
+entire unit. (Since this document currently does not have multi-unit
+track entries, it will suffice to use <code>unitLast</code> or
+<code>unitFirst</code>). It will be useful to be able to see this column
+while making manual annotations:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rez_left_join.html">rez_left_join</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">unitDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_select.html">rez_select</a></span><span class="op">(</span><span class="va">unitSeq</span>, <span class="va">text</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>unitSeqLast <span class="op">=</span> <span class="st">"unitSeq"</span><span class="op">)</span>, suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"_unit"</span><span class="op">)</span>, df2key <span class="op">=</span> <span class="st">"unitSeq"</span>, rezrObj <span class="op">=</span> <span class="va">rez007</span>, df2Address <span class="op">=</span> <span class="st">"unitDF"</span>, fkey <span class="op">=</span> <span class="st">"unitSeqLast"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -173,30 +175,30 @@ use<code>tokenSeq</code> or <code>wordSeq</code> ). <code>name</code> is
 the name of the chain/entity. Finally, for obvious reasons you should
 export the column(s) you’re editing.</p>
 <p>In general, I recommend that you copy the <code>.csv</code> file
-before editing it, and edit from the copied file. This is because you
-don’t want to accidentally re-run your code and lose all your edits. In
-this case, I have added <code>_edited</code> to the end of the
-filename.</p>
+before editing it, and edit from the copy. This is because you don’t
+want to accidentally re-run your code and lose all your edits. In this
+case, I have added <code>_edited</code> to the end of the filename of
+the copy.</p>
 <p>Note: From time to time, you will find cases where an ID is a pure
 numeral. In that case, Microsoft Excel will treat it as a number. This
-will cause issues when importing back to rezonateR, so you need to
-manually mark it as a string by adding a ` to the beginning of the cell.
-Unfortunately, because this is an Excel issue, there is no way for me to
-get around this.</p>
+will cause issues when importing back to <code>rezonateR</code>, so you
+need to manually mark it as a string by adding a ` to the beginning of
+the cell. Unfortunately, because this is an Excel issue, there is no way
+for me to get around this.</p>
 <p>After editing the CSV in a spreadsheet program, let’s import it back
 using <code><a href="../reference/rw.html">rez_read_csv()</a></code>. The first argument of this function
-is just the path to the <code>.csv</code>, and the origDF argument tells
-rezonateR to look in the original rezrDF that produced the CSV, and
-determine the data types accordingly:</p>
+is just the path to the <code>.csv</code>, and the <code>origDF</code>
+argument tells <code>rezonateR</code> to look in the original
+<code>rezrDF</code> that produced the CSV, and determine the data types
+accordingly:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">changeDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/rw.html">rez_read_csv</a></span><span class="op">(</span><span class="st">"rez007_refexpr_edited.csv"</span>, origDF <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, the <code><a href="../reference/updateFromDF.html">updateFromDF()</a></code> function allows us to update
-the original rezrDF using information from the new rezrDF. The first
-argument of this function is the target
-<code>rezr</code>DF<code>(i.e. the</code>rezrDF` you’re changing), and
-the second one is the data frame that you’re changing from, i.e. the
-data frame you just imported. The rest of the arguments are all
-settings:</p>
+the original rezrDF using information from the new <code>rezrDF.</code>
+The first argument of this function is the target <code>rezrDF</code>
+(i.e. the <code>rezrDF</code> you’re changing), and the second one is
+the data frame that you’re changing from, i.e. the data frame you just
+imported. The rest of the arguments are all settings:</p>
 <ul>
 <li>
 <code>changeCols</code>: Columns to be changed. By default, this is
@@ -212,24 +214,26 @@ upon reload.</li>
 <code>renameCols</code>: Will you rename columns according to the
 new data frame? Generally, and by default, this should be ‘no’.</li>
 <li>
-<code>colCorr</code>: If <code>renameCols</code> = T, specify a list
+<code>colCorr</code>: If <code>renameCols = T</code>, specify a list
 where keys are the new names and values are the old names. If
-<code>renameCols</code> = F but you changed some names in your
+<code>renameCols = F</code> but you changed some names in your
 spreadsheet program anyway, you can specify a list where the keys are
 the old names and the values are the new names.</li>
 <li>
-<code>delRows</code>: Will you delete rows from targetDF if not
-present in changeDF? Generally, and by default, this should be a
+<code>delRows</code>: Will you delete rows from
+<code>targetDF</code> if not present in <code>changeDF</code>?
+Generally, and by default, this should be a ‘no’.</li>
+<li>
+<code>addRows</code>: Will you add rows to <code>targetDF</code> if
+not present in <code>targetDF</code>? By <code>default</code>, this is
 ‘no’.</li>
 <li>
-<code>addRows</code>: Will you add rows to targetDF if not present
-in targetDF? By default, this is ‘no’.</li>
-<li>
-<code>addCols</code>: Will you add columns present in the changeDF
-but not in the targetDF? By default, ‘no’.</li>
+<code>addCols</code>: Will you add columns present in the
+<code>changeDF</code> but not in the <code>targetDF</code>? By default,
+‘no’.</li>
 <li>
 <code>reloadAfterCorr</code>: Would you like to do a local reload on
-the rezrDF afterwards? By default, ‘yes’.</li>
+the <code>rezrDF</code> afterwards? By default, ‘yes’.</li>
 </ul>
 <p>Here is one example:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -254,10 +258,10 @@ change something in Rezonator. All you need to do is import your new
 workflow also involves external editing, this becomes a little more
 complicated.</p>
 <p>The <code><a href="../reference/rw.html">rez_write_csv()</a></code> &gt; <code><a href="../reference/rw.html">rez_read_csv()</a></code>
-&gt; <code>updateFromDF</code> workflow allows for a fair amount of
+&gt; <code><a href="../reference/updateFromDF.html">updateFromDF()</a></code> workflow allows for a fair amount of
 flexibility in changing your Rezonator annotations. If you need to go
-back and change something in your .rez file, don’t panic! Here is what
-you will need to do in each situation:</p>
+back and change something in your <code>.rez</code> file, don’t panic!
+Here is what you will need to do in each situation:</p>
 <ul>
 <li>If you simply changed values of <strong>tags</strong> that you
 manually annotate in Rezonator, then simply re-run all your code from
@@ -265,19 +269,19 @@ the beginning, and make sure that the fields you’ve changed in Rezonator
 are <strong>not</strong> being updated in <code><a href="../reference/updateFromDF.html">updateFromDF()</a></code>
 through the <code>changeCols</code> field.</li>
 <li>If you deleted certain fields from Rezonator, simply re-run all your
-code from the beginning, and ensure that <code>addCols == FALSE</code>
-in <code><a href="../reference/updateFromDF.html">updateFromDF()</a></code>.</li>
+code from the beginning, and ensure that <code>addCols = FALSE</code> in
+<code><a href="../reference/updateFromDF.html">updateFromDF()</a></code>.</li>
 <li>If you added fields in Rezonator, simply re-run all your code. There
 is nothing to worry about.</li>
-<li>If you deleted certain elements from Rezonator, simply re-run all
-your code from the beginning, and ensure that
-<code>addRos == FALSE</code> in <code><a href="../reference/updateFromDF.html">updateFromDF()</a></code>.</li>
+<li>If you deleted certain elements (e.g. chunks, tracks, rezzes) from
+Rezonator, simply re-run all your code from the beginning, and ensure
+that <code>addRows = FALSE</code> in <code><a href="../reference/updateFromDF.html">updateFromDF()</a></code>.</li>
 <li>If you added certain elements in Rezonator, this is by far the
 trickiest. You should first make sure that your edited <code>.csv</code>
 is separate from the <code>.csv</code> exported by
 <code>rezonateR</code> (see the previous section). Then, you should
 re-run all your code up to the point where you export your
-<code>.csv</code>. Go to the newly exported <code>,csv</code> and copy
+<code>.csv</code>. Go to the newly exported <code>.csv</code> and copy
 the rows corresponding to the new elements to your edited
 <code>.csv</code>, edit the columns as needed, and then run the rest of
 your code.</li>

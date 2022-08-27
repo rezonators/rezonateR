@@ -50,3 +50,8 @@ Update a rezrDF using data from another data frame
 \note{
 Most often used for updating a rezrDF using data from a CSV used for manual annotation.
 }
+\examples{
+inpath = system.file("extdata", "rez007_refexpr_edited.csv", package = "rezonateR")
+changeDF = rez_read_csv(inpath, origDF = rez007$trackDF$default)
+sbc007$trackDF$default = sbc007$trackDF$default \%>\% updateFromDF(changeDF, addCols = T, changeCols = c()) #Only adds columns.
+}

@@ -3,7 +3,7 @@
 \name{rez_write_csv}
 \alias{rez_write_csv}
 \alias{rez_read_csv}
-\title{Read and write rezrDFs as CSV files}
+\title{Read and write \code{rezrDF}s as CSV files}
 \usage{
 rez_write_csv(df, path, inclCols = character(0), exclCols = character(0), ...)
 
@@ -17,7 +17,7 @@ rez_read_csv(
 )
 }
 \arguments{
-\item{df}{The rezrDF to be exported.}
+\item{df}{The \code{rezrDF} to be exported.}
 
 \item{path}{The path from which a CSV is to be imported / exported.}
 
@@ -25,20 +25,20 @@ rez_read_csv(
 
 \item{exclCols}{Columns to be excluded from the import / export.}
 
-\item{...}{Arguments passed onto read_csv and write_csv.}
+\item{...}{Arguments passed onto \code{\link[readr:read_delim]{readr::read_csv()}} and \code{\link[readr:write_delim]{readr::write_csv()}}}
 
-\item{origDF}{The rezrDF that originally produced this CSV, used to identify data types of the columns.}
+\item{origDF}{The \code{rezrDF} that originally produced this CSV, used to identify data types of the columns.}
 
 \item{lubridate}{Are you using the lubridate package?}
 }
 \value{
-For rez_read_csv, a data.frame for the CSV being imported. This is NOT a rezrDF, so please do not assign it to a rezrObj; use \link{updateFromDF} to update an existing rezrDF with the imported data.frame.
+For \code{rez_read_csv()}, a data.frame for the CSV being imported. This is NOT a \code{rezrDF}, so please do not assign it to a \code{rezrObj}; use \code{\link[=updateFromDF]{updateFromDF()}} to update an existing rezrDF with the imported data.frame.
 }
 \description{
-Replacement of readr read_csv and write_csv, but contains added functionality for dealing with rezrDFs more easily.
+Replacement of readr \code{\link[readr:read_delim]{readr::read_csv()}} and \code{\link[readr:write_delim]{readr::write_csv()}}, but contains added functionality for dealing with \code{rezrDF}s more easily.
 }
 \examples{
-#rez_write_csv(rez007$trackDF$default, "rez007_refexpr.csv", c("id", "unitLastText", "tokenOrderLast", "text", "name", "number"))
-#inpath = system.file("extdata", "rez007_refexpr_edited.csv", package = "rezonateR")
-#changeDF = rez_read_csv(inpath, origDF = rez007$trackDF$default)
+#rez_write_csv(sbc007$trackDF$default, "rez007_refexpr.csv", c("id", "tokenOrderLast", "text", "name"))
+inpath = system.file("extdata", "rez007_refexpr_edited.csv", package = "rezonateR")
+changeDF = rez_read_csv(inpath, origDF = rez007$trackDF$default)
 }
