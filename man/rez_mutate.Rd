@@ -23,3 +23,6 @@ Currently does not work with across, so you will have to stick to mutate for tha
 \note{
 If fieldaccess is not set, it will be set to flex for NEW fields. Old fields will remain unchanged. \emph{Note that this is different behaviour from changeField, which changes field access status to 'flex' by default if field access is not given.}
 }
+\examples{
+sbc007$trackDF$default = sbc007$trackDF$default \%>\% rez_mutate(charLength = nchar(text))
+}

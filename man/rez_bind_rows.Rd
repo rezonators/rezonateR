@@ -2,18 +2,21 @@
 % Please edit documentation in R/rezrDF_tidy.R
 \name{rez_bind_rows}
 \alias{rez_bind_rows}
-\title{Bind together related rezrDF objects.}
+\title{Bind together related \code{rezrDF} objects.}
 \usage{
 rez_bind_rows(..., type = "intersect")
 }
 \arguments{
-\item{...}{The rezrDF objects to be combined}
+\item{...}{The \code{rezrDF} objects to be combined}
 
-\item{type}{The type of combination. If 'intersect', I will take the intersection of the columns in the rezrDFs. If 'union', I will take the union of the columns, populating missing fields with NAs.}
+\item{type}{The type of combination. If 'intersect', I will take the intersection of the columns in the \code{rezrDFs.} If 'union', I will take the union of the columns, populating missing fields with \code{NA}s.}
 }
 \value{
-The bound rezrDF
+The bound \code{rezrDF}
 }
 \description{
-Bind together related rezrDF objects.
+Bind together related \code{rezrDF} objects.
+}
+\examples{
+sbc007_allChunks = rez_bind_rows(sbc007$chunkDF$verb, sbc007$chunkDF$refexpr)
 }

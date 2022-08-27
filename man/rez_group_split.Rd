@@ -2,21 +2,24 @@
 % Please edit documentation in R/rezrDF_tidy.R
 \name{rez_group_split}
 \alias{rez_group_split}
-\title{Perform a group_split on a rezrDF}
+\title{Perform a group_split on a \code{rezrDF}}
 \usage{
 rez_group_split(df, ...)
 }
 \arguments{
-\item{df}{A rezrDF object.}
+\item{df}{A \code{rezrDF} object.}
 
-\item{...}{Usual group_split parameters.}
+\item{...}{Usual \code{group_split} parameters.}
 }
 \value{
-A list rezrDF objects after the group_split.
+A list \code{rezrDF} objects after the \code{group_split.}
 }
 \description{
-The main difference with group_split is that attributes are retained. If you use dplyr group_split, attributes will NOT be retained.
+The main difference with \code{\link[dplyr:group_split]{dplyr::group_split()}} is that attributes are retained. If you use \code{\link[dplyr:group_split]{dplyr::group_split()}}, attributes will NOT be retained.
 }
 \note{
 This is mostly useful for creating smaller emancipated rezrDFs. Do not assign the results of this function back to a rezrObj.
+}
+\examples{
+sbc007_arguments_byRelation = sbc007$treeEntry$default \%>\% filter(level = 1) \%>\% group_split(Relation)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/rezrDF.R
 \name{stringToFactor}
 \alias{stringToFactor}
-\title{Change the strings in a rezrDF to factors}
+\title{Change the strings in a \code{rezrDF} to factors}
 \usage{
 stringToFactor(df, colsToChange = NULL, levels = list())
 }
@@ -13,6 +13,9 @@ stringToFactor(df, colsToChange = NULL, levels = list())
 
 \item{levels}{Factor levels, as a list with each label being a column name.}
 }
+\value{
+The column in factor format.
+}
 \description{
-Change the strings in a rezrDF to factors
+Change the strings in a \code{rezrDF} to factors
 }

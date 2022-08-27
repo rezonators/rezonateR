@@ -47,13 +47,13 @@
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Bind together related rezrDF objects.</h1>
+      <img src="" class="logo" alt=""><h1>Bind together related <code>rezrDF</code> objects.</h1>
       
       <div class="d-none name"><code>rez_bind_rows.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p>Bind together related rezrDF objects.</p>
+    <p>Bind together related <code>rezrDF</code> objects.</p>
     </div>
 
     <div class="section level2">
@@ -64,20 +64,27 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>...</dt>
-<dd><p>The rezrDF objects to be combined</p></dd>
+<dd><p>The <code>rezrDF</code> objects to be combined</p></dd>
 
 
 <dt>type</dt>
-<dd><p>The type of combination. If 'intersect', I will take the intersection of the columns in the rezrDFs. If 'union', I will take the union of the columns, populating missing fields with NAs.</p></dd>
+<dd><p>The type of combination. If 'intersect', I will take the intersection of the columns in the <code>rezrDFs.</code> If 'union', I will take the union of the columns, populating missing fields with <code>NA</code>s.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>The bound rezrDF</p>
+<p>The bound <code>rezrDF</code></p>
+
+
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007_allChunks</span> <span class="op">=</span> <span class="fu">rez_bind_rows</span><span class="op">(</span><span class="va">sbc007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">verb</span>, <span class="va">sbc007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span><span class="op">)</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

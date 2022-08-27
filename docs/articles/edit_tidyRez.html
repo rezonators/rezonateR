@@ -119,16 +119,17 @@ the option to change the field access value of that field through the
 <code>fieldaccess</code> field. <code>updateFunction</code>s are
 automatically added if you choose <code>auto</code> or
 <code>foreign</code>. Other TidyRez functions do not differ
-substantially from classic <code>dplyr</code>; theu only allow you to
+substantially from classic <code>dplyr</code>; they only allow you to
 keep your field access labels, <code>updateFunction</code>s, and
 <code>inNodeMap</code> values.</p>
 <p>To see the power of TidyRez, let’s try creating an emancipated
-<code>rezrDF</code> with only a subset of the original columns. Here, we
-take <code>trackDF$refexpr</code>, the table of referential expressions.
-We then damage one of the fields using a classic <code>dplyr</code>
-function. As you can see here, the emancipated <code>rezrDF</code> can
-still be updated using the <code>rezrObj</code>, effectively overriding
-the damage:</p>
+<code>rezrDF</code> with only a subset of the original columns with
+<code><a href="../reference/rez_select.html">rez_select()</a></code>. Here, we take <code>trackDF$refexpr</code>,
+the table of referential expressions. We then damage one of the
+<code>auto</code> fields using a classic <code>dplyr</code> function. As
+you can see here, the emancipated <code>rezrDF</code> can still be
+updated using the <code>rezrObj</code>, effectively overriding the
+damage:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">refTable</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_select.html">rez_select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">token</span>, <span class="va">chain</span>, <span class="va">name</span>, <span class="va">text</span>, <span class="va">tokenOrderLast</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Before:"</span><span class="op">)</span></span>
@@ -181,14 +182,15 @@ those that focus on selecting rows of a table, such as
 <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">dplyr::slice()</a></code>. Currently implemented TidyRez functions
 include:</p>
 <ul>
-<li><p><code><a href="../reference/rez_add_row.html">rez_add_row()</a></code> for adding new entries</p></li>
+<li><p><code><a href="../reference/rez_add_row.html">rez_add_row()</a></code> for adding new entries (not
+recommended; <code><a href="../reference/addRow.html">addRow()</a></code> is better)</p></li>
 <li><p><code><a href="../reference/rez_mutate.html">rez_mutate()</a></code> for adding and editing columns</p></li>
 <li><p><code><a href="../reference/rez_rename.html">rez_rename()</a></code> for renaming columns</p></li>
 <li><p><code><a href="../reference/rez_bind_rows.html">rez_bind_rows()</a></code> for combining rezrDFs
 vertically</p></li>
 <li><p><code><a href="../reference/rez_group_split.html">rez_group_split()</a></code> for splitting rezrDFs
 vertically</p></li>
-<li><p><code><a href="../reference/gug.html">rez_group_by()</a></code> and rez_ungroup() for
+<li><p><code><a href="../reference/gug.html">rez_group_by()</a></code> and <code><a href="../reference/gug.html">rez_ungroup()</a></code> for
 grouping</p></li>
 <li><p><code><a href="../reference/rez_select.html">rez_select()</a></code> for selecting certain columns inside a
 rezrDF</p></li>
@@ -210,24 +212,38 @@ you’re done with it!).</p>
 only minimally in ways that you can read about in the documentation.
 However, <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code> is a notable exception.</p>
 <p>Firstly, by default, if no suffix is specified, the suffixes are
-c(““,”_lower”). That is, if you are joining two data.frames, both with a
-column called ‘name’, then the left data.frame’s column will still be
-called ‘name’ in the new data.frame but the right data.frame’s column
-will get called ‘name_lower’.</p>
+<code>c("", "_lower")</code>. That is, if you are joining two
+data.frames, both with a column called <code>name</code>, then the left
+data.frame’s column will still be called
+<code>name</code>’<code>in the new data.frame but the right data.frame's column will get called</code>name_lower<code>. Because</code>_lower`
+is not a very informative name, it’s best to supply your own
+suffixes.</p>
 <p>In addition to a <code>fieldaccess</code> field, as we’ve mentioned
-before, you will also need: * <code>rezrObj</code> which is
-self-explanatory * <code>fkey</code> - the name of the field in the
-first rezrDF that corresponds to IDs of the second rezrDF. If this is
-not specified, it will be guessed from the <code>by</code> argument of
-<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>. * An <code>df2Address</code> field a
-string that tells <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code> how to find the source
-rezrDF from the rezrObj next time.</p>
-<p>Addresses are mostly used by rezonateR under the hood, but in the
-case of <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code>, you do need to be able to use it.
-If the source rezrDF doesn’t belong to a layer, e.g. tokenDF, then the
-DF name is the address. If the source rezrDF belongs to a layer, put a
-‘/’ between the table and the layer, e.g. ‘trackDF/refexpr’. Don’t
-forget that default layers are also layers!</p>
+before, you will also need:</p>
+<ul>
+<li>
+<code>rezrObj</code> which is self-explanatory</li>
+<li>
+<code>fkey</code> - the name of the field in the first rezrDF that
+corresponds to IDs of the second rezrDF. If this is not specified, it
+will be guessed from the <code>by</code> argument of
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>.</li>
+<li>
+<code>df2key</code> - the name of the field in the second rezrDF
+that corresponds to <code>fkey</code>. If this is not specified, it will
+be guessed from the <code>by</code> argument of
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>.</li>
+<li>An <code>df2Address</code> field a string that tells
+<code><a href="../reference/rez_left_join.html">rez_left_join()</a></code> how to find the source rezrDF from the
+rezrObj next time.</li>
+</ul>
+<p>Addresses are mostly used by <code>rezonateR</code> under the hood,
+but in the case of <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code>, you do need to be able
+to use it. If the source <code>rezrDF</code> doesn’t belong to a layer,
+e.g. <code>tokenDF</code>, then the DF name is the address. If the
+source <code>rezrDF</code> belongs to a layer, put a ‘/’ between the
+table and the layer, e.g. <code>'trackDF/refexpr'</code>. Don’t forget
+that default layers are also layers!</p>
 <p>As an example, we’ll take <code>averageWordLength</code> in the
 <code>unitDF</code>, which we added in
 <code><a href="../articles/edit_easyEdit.html">vignette("edit_easyEdit")</a></code>, and add it back to
@@ -240,7 +256,7 @@ average length of the word in its units. Here’s how:</p>
 <span>  fieldaccess <span class="op">=</span> <span class="st">"foreign"</span>,</span>
 <span>  df2Address <span class="op">=</span> <span class="st">"unitDF"</span>,</span>
 <span>  fkey <span class="op">=</span> <span class="st">"unit"</span>,</span>
-<span>  rezrObj <span class="op">=</span> <span class="va">rez007</span>,</span>
+<span>  rezrObj <span class="op">=</span> <span class="va">rez007</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">averageWordLength</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">head</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
@@ -256,7 +272,7 @@ average length of the word in its units. Here’s how:</p>
 <div class="section level2">
 <h2 id="onwards">Onwards!<a class="anchor" aria-label="anchor" href="#onwards"></a>
 </h2>
-<p>Using easyEdit or tidyRez, it is not hard to use some rules to add
+<p>Using EasyEdit or TidyRez, it is not hard to use some rules to add
 some automatic annotations, and then correct them by hand in a
 spreadsheet program. The next tutorial,
 <code><a href="../articles/edit_external.html">vignette("edit_external")</a></code>, will cover exactly this use

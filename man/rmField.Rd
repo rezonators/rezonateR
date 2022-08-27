@@ -4,7 +4,7 @@
 \alias{removeField}
 \alias{removeField.rezrDF}
 \alias{removeField.rezrObj}
-\title{Remove a field from a rezrDF.}
+\title{Remove a field from a \code{rezrDF}.}
 \usage{
 removeField(x, ...)
 
@@ -13,11 +13,18 @@ removeField(x, ...)
 \method{removeField}{rezrObj}(rezrObj, entity, layer, fields)
 }
 \arguments{
+\item{...}{Arguments to be passed to functions such as those in see \link{addFieldLocal.rezrDF}, \link{addFieldForeign.rezrDF}, \link{addFieldLocal.rezrObj} and \link{addFieldForeign.rezrObj}.}
+
+\item{rezrDF}{The rezrDF to be modified.}
+
 \item{fields}{Vector of column names to be removed.}
 }
 \value{
-A rezrDF with the specified fields removed.
+A rezrDF with the fields specified in \code{fields} removed.
 }
 \description{
-Remove a field from a rezrDF.
+Remove a field from a \code{rezrDF}.
+}
+\examples{
+sbc007$chunkDF$refexpr = sbc007$chunkDF$refexpr \%>\% removeField("POS_dft")
 }

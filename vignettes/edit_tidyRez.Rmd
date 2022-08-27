@@ -55,7 +55,7 @@ Another implication is that if you use `rez_mutate()` and create an auto field, 
 ## What functions are available?
 A few dplyr functions are completely safe to use in rezonateR, mostly those that focus on selecting rows of a table, such as `dplyr::filter()`, `dplyr::arrange()` or `dplyr::slice()`. Currently implemented TidyRez functions include:
 
-* `rez_add_row()` for adding new entries
+* `rez_add_row()` for adding new entries (not recommended; `addRow()` is better)
 
 * `rez_mutate()` for adding and editing columns
 
@@ -77,14 +77,16 @@ Potential future additions include `rez_bind_cols()` and `rez_outer_join()`; sug
 
 Most of the TidyRez functions' syntax deviate from `dplyr` only minimally in ways that you can read about in the documentation. However, `rez_left_join()` is a notable exception.
 
-Firstly, by default, if no suffix is specified, the suffixes are c("", "_lower"). That is, if you are joining two data.frames, both with a column called 'name', then the left data.frame's column will still be called 'name' in the new data.frame but the right data.frame's column will get called 'name_lower'.
+Firstly, by default, if no suffix is specified, the suffixes are `c("", "_lower")`. That is, if you are joining two data.frames, both with a column called `name`, then the left data.frame's column will still be called `name`'` in the new data.frame but the right data.frame's column will get called `name_lower`. Because `_lower` is not a very informative name, it's best to supply your own suffixes.
 
 In addition to a `fieldaccess` field, as we've mentioned before, you will also need:
+
 *  `rezrObj` which is self-explanatory
 * `fkey` - the name of the field in the first rezrDF that corresponds to IDs of the second rezrDF. If this is not specified, it will be guessed from the `by` argument of `dplyr::left_join()`.
+* `df2key` - the name of the field in the second rezrDF that corresponds to `fkey`. If this is not specified, it will be guessed from the `by` argument of `dplyr::left_join()`.
 * An `df2Address` field a string that tells `rez_left_join()` how to find the source rezrDF from the rezrObj next time.
 
-Addresses are mostly used by rezonateR under the hood, but in the case of `rez_left_join()`, you do need to be able to use it. If the source rezrDF doesn't belong to a layer, e.g. tokenDF, then the DF name is the address. If the source rezrDF belongs to a layer, put a '/' between the table and the layer, e.g. 'trackDF/refexpr'. Don't forget that default layers are also layers!
+Addresses are mostly used by `rezonateR` under the hood, but in the case of `rez_left_join()`, you do need to be able to use it. If the source `rezrDF` doesn't belong to a layer, e.g. `tokenDF`, then the DF name is the address. If the source `rezrDF` belongs to a layer, put a '/' between the table and the layer, e.g. `'trackDF/refexpr'`. Don't forget that default layers are also layers!
 
 As an example, we'll take `averageWordLength` in the `unitDF`, which we added in `vignette("edit_easyEdit")`, and add it back to `tokenDF`, so that when we look at each word, we know the average length of the word in its units. Here's how:
 
@@ -95,14 +97,14 @@ rez007$tokenDF = rez007$tokenDF %>% rez_left_join(
   fieldaccess = "foreign",
   df2Address = "unitDF",
   fkey = "unit",
-  rezrObj = rez007,
+  rezrObj = rez007
 )
 rez007$tokenDF %>% select(id, text, averageWordLength) %>% head
 ```
 
 
 ## Onwards!
-Using easyEdit or tidyRez, it is not hard to use some rules to add some automatic annotations, and then correct them by hand in a spreadsheet program. The next tutorial, `vignette("edit_external")`, will cover exactly this use case. We will export data to a `.csv`, edit it outside R, and then import it back.
+Using EasyEdit or TidyRez, it is not hard to use some rules to add some automatic annotations, and then correct them by hand in a spreadsheet program. The next tutorial, `vignette("edit_external")`, will cover exactly this use case. We will export data to a `.csv`, edit it outside R, and then import it back.
 
 As always, saving is a virtue!
 

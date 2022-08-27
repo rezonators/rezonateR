@@ -20,3 +20,6 @@ Rename rezrDF columns.
 \note{
 This function does not update foreign references to the field that you're renaming. So be sure to update the updateFunctions of those fields; otherwise, you will break your rezrObj.
 }
+\examples{
+sbc007$treeEntryDF$default \%>\% rez_rename(gramRel = Relation)
+}

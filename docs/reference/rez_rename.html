@@ -82,6 +82,30 @@
     <p>This function does not update foreign references to the field that you're renaming. So be sure to update the updateFunctions of those fields; otherwise, you will break your rezrObj.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007</span><span class="op">$</span><span class="va">treeEntryDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rez_rename</span><span class="op">(</span>gramRel <span class="op">=</span> <span class="va">Relation</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Tip: When performed on a rezrDF inside a rezrObj, rez_rename is a potentially destructive action. It is NOT recommended to assign it back to a rezrDF inside a rezrObj. If you must do so, be careful to update all addresses from other DFs to this DF.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,525 × 16</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id      doc   tree  order sourc…¹ level token…² docTo…³ token…⁴ docTo…⁵ text </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 3419C1… sbc0… 1235…     0 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       1       1       1       1 (...)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 272B7E… sbc0… 1235…     1 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       2       2       2       2 God  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 9403F1… sbc0… 1235…     2 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       3       3       3       3 ,    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 1FA817… sbc0… 36F1…     0 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       1       4       1       4 I    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> E5564F… sbc0… 1235…     3 <span style="color: #949494;">"</span>D98B0…     1       1       4       1       4 I    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 87560F… sbc0… 79D2…     0 <span style="color: #949494;">"</span>D4796…     1       1       4       1       4 I    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 219869… sbc0… 36F1…     1 <span style="color: #949494;">""</span>         -<span style="color: #BB0000;">1</span>       2       5       2       5 said </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 29A7D8… sbc0… 79D2…     1 <span style="color: #949494;">""</span>          0       2       5       2       5 said </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 300526… sbc0… 1235…     4 <span style="color: #949494;">""</span>          0       2       5       2       5 said </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 163E21… sbc0… 36F1…     2 <span style="color: #949494;">"</span>2234E…     1       3       6       3       6 I    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,515 more rows, 5 more variables: transcript &lt;chr&gt;, parent &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   subtype &lt;chr&gt;, gramRel &lt;chr&gt;, layer &lt;chr&gt;, and abbreviated variable names</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ¹​sourceLink, ²​tokenOrderFirst, ³​docTokenSeqFirst, ⁴​tokenOrderLast,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ⁵​docTokenSeqLast</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

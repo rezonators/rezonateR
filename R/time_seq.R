@@ -144,7 +144,6 @@ getDiscourseWordSeq = function(isWord, docTokenSeq){
 #' Functions for getting information on whether something is located at the beginning or end of a larger structure.
 #'
 #' @rdname initfin
-#' @inheritparams complexActions
 #' @param seq Name of the column containing the sequence value to be taken into account.
 #'
 #' @examples sbc007$tokenDF = addFieldLocal(sbc007$tokenDF, "isPSentInitial", isInitial(pSentOrder)

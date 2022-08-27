@@ -121,6 +121,7 @@ getSourceTableInfo = function(rezrObj, address, df2key, field){
 #' @param ... Functions to be passed to dplyr select
 #'
 #' @return The rezrDF object with only the required columns
+#' @examples sbc007$trackDF$default %>% rez_select(id, name, text)
 #' @export
 rez_select = function(df, ...){
   result = df %>% select(...)
@@ -139,6 +140,7 @@ rez_select = function(df, ...){
 #'
 #'
 #' @return A rezrDF object.
+#' @examples sbc007$treeEntryDF$default %>% rez_rename(gramRel = Relation)
 #' @note This function does not update foreign references to the field that you're renaming. So be sure to update the updateFunctions of those fields; otherwise, you will break your rezrObj.
 #' @export
 rez_rename = function(df, ...){
@@ -183,7 +185,11 @@ rez_rename = function(df, ...){
 #' @inheritParams rez_mutate
 #' @param ... Arguments to be passed to group_by / ungroup, including the field(s) on which you're grouping.
 #'
-#' @return The grouped / ungroupd rezrDF.
+#' @return The grouped / ungrouped rezrDF.
+#' @examples
+#' sbc007$tokenDF = sbc007$tokenDF %>%
+#' rez_group_by(unit) %>% rez_mutate(unitLength = inLength(text, isWord = (kind == "Word"))) %>% rez_ungroup
+#' @note There is no replacement for [dplyr::summarise()]. Currently there are no plans for a `rezonateR` equivalent of [dplyr::summarise()], but please feel free to describe a use case in a GitHub issue if you would like.
 #' @export
 rez_group_by = function(df, ...){
   result = group_by(df, ...)
@@ -205,14 +211,15 @@ rez_ungroup = function(df, ...){
   result
 }
 
-#' Perform a group_split on a rezrDF
+#' Perform a group_split on a `rezrDF`
 #'
-#' The main difference with group_split is that attributes are retained. If you use dplyr group_split, attributes will NOT be retained.
+#' The main difference with [dplyr::group_split()] is that attributes are retained. If you use [dplyr::group_split()], attributes will NOT be retained.
 #'
-#' @param df A rezrDF object.
-#' @param ... Usual group_split parameters.
+#' @param df A `rezrDF` object.
+#' @param ... Usual `group_split` parameters.
 #'
-#' @return A list rezrDF objects after the group_split.
+#' @return A list `rezrDF` objects after the `group_split.`
+#' @examples sbc007_arguments_byRelation = sbc007$treeEntry$default %>% filter(level = 1) %>% group_split(Relation)
 #' @note This is mostly useful for creating smaller emancipated rezrDFs. Do not assign the results of this function back to a rezrObj.
 #' @export
 #'
@@ -226,12 +233,13 @@ rez_group_split = function(df, ...){
   result
 }
 
-#' Bind together related rezrDF objects.
+#' Bind together related `rezrDF` objects.
 #'
-#' @param ... The rezrDF objects to be combined
-#' @param type The type of combination. If 'intersect', I will take the intersection of the columns in the rezrDFs. If 'union', I will take the union of the columns, populating missing fields with NAs.
+#' @param ... The `rezrDF` objects to be combined
+#' @param type The type of combination. If 'intersect', I will take the intersection of the columns in the `rezrDFs.` If 'union', I will take the union of the columns, populating missing fields with `NA`s.
 #'
-#' @return The bound rezrDF
+#' @return The bound `rezrDF`
+#' @examples sbc007_allChunks = rez_bind_rows(sbc007$chunkDF$verb, sbc007$chunkDF$refexpr)
 #' @export
 rez_bind_rows = function(..., type = "intersect"){
   args = list(...)
@@ -271,6 +279,7 @@ rez_bind_rows = function(..., type = "intersect"){
 #'
 #' @return The rezrDF with the new row(s).
 #' @note Does not update foreign fields. If you want to update foreign fields, use [rezonateR::addRow.rezrDF]. If you call this function on a rezrDF with complex foreign fields, use [rezonateR::addRow.rezrDF] instead; otherwise, you cannot update those fields in the future.
+#' @examples sbc007 = rez_add_row(sbc007$trailDF$default, doc = "sbc007", chainCreateSeq = max(rez007$trailDF$default$chainCreateSeq) + 1, layer = "default", name = "Danae", chainSize = 1)
 #' @export
 rez_add_row = function(df, ..., rezrObj = NULL){
   args = list(...)

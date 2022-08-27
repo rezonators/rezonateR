@@ -20,7 +20,6 @@
 #'
 #' @return When used on rezrObjs, a rezrObj with the changed rezrDF.
 #' @note There are no major differences between rezrDFs and rezrObjs. However, only the rezrDF variant can be applied on emancipated rezrDFs (rezrDFs that do not belong to a rezrObj), whereas the rezrObj variant is more elegant when working with rezrDFs within a rezrObj.
-#' @example
 #'
 #' @export
 addFieldLocal.rezrObj = function(rezrObj, entity, layer, fieldName, expression, type = "simple", fieldaccess = "flex", groupField = ""){
@@ -315,8 +314,6 @@ addRow.rezrObj = function(rezrObj, entity, layer, nodeMapArgs = list(), ...){
 
 #' @rdname rmField
 #' @export
-#'
-#' @examples
 removeField.rezrObj = function(rezrObj, entity, layer, fields){
   if(layer != ""){
     removeField(rezrObj[[entity %+% "DF"]][[layer]], fields)

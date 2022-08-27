@@ -22,3 +22,6 @@ Add new rows to a rezrDF.
 \note{
 Does not update foreign fields. If you want to update foreign fields, use \link{addRow.rezrDF}. If you call this function on a rezrDF with complex foreign fields, use \link{addRow.rezrDF} instead; otherwise, you cannot update those fields in the future.
 }
+\examples{
+sbc007 = rez_add_row(sbc007$trailDF$default, doc = "sbc007", chainCreateSeq = max(rez007$trailDF$default$chainCreateSeq) + 1, layer = "default", name = "Danae", chainSize = 1)
+}

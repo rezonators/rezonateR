@@ -223,7 +223,7 @@ validateSimpleForeign = function(targetDF, sourceDF, targetForeignKeyName, targe
 #'                  type = "complex",
 #'                  groupField = "unit",
 #'                  fieldaccess = "auto")
-#' sbc007$tokenDF = sbc007$tokenDF %>%
+#' sbc007UnitLengths = sbc007$tokenDF %>%
 #' rez_group_by(unit) %>%
 #' summarise(lenWords = inLength(text, isWord = (kind == "Word")))
 #' @export
@@ -296,16 +296,16 @@ changeField.rezrDF = function(rezrDF, ..., foreign = F){
 }
 
 
-#' Remove a field from a rezrDF.
+#' Remove a field from a `rezrDF`.
 #'
 #' @rdname rmField
-#' @inheritparams acField
+#' @inheritParams addField
 #' @param fields Vector of column names to be removed.
 #'
-#' @return A rezrDF with the specified fields removed.
+#' @return A rezrDF with the fields specified in `fields` removed.
 #' @export
 #'
-#' @examples
+#' @examples sbc007$chunkDF$refexpr = sbc007$chunkDF$refexpr %>% removeField("POS_dft")
 removeField.rezrDF = function(rezrDF, fields){
   rezrDF %>% rez_select(!fields)
 }

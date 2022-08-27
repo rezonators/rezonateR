@@ -6,19 +6,26 @@
 
 #' Perform a left join on two rez data.frames and change field access status.
 #'
-#' This is a wrapper for performing left joins on Rez data.frames. It *only* changes the data frame, such as by changing field access values, at the moment. If your desired fieldaccess value is flex, this may serve as a drop-in replacement for mutate. Note that apart from the data.frame to be modified and the data.frame you are joining from, all arguments of left_join must be named.
+#' This is a wrapper for performing left joins ([dplyr::left_join()]) on Rez data.frames. It *only* changes the data frame, such as by changing field access values, at the moment. If your desired field access value is `"flex"`, this may serve as a drop-in replacement for mutate. Note that apart from the data.frame to be modified and the data.frame you are joining from, all arguments of [dplyr::left_join()] must be named.
 #'
-#' By default, if no suffix is specified, the suffixes are c("", "_lower"). That is, if you are joining two data.frames, both with a column called 'name', then the left data.frame's column will still be called 'name' in the new data.frame but the right data.frame's column will get called 'name_lower'.
+#' By default, if no suffix is specified, the suffixes are `c("", "_lower")`. That is, if you are joining two data.frames, both with a column called 'name', then the left data.frame's column will still be called `name` in the new data.frame but the right data.frame's column will get called `name_lower`.
 #'
 #' @param df1 The left data.frame.
 #' @param df2 The right data.frame.
 #' @param fieldaccess The field access status of the field you're addding, either a single character (to apply to all of the new fields) or a vector of characters for each new field. Note that if you are both modifying and adding fields, only the added fields will have access values changed. So if you're specifying an entire vector of field access values, the best practice in using this function is to separate new-field and added-field mutates, otherwise the code will be difficult to read.
-#' @param ... Other functions passed onto left_join, i.e. the columns you will be changing or adding.
-#' @param df2Address The address to the source rezrDF.
+#' @param ... Other functions passed onto [dplyr::left_join()], i.e. the columns you will be changing or adding.
+#' @param df2Address The address to the source `rezrDF`.
 #' @param fkey The foreign key to the df2. If not present, I'll guess with the by-line.
-#' @param rezrObj The rezrObj object.
+#' @param rezrObj The `rezrObj` object.
 #'
 #' @return resultDF
+#' @examples sbc007$tokenDF = sbc007$tokenDF %>% rez_left_join(
+#' y = sbc007$unitDF %>% rez_select(id, text),
+#' by = c("unit" = "id"),
+#' fieldaccess = "foreign",
+#' df2Address = "unitDF",
+#' fkey = "unit",
+#' rezrObj = sbc007)
 #' @export
 rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Address = "", df2key = "", fkey = "", rezrObj = NULL){
   oldNames = colnames(df1)

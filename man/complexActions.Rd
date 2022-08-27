@@ -41,7 +41,7 @@ sbc007 = addField(sbc007, entity = "token", layer = "",
                  type = "complex",
                  groupField = "unit",
                  fieldaccess = "auto")
-sbc007$tokenDF = sbc007$tokenDF \%>\%
+sbc007UnitLengths = sbc007$tokenDF \%>\%
 rez_group_by(unit) \%>\%
 summarise(lenWords = inLength(text, isWord = (kind == "Word")))
 }

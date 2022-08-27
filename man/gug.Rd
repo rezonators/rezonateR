@@ -15,8 +15,15 @@ rez_ungroup(df, ...)
 \item{...}{Arguments to be passed to group_by / ungroup, including the field(s) on which you're grouping.}
 }
 \value{
-The grouped / ungroupd rezrDF.
+The grouped / ungrouped rezrDF.
 }
 \description{
-A replacement for dplyr group_by and ungroup.
+A replacement for \code{\link[dplyr:group_by]{dplyr::group_by()}} and \code{\link[dplyr:group_by]{dplyr::ungroup()}}.
+}
+\note{
+There is no replacement for \code{\link[dplyr:summarise]{dplyr::summarise()}}. Currently there are no plans for a \code{rezonateR} equivalent of \code{\link[dplyr:summarise]{dplyr::summarise()}}, but please feel free to describe a use case in a GitHub issue if you would like.
+}
+\examples{
+sbc007$tokenDF = sbc007$tokenDF \%>\%
+rez_group_by(unit) \%>\% rez_mutate(unitLength = inLength(text, isWord = (kind == "Word"))) \%>\% rez_ungroup
 }

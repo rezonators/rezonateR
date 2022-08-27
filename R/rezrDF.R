@@ -319,13 +319,14 @@ undupeLayers = function(rezrObj, entity, colname){
   rezrObj
 }
 
-#' Change the strings in a rezrDF to factors
+#' Change the strings in a `rezrDF` to factors
 #'
 #' @param df The data.frame to be modified.
 #' @param colsToChange The columns to be modified. If left blank, all character columns will be factor-fied.
 #' @param levels Factor levels, as a list with each label being a column name.
 #'
-#' @return
+#' @return The column in factor format.
+#' @examples
 #' @export
 stringToFactor = function(df, colsToChange = NULL, levels = list()){
   result = df

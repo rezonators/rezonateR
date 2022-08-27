@@ -17,3 +17,6 @@ The rezrDF object with only the required columns
 \description{
 The main difference with dplyr select is that attributes will be updated to remove fields no longer there. There are no other differences at the moment.
 }
+\examples{
+sbc007$trackDF$default \%>\% rez_select(id, name, text)
+}
