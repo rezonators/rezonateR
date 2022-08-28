@@ -69,7 +69,11 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>annoScheme</dt>
+    <dl><dt>unitDF</dt>
+<dd><p>The <code>unitDF</code> of the text.</p></dd>
+
+
+<dt>annoScheme</dt>
 <dd><p>A character vector specifying the annotations used for the start and end of turns, backchannels, (self-initiated) other-repairs, and extra-turn content, as well as single-line instances of such. The default scheme is as follows: c(turnStart = "", turnEnd = "turnEnd", turn = "turnEnd", bcStart = "bcStart", bcEnd = "bcEnd", bc = "bc", siorInitiate = "SIORInit", sior = "SIOR", siorStart = "SIORStart", siorEnd = "SIOREnd", noTurn = "noTurn", noTurnStart = "noTurnStart", noTurnEnd = "noTurnEnd"). If you wish to deviate from this default, simply enter a vector with the deviating entries, e.g. c(turnStart = "turnStart", turn = "turn") if you want to annotate turn starts and single-unit turns directly.</p></dd>
 
 
@@ -85,6 +89,12 @@
 <dd><p>The field name of the turn annotations in the Rez file.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>A vector of turn IDs.</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

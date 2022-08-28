@@ -25,6 +25,7 @@
 #' fieldaccess = "foreign",
 #' df2Address = "unitDF",
 #' fkey = "unit",
+#' df2key = "id",
 #' rezrObj = sbc007)
 #' @export
 rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Address = "", df2key = "", fkey = "", rezrObj = NULL){
@@ -62,7 +63,11 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
     if(!all(fkey == "")){
       i = 1
       for(key in fkey){
-        autoBy[key] = names(fieldaccess(df2)[fieldaccess(df2) == "key"])[i]
+        if(is.null(df2key) | is.na(df2key) | all(df2key == "")){
+          autoBy[key] = names(fieldaccess(df2)[fieldaccess(df2) == "key"])[i]
+        } else {
+          autoBy[key] = df2key[i]
+        }
         i = i + 1
         message("You didn't give me a by-line for the left join. So I figured it out for you from your key information.")
       }
@@ -70,7 +75,7 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
   }
 
   #c) Figuring out foreign key from by-line
-  if(all(fkey == "")){
+  if(all(fkey == "") | is.null(fkey) | is.na(fkey)){
     if(!is.null(list(...)[["by"]])){
       fkey = names(list(...)[["by"]])[1]
       message("You didn't give me a foreign key for future updates, so I'm assuming it's the first of your by-fields.")
@@ -78,13 +83,24 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
   }
 
   #and the df2key from the by-line if this is available, or else through fieldaccess
-  if(all(df2key == "")){
+  if(all(df2key == "") | is.null(df2key) | is.na(df2key)){
     if(!is.null(list(...)[["by"]])){
       df2key = list(...)[["by"]]
       names(df2key) = ""
     } else {
       df2key = names(fieldaccess(df2)[fieldaccess(df2) == "key"])
     }
+
+
+    if(length(df2key) > length(fkey)){
+      print(df2key)
+      print(fkey)
+      df2key = df2key[1:length(fkey)]
+    } else if(length(df2key) < length(fkey)){
+      warning("You have more fkeys: " %+% paste(fkey, collapse = ",") %+% " than by-line entries: " %+% paste(names(list(...)[["by"]]), collapse = ",") %+% ". I have removed the fkeys at the end.")
+      fkey = fkey[1:length(df2key)]
+    }
+    message("You didn't give me a df2 key for future updates, so I've guessed it from your by-line.")
   }
 
   if(!suffixIncl){

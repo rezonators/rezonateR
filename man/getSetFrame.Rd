@@ -20,3 +20,6 @@ The \code{frameMatrix} of the \code{rezrObj}.
 \description{
 Extract/set a \code{frameMatrix}.
 }
+\examples{
+frameMatrix(sbc007)[1:10, 1:12]
+}

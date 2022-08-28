@@ -19,3 +19,6 @@ The column in factor format.
 \description{
 Change the strings in a \code{rezrDF} to factors
 }
+\examples{
+sbc007$treeEntryDF = sbc007$treeLinkDF \%>\% rez_mutate(Relation = stringToFactor(case_when(Relation == "Subj" ~ "Subj", T ~ "NonSubj")))
+}

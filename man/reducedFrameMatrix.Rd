@@ -11,6 +11,9 @@ reducedFrameMatrix(rezrObj, cond)
 
 \item{cond}{Conditions for reduction.}
 }
+\value{
+The reduced \code{frameMatrix}.
+}
 \description{
 Extract a frameMatrix, removing rows and columns that do not participate in frame semantics.
 }

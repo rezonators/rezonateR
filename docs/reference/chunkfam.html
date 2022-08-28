@@ -62,13 +62,13 @@
 <span></span>
 <span><span class="fu">getChildrenOfChunk</span><span class="op">(</span><span class="va">chunkID</span>, <span class="va">chunkDF</span>, <span class="va">treeEntryDF</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">getChildrenOfChunkIf</span><span class="op">(</span><span class="va">chunkID</span>, <span class="va">chunkDF</span>, <span class="va">treeEntryDF</span>, cond <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">getChildrenOfChunkIf</span><span class="op">(</span><span class="va">chunkID</span>, <span class="va">chunkDF</span>, <span class="va">treeEntryDF</span>, cond <span class="op">=</span> <span class="fu">expr</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">getSiblingsOfEntry</span><span class="op">(</span><span class="va">treeEntry</span>, <span class="va">treeEntryDF</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">getSiblingsOfChunk</span><span class="op">(</span><span class="va">chunkID</span>, <span class="va">chunkDF</span>, <span class="va">treeEntryDF</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">getSiblingOfChunkIf</span><span class="op">(</span><span class="va">chunkID</span>, <span class="va">chunkDF</span>, <span class="va">treeEntryDF</span>, cond <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">getSiblingOfChunkIf</span><span class="op">(</span><span class="va">chunkID</span>, <span class="va">chunkDF</span>, <span class="va">treeEntryDF</span>, cond <span class="op">=</span> <span class="fu">expr</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -90,7 +90,7 @@
 
 
 <dt>cond</dt>
-<dd><p>A condition using column sfrom the <code>chunkDF</code>.</p></dd>
+<dd><p>A condition using columns from the <code>chunkDF</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -103,6 +103,9 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007</span> <span class="op">=</span> <span class="fu"><a href="getAllTreeCorrespondences.html">getAllTreeCorrespondences</a></span><span class="op">(</span><span class="va">sbc007</span>, <span class="st">"chunk"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> There is more than one tree entry match for the token 37EFCBECFD691. I will take the first match.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> There is more than one tree entry match for the token 12D67756890C1. I will take the first match.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> There is more than one tree entry match for the token 152560A5DE6AC. I will take the first match.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> There is more than one tree entry match for the chunk 210FB26A315A. I will take the first match.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> There is more than one tree entry match for the chunk 22273255D825D. I will take the first match.</span>
 <span class="r-in"><span><span class="fu">getSiblingsOfChunk</span><span class="op">(</span><span class="st">"33EAD4C986974"</span>, <span class="va">sbc007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span>, <span class="va">sbc007</span><span class="op">$</span><span class="va">treeEntryDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span></span></span>

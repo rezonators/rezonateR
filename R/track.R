@@ -29,6 +29,28 @@ isFrag = function(combinedChunk, nonFragmentMember){
 #' @param exclFrag Exclude 'fragments' (i.e. members of a combined chunk which do not serve as meaningful chunks in their own right)
 #' @param combinedChunk The `combinedChunk` column of the rezrDF. By default, named `combinedChunk`.
 #' @param nonFragmentMember Vector indicating whether each entry is a non-fragment member, i.e. a member of a combined chunk that also serves as a meaningful chunk in its own right.
+#' @examples
+#' sbc007 = addUnitSeq(sbc007, "track")
+#' #Get the number of units to the last mention
+#' sbc007$trackDF$default = sbc007$trackDF$default %>%
+#' rez_mutate(unitsToLastMention = unitsToLastMention(unitSeqLast))
+#' #Get the number of words to the last mention
+#' sbc007$trackDF$default =  sbc007$trackDF$default %>%
+#' rez_mutate(wordsToLastMention = tokensToLastMention(
+#' docWordSeqLast, #What seq to use
+#' zeroProtocol = "unitFinal", #How to treat zeroes
+#' zeroCond = (text == "<0>"),
+#' unitDF = sbc007$unitDF)) #Additional argument for unitFinal protocol
+#' #Get the character length of the previous mention
+#' sbc007$trackDF$default = sbc007$trackDF$default %>%
+#' addFieldLocal(fieldName = "prevLength",
+#'               expression = nchar(getPrevMentionField(text)),
+#'               fieldaccess = "auto")
+#' #Get the number of zero mentions and zero status-matching mentions in the last 20 units
+#' sbc007$trackDF$default %>%
+#' rez_mutate(isZero = text == "<0>") %>%
+#' rez_mutate(noPrevZeroMentionsIn20 = countPrevMentionsIf(20, isZero),
+#'             noPrevZeroMentionsIn20 = countPrevMentionsMatch(20, isZero))
 #' @export
 lastMentionUnit = function(unitSeq = NULL, chain = NULL, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
   #Get the default column names from the rezrDF environment
@@ -77,13 +99,15 @@ lastMentionToken = function(tokenOrder = NULL, chain = NULL, exclFrag = F, combi
 }
 
 #' @rdname trackPrevContext
-#' @param zeroProtocol If 'literal', I will take the seq values of the zeroes at face value. (If you set zeros as non-words and use docWordSeqFirst or discourseWordSeLast as your tokenOrder, this will lead to meaningless values.) If 'unitFinal', I will treat zeroes as if they were the final word of the unit. If 'unitFirst', I will treat zeroes as if they were the first word of the unit.
-#' @param zeroCond A condition for determining whether a token is zero. For most people, this should be (word column) == "<0>".
+#' @param zeroProtocol If `literal`, I will take the seq values of the zeroes at face value. (If you set zeros as non-words and use `docWordSeqFirst` or `discourseWordSeLast` as your `tokenOrder`, this will lead to meaningless values.) If `unitFinal`, I will treat zeroes as if they were the final word of the unit. If `unitFirst`, I will treat zeroes as if they were the first word of the unit.
+#' @param unitTokenSeqName The name of the corresponding tokenSeq column in the unit column. By default, `docTokenSeqLast` is used.
+#' @param zeroCond A condition for determining whether a token is zero. For most people, this should be `(word column) == "<0>"`.
 #' @export
-tokensToLastMention = function(tokenOrder = NULL, chain = NULL, zeroProtocol = "literal", zeroCond = NULL, unitSeq = NULL, unitDF = NULL, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
+tokensToLastMention = function(tokenOrder = NULL, chain = NULL, zeroProtocol = "literal", zeroCond = NULL, unitSeq = NULL, unitTokenSeqName = NULL, unitDF = NULL, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
   #Get the default column names from the rezrDF environment if unspecified
   grabFromDF(tokenOrder = "docTokenSeqLast", chain = "chain", combinedChunk = "combinedChunk")
 
+  if(is.null(unitTokenSeqName)) unitTokenSeqName = "docTokenSeqLast"
   if(zeroProtocol == "literal"){
     result = tokenOrder - lastMentionToken(tokenOrder, chain, exclFrag, combinedChunk, nonFragmentMember)
   } else if(zeroProtocol == "unitFinal"){
@@ -93,10 +117,13 @@ tokensToLastMention = function(tokenOrder = NULL, chain = NULL, zeroProtocol = "
     stopifnot(!is.null(unitSeq))
     stopifnot(!is.null(unitDF))
 
+    tokenIUEnds = sapply(unitSeq, function(x) unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(unitTokenSeqName))
+    tokenOrder[tokenOrder == 0 & tokenIUEnds > -Inf] = tokenIUEnds[tokenOrder == 0 & tokenIUEnds > -Inf]
+
     prevUnit = lastMentionUnit(unitSeq, chain, exclFrag, combinedChunk, nonFragmentMember) #Prev units
     prevToken = sapply(prevUnit, function(x){
       if(!is.na(x)){
-        unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(docTokenSeqLast)
+          unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(unitTokenSeqName)
       } else NA
     })
     result = sapply(tokenOrder - prevToken, function(x) max(x, 0))
@@ -109,10 +136,13 @@ tokensToLastMention = function(tokenOrder = NULL, chain = NULL, zeroProtocol = "
     stopifnot(!is.null(unitSeq))
     stopifnot(!is.null(unitDF))
 
+    tokenIUBegins = sapply(unitSeq, function(x) unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(unitTokenSeqName))
+    tokenOrder[tokenOrder == 0 &  tokenIUBegins < Inf] = tokenIUBegins[tokenOrder == 0 &  tokenIUBegins < Inf]
+
     prevUnit = lastMentionUnit(unitSeq, chain, exclFrag, combinedChunk, nonFragmentMember) #Prev units
     prevToken = sapply(prevUnit, function(x){
       if(!is.na(x)){
-        unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(docTokenSeqFirst)
+          unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(unitTokenSeqName)
       } else NA
     })
     result = sapply(tokenOrder - prevToken, function(x) max(x, 0))
@@ -188,9 +218,7 @@ nextMentionUnit = function(unitSeq = NULL, chain = NULL, exclFrag = F, combinedC
   if(exclFrag) frag = isFrag(combinedChunk, nonFragmentMember) else frag = F
 
   result = numeric(length(unitSeq))
-  print(unique(chain))
   for(currChain in unique(chain)){
-    print(currChain)
     chainUnits = unitSeq[chain == currChain & !frag] #Grab all the PRE's units
     unitsOrdered = sort(chainUnits) #Put them in the right order
     unitsOrderedLagged = lag(unitsOrdered, k = -1) #Get the next unit
@@ -231,9 +259,10 @@ nextMentionToken = function(tokenOrder = NULL, chain = NULL, exclFrag = F, combi
 
 #' @rdname trackPrevContext
 #' @export
-tokensToNextMention = function(tokenOrder = NULL, chain = NULL, zeroProtocol = "literal", zeroCond = NULL, unitSeq = NULL, unitDF = NULL, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
+tokensToNextMention = function(tokenOrder = NULL, chain = NULL, zeroProtocol = "literal", zeroCond = NULL, unitSeq = NULL,  unitTokenSeqName = NULL, unitDF = NULL, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
   #Get the default column names from the rezrDF environment if unspecified
   grabFromDF(tokenOrder = "docTokenSeqFirst", chain = "chain", combinedChunk = "combinedChunk")
+  if(is.null(unitTokenSeqName)) unitTokenSeqName = "docTokenSeqLast"
 
   if(zeroProtocol == "literal"){
     result = nextMentionToken(tokenOrder, chain, exclFrag, combinedChunk, nonFragmentMember) - tokenOrder
@@ -244,10 +273,13 @@ tokensToNextMention = function(tokenOrder = NULL, chain = NULL, zeroProtocol = "
     stopifnot(!is.null(unitSeq))
     stopifnot(!is.null(unitDF))
 
+    tokenIUEnds = sapply(unitSeq, function(x) unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(unitTokenSeqName))
+    tokenOrder[tokenOrder == 0 & tokenIUEnds > -Inf] = tokenIUEnds[tokenOrder == 0 & tokenIUEnds > -Inf]
+
     nextUnit = nextMentionUnit(unitSeq, chain, exclFrag, combinedChunk, nonFragmentMember) #Next units
     nextToken = sapply(nextUnit, function(x){
       if(!is.na(x)){
-        unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(docTokenSeqLast)
+        unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(unitTokenSeqName)
       } else NA
     })
     result = nextToken - tokenOrder
@@ -259,10 +291,13 @@ tokensToNextMention = function(tokenOrder = NULL, chain = NULL, zeroProtocol = "
     stopifnot(!is.null(unitSeq))
     stopifnot(!is.null(unitDF))
 
+    tokenIUBegins = sapply(unitSeq, function(x) unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(unitTokenSeqName))
+    tokenOrder[tokenOrder == 0 &  tokenIUBegins < Inf] = tokenIUBegins[tokenOrder == 0 &  tokenIUBegins < Inf]
+
     nextUnit = nextMentionUnit(unitSeq, chain, exclFrag, combinedChunk, nonFragmentMember) #Next units
     nextToken = sapply(nextUnit, function(x){
       if(!is.na(x)){
-        unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(docTokenSeqFirst)
+        unitDF %>% filter(unitSeq == x) %>% slice(1) %>% pull(unitTokenSeqName)
       } else NA
     })
     result = nextToken - tokenOrder
@@ -325,13 +360,19 @@ getNextMentionField = function(field, tokenOrder = NULL, chain = NULL, exclFrag 
 
 #' Count the number of competing referents to the current mention
 #'
-#' This may either be counted within a window of units from the current one, or all referents competing with the current one may be counted, or a mix of both conditions. By default, we count referents intervening between the current and previous mention. Despite its name, tokenOrder can be set as unitSeqLast or similar.
+#' This may either be counted within a window of tokens from the current one, or all referents competing with the current one may be counted, or a mix of both conditions. By default, we count referents intervening between the current and previous mention. Despite its name, tokenOrder can be set as unitSeqLast or similar.
 #'
 #' @param cond The condition under which something counts as a competitor. Leave blank if anything goes.
+#' @param between Do we only count competitors between the current mention and previous mention? (If `T`, then the value is `NA` for first mentions.)
 #' @inheritParams lastMentionToken
-#' @return
+#' @rdname countCompete
+#' @examples sbc007$trackDF$default %>%
+#' rez_mutate(isZero = (text == "<0>")) %>%
+#'  rez_mutate(noCompetitors = countCompetitors(windowSize = 40, between = F),
+#'             noMatchingCompetitors = countMatchingCompetitors(isZero, windowSize = 40, between = F))
+#' @return A vector of number of competitors.
 #' @export
-countCompetitors = function(cond = NULL, window = Inf, tokenOrder = NULL, chain = NULL, between = T, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
+countCompetitors = function(cond = NULL, windowSize = Inf, tokenOrder = NULL, chain = NULL, between = T, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
   grabFromDF(tokenOrder = "docTokenSeqLast", chain = "chain", combinedChunk = "combinedChunk")
   if(exclFrag) frag = isFrag(combinedChunk, nonFragmentMember) else frag = F
 
@@ -345,25 +386,22 @@ countCompetitors = function(cond = NULL, window = Inf, tokenOrder = NULL, chain 
   sapply(1:length(tokenOrder), function(x){
     if(between){
       result = sum(tokenOrder < tokenOrder[x] & tokenOrder > lastMentionPos[x] &
-                     condition & tokenOrder > tokenOrder[x] - window &
+                     condition & tokenOrder > tokenOrder[x] - windowSize &
                      chain[x] != chain & !frag, na.rm = T)
       result[is.na(result)] = 0
       result
     } else {
       sum(tokenOrder < tokenOrder[x] & condition &
-                     tokenOrder > tokenOrder[x] - window &
+                     tokenOrder > tokenOrder[x] - windowSize &
                      chain[x] != chain & !frag, na.rm = T)
     }
   })
 }
 
-#' Count the number of competitors intervening between the previous mention and the current mention
-#'
 #' @param matchCol The column for which a value is to be matched.
-#' @inheritParams lastMentionToken
-#' @return
+#' @rdname countCompete
 #' @export
-countMatchingCompetitors = function(matchCol, window = Inf, tokenOrder = NULL, chain = NULL, between = T, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
+countMatchingCompetitors = function(matchCol, windowSize = Inf, tokenOrder = NULL, chain = NULL, between = T, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
   grabFromDF(tokenOrder = "docTokenSeqLast", chain = "chain", combinedChunk = "combinedChunk")
   lastMentionPos = lastMentionToken(tokenOrder, chain, exclFrag, combinedChunk, nonFragmentMember)
   if(exclFrag) frag = isFrag(combinedChunk, nonFragmentMember) else frag = F
@@ -371,7 +409,7 @@ countMatchingCompetitors = function(matchCol, window = Inf, tokenOrder = NULL, c
   if(between){
     sapply(1:length(tokenOrder), function(x){
       result = sum(tokenOrder < tokenOrder[x] & tokenOrder > lastMentionPos[x] &
-                     matchCol[x] == matchCol & tokenOrder > tokenOrder[x] - window  &
+                     matchCol[x] == matchCol & tokenOrder > tokenOrder[x] - windowSize  &
                      chain[x] != chain & !frag, na.rm = T)
       result[is.na(result)] = 0
       result
@@ -379,7 +417,7 @@ countMatchingCompetitors = function(matchCol, window = Inf, tokenOrder = NULL, c
   } else {
     sapply(1:length(tokenOrder), function(x){
       sum(tokenOrder < tokenOrder[x] &
-                     matchCol[x] == matchCol & tokenOrder > tokenOrder[x] - window &
+                     matchCol[x] == matchCol & tokenOrder > tokenOrder[x] - windowSize &
                      chain[x] != chain & !frag, na.rm = T)
     })
   }

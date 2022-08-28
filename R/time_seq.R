@@ -95,7 +95,7 @@ addIsWordField.rezrObj = function(x, cond, addWordSeq = T){
     #Chunk and dependencies
     if("chunkDF" %in% names(x)){
       for(layer in names(x$chunkDF)){
-        x$chunkDF[[layer]] = suppressWarnings(getSeqBounds(x$tokenDF, x$chunkDF[[layer]], x$nodeMap$chunk, c("wordOrder", "docWordSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk"))
+        x$chunkDF[[layer]] = suppressMessages(suppressWarnings(getSeqBounds(x$tokenDF, x$chunkDF[[layer]], x$nodeMap$chunk, c("wordOrder", "docWordSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "chunk")))
       }
     }
 
@@ -109,8 +109,8 @@ addIsWordField.rezrObj = function(x, cond, addWordSeq = T){
 
 
     #Entry and dependencies
-    x$entryDF = x$entryDF %>% rez_left_join(x$tokenDF %>% select(id, wordOrder, docWordSeq), by = c("token" = "id"), df2Address = "tokenDF", fkey = "token", rezrObj = x)
-    x$unitDF = suppressWarnings(getSeqBounds(x$entryDF, x$unitDF, x$nodeMap$unit, "docWordSeq", tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit"))
+    x$entryDF = suppressMessages(x$entryDF %>% rez_left_join(x$tokenDF %>% select(id, wordOrder, docWordSeq), by = c("token" = "id"), df2Address = "tokenDF", fkey = "token", rezrObj = x))
+    x$unitDF = suppressMessages(suppressWarnings(getSeqBounds(x$entryDF, x$unitDF, x$nodeMap$unit, "docWordSeq", tokenListName = "entryList", simpleDFAddress = "entryDF", complexNodeMapAddress = "unit")))
 
   }
   x

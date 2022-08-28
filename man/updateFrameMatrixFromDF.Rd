@@ -19,3 +19,11 @@ and subsequently added to the upper triangular matrix.
 \description{
 Update \code{frameMatrix} from an external source.
 }
+\examples{
+sbc007 = undupeLayers(sbc007, "trail", "name")
+sbc007 = addFrameMatrix(sbc007)
+#(After exporting the frame matrix and editing it)
+inpath = system.file("extdata", "rez007_frame_edited.csv", package = "rezonateR")
+newFrame = rez_read_csv(inpath, origDF = frameMatrix(sbc007))
+frameMatrix(sbc007) = updateFrameMatrixFromDF(frameMatrix(rez007), newFrame)
+}

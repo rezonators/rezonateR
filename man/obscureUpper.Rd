@@ -15,3 +15,9 @@ A frameMatrix with the diagonal and all entries above it obscured.
 \description{
 Obscure the upper triangular portion of a frameMatrix.
 }
+\examples{
+sbc007 = undupeLayers(sbc007, "trail", "name")
+sbc007 = addFrameMatrix(sbc007)
+obscureUpper(frameMatrix(sbc007))[1:10, 1:12]
+
+}

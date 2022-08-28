@@ -30,7 +30,7 @@ getSiblingOfChunkIf(chunkID, chunkDF, treeEntryDF, cond = expr(TRUE))
 
 \item{chunkDF}{A \code{chunkDF}from a \code{rezrObj},  Must be a \code{rezrDF}, not a list; \code{combineChunks()} or \code{combineTokenChunk()} can be used to combine multiple \code{rezrDF}s. You must have run \code{getAllTreeCorrespondences()} on it beforehand, i.e. a \code{treeEntry} column must exist. Also, both parents and children (for child-related functions) and all relevant siblings (for sibling-related functions) must reside in the \code{chunkDF}.}
 
-\item{cond}{A condition using column sfrom the \code{chunkDF}.}
+\item{cond}{A condition using columns from the \code{chunkDF}.}
 }
 \value{
 A list of IDs of siblings or children

@@ -15,3 +15,10 @@ A \code{rezrObj} object, but its \code{trailDF} now has an attribute which is a 
 \description{
 Add a frame matrix to \code{trailDF}.
 }
+\note{
+Make sure that the names of the trails are not duplicate with \code{undupeLayers()} first. Otherwise you will have trouble when annotating the \code{frameMatrix}.
+}
+\examples{
+sbc007 = undupeLayers(sbc007, "trail", "name")
+sbc007 = addFrameMatrix(sbc007)
+}

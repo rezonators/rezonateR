@@ -13,6 +13,8 @@ getTurnFromAnnos(
 )
 }
 \arguments{
+\item{unitDF}{The \code{unitDF} of the text.}
+
 \item{annoScheme}{A character vector specifying the annotations used for the start and end of turns, backchannels, (self-initiated) other-repairs, and extra-turn content, as well as single-line instances of such. The default scheme is as follows: c(turnStart = "", turnEnd = "turnEnd", turn = "turnEnd", bcStart = "bcStart", bcEnd = "bcEnd", bc = "bc", siorInitiate = "SIORInit", sior = "SIOR", siorStart = "SIORStart", siorEnd = "SIOREnd", noTurn = "noTurn", noTurnStart = "noTurnStart", noTurnEnd = "noTurnEnd"). If you wish to deviate from this default, simply enter a vector with the deviating entries, e.g. c(turnStart = "turnStart", turn = "turn") if you want to annotate turn starts and single-unit turns directly.}
 
 \item{sior}{If new, then self-initiated other-repairs are treated as a new turn.}
@@ -20,6 +22,9 @@ getTurnFromAnnos(
 \item{bc}{If 'noTurn', then backchannels are treated as turnless. If 'turn', then backchannels belong to the previous turn.}
 
 \item{turnAnno}{The field name of the turn annotations in the Rez file.}
+}
+\value{
+A vector of turn IDs.
 }
 \description{
 Get turn IDs from turn position annotations

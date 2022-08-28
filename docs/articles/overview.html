@@ -208,7 +208,9 @@ on a file in R.</p>
 <div class="section level2">
 <h2 id="introduction-to-rezrobjs-and-nodemaps">Introduction to rezrObjs and nodeMaps<a class="anchor" aria-label="anchor" href="#introduction-to-rezrobjs-and-nodemaps"></a>
 </h2>
-<p>###rezrObjs</p>
+<div class="section level3">
+<h3 id="rezrobjs">rezrObjs<a class="anchor" aria-label="anchor" href="#rezrobjs"></a>
+</h3>
 <p>There are three main kinds of objects in rezonateR that you will
 interact with directly, namely rezrObj, nodeMap and rezrDF. rezrObjs and
 nodeMaps will be covered in this section. rezrDFs are relatively
@@ -230,6 +232,7 @@ entries</p></li>
 </ul>
 <p>This has some ramifications for updating, which we’ll come to
 later.</p>
+</div>
 <div class="section level3">
 <h3 id="nodemaps">nodeMaps<a class="anchor" aria-label="anchor" href="#nodemaps"></a>
 </h3>
@@ -336,8 +339,8 @@ updateFunct:</p>
 <span><span class="co">#&gt; function (df, rezrObj) </span></span>
 <span><span class="co">#&gt; updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, </span></span>
 <span><span class="co">#&gt;     field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000001e2a62df708&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000001e2a62f4558&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000122c2323db8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000122c23523b8&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -347,8 +350,8 @@ updateFunct:</p>
 <span><span class="co">#&gt; function (df, rezrObj) </span></span>
 <span><span class="co">#&gt; updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, </span></span>
 <span><span class="co">#&gt;     field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000001e2a62e8a38&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000001e2a62dfd98&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000122c23290c8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000122c2328568&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -358,8 +361,8 @@ updateFunct:</p>
 <span><span class="co">#&gt; function (df, rezrObj) </span></span>
 <span><span class="co">#&gt; updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, </span></span>
 <span><span class="co">#&gt;     field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000001e2a62e9db0&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000001e2a62e9100&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000122c2318520&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000122c2329758&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -369,8 +372,8 @@ updateFunct:</p>
 <span><span class="co">#&gt; function (df, rezrObj) </span></span>
 <span><span class="co">#&gt; updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, </span></span>
 <span><span class="co">#&gt;     field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000001e2a62ed2e0&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000001e2a62ec550&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000122c2327ba8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000122c2318bb0&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -525,7 +528,7 @@ with an updateFunction that will be attached to the table:</p>
 <span><span class="fu"><a href="../reference/getRezrDFAttr.html">updateFunct</a></span><span class="op">(</span><span class="va">myRez</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"orthoLength"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (df) </span></span>
 <span><span class="co">#&gt; updateMutate(df, field, x)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000001e2aa679a30&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000122c9b18168&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -810,6 +813,9 @@ rows, add columns, etc. We will only use the most vanilla options, and
 update the ‘person’ column:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">=</span> <span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/updateFromDF.html">updateFromDF</a></span><span class="op">(</span><span class="va">changeDF</span>, changeCols <span class="op">=</span> <span class="st">'person'</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      </span></span>
+<span><span class="co">#&gt; "id" </span></span>
+<span><span class="co">#&gt; NULL</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">word</span>, <span class="va">person</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
 <span><span class="co">#&gt;   id            word             person</span></span>
@@ -864,7 +870,7 @@ have access to unit information:</p>
 <code class="sourceCode R"><span><span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">=</span>  <span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>wordsToLastMention <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">tokensToLastMention</a></span><span class="op">(</span></span>
 <span>    <span class="va">docWordSeqLast</span>, <span class="co">#What seq to use</span></span>
-<span>    zeroProtocol <span class="op">=</span> <span class="st">"unitFinal"</span>, <span class="co">#How to treat zeroes</span></span>
+<span>    zeroProtocol <span class="op">=</span> <span class="st">"unitInitial"</span>, <span class="co">#How to treat zeroes</span></span>
 <span>    zeroCond <span class="op">=</span> <span class="op">(</span><span class="va">word</span> <span class="op">==</span> <span class="st">"&lt;0&gt;"</span><span class="op">)</span>,</span>
 <span>    unitDF <span class="op">=</span> <span class="va">myRez</span><span class="op">$</span><span class="va">unitDF</span><span class="op">)</span><span class="op">)</span> <span class="co">#Additional argument for unitFinal protocol</span></span>
 <span><span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">wordsToLastMention</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span></span>
@@ -931,7 +937,7 @@ tallies the number of competitors intervening between the previous and
 current mention, possibly within a window. Here is one example with no
 window:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">=</span> <span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>noCompetitors <span class="op">=</span> <span class="fu"><a href="../reference/countCompetitors.html">countCompetitors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">=</span> <span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>noCompetitors <span class="op">=</span> <span class="fu"><a href="../reference/countCompete.html">countCompetitors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">myRez</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">noComingZeroes</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span></span>
 <span><span class="co">#&gt;   id            noComingZeroes</span></span>

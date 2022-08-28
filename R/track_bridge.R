@@ -9,7 +9,9 @@
 #' @return A `rezrObj` object, but its `trailDF` now has an attribute which is a `frameMatrix` object.
 #' @export
 #'
-#' @examples
+#' @note Make sure that the names of the trails are not duplicate with `undupeLayers()` first. Otherwise you will have trouble when annotating the `frameMatrix`.
+#' @examples sbc007 = undupeLayers(sbc007, "trail", "name")
+#' sbc007 = addFrameMatrix(sbc007)
 addFrameMatrix = function(rezrObj){
   attr(rezrObj$trailDF, "frameMatrix") = createFrameMatrix(rezrObj)
   rezrObj
@@ -42,7 +44,9 @@ new_frameMatrix = function(m){
 #' @return The `frameMatrix` of the `rezrObj`.
 #' @export
 #'
-#' @examples
+#' @examples sbc007 = undupeLayers(sbc007, "trail", "name")
+#' sbc007 = addFrameMatrix(sbc007)
+#' frameMatrix(sbc007)[1:10, 1:12]
 frameMatrix = function(rezrObj){
   attr(rezrObj$trailDF, "frameMatrix")
 }
@@ -61,7 +65,7 @@ frameMatrix = function(rezrObj){
 #' @param rezrObj The `rezrObj` from which the `frameMatrix` is extracted.
 #' @param cond Conditions for reduction.
 #'
-#' @return
+#' @return The reduced `frameMatrix`.
 #' @export
 #'
 #' @examples
@@ -81,7 +85,10 @@ reducedFrameMatrix = function(rezrObj, cond){
 #' @return A frameMatrix with the diagonal and all entries above it obscured.
 #' @export
 #'
-#' @examples
+#' @examples sbc007 = undupeLayers(sbc007, "trail", "name")
+#' sbc007 = addFrameMatrix(sbc007)
+#' obscureUpper(frameMatrix(sbc007))[1:10, 1:12]
+#'
 obscureUpper = function(frameMatrix){
   for(i in 3:ncol(frameMatrix)){
     for(j in 1:nrow(frameMatrix)){
@@ -101,7 +108,12 @@ obscureUpper = function(frameMatrix){
 #' and subsequently added to the upper triangular matrix.
 #' @export
 #'
-#' @examples
+#' @examples sbc007 = undupeLayers(sbc007, "trail", "name")
+#' sbc007 = addFrameMatrix(sbc007)
+#' #(After exporting the frame matrix and editing it)
+#' inpath = system.file("extdata", "rez007_frame_edited.csv", package = "rezonateR")
+#' newFrame = rez_read_csv(inpath, origDF = frameMatrix(sbc007))
+#' frameMatrix(sbc007) = updateFrameMatrixFromDF(frameMatrix(rez007), newFrame)
 updateFrameMatrixFromDF = function(frameMatrix, changeDF){
   changeDF = changeDF %>% mutate(
     across(all_of(colnames(changeDF) %>% setdiff(c("id", "name"))),
@@ -161,6 +173,17 @@ findPrev = function(curr, x){
 #' @rdname bridging
 #' @param unitSeq The vector of units where the mentions appeared.
 #' @param chain The chain that each mention belongs to.
+#' @examples sbc007 = undupeLayers(sbc007, "trail", "name")
+#' sbc007 = addUnitSeq(sbc007, "track")
+#' sbc007 = addFrameMatrix(sbc007)
+#' #(After exporting the frame matrix and editing it)
+#' inpath = system.file("extdata", "rez007_frame_edited.csv", package = "rezonateR")
+#' newFrame = rez_read_csv(inpath, origDF = frameMatrix(sbc007))
+#' frameMatrix(sbc007) = updateFrameMatrixFromDF(frameMatrix(sbc007), newFrame)
+#' sbc007$trackDF$default = sbc007$trackDF$default %>%
+#'   rez_mutate(bridgeDistUnit = unitsToLastBridge(frameMatrix(sbc007)),
+#'              bridgeDistToken = tokensToLastBridge(frameMatrix(sbc007),
+#'                                                   inclRelations = "individual-group"))
 #' @export
 lastBridgeUnit = function(frameMatrix, unitSeq = NULL, chain = NULL, tokenOrderFirst = NULL, tokenOrderLast = NULL, inclRelations = NULL){
   #Get the default column names from the rezrDF environment

@@ -202,3 +202,26 @@ countPrevBridges(
 \description{
 See also \link{countCompetitors}.
 }
+\examples{
+sbc007 = addUnitSeq(sbc007, "track")
+#Get the number of units to the last mention
+sbc007$trackDF$default = sbc007$trackDF$default \%>\%
+rez_mutate(unitsToLastMention = unitsToLastMention(unitSeqLast))
+#Get the number of words to the last mention
+sbc007$trackDF$default =  sbc007$trackDF$default \%>\%
+rez_mutate(wordsToLastMention = tokensToLastMention(
+docWordSeqLast, #What seq to use
+zeroProtocol = "unitFinal", #How to treat zeroes
+zeroCond = (text == "<0>"),
+unitDF = sbc007$unitDF)) #Additional argument for unitFinal protocol
+#Get the character length of the previous mention
+sbc007$trackDF$default = sbc007$trackDF$default \%>\%
+addFieldLocal(fieldName = "prevLength",
+              expression = nchar(getPrevMentionField(text)),
+              fieldaccess = "auto")
+#Get the number of zero mentions and zero status-matching mentions in the last 20 units
+sbc007$trackDF$default \%>\%
+rez_mutate(isZero = text == "<0>") \%>\%
+rez_mutate(noPrevZeroMentionsIn20 = countPrevMentionsIf(20, isZero),
+            noPrevZeroMentionsIn20 = countPrevMentionsMatch(20, isZero))
+}

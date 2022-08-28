@@ -20,14 +20,13 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 library(rezonateR)
 ```
 
-## Getting started
 
 This tutorial discusses the handling of trails and tracks in Rezonator
-using the EasyTrack series of functions. In more general linguistic
+using the EasyTrack series of functions. In more generally accepted linguistic
 terms, a trail is a coreference chain, and a track is a mention or
 referential expression within a coreference chain.
 
-We will be using the same Santa Barbara Corpus as before:
+We will be using the same Santa Barbara Corpus annotations as before:
 
 ```{r}
 library(rezonateR)
@@ -40,6 +39,10 @@ text or so, and the `.Rdata` file imported here has been processed to
 include information on trees in `vignettes("trees")`. This tutorial will
 make use of this feature.
 
+This tutorial will build towards a very simple
+toy analysis at the end, using all the changes that have been made to the `rezrObj` so far,
+to show the capabilities of `rezonateR`.
+
 ## Getting information from previous mentions
 
 ### Anaphoric and cataphoric distance
@@ -49,9 +52,9 @@ current mention to the previoue mention. `EasyTrack` takes care of this
 using a family of functions
 
 -   `lastMentionUnit()` and `nextMentionUnit()`: Give you the unit ID of
-    the previous and next mention, repsectively.
+    the previous and next mention, respectively.
 -   `lastMentionToken()` and `nextMentionToken()`: Give you the token ID
-    of the previous and next mention, repsectively.
+    of the previous and next mention, respectively.
 -   `unitsToLastMention()` and `unitsToNextMention()`: Give you the
     number of units from the current mention to the last mention and to
     the next mention, respectively.
@@ -74,6 +77,8 @@ Rezonator. There are two optional arguments:
     Typically there is no reason to touch this parameter; just leave it
     blank, and the column `chain` will be used.
 
+The value will be `NA` if there are no previous mentions:    
+
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
   rez_mutate(unitsToLastMention = unitsToLastMention(unitSeqLast))
@@ -87,8 +92,9 @@ complications. There are more parameters to fill this time:
 * `tokenOrder`: Similar to `unitSeq`, but for counting tokens. Common choices are `docTokenSeqFirst`, `docTokenSeqLast`, `wordTokenSeqFirst` and `wordTokenseqLast` (see `vignette("time_seq")` for the last two). By default it's `docTokenSeqLast`.
 * `chain`: As above.
 * `zeroProtocol`: How the positions of zero are determined. By default, it is `"literal"`, i.e. the position at which the zero was inserted. If `unitFinal`, zeroes will be treated as being located at the end of the unit. If `unitFirst`, they will be treated as the first word.
-* `zeroCond`: A condition for determining whether a token is zero. Normally, this is `(word column) == "<0>"` if the default Rezonator zero is used, though others may prefer <ZERO> or similar.
+* `zeroCond`: A condition for determining whether a token is zero. Normally, this is `(word column) == "<0>"` if the default Rezonator zero is used, though others may prefer `"<ZERO>"` or similar.
 * `unitSeq`: As above. Required when using the `unitFinal` and `unitFirst` protocols.
+* `unitTokenSeqName`: The name of the `tokenSeq` column to be used in the `unitDF`.
 * `unitDF`: the `rezrDF` containing the unit.
 
 
@@ -96,15 +102,16 @@ complications. There are more parameters to fill this time:
 
 rez007$trackDF$default =  rez007$trackDF$default %>%
   rez_mutate(wordsToLastMention = tokensToLastMention(
-    docWordSeqLast, #What seq to use
-    zeroProtocol = "unitFinal", #How to treat zeroes
+    docWordSeqFirst, #What seq to use
+    zeroProtocol = "unitInitial", #How to treat zeroes
     zeroCond = (text == "<0>"),
-    unitDF = rez007$unitDF)) #Additional argument for unitFinal protocol
+    unitDF = rez007$unitDF,
+    unitTokenSeqName = "docWordSeqFirst")) #Additional argument for unitFinal protocol
 rez007$trackDF$default %>% select(id, wordsToLastMention) %>% slice(1:20)
 ```
 
-Note that `unitsToNextMention` and `tokensToNextMention` work in the same
-way.
+The functions `unitsToNextMention()` and `tokensToNextMention()` work in the same
+way, except that they deal with following rather than preceding mentions.
 
 ### Extracting features from previous mentions
 
@@ -137,12 +144,12 @@ Apart from looking only at the previous or next unit, We can also count how many
 
 * `countPrevMentions()` and  `countNextMentions()`: Get the number of previous or following units within a specified window of units.
 * `countPrevMentionsIf()` and `countNextMentionsIf()`: Get the number of previous or following units within a specified window of units given that they satisfy certain conditions (which do not depend on the current mention).
-* `countPrevMentionsMatch()` and `countNextMentionsMatch()`: : Get the number of previous or following units within a specified window of units given that they have the same value as the current mention for some field.
+* `countPrevMentionsMatch()` and `countNextMentionsMatch()`: Get the number of previous or following units within a specified window of units given that they have the same value as the current mention for some field.
 
 These functions have the following fields, in order:
 
 * `windowSize`: How many IUs before / after the current one do you want to count?
-* `cond` (`countPrevMentionsIf` only): The condition that fields must satisfy to count
+* `cond` (`countPrevMentionsIf` only): The condition that fields must satisfy to count.
 * `field`(`countPrevMentionsMatch` only): The field whose value is to be matched.
 * `unitSeq`: As before.
 * `chain`: As before.
@@ -152,7 +159,7 @@ Let's try all three functions. We will count the number of previous mentions in 
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
   rez_mutate(noPrevMentionsIn20 = countPrevMentions(20),
-             noPrevSubjMentionsIn20 = countPrevMentionsIf(20, Relation == "Subject"),
+             noPrevSubjMentionsIn20 = countPrevMentionsIf(20, Relation == "Subj"),
              noPrevSubjMatchMentionsIn20 = countPrevMentionsMatch(20, "Relation"))
 rez007$trackDF$default %>% select(id, noPrevMentionsIn20, noPrevSubjMentionsIn20, noPrevSubjMatchMentionsIn20)  %>% slice(1:20)
 ```
@@ -168,7 +175,7 @@ rez007$trackDF$default %>% select(id, noComingZeroes)  %>% slice(1:20)
 
 We may also want to count competing mentions, that is, recent mentions
 not coreferential to the current mention. The presence of competitors usually suggests that a referential form is more likely to be explicit. `countCompetitors()` tallies the
-number of competitors recently. The following parameters are present, all of which are :
+number of competitors recently. The following parameters are present, all of which are:
 
 * `cond`: The condition under which something counts as a competitor (other than being non-coreferential with the present mention). By default, anything goes.
 * `window`: How many far back (in tokens) do you want to look? By default, there is no limit.
@@ -182,21 +189,21 @@ Here is one example. `noCompetitors` uses a window of 40 tokens, and may look be
 
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
-  rez_mutate(noCompetitors = countCompetitors(window = 40, between = F),
-             noMatchingCompetitors = countMatchingCompetitors(Relation, window = 40, between = F))
+  rez_mutate(noCompetitors = countCompetitors(windowSize = 40, between = F),
+             noMatchingCompetitors = countMatchingCompetitors(Relation, windowSize = 40, between = F))
 rez007$trackDF$default %>% select(id, text, noCompetitors, noMatchingCompetitors)  %>% slice(1:20)
 ```
 
 
 ## Adding verb information to the track table, and vice versa
 
-We often want to connect information about verbs t o their arguments. We may either put verb information in a track table, or put track information in a verb table. The former approach can be taken when investigating issues like coreference, and the latter for issues like argument structure.
+We often want to connect information about verbs to their arguments. We may either put verb information in a track table, or put track information in a verb table. The former approach can be taken when investigating issues like coreference, and the latter for issues like argument structure.
 
 If we want to add verb information to the track table, we can do this in two steps: 
 
 1. Add a `treeParent` column to `trackDF$refexpr` that takes the value of the `parent` column
 of `treeEntryDF`.
-2. Using the `treeParent` column and, find thw corresponding verb in the verb table `chunkDF$verb` through the `treeEntry` column of `chunkDF$verb`.
+2. Using the `treeParent` column, find the corresponding verb in the verb table `chunkDF$verb` through the `treeEntry` column of `chunkDF$verb`.
 
 ```{r}
 rez007 = rez007 %>%
@@ -251,7 +258,9 @@ frameMatrix(rez007)[1:10, 1:12]
 
 The second step is to export the `frameMatrix` and populate it with actual annotations. Although it does not apply to our cases, in many cases the function `reduceFrameMatrix()` will be useful for removing rows and columns that do not actually participate in framing relations, or divide them into subparts that don't have framing relationships with each other, so that we end up with a cleaner CSV to annotate.
 
-We use the function `obscureUpper()` to obscure the upper triangular matrix of 'repeat' entries so that we don't duplicate our annotation efforts: if we've already annotated that 'the car's engine' and 'the car' have a part-whole relationship in the lower triangular matrix, we don't need to annotate that 'the car' and 'the car's engine' have a whole-part relationship! When entering relationships, use the format '(role of the row entity)-(role of the column entity)'. For example, if 'the car's engine' is the row and 'the car' is the column, type `part-whole`, not `whole-part`.
+We use the function `obscureUpper()` to obscure the upper triangular matrix of 'repeat' entries so that we don't duplicate our annotation efforts: if we've already annotated that *the car's engine* and *the car* have a part-whole relationship in the lower triangular matrix, we don't need to annotate that *the car* and *the car's engine* have a whole-part relationship!
+
+After `obscureUpper()` and (optionally) `reduceFrameMatrix()`, the frameMatrix can be exported using `rez_write_csv()` and edited in an external editor. A spreadsheet program is highly recommended for this; you can use the freeze frame feature to annotate these relations more easily. When entering relationships, use the format '(role of the row entity)-(role of the column entity)'. For example, if *the car's engine* is the row and *the car* is the column, type `part-whole`, not `whole-part`. Alternatively, if there are only a few of these relations and you already remember which ones they are, you can edit those relations in R directly. You can simply use base R assignment for this.
 
 For this text, we will mainly be annotating individual-group relationships. 
 
@@ -260,11 +269,14 @@ rez_write_csv(obscureUpper(frameMatrix(rez007)), "rez007_frame.csv")
 newFrame = rez_read_csv("rez007_frame_edited.csv", origDF = frameMatrix(rez007))
 newFrame[10:20,c(1,2,12:22)]
 ```
-Rather than `updateFromDF()`, we use `updateFrameMatrixFromDF()` to update the `frameMatrix`. This function will 'flip' the relationships for the upper triangular matrix. For example, if in the lower triangular matrix you annotated 'the car's engine' as having a part-whole relationship with 'the car', then 'whole-part' will show up in the upper triangular matrix for the row 'car' and the column 'the car's engine'.
+Rather than `updateFromDF()`, we use `updateFrameMatrixFromDF()` to update the `frameMatrix`. This function will 'flip' the relationships for the upper triangular matrix. For example, if in the lower triangular matrix you annotated *the car's engine* as having a part-whole relationship with *the car*, then 'whole-part' will show up in the upper triangular matrix for the row 'car' and the column *the car's engine*.
 
 ```{r}
 frameMatrix(rez007) = updateFrameMatrixFromDF(frameMatrix(rez007), newFrame)
 ```
+
+After having updated the frame matrix, we can easily 
+
 * `lastBridgeUnit()`: Get the location (in unit) of the previous unit with a bridge to this unit.
 * `lastBridgeToken()`: Get the location (in tokens) of the bridging expression to this unit.
 * `unitsToLastBridge()`: Get the number of units between the closest unit with a bridge to the current unit, and the current unit.
@@ -278,7 +290,7 @@ In practice, we will generally be using `unitsToLastBridge()` and `tokensToLastB
 * `chain`: As before.
 * `tokenOrderLast`: The token sequence value for the last token in an expression, by default `docTokenSeqFirst`.
 * `tokenOrderFirst`: The token sequence value for the first token in an expression, by default `docTokenSeqLast`.
-* `inclRelations`: Vector of relations that will be counted. If left blank, everything will be counted.
+* `inclRelations`: Vector of relations that will be counted. This allows you to, for example, count part-whole relations but not whole-part. If left blank, everything will be counted.
 
 The arguments of `tokensToTheLastBridge()` are again mostly things we have seen before:
 
@@ -299,7 +311,7 @@ Let's say you want to extract the units and tokens to the previous bridge, inclu
 rez007$trackDF$default = rez007$trackDF$default %>%
   rez_mutate(bridgeDistUnit = unitsToLastBridge(frameMatrix(rez007),
                                                      inclRelations = "individual-group"),
-             bridgeDistToken = unitsToLastBridge(frameMatrix(rez007),
+             bridgeDistToken = tokensToLastBridge(frameMatrix(rez007),
                                                      inclRelations = "individual-group"))
 rez007$trackDF$default %>% select(id, text, bridgeDistUnit, bridgeDistToken) %>% slice(53:63)
 ```
@@ -317,7 +329,7 @@ Let's try to predict the number of characters inside a referential expression fr
 * `Relation`: Is the current mention a subject?
 * `number`: Is the current mention singular or plural?
 
-We will use a linear regression for this prediction. (This probably isn't the best model, but let's keep it simple for this demonstration.) First we need to create `noPrevNonSubjMentionsIn20` (which we do un an emancipated `rezrDF` to avoid clogging up the main table), then make the categorical  then we'll use the `lm()` function in base R to do the prediction:
+We will use a linear regression for this prediction. (This probably isn't the best model, but let's keep it simple for this demonstration.) First we need to create `noPrevNonSubjMentionsIn20` (which we do in an emancipated `rezrDF` to avoid clogging up the main table), then we'll convert `Relation` to a factor, and then we'll use the `lm()` function in base R to do the prediction:
 
 ```{r}
 analysis_df = rez007$trackDF$default %>% rez_mutate(
@@ -340,21 +352,3 @@ As usual, let's not forget, for one last time:
 savePath = "rez007.Rdata"
 rez_save(rez007, savePath)
 ```
-
-<!--
-Writing findContainingChunk.Rd
-Writing importRez.Rd
-Writing undupeSingle.Rd
-Writing undupeLayers.Rd
-Writing stringToFactor.Rd
-Writing getAddresses.Rd
-Writing countCompetitors.Rd
-Writing countMatchingCompetitors.Rd
-Writing addFrameMatrix.Rd
-Writing getSetFrame.Rd
-Writing reducedFrameMatrix.Rd
-Writing obscureUpper.Rd
-Writing updateFrameMatrixFromDF.Rd
-Writing mergeChunksWithTree.Rd
-Writing getTurnFromAnnos.Rd
--->

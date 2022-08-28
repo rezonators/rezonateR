@@ -73,7 +73,17 @@
 
 <p>A <code>rezrObj</code> object, but its <code>trailDF</code> now has an attribute which is a <code>frameMatrix</code> object.</p>
     </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>Make sure that the names of the trails are not duplicate with <code><a href="undupe.html">undupeLayers()</a></code> first. Otherwise you will have trouble when annotating the <code>frameMatrix</code>.</p>
+    </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007</span> <span class="op">=</span> <span class="fu"><a href="undupe.html">undupeLayers</a></span><span class="op">(</span><span class="va">sbc007</span>, <span class="st">"trail"</span>, <span class="st">"name"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sbc007</span> <span class="op">=</span> <span class="fu">addFrameMatrix</span><span class="op">(</span><span class="va">sbc007</span><span class="op">)</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

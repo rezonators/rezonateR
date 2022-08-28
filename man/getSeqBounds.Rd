@@ -42,3 +42,8 @@ This is typically used for sequence or time.
 \note{
 Most use cases should be handled by other functions like \link{addUnitSeq} and \link{addIsWordField}. If you do call this function, do note that the rezrDF you are changing is the second parameter, not the first. As such, piping should be done like this: someDF \%>\% getSeqBounds(simpleDF, ., complexNodeMap, ...)
 }
+\examples{
+sbc007_stackWithSeq = sbc007
+sbc007_stackWithSeq$cardDF = sbc007$cardDF \%>\% rez_left_join(select(sbc007$unitDF, id, docTokenSeqFirst, docTokenSeqLast), by = c("unit" = "id"), fkey = "unit", df2Address = "unit")
+sbc007_stackWithSeq$stackDF = getSeqBounds(sbc007_stackWithSeq$cardDF, sbc007_stackWithSeq$stackDF, sbc007$nodeMap$stack, tokenListName = "setIDList", fieldnames = c("docTokenSeq"), simpleIsAtom = F, simpleDFAddress = "cardDF", complexNodeMapAddress = "stackDF"))
+}

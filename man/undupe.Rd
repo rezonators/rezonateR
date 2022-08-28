@@ -22,3 +22,6 @@ The rezrObj, with the modified column de-duplicated so that entries with the sam
 \description{
 De-duplicate a rezrObj entity.
 }
+\examples{
+sbc007 = undupeLayers(sbc007, "trail", "name")
+}

@@ -98,7 +98,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
 
     message(">Adding to unit entry DF ...")
     #Adding fields to higher-level DFs that depend on lower-level DFs.
-    entryDF = entryDF %>% rez_left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"), df2Address = "tokenDF", fkey = "token")
+    entryDF = entryDF %>% rez_left_join(tokenDF, by = c(token = "id", doc = "doc", unit = "unit"), df2Address = "tokenDF", fkey = "token", df2key = "id")
     entryDF = entryDF %>% arrange(docTokenSeq)
 
     message(">Adding to unit DF ...")
@@ -119,9 +119,9 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
     if("rez" %in% names(fullNodeMap)){
       message(">Adding to track DFs ...")
       #mergedDF from the previous condition
-      rezDF = rezDF %>% rez_left_join(mergedDF, by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token")
+      rezDF = rezDF %>% rez_left_join(mergedDF, by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token", df2key = "id")
       #Adding fields to lower-level DFs that depend on higher-level DFs.
-      rezDF = rezDF %>% rez_left_join(resonanceDF, by = c(chain = "id", doc = "doc"), df2Address = "resonanceDF", fkey = "token")
+      rezDF = rezDF %>% rez_left_join(resonanceDF, by = c(chain = "id", doc = "doc"), df2Address = "resonanceDF", fkey = "token", df2key = "id")
       rezDF = rezDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
     }
 
@@ -129,9 +129,9 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
     if("track" %in% names(fullNodeMap)){
       message(">Adding to track DFs ...")
       #mergedDF from the previous condition
-      trackDF = trackDF %>% rez_left_join(mergedDF, by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token")
+      trackDF = trackDF %>% rez_left_join(mergedDF, by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token", df2key = "id")
       #Adding fields to lower-level DFs that depend on higher-level DFs.
-      trackDF = trackDF %>% rez_left_join(trailDF, by = c(chain = "id", doc = "doc"), df2Address = "trailDF", fkey = "token")
+      trackDF = trackDF %>% rez_left_join(trailDF, by = c(chain = "id", doc = "doc"), df2Address = "trailDF", fkey = "token", df2key = "id")
       trackDF = trackDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
     }
 
@@ -142,7 +142,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
       fieldaccess(treeEntryDF, concatFields) = "foreign"
       treeEntryDF = treeEntryDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
       treeEntryDF = treeEntryDF %>% getTreeOfEntry(treeLinkDF, fullNodeMap$tree)
-      treeEntryDF = suppressMessages(treeEntryDF %>% rez_left_join(treeLinkDF %>% select(-goal, -doc, -type), df2Address = "treeLink", fkey = "sourceLink", by = c("sourceLink" = "id")) %>% rez_rename(parent = source))
+      treeEntryDF = suppressMessages(treeEntryDF %>% rez_left_join(treeLinkDF %>% select(-goal, -doc, -type), df2Address = "treeLink", fkey = "sourceLink", by = c("sourceLink" = "id"), df2key = "id") %>% rez_rename(parent = source))
 
       treeDF = getSeqBounds(tokenDF, treeDF, fullNodeMap[["tree"]], c("tokenOrder", "docTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree")
       treeDF = concatStringFields(tokenDF, treeDF, fullNodeMap[["tree"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree", separator = separator)

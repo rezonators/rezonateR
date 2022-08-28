@@ -80,19 +80,19 @@ rez_validate_fieldchange = function(df, changedFields, changingStatus = F, field
         }
       } else if(fieldaccess(df)[entry] == "auto"){
         if(!changingStatus){
-          warning("Note that you are changing a field " %+% entry %+% "that is automatically updated. Your change is likely to be overridden by a future update.")
+          warning("Note that you are changing a field " %+% entry %+% " that is automatically updated. Your change is likely to be overridden by a future update.")
         } else if(fieldaccess == "foreign"){
-          message("Note that you are changing a field " %+% entry %+% "from auto to foreign. This will change reload behaviour.")
+          message("Note that you are changing a field " %+% entry %+% " from auto to foreign. This will change reload behaviour.")
         } else if(fieldaccess == "flex"){
-          message("Note that you are changing a field " %+% entry %+% "from auto to flex. This field will no longer reload.")
+          message("Note that you are changing a field " %+% entry %+% " from auto to flex. This field will no longer reload.")
         }
       } else if(fieldaccess(df)[entry] == "foreign"){
         if(!changingStatus){
-          warning("Note that you are changing a field " %+% entry %+% "that depends on another data.frame. Your change is likely to be overridden by a future update on the data.frame that this data.frame depends on.")
+          warning("Note that you are changing a field " %+% entry %+% " that depends on another data.frame. Your change is likely to be overridden by a future update on the data.frame that this data.frame depends on.")
         } else if(fieldaccess == "auto"){
-          message("Note that you are changing a field " %+% entry %+% "from foreign to auto This will change reload behaviour.")
+          message("Note that you are changing a field " %+% entry %+% " from foreign to auto. This will change reload behaviour.")
         } else if(fieldaccess == "flex"){
-          message("Note that you are changing a field " %+% entry %+% "from auto to flex This field will no longer reload.")
+          message("Note that you are changing a field " %+% entry %+% " from auto to flex This field will no longer reload.")
         }
       }
     }

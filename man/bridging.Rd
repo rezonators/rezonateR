@@ -61,3 +61,16 @@ tokensToLastBridge(
 \description{
 See also \link{countCompetitors}, \link{trackPrevContext}.
 }
+\examples{
+sbc007 = undupeLayers(sbc007, "trail", "name")
+sbc007 = addUnitSeq(sbc007, "track")
+sbc007 = addFrameMatrix(sbc007)
+#(After exporting the frame matrix and editing it)
+inpath = system.file("extdata", "rez007_frame_edited.csv", package = "rezonateR")
+newFrame = rez_read_csv(inpath, origDF = frameMatrix(sbc007))
+frameMatrix(sbc007) = updateFrameMatrixFromDF(frameMatrix(sbc007), newFrame)
+sbc007$trackDF$default = sbc007$trackDF$default \%>\%
+  rez_mutate(bridgeDistUnit = unitsToLastBridge(frameMatrix(sbc007)),
+             bridgeDistToken = tokensToLastBridge(frameMatrix(sbc007),
+                                                  inclRelations = "individual-group"))
+}

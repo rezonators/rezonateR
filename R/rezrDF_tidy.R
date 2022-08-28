@@ -79,6 +79,7 @@ getSourceTableInfo = function(rezrObj, address, df2key, field){
 
     return(list(df2key = df2key, df2field = df2field, df2 = df2, field = field, splitAdd = splitAdd))
   } else {
+    df2keys = NULL
     #When there isn't one single source table but multiple.
     #We'll have to combine the source tables.
     #Most common example:
@@ -102,9 +103,20 @@ getSourceTableInfo = function(rezrObj, address, df2key, field){
 
     #We'll now create a temporary merged table ...
 
-    df2key = df2keys[[1]]#Arbitrarily pick the key field name of the first source table as the name of the key field in the temp table
+    if(df2key == "" | is.na(df2key) | is.null(df2key)){
+      if(!is.null(df2keys)){
+        df2key = df2keys[[1]]#Arbitrarily pick the key field name of the first source table as the name of the key field in the temp table
+      } else {
+        stop("Missing df2key.")
+      }
+    }
+
+    if(is.null(df2keys) | length(df2keys) == 0){
+      df2keys = rep(df2key, length(address))
+    }
+
     df2field = field #Choose the name of the target field as the name of the other field in the temp table
-    df2s_prejoin = lapply(1:length(df2s), function(x) as.data.frame(df2s[[x]]) %>% select(!!parse_expr(df2key) := df2keys[[x]], !!parse_expr(field) := df2fields[[x]])) #Create the bits of the df2...
+    df2s_prejoin = lapply(1:length(df2s), function(x) as.data.frame(df2s[[x]]) %>% select(!!parse_expr(df2key) := df2keys[[x]],   !!parse_expr(field) := df2fields[[x]])) #Create the bits of the df2...
     df2 = Reduce(rbind, df2s_prejoin[2:length(df2s_prejoin)], df2s_prejoin[[1]]) #And put them together
 
     return(list(df2key = df2key, df2field = df2field, df2 = df2, field = field))

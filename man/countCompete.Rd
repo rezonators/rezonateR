@@ -2,11 +2,23 @@
 % Please edit documentation in R/track.R
 \name{countCompetitors}
 \alias{countCompetitors}
+\alias{countMatchingCompetitors}
 \title{Count the number of competing referents to the current mention}
 \usage{
 countCompetitors(
   cond = NULL,
-  window = Inf,
+  windowSize = Inf,
+  tokenOrder = NULL,
+  chain = NULL,
+  between = T,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
+)
+
+countMatchingCompetitors(
+  matchCol,
+  windowSize = Inf,
   tokenOrder = NULL,
   chain = NULL,
   between = T,
@@ -18,16 +30,31 @@ countCompetitors(
 \arguments{
 \item{cond}{The condition under which something counts as a competitor. Leave blank if anything goes.}
 
+\item{windowSize}{The size of the window in which you will be counting.}
+
 \item{tokenOrder}{The vector of sequence values values where the mentions appeared. Common choices are docTokenSeqFirst, docTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running \link{addIsWordField} on a rezrObj. By default it's docTokenSeqLast.}
 
 \item{chain}{The chain that each mention belongs to.}
+
+\item{between}{Do we only count competitors between the current mention and previous mention? (If \code{T}, then the value is \code{NA} for first mentions.)}
 
 \item{exclFrag}{Exclude 'fragments' (i.e. members of a combined chunk which do not serve as meaningful chunks in their own right)}
 
 \item{combinedChunk}{The \code{combinedChunk} column of the rezrDF. By default, named \code{combinedChunk}.}
 
 \item{nonFragmentMember}{Vector indicating whether each entry is a non-fragment member, i.e. a member of a combined chunk that also serves as a meaningful chunk in its own right.}
+
+\item{matchCol}{The column for which a value is to be matched.}
+}
+\value{
+A vector of number of competitors.
 }
 \description{
 This may either be counted within a window of units from the current one, or all referents competing with the current one may be counted, or a mix of both conditions. By default, we count referents intervening between the current and previous mention. Despite its name, tokenOrder can be set as unitSeqLast or similar.
+}
+\examples{
+sbc007$trackDF$default \%>\%
+rez_mutate(isZero = (text == "<0>")) \%>\%
+ rez_mutate(noCompetitors = countCompetitors(windowSize = 40, between = F),
+            noMatchingCompetitors = countMatchingCompetitors(isZero, windowSize = 40, between = F))
 }

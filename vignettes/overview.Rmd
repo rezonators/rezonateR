@@ -399,7 +399,7 @@ Now let's count the tokens from the last mention using the tokensToLastMention()
 myRez$trackDF$refexpr =  myRez$trackDF$refexpr %>%
   rez_mutate(wordsToLastMention = tokensToLastMention(
     docWordSeqLast, #What seq to use
-    zeroProtocol = "unitFinal", #How to treat zeroes
+    zeroProtocol = "unitInitial", #How to treat zeroes
     zeroCond = (word == "<0>"),
     unitDF = myRez$unitDF)) #Additional argument for unitFinal protocol
 myRez$trackDF$refexpr %>% select(id, wordsToLastMention) %>% slice(10:16)

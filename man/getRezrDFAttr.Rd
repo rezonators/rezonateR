@@ -28,7 +28,7 @@ fieldaccess(df, fields = "") <- value
 inNodeMap(df, fields = "") <- value
 }
 \arguments{
-\item{df}{The data.frame whose field access attributes you want to see.}
+\item{df}{The \code{rezrDF} whose field access attributes you want to see.}
 
 \item{attr}{The attribute that you want to extract.}
 
@@ -40,7 +40,7 @@ inNodeMap(df, fields = "") <- value
 The value of the attribute you want to extract (for extract functions), and the DF with the value set (for set functions).
 }
 \description{
-Extract an attribute of a data.frame (inNodeMap, fieldaccess, updateFunct), or set it.
+Extract an attribute of a data.frame (\code{inNodeMap}, \code{fieldaccess}, \code{updateFunct}), or set it.
 }
 \examples{
 updateFunct(sbc007$unitDF, "docTokenSeqLast")

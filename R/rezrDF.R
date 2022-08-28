@@ -41,10 +41,10 @@ new_rezrDF = function(df, fieldaccess, updateFunct, inNodeMap){
 
 #' Extract/set an attribute of a rezrDF.
 #'
-#' Extract an attribute of a data.frame (inNodeMap, fieldaccess, updateFunct), or set it.
+#' Extract an attribute of a data.frame (`inNodeMap`, `fieldaccess`, `updateFunct`), or set it.
 #'
 #' @rdname getRezrDFAttr
-#' @param df The data.frame whose field access attributes you want to see.
+#' @param df The `rezrDF` whose field access attributes you want to see.
 #' @param attr The attribute that you want to extract.
 #' @param fields The field whose access attribute you want to see. If left blank, a vector containing all the attributes is output.
 #' @param value The value that you want to set it to.
@@ -295,14 +295,13 @@ reloadForeign = function(df, rezrObj, fields = ""){
 #'
 #' @return The rezrObj, with the modified column de-duplicated so that entries with the same name will come with numbers starting from the second appearance.
 #' @export
-#'
-#' @examples
 undupeSingle = function(rezrObj, entity, colname){
   rezrObj[[entity %+% "DF"]][[colname]] = undupe(rezrObj[[entity %+% "DF"]][[colname]])
   rezrObj
 }
 
 #' @rdname undupe
+#' @examples sbc007 = undupeLayers(sbc007, "trail", "name")
 #' @export
 undupeLayers = function(rezrObj, entity, colname){
   combDF = combineLayers(rezrObj, entity)
@@ -326,7 +325,7 @@ undupeLayers = function(rezrObj, entity, colname){
 #' @param levels Factor levels, as a list with each label being a column name.
 #'
 #' @return The column in factor format.
-#' @examples
+#' @examples sbc007$treeEntryDF = sbc007$treeLinkDF %>% rez_mutate(Relation = stringToFactor(case_when(Relation == "Subj" ~ "Subj", T ~ "NonSubj")))
 #' @export
 stringToFactor = function(df, colsToChange = NULL, levels = list()){
   result = df
