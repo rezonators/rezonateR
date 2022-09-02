@@ -29,7 +29,7 @@ rez007 = rez_load(path)
 
 
 ## The workflow
-In general, the workflow when working externally is to first finish at least some annotations in Rezonator. You then import it to `rezonateR` and, typically, use the editing functions from the previous tutorials to add some annotations automatically.
+In general, the workflow when working externally is to first finish at least some annotations in Rezonator. You then export it from `rezonateR` and, typically, use the editing functions from the previous tutorials to add some annotations automatically.
 
 You will then export a `.csv` file from `rezonateR.` Because `rezrDF`s often contain a lot of information that will be a distraction when working with a `.csv`, you can export a lighter version of it as a `.csv` file. After working with the `.csv` file, you will import it into Rezonator, then combine the information in the newly imported `.CSV` back to the original `rezrDF`.
 

@@ -220,7 +220,7 @@ getNextChunks = function(chunkDF, currDoc, p, currDTSL, currVec = character(0)){
 #' @param rezrObj A `rezrObj` that has had chunked merged using [rezonateR::mergeChunksWithTree].
 #' @param trackLayers Track chain layers on which this is going to be performed. If NULL, the action will be performed on all layers.
 #'
-#' @return A `rezrObj` with the `trackDF` augmented with a combined chunks from the `chunkDF.`
+#' @return A `rezrObj` with the `trackDF` augmented with a combined chunks from the `chunkDF`.
 #' @examples sbc007 = sbc007 %>% getAllTreeCorrespondences %>% mergeChunksWithTree %>% mergedChunksToTrack("default")
 #' @export
 mergedChunksToTrack = function(rezrObj, trackLayers = NULL){

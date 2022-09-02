@@ -230,7 +230,7 @@ rez_ungroup = function(df, ...){
 #' @param df A `rezrDF` object.
 #' @param ... Usual `group_split` parameters.
 #'
-#' @return A list `rezrDF` objects after the `group_split.`
+#' @return A list `rezrDF` objects after the `group_split`.
 #' @examples sbc007_arguments_byRelation = sbc007$treeEntry$default %>% filter(level = 1) %>% group_split(Relation)
 #' @note This is mostly useful for creating smaller emancipated rezrDFs. Do not assign the results of this function back to a rezrObj.
 #' @export
@@ -248,7 +248,7 @@ rez_group_split = function(df, ...){
 #' Bind together related `rezrDF` objects.
 #'
 #' @param ... The `rezrDF` objects to be combined
-#' @param type The type of combination. If 'intersect', I will take the intersection of the columns in the `rezrDFs.` If 'union', I will take the union of the columns, populating missing fields with `NA`s.
+#' @param type The type of combination. If 'intersect', I will take the intersection of the columns in the `rezrDFs`. If 'union', I will take the union of the columns, populating missing fields with `NA`s.
 #'
 #' @return The bound `rezrDF`
 #' @examples sbc007_allChunks = rez_bind_rows(sbc007$chunkDF$verb, sbc007$chunkDF$refexpr)

@@ -70,7 +70,7 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
 #' @param cond The wordhood condition. For example, if your word column is called 'word', and you wish to exclude zeroes, you may write 'x == "<0>"'.
 #' @param addWordSeq If TRUE, the columns wordOrder and docWordSeq will be added.
 #'
-#' @return The modified `rezrDF` or `rezrObj.` If `addWordSeq` is set to `TRUE`, the columns `wordOrder` and `docWordSeq` will be added to `tokenDF` and `entryDF`, and the columns `wordOrderFirst`, `wordOrderLast`, `docWordSeqFirst` and `docWordSeqLast` will be added to `unitDF`, `chunkDF`, `rezDF` and `trackDF.`
+#' @return The modified `rezrDF` or `rezrObj`. If `addWordSeq` is set to `TRUE`, the columns `wordOrder` and `docWordSeq` will be added to `tokenDF` and `entryDF`, and the columns `wordOrderFirst`, `wordOrderLast`, `docWordSeqFirst` and `docWordSeqLast` will be added to `unitDF`, `chunkDF`, `rezDF` and `trackDF.`
 #' @note If used on a `rezrObj` and `addWordSeq = T`, `wordOrder` and `docWordSeq` are automatically added to `entry`, `unit`, `chunk`, `rez` and `track` tables.
 #' @examples sbc007_withword = addIsWordField(sbc007, kind == "Word")
 #' head(sbc007_withword$chunkDF$refexpr %>% select(id, text, tokenOrderFirst, wordOrderFirst, docTokenSeqLast, docWordSeqLast))
