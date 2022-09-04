@@ -7,10 +7,11 @@ articles:
   edit_tidyRez: edit_tidyRez.html
   import_save_basics: import_save_basics.html
   overview: overview.html
+  sample_proj: sample_proj.html
   time_seq: time_seq.html
   track: track.html
   tree: tree.html
-last_built: 2022-08-09T02:13Z
+last_built: 2022-09-04T15:53Z
 urls:
   reference: https://rezonators.github.io/rezonateR/reference
   article: https://rezonators.github.io/rezonateR/articles

@@ -115,6 +115,7 @@ articles:
   navbar: Overview
   contents:
   - overview
+  - sample_proj
 - title: "A detailed walkthrough"
   desc: An detailed walkthrough of useful functions in rezonateR. You can choose to read only sections that interest you, though if you are new to rezonateR, it might help to read through the first two first.
   navbar: Detailed walkthrough

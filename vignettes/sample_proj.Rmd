@@ -2,7 +2,7 @@
 title: "Toy example of an analysis in rezonateR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Time and sequence}
+  %\VignetteIndexEntry{Toy example of an analysis in rezonateR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -24,7 +24,7 @@ install_github("rezonators/rezonateR")
 ```
 
 
-The aim of this article is to demonstrate, using a sample, highly simplified project, what type of analysis may be conducted using Rezonator and `rezonateR`. This particular example will examine the choice of referential forms in spoken dialogue: What factors lead to the choice of a longer form versus a shorter one? The data here is the same as that used in the series of tutorials starting with `vignette("import_save_basics")`, but this article will have less focus on how to write the code, and more on answering the sample research question.
+The aim of this article is to demonstrate, using a sample, highly simplified project, what type of analysis may be conducted using Rezonator and `rezonateR`. This particular example will examine the choice of referential forms in spoken dialogue: What factors lead to the choice of a longer form (e.g. *the three black cats*) versus a shorter one (e.g. *them*)? The data here is the same as that used in the series of tutorials starting with `vignette("import_save_basics")`, but this article will have less focus on how to write the code, and more on showing you how to answer the sample research question using `rezonateR`.
 
 This article does not assume that you have read any of the other articles on `rezonateR`. So there is some overlap in the topics covered. I will point you to other tutorials for further details when necessary.
 
@@ -32,40 +32,52 @@ You are welcome to follow this tutorial in R. If you are reading this in R using
 
 ## The research question
 
-It is often noted that in language, if a referent is more accessible (for example, it is salient in the previous discourse or physical context), we will tend to refer to it using a shorter and simpler form form, whereas longer forms tend to be used for things that are less accessible (for example, the first time we mention something). This example will use the following factors to predict the length (in number of characters) of a certain word:
+It is often noted that in language, if a referent is more accessible (for example, it is salient in the previous discourse or physical context), we will tend to refer to it using a shorter and simpler form form, whereas longer forms tend to be used for things that are less accessible (for example, the first time we mention something). Thus, we should expect that in natural discourse, factors that render a referent more accessible are associated with shorter forms, and factors that make it less accessible are associated with longer forms.
 
-* `noPrevSubjMentionsIn20`: The number of coreferent subject mentions within the 20 previous units.
-* `noPrevNonSubjMentionsIn20`: The number of coreferent non-subject mentions within the 20 previous units.
-* `noCompetitors`: The number of competitors within the five previous units.
-* `Relation`: Is the current mention a subject?
-* `number`: Is the current mention singular or plural?
+This example will use the following factors to predict the length (in number of characters) of a certain referential expression:
 
-Thus, what we need to do within R is to create a data frame where each row corresponds to a referential expresssion and contains all of these factors as columns (plus `charCount`, the number of characters).
+* `noPrevSubjMentionsIn20`: The number of coreferent subject mentions within the 20 previous intonation units. That is, how many times was the referent of a form mentioned in the 20 previous intonation units in subject position?
+* `noPrevNonSubjMentionsIn20`: The number of coreferent non-subject mentions within the 20 previous units. That is, how many times was the referent of a form mentioned in the 20 previous intonation units, outside of subject position?
+* `noCompetitors`: The number of competitors within the five previous units. That is, how many times were entities other than the referent of the current referential expression mentioned within the five previous intonation units?
+* `Relation`: Is the current referential expression a subject? 
+* `number`: Is the current referential expression singular or plural?
+
+Thus, our goal within R is to create a data frame where each row corresponds to a referential expresssion and contains all of these factors as columns (plus `charCount`, the number of characters).
 
 ## The data
 The data used in this example is from the text *A Tree's Life*, a conversation between two sisters from the Santa Barbara Corpus of Spoken American English. The first 162 lines have been annotated here, which deals with the topic of one of the sisters' roommates.
 
-The file has been annotated for coreference (trails), resonance, as well as argument structure (through trees). For this tutorial, resonance will be ignored. Coreference chains include referential expressions along with non-referring expressions that have been otherwise referred back to (e.g. discourse deixis).
-
-Two-layered trees indicate argument structure of each verb. The verbal complex (including auxiliaries and adverbs that intervene between the auxiliary and verb, but not arguments that intervene between auxiliary and verb) is annotated as blank chunks (with chunkType = "verb") and serves as the root of each tree. Tree links are annotated as Relation = "Subject" when it indicates a subject-verb relation; otherwise Relation is left blank.
-
-Figure 1 Shows an example of the Rezonator interface with trail (wavy lines), resonances (straight lines) and a dependency tree in the nav window:
+The file has been annotated for coreference (trails), resonance, as well as argument structure (through trees). For this tutorial, resonance will be ignored. Coreference chains include referential expressions along with non-referring expressions that have been otherwise referred back to (e.g. discourse deixis). Figure 1 shows an example of the data in the Rezonator interface:
 
 ![Figure 1](img/iosave-sbc007.PNG){width=100%}
 
-There are two types of chunks in this file: Chunks that have been created as part of a trail (mostly referential expressions), and verbs, which are 'blank chunks', i.e. do not belong to any trail. They have been annotated for two properties: `chunkType` (which is `verb` for verbs and left blank for referential expressions) and `largerChunk`, i.e. the larger chunk to which a chunk belongs. Note that `number` is NOT annotated; it will instead be annotateed with the help of `rezonateR`.
+Wavy lines indicate coreference links. Each mention or referential expression is a *track* inside the larger trail. In this file,  entire clauses that serve as antecedents in cases of discourse deixis are also considered tracks. For example, notice that the two occurrences of *I* on Line 2 are linked together with a purple link, along with the zero on line 3. These expressions all form tracks that are part of the trail for Mary.
 
-![Figure 2](sample_chunk.PNG)[width=100%]
+
+![Figure 2](img/sample_track.PNG){width=100%}
+
+Two-layered trees indicate argument structure of each verb. The verbal complex (including auxiliaries and adverbs that intervene between the auxiliary and verb, but not arguments that intervene between auxiliary and verb) is annotated as blank chunks (with chunkType = "verb") and serves as the root of each tree. Tree links are annotated as Relation = "Subject" when it indicates a subject-verb relation; otherwise Relation is left blank. For example, the tree panel of Figure 3 shows the argument structure of Line 4, with *defeats* as the root with three children: a zero subject, the object *the purpose of getting up in the morning*, and the adverb *kinda*;
+
+
+![Figure 3](img/sample_tree.PNG){width=100%}
+
+
+There are two types of chunks in this file: Chunks that have been created as part of a trail (mostly referential expressions - such as *the purpose of getting up in the morning* the example), and verbs, which are 'blank chunks', i.e. do not belong to any trail (such as *said* in the example). They have been annotated for two properties: `chunkType` (which is `verb` for verbs and left blank for referential expressions) and `largerChunk`, i.e. the larger chunk to which a chunk belongs. Note that `number` is NOT annotated; it will instead be annotated with the help of `rezonateR`.
+
+![Figure 4](img/sample_chunk.PNG)[width=100%]
 
 ## Importing the file
 
 The first step is to import the file. When importing a file, an object called `rezrObj` is created. `rezrObj` contains two kinds of elements:
+
 * A `nodeMap`, which contains the data in the form of a series of interconnected nodes with attributes
 * A series of `rezrDF`s, which are data frames containing information about different elements of the file.
 
-Some important `rezrDF`s include: `tokenDF` (which contains the information about individual tokens of the original file), `chunkDF` (which contains information about chunks), `trackDF`, which contains information about entries of trails (i.e. mentions in coreference chains), and `treeEntryDF`, which contains information about entries on a tree.
+Some important `rezrDF`s include: `tokenDF`, which contains the information about individual tokens of the original file, `chunkDF`, which contains information about chunks, `trackDF`, which contains information about entries of trails (i.e. mentions in coreference chains), and `treeEntryDF`, which contains information about entries on a tree.
 
-Here's the import code. It contains a) information about dividing the chunks into layers and information about which fields of a token contains text to be concatenated in `concatFields`. Here, we divide the chunks into two layers, `verb` and `refexpr` (for referential expressions - this actually include some non-referential expressions which were put in track chains anyway, but we ignore this for this tutorial). The fields `text` and `transcript` of the Santa Barbara Corpus are concatenated to form `text` and `transcript` fields of larger structures like units and chunks.
+Here's the import code. It contains two kinds of information: 
+* How to divide the chunks into layers. Here, we divide the chunks into two layers, `verb` and `refexpr` (for referential expressions - this actually include some non-referential expressions which were put in track chains anyway, but we ignore this for this tutorial). Chunks in the two layers are put into two separate `rezrDF`s.
+* Which fields of a token contains text to be concatenated in `concatFields`. The fields `text` and `transcript` of the Santa Barbara Corpus are concatenated to form `text` and `transcript` fields of larger structures like units and chunks. Telling this information to `rezonateR` is important for the text to appear in tables like `chunkDF` or `unitDF`.
 
 ```{r}
 library(rezonateR)
@@ -89,9 +101,9 @@ head(rez007$trackDF$default) #Note: Because there is only one layer for `trackDF
 
 More information about the import process and the various objects created can be found in `vignette("import_save_basics")`.
 
-Each line of the table `rez007$trackDF` contains a referential expression whose size we want to predict. The goal of using `rezonateR` for this project will be to produce a version of the data frame `rez007$trackDF` that contains all the predictors and the dependent variable on each line, and may be fed to models such as `lm()`.
+Each line of the table `rez007$trackDF$default` contains a referential expression whose size we want to predict. The goal of using `rezonateR` for this project will be to produce a version of the data frame `rez007$trackDF` that contains all the predictors and the dependent variable on each line, and may be fed to models such as `lm()`.
 
-You can save the `rezrObj` so that it can be opend with `rez_load()` next time, saving you the trouble of importing again:
+You can save the `rezrObj` with `rez_save()` so that it can be opened with `rez_load()` next time, saving you the trouble of importing again:
 
 ```{r}
 savePath = "rez007.Rdata"
@@ -101,7 +113,7 @@ rez_save(rez007, savePath)
 
 ## Augmenting the file with basic information automatically
 
-After importing the file, there are a few simple operations that we usually call to add additional information to the table which was not added during the original import process.
+After importing the file, there are a few simple operations that we usually call to add additional information to the table which was not added during the original import process, before beginning the process of editing.
 
 ### Words vs tokens
 
@@ -110,12 +122,12 @@ By default Rezonator  provides two fields related to the position of a token, wh
 * `docTokenSeq` - refers to the order of a token within the entire text
 * `tokenOrder` -  refers to the position of a token within its intonation unit
 
-Entities that span multiple tokens, like chunks and units, have four token sequence-related fields:
+Structures that span multiple tokens, like chunks and units, have four token sequence-related fields:
 
 * `docTokenSeqFirst` - refers to the `docTokenSeq` of the first token.
-* `docTokenSeqLast` - refers to the `docTokenSeq` of the first token.
+* `docTokenSeqLast` - refers to the `docTokenSeq` of the last token.
 * `tokenOrderFirst` - refers to the `tokenOrder` of the first token.
-* `tokenOrderLast` - refers to the `tokenOrder` of the first token.
+* `tokenOrderLast` - refers to the `tokenOrder` of the last token.
 
 Here are some examples:
 
@@ -149,7 +161,7 @@ For the details of these functions, see `vignette("time_seq")`.
 
 ### Linking up non-tree tables with tree-related tables
 
-The function `getAllTreeCorrespondences()` adds a column `treeEntry` to various tables, which gives the corresponding entry in the table `treeEntryDF`:
+Inside Rezonator, there are no direct links between trees and entities like tracks and chunks. The function `getAllTreeCorrespondences()` adds a column `treeEntry` to various tables, which gives the corresponding entry in the table `treeEntryDF`:
 
 ```{r}
 rez007 = getAllTreeCorrespondences(rez007, entity = "track")
@@ -163,7 +175,7 @@ head(rez007$trackDF$default %>% select(id, text, treeEntry))
 In Rezonator, it is not possible to create chunks that span multiple units. `rezonateR` is equipped with the ability to combine several chunks inside the file into one larger chunk. There are two functions for doing this:
 
 * `mergeChunksWithTree()`: If there is a treeEntry that corresponds to the concatenation of multiple chunks, then we merge those chunks.
-* `mergeChunksWithIDs()`: We merge chunks by annotating the ID of the larger chunk that it belongs to, in this case in the field `largerChunk`. For example, the first chunk you create this way may have the ID 1, the second chunk 2, the third chunk 3 and so on. In this case, all the component chunks of the first complex chunk will have the value `1` for `largerChunk` and so on.
+* `mergeChunksWithIDs()`: We merge chunks by annotating the ID of the larger chunk that it belongs to, in this case in the field `largerChunk`. For example, the first chunk you create this way may have the ID 1, the second chunk 2, the third chunk 3 and so on. In this case, all the component chunks of the first complex chunk should have the value `1` for `largerChunk` and so on.
 
 The new chunks will be added to the bottom of `chunkDF`. In addition, `chunkDF` will have an extra column `combinedChunk` giving information about chunk combinations:
 
@@ -198,9 +210,9 @@ Recall that our final table will need to contain the following information:
 
 The first variable is already computed in Rezonator by default and need not be included again. The middle four will be added in later sections. This section will focus on the final variable.
 
-We will first take a guess at what the number is in `rez007$trackDF` using a set of simplistic rules. Then we export a `.csv` file from `rezonateR`, and edit the automatic guesses in Microsoft Excel. We then import the `.csv` file back into `rezonateR` and update `rez007$trackDF` from the imported file.
+We will first take a guess at what the number of a track in `rez007$trackDF` is using a set of simplistic rules based on the linguistic form. Then we export a `.csv` file from `rezonateR`, and edit the automatic guesses in Microsoft Excel. We then import the `.csv` file back into `rezonateR` and update `rez007$trackDF` from the imported file.
 
-Let's say we want to annotate the number of the referential expressions inside `trackDF$default`. A good approximation will be to mark everything that ends with \<s\> as plural, along with common plural pronouns and demonstratives, mark coordinate noun phrases as plural, mark noun phrases with singular demonstratives as singular, mark *you* as uncertain, and then mark the rest as singular. Here we use the `rez_mutate()` function from TidyRez to do it (see `vignette("edit_tidyRez") for more on these functions):
+Let's say we want to annotate the number of the referential expressions inside `trackDF$default`. A good approximation will be to mark everything that ends with \<s\> as plural, along with common plural pronouns and demonstratives, mark coordinate noun phrases as plural, mark noun phrases with singular demonstratives as singular, mark *you* as uncertain, and then mark the rest as singular. Here we use the `rez_mutate()` function from TidyRez to do it (see `vignette("edit_tidyRez")` for more on these functions):
 
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>% rez_mutate(number = case_when(
@@ -219,7 +231,13 @@ Before we export this as a `.csv` for annotation, I would like to add a column i
 
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
-  rez_left_join(rez007$unitDF %>% rez_select(unitSeq, text), by = c(unitSeqLast = "unitSeq"), suffix = c("", "_unit"), df2key = "unitSeq", rezrObj = rez007, df2Address = "unitDF", fkey = "unitSeqLast") %>%
+  rez_left_join(rez007$unitDF %>% rez_select(unitSeq, text),
+                by = c(unitSeqLast = "unitSeq"),
+                suffix = c("", "_unit"),
+                df2key = "unitSeq",
+                rezrObj = rez007,
+                df2Address = "unitDF",
+                fkey = "unitSeqLast") %>%
   rez_rename(unitLastText = text_unit)
 ```
 
@@ -231,7 +249,7 @@ rez_write_csv(rez007$trackDF$default, "rez007_refexpr.csv", c("id", "unitLastTex
 
 An editing best practice is to copy the `.csv` file and edit from the copy, rather from the `.csv` you export directly. Figure 2 shows what the exported `.csv` looks like in Excel:
 
-![Figure 2](img/iosave-sbc007.PNG){width=100%}
+![Figure 5](img/sample-excel.PNG){width=100%}
 
 After editing the CSV in a spreadsheet program, we import it back using `rez_read_csv()` (specifying the original `rezrDF` makes the import processes smoother and less error-prone):
 
@@ -242,13 +260,14 @@ changeDF = rez_read_csv("rez007_refexpr_edited.csv", origDF = rez007$trackDF$def
 Finally, we use the `updateFromDF()` function to change the `number` column:
 
 ```{r}
-rez007$trackDF$default = rez007$trackDF$default %>% updateFromDF(changeDF, changeCols = "number")
+rez007$trackDF$default = rez007$trackDF$default %>%
+  updateFromDF(changeDF, changeCols = "number")
 head(rez007$trackDF$default %>% select(id, text, number))
 ```
 
 
 ## Adding information about argument structure
-Now let's add the `Relation` variable. We use `addFieldForeign()`, which belongs to the EasyEdit family of functions covered in `vignette("edit_easyEdit")`. Recall that we've put a `treeEntry` column in `trackDF` that gives the ID of the corresponding tree entry. This code looks into `treeEntryDF`, finds the `Relation` value corresponding to a `treeEntry`, and adds it to `trackDF`, allowing us to know whether each referential expression is a subject:
+Now let's add the `Relation` variable. We use `addFieldForeign()`, which belongs to the EasyEdit family of functions covered in `vignette("edit_easyEdit")`. Recall that we've put a `treeEntry` column in `trackDF` that gives the ID of the corresponding tree entry. The following code looks into `treeEntryDF`, finds the `Relation` value corresponding to a `treeEntry`, and adds it to `trackDF`, allowing us to know whether each referential expression is a subject:
 
 ```{r}
 rez007 = rez007 %>%
@@ -303,7 +322,7 @@ lm_nochar = lm(charCount ~ noPrevSubjMentionsIn20 + noPrevNonSubjMentionsIn20 + 
 lm_nochar
 anova(lm_nochar)
 ```
-As we can see, `noPrevSubjMentionsIn20`, `noPrevNonSubjMentionsIn20` and `Relation` emerge as very good predictors, with entities mentioned more in the previous 20 units and which are subjects having a much stronger tendency to be light.
+As we can see, `noPrevSubjMentionsIn20`, `noCompetitors` and `Relation` emerge as very good predictors, with entities mentioned more in the previous 20 units and which are subjects having a much stronger tendency to be light.
 
 ## Where to go from here?
 This simple project shows most of the basic capabilities of `rezonateR`, though it still leaves out a lot, such as *reloads*, which allows you to update certain column automatically after changing other columns. `vignette("overview")` is a less topically focused overview of the package, less focused on a single problem but covering more topics. The series of tutorials starting from `vignette("import_save_basics")` covers most functionality of the package down to the smallest details, and you can pick and choose topics from there to read. Good luck!
