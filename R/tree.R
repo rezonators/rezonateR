@@ -348,6 +348,7 @@ getPositionAmongSiblings = function(currChunkDF, rezrObj, treeEntryDF = NULL, co
 
 #' Find the position of a chunk among its siblings in a tree.
 #'
+#' @rdname siblingpos
 #' @param chunkDF The `chunkDF` to be edited.
 #' @param rezrObj The `rezrObj` containing the `chunkDF`.
 #' @param treeEntryDFAddress The address to the `treeEntryDF` layer that will be used. If left blank, all layers will be used.
@@ -376,6 +377,8 @@ updatePositionAmongSiblings = function(df, rezrObj, treeEntryDFAddress, cond = e
   df
 }
 
+#' @rdname siblingpos
+#' @export
 addAllPositionsAmongSiblings = function(rezrObj, cond = expr(TRUE)){
   cond = enexpr(cond)
   #Later: combine treeEntryDF

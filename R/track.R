@@ -372,27 +372,27 @@ getNextMentionField = function(field, tokenOrder = NULL, chain = NULL, exclFrag 
 #'             noMatchingCompetitors = countMatchingCompetitors(isZero, windowSize = 40, between = F))
 #' @return A vector of number of competitors.
 #' @export
-countCompetitors = function(cond = NULL, windowSize = Inf, tokenOrder = NULL, chain = NULL, between = T, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
-  grabFromDF(tokenOrder = "docTokenSeqLast", chain = "chain", combinedChunk = "combinedChunk")
+countCompetitors = function(cond = NULL, windowSize = Inf, tokenSeq = NULL, unitSeq = NULL, chain = NULL, between = T, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
+  grabFromDF(tokenSeq = "docTokenSeqLast", chain = "chain", combinedChunk = "combinedChunk", unitOrder = "unitSeqLast")
   if(exclFrag) frag = isFrag(combinedChunk, nonFragmentMember) else frag = F
 
-  if(between) lastMentionPos = lastMentionToken(tokenOrder, chain, exclFrag, combinedChunk, nonFragmentMember)
+  if(between) lastMentionPos = lastMentionToken(tokenSeq, chain, exclFrag, combinedChunk, nonFragmentMember)
   if(is.null(cond)){
     condition = T
   } else {
     condition = eval_bare(enexpr(cond), env = env_parent(caller_env()))
   }
 
-  sapply(1:length(tokenOrder), function(x){
+  sapply(1:length(tokenSeq), function(x){
     if(between){
-      result = sum(tokenOrder < tokenOrder[x] & tokenOrder > lastMentionPos[x] &
-                     condition & tokenOrder > tokenOrder[x] - windowSize &
+      result = sum(tokenSeq < tokenSeq[x] & tokenSeq > lastMentionPos[x] &
+                     condition & unitSeq > unitSeq[x] - windowSize &
                      chain[x] != chain & !frag, na.rm = T)
       result[is.na(result)] = 0
       result
     } else {
-      sum(tokenOrder < tokenOrder[x] & condition &
-                     tokenOrder > tokenOrder[x] - windowSize &
+      sum(tokenSeq < tokenSeq[x] & condition &
+            tokenSeq > tokenSeq[x] - windowSize &
                      chain[x] != chain & !frag, na.rm = T)
     }
   })

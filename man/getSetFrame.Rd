@@ -21,5 +21,7 @@ The \code{frameMatrix} of the \code{rezrObj}.
 Extract/set a \code{frameMatrix}.
 }
 \examples{
+sbc007 = undupeLayers(sbc007, "trail", "name")
+sbc007 = addFrameMatrix(sbc007)
 frameMatrix(sbc007)[1:10, 1:12]
 }

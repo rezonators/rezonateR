@@ -44,6 +44,6 @@ Most use cases should be handled by other functions like \link{addUnitSeq} and \
 }
 \examples{
 sbc007_stackWithSeq = sbc007
-sbc007_stackWithSeq$cardDF = sbc007$cardDF \%>\% rez_left_join(select(sbc007$unitDF, id, docTokenSeqFirst, docTokenSeqLast), by = c("unit" = "id"), fkey = "unit", df2Address = "unit")
-sbc007_stackWithSeq$stackDF = getSeqBounds(sbc007_stackWithSeq$cardDF, sbc007_stackWithSeq$stackDF, sbc007$nodeMap$stack, tokenListName = "setIDList", fieldnames = c("docTokenSeq"), simpleIsAtom = F, simpleDFAddress = "cardDF", complexNodeMapAddress = "stackDF"))
+sbc007_stackWithSeq$cardDF = sbc007$cardDF \%>\% rez_left_join(select(sbc007$unitDF, id, docTokenSeqFirst, docTokenSeqLast), by = c("unit" = "id"), fkey = "unit", df2Address = "unit", df2key = "id")
+sbc007_stackWithSeq$stackDF = getSeqBounds(sbc007_stackWithSeq$cardDF, sbc007_stackWithSeq$stackDF, sbc007$nodeMap$stack, tokenListName = "setIDList", fieldnames = c("docTokenSeq"), simpleIsAtom = F, simpleDFAddress = "cardDF", complexNodeMapAddress = "stackDF")
 }

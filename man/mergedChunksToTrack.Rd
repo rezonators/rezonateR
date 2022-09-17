@@ -12,7 +12,7 @@ mergedChunksToTrack(rezrObj, trackLayers = NULL)
 \item{trackLayers}{Track chain layers on which this is going to be performed. If NULL, the action will be performed on all layers.}
 }
 \value{
-A \code{rezrObj} with the \code{trackDF} augmented with a combined chunks from the \code{chunkDF.}
+A \code{rezrObj} with the \code{trackDF} augmented with a combined chunks from the \code{chunkDF}.
 }
 \description{
 Add merged chunks in the chunkDF to the \code{trackDF}

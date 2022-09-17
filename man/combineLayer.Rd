@@ -17,7 +17,7 @@ combineTokenChunk(rezrObj, type = "intersect")
 
 \item{entity}{The Rezonator entity with multiple layers (e.g. track, rez, chunk) that you want to combine}
 
-\item{type}{The type of combination. If 'intersect', I will take the intersection of the columns in the \code{rezrDFs.} If 'union', I will take the union of the columns, populating missing fields with \code{NA}s.}
+\item{type}{The type of combination. If 'intersect', I will take the intersection of the columns in the \code{rezrDFs}. If 'union', I will take the union of the columns, populating missing fields with \code{NA}s.}
 
 \item{...}{The \code{rezrDF} objects to be combined}
 }

@@ -1,5 +1,5 @@
 ---
-title: "Toy example of an analysis in rezonateR"
+title: "Toy example of a coreference analysis in rezonateR"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Toy example of an analysis in rezonateR}
@@ -50,6 +50,7 @@ The data used in this example is from the text *A Tree's Life*, a conversation b
 The file has been annotated for coreference (trails), resonance, as well as argument structure (through trees). For this tutorial, resonance will be ignored. Coreference chains include referential expressions along with non-referring expressions that have been otherwise referred back to (e.g. discourse deixis). Figure 1 shows an example of the data in the Rezonator interface:
 
 ![Figure 1](img/iosave-sbc007.PNG){width=100%}
+(remove nav window, rez links?)
 
 Wavy lines indicate coreference links. Each mention or referential expression is a *track* inside the larger trail. In this file,  entire clauses that serve as antecedents in cases of discourse deixis are also considered tracks. For example, notice that the two occurrences of *I* on Line 2 are linked together with a purple link, along with the zero on line 3. These expressions all form tracks that are part of the trail for Mary.
 
@@ -296,7 +297,7 @@ The second one can be added using the function `countCompetitors()`:
 
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
-  rez_mutate(noCompetitors = countCompetitors(windowSize = 40, between = F))
+  rez_mutate(noCompetitors = countCompetitors(windowSize = 5, between = F))
 rez007$trackDF$default %>% select(id, noCompetitors)  %>% slice(1:20)
 ```
 
@@ -322,7 +323,7 @@ lm_nochar = lm(charCount ~ noPrevSubjMentionsIn20 + noPrevNonSubjMentionsIn20 + 
 lm_nochar
 anova(lm_nochar)
 ```
-As we can see, `noPrevSubjMentionsIn20`, `noCompetitors` and `Relation` emerge as very good predictors, with entities mentioned more in the previous 20 units and which are subjects having a much stronger tendency to be light.
+As we can see, `noPrevSubjMentionsIn20`, `noCompetitors` and `Relation` emerge as very good predictors, with entities mentioned more in the previous 20 units and which are subjects having a much stronger tendency to be short.
 
 ## Where to go from here?
 This simple project shows most of the basic capabilities of `rezonateR`, though it still leaves out a lot, such as *reloads*, which allows you to update certain column automatically after changing other columns. `vignette("overview")` is a less topically focused overview of the package, less focused on a single problem but covering more topics. The series of tutorials starting from `vignette("import_save_basics")` covers most functionality of the package down to the smallest details, and you can pick and choose topics from there to read. Good luck!

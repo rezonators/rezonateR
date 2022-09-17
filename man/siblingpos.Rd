@@ -2,6 +2,7 @@
 % Please edit documentation in R/tree.R
 \name{addPositionAmongSiblings}
 \alias{addPositionAmongSiblings}
+\alias{addAllPositionsAmongSiblings}
 \title{Find the position of a chunk among its siblings in a tree.}
 \usage{
 addPositionAmongSiblings(
@@ -10,6 +11,8 @@ addPositionAmongSiblings(
   treeEntryDFAddress = NULL,
   cond = expr(TRUE)
 )
+
+addAllPositionsAmongSiblings(rezrObj, cond = expr(TRUE))
 }
 \arguments{
 \item{chunkDF}{The \code{chunkDF} to be edited.}

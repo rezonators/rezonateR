@@ -12,7 +12,7 @@ rez_group_split(df, ...)
 \item{...}{Usual \code{group_split} parameters.}
 }
 \value{
-A list \code{rezrDF} objects after the \code{group_split.}
+A list \code{rezrDF} objects after the \code{group_split}.
 }
 \description{
 The main difference with \code{\link[dplyr:group_split]{dplyr::group_split()}} is that attributes are retained. If you use \code{\link[dplyr:group_split]{dplyr::group_split()}}, attributes will NOT be retained.

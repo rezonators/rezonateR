@@ -2,6 +2,7 @@
 
 #' Find chunks containing other chunks
 #'
+#' @rdname containChunk
 #' @param containedDF The rezrDF with contained chunks (may be a track/rez rezrDF)
 #' @param containerDF The rezrDF with container chunks (may be a track/rez rezrDF)
 #' @param proper Do you count only proper containment?
@@ -23,6 +24,9 @@ findContainingChunk = function(containedDF, containerDF, proper = F){
   })
 }
 
+#' @rdname containChunk
+#' @param rezrObj The rezrObj for which you would like to add containing chunks.
+#' @export
 addContainingChunk = function(containedDF, rezrObj, containerDFAdd){
   #TODO: Multiple containerDFAdds
 

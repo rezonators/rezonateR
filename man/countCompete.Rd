@@ -50,7 +50,7 @@ countMatchingCompetitors(
 A vector of number of competitors.
 }
 \description{
-This may either be counted within a window of units from the current one, or all referents competing with the current one may be counted, or a mix of both conditions. By default, we count referents intervening between the current and previous mention. Despite its name, tokenOrder can be set as unitSeqLast or similar.
+This may either be counted within a window of tokens from the current one, or all referents competing with the current one may be counted, or a mix of both conditions. By default, we count referents intervening between the current and previous mention. Despite its name, tokenOrder can be set as unitSeqLast or similar.
 }
 \examples{
 sbc007$trackDF$default \%>\%

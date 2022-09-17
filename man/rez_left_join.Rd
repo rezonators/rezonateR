@@ -46,5 +46,6 @@ by = c("unit" = "id"),
 fieldaccess = "foreign",
 df2Address = "unitDF",
 fkey = "unit",
+df2key = "id",
 rezrObj = sbc007)
 }

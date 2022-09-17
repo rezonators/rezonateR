@@ -50,6 +50,7 @@ tokensToLastMention(
   zeroProtocol = "literal",
   zeroCond = NULL,
   unitSeq = NULL,
+  unitTokenSeqName = NULL,
   unitDF = NULL,
   exclFrag = F,
   combinedChunk = NULL,
@@ -124,6 +125,7 @@ tokensToNextMention(
   zeroProtocol = "literal",
   zeroCond = NULL,
   unitSeq = NULL,
+  unitTokenSeqName = NULL,
   unitDF = NULL,
   exclFrag = F,
   combinedChunk = NULL,
@@ -189,9 +191,11 @@ countPrevBridges(
 
 \item{tokenOrder}{The vector of sequence values values where the mentions appeared. Common choices are docTokenSeqFirst, docTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running \link{addIsWordField} on a rezrObj. By default it's docTokenSeqLast.}
 
-\item{zeroProtocol}{If 'literal', I will take the seq values of the zeroes at face value. (If you set zeros as non-words and use docWordSeqFirst or discourseWordSeLast as your tokenOrder, this will lead to meaningless values.) If 'unitFinal', I will treat zeroes as if they were the final word of the unit. If 'unitFirst', I will treat zeroes as if they were the first word of the unit.}
+\item{zeroProtocol}{If \code{literal}, I will take the seq values of the zeroes at face value. (If you set zeros as non-words and use \code{docWordSeqFirst} or \code{discourseWordSeLast} as your \code{tokenOrder}, this will lead to meaningless values.) If \code{unitFinal}, I will treat zeroes as if they were the final word of the unit. If \code{unitFirst}, I will treat zeroes as if they were the first word of the unit.}
 
-\item{zeroCond}{A condition for determining whether a token is zero. For most people, this should be (word column) == "<0>".}
+\item{zeroCond}{A condition for determining whether a token is zero. For most people, this should be \verb{(word column) == "<0>"}.}
+
+\item{unitTokenSeqName}{The name of the corresponding tokenSeq column in the unit column. By default, \code{docTokenSeqLast} is used.}
 
 \item{windowSize}{The size of the window in which you will be counting.}
 

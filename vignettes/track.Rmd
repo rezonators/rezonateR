@@ -178,19 +178,20 @@ not coreferential to the current mention. The presence of competitors usually su
 number of competitors recently. The following parameters are present, all of which are:
 
 * `cond`: The condition under which something counts as a competitor (other than being non-coreferential with the present mention). By default, anything goes.
-* `window`: How many far back (in tokens) do you want to look? By default, there is no limit.
-* `tokenOrder`: As before.
+* `window`: How many far back (in units) do you want to look? By default, there is no limit.
+* `tokenSeq`: As before.
+* `unitSeq`: As before.
 * `chain`: As before.
 * `between`: Do you count only competitors between the current mention and the previous mention in the same trail, or do you also count mentions from before the previous mention?
 
 The function `countMatchingCompetitors()` is similar, but instead of `col`, there is a field `matchCol`, where you should put the name of a field in which competitors should match the current mention in order to be mentioned:
 
-Here is one example. `noCompetitors` uses a window of 40 tokens, and may look beyond the previous mention, whereas `noMatchingCompetitors` is similar, but only looks between the current and previous mention, and only counts mentions with matching `Relation` values:
+Here is one example. `noCompetitors` uses a window of 10 units, and may look beyond the previous mention, whereas `noMatchingCompetitors` is similar, but only looks between the current and previous mention, and only counts mentions with matching `Relation` values:
 
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
-  rez_mutate(noCompetitors = countCompetitors(windowSize = 40, between = F),
-             noMatchingCompetitors = countMatchingCompetitors(Relation, windowSize = 40, between = F))
+  rez_mutate(noCompetitors = countCompetitors(windowSize = 10, between = F),
+             noMatchingCompetitors = countMatchingCompetitors(Relation, windowSize = 10, between = F))
 rez007$trackDF$default %>% select(id, text, noCompetitors, noMatchingCompetitors)  %>% slice(1:20)
 ```
 

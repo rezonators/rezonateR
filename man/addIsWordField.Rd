@@ -20,7 +20,7 @@ addIsWordField(x, ...)
 \item{addWordSeq}{If TRUE, the columns wordOrder and docWordSeq will be added.}
 }
 \value{
-The modified \code{rezrDF} or \code{rezrObj.} If \code{addWordSeq} is set to \code{TRUE}, the columns \code{wordOrder} and \code{docWordSeq} will be added to \code{tokenDF} and \code{entryDF}, and the columns \code{wordOrderFirst}, \code{wordOrderLast}, \code{docWordSeqFirst} and \code{docWordSeqLast} will be added to \code{unitDF}, \code{chunkDF}, \code{rezDF} and \code{trackDF.}
+The modified \code{rezrDF} or \code{rezrObj}. If \code{addWordSeq} is set to \code{TRUE}, the columns \code{wordOrder} and \code{docWordSeq} will be added to \code{tokenDF} and \code{entryDF}, and the columns \code{wordOrderFirst}, \code{wordOrderLast}, \code{docWordSeqFirst} and \code{docWordSeqLast} will be added to \code{unitDF}, \code{chunkDF}, \code{rezDF} and \code{trackDF.}
 }
 \description{
 Add a field on whether something is a word or not.

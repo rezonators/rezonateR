@@ -9,7 +9,7 @@ rez_bind_rows(..., type = "intersect")
 \arguments{
 \item{...}{The \code{rezrDF} objects to be combined}
 
-\item{type}{The type of combination. If 'intersect', I will take the intersection of the columns in the \code{rezrDFs.} If 'union', I will take the union of the columns, populating missing fields with \code{NA}s.}
+\item{type}{The type of combination. If 'intersect', I will take the intersection of the columns in the \code{rezrDFs}. If 'union', I will take the union of the columns, populating missing fields with \code{NA}s.}
 }
 \value{
 The bound \code{rezrDF}
