@@ -57,8 +57,7 @@ Wavy lines indicate coreference links. Each mention or referential expression is
 
 ![Figure 2](img/sample_track.PNG){width=100%}
 
-Two-layered trees indicate argument structure of each verb. The verbal complex (including auxiliaries and adverbs that intervene between the auxiliary and verb, but not arguments that intervene between auxiliary and verb) is annotated as blank chunks (with chunkType = "verb") and serves as the root of each tree. Tree links are annotated as Relation = "Subject" when it indicates a subject-verb relation; otherwise Relation is left blank. For example, the tree panel of Figure 3 shows the argument structure of Line 4, with *defeats* as the root with three children: a zero subject, the object *the purpose of getting up in the morning*, and the adverb *kinda*;
-
+Two-layered trees indicate argument structure of each verb. The verbal complex (including auxiliaries and adverbs that intervene between the auxiliary and verb, but not arguments that intervene between auxiliary and verb) is annotated as blank chunks (with chunkType = "verb") and serves as the root of each tree. Tree links are annotated as Relation = "Subject" when it indicates a subject-verb relation; otherwise Relation is left blank. For example, the tree panel of Figure 3 shows the argument structure of Line 4, with *defeats* as the root with three children: a zero subject, the object *the purpose of getting up in the morning*, and the adverb *kinda*:
 
 ![Figure 3](img/sample_tree.PNG){width=100%}
 
@@ -159,6 +158,25 @@ head(rez007$chunkDF$refexpr %>% select(id, text, unitSeqFirst, unitSeqLast))
 ```
 
 For the details of these functions, see `vignette("time_seq")`.
+
+## Pass 1: Predicting length from lookback distance
+
+### `gapUnits`: Lookback distance in R
+
+As you may have noticed when using Rezonator, Rezonator automatically calculates the number of distances from each track (mention) to the previous mention in the same trail (coreference chain). This is called `gapUnits`, and it is automatically imported from Rezonator into rezonateR in `trackDF`. 
+
+```{r}
+library(ggplot2)
+rez007$trackDF$default %>%
+  filter(gapUnits != "N/A", charCount > 0) %>%
+  mutate(gapUnits = as.integer(gapUnits)) %>%
+  ggplot(aes(x = gapUnits, y = charCount)) + geom_point()
+```
+
+
+## Pass 2: Counting 
+
+## Pass 3: Full analysis
 
 ### Linking up non-tree tables with tree-related tables
 
