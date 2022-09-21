@@ -163,22 +163,194 @@ For the details of these functions, see `vignette("time_seq")`.
 
 ### `gapUnits`: Lookback distance in R
 
-As you may have noticed when using Rezonator, Rezonator automatically calculates the number of distances from each track (mention) to the previous mention in the same trail (coreference chain). This is called `gapUnits`, and it is automatically imported from Rezonator into rezonateR in `trackDF`. 
+As you may have noticed when using Rezonator, Rezonator automatically calculates the number of distances from each track (mention) to the previous mention in the same trail (coreference chain). This is called `gapUnits`, and it is automatically imported from Rezonator into rezonateR in `trackDF`. The `gapUnits` value is `N/A` for first mentions of things; otherwise it is a nonnegative integer.
+
+Because first mentions are usually not accessible in discourse when they are first introduced, we can expect that they would be referred to using heavier noun phrases. Let's try to verify that this is the case. (This tutorial will use some Tidyverse functions, such as those from `ggplot2`; feel free to click on any functions that you do not recognise).
 
 ```{r}
 library(ggplot2)
 rez007$trackDF$default %>%
-  filter(gapUnits != "N/A", charCount > 0) %>%
-  mutate(gapUnits = as.integer(gapUnits)) %>%
-  ggplot(aes(x = gapUnits, y = charCount)) + geom_point()
+  mutate(isFirst = case_when(gapUnits == "N/A" ~ "First",
+                             T ~ "NonFirst")) %>%
+  ggplot(aes(x = isFirst, y = charCount)) + geom_violin()
 ```
 
 
-## Pass 2: Counting 
+Clearly, we can see that first mentions have a much higher tendency to be referred to using a noun phrase that has more characters.
+
+Among the non-first mentions, can we also predict whether the character count from `gapUnits`? Let's again do a quick visualisation. If we exclude non-first mentions, and plot the relationship betwee `gapUnits` and `charCount`, this is what we get:
+
+```{r}
+rez007$trackDF$default %>%
+  filter(gapUnits != "N/A", charCount > 0) %>%
+  mutate(gapUnits = as.integer(gapUnits)) %>%
+  ggplot(aes(x = gapUnits, y = charCount)) + geom_count()
+```
+
+Oh no, what's going on? It seems that `gapUnits` is not predicting what we would usually expect to see. Most of the long `gapUnits` noun phrases are fairly light, and there are quite a few small `gapUnits` phrases that are quite long.
+
+In the rest of the tutorial, we will partially account for this weirdness. But for now, let's try to apply a simple linear model to this data to see what happens when we try to predict `charCount` from `gapUnits`. (Note: This is not the best model for the model specification we're looking at, but let's keep it simple for this tutorial.)
+
+```{r}
+pass1_model1 = rez007$trackDF$default %>%
+  filter(gapUnits != "N/A", charCount > 0) %>%
+  mutate(gapUnits = as.integer(gapUnits)) %>%
+  lm(charCount ~ gapUnits, .)
+summary(pass1_model1)
+```
+As we can see, although there is a negative coefficient that says a larger `gapUnits` leads to a smaller character count (as expected), it is not significant.
+
+## A finer-grained distance metric?
+
+There is another value, `gapWords`, that is automatically calculated in Rezonator and calculates the number of tokens from the current mention to the previous one. Would this finer-grained measure do better than `gapUnits`? Let's try:
+
+
+```{r}
+rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  mutate(gapWords = as.integer(gapWords)) %>%
+  ggplot(aes(x = gapWords, y = charCount)) + geom_count()
+pass1_model2 = rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  mutate(gapWords = as.integer(gapWords)) %>%
+  lm(charCount ~ gapWords, .)
+summary(pass1_model2)
+```
+
+The pattern is not much clearer from the diagram this time than last time, and there is little change with the linear model either: The p-value is still around 0.2.
+
+There are ways we can potentially improve on these measures as well as other predictors of character count that we can potentially explore. We'll continue doing this throughout the tutorial.
+
+
+## Pass 2: Getting started with EasyTrack 
+
+Having attempted to predict character count from predictors imported directly from Rezonator, let's try to derive some predictors using `rezonateR` functions. This section will cover some basic functions in the `EasyTrack` series of functions. See `vignette("track")` for details about them./
+
+### Counting previous mentions
+The function `countPrevMentions()` in `rezonateR` is one function we can use. In its simplest form, you can simply specify a window of units in which to look. We will look at the 10 previous units. We will add this value to the `trackDF` using the `rez_mutate()` function, which is part of the TidyRez family (`vignette("edit_tidyRez")`), in order to ensure that the resulting data frame will remain in the correct `rezonateR` format.
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>%
+  rez_mutate(noPrevMentionsIn10 = countPrevMentions(10))
+rez007$trackDF$default %>% select(id, noPrevMentionsIn10)  %>% slice(1:20)
+```
+Now let's try to draw a scatterplot and fit a linear model, as we have done before:
+
+```{r}
+rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  ggplot(aes(x = noPrevMentionsIn10, y = charCount)) + geom_count()
+pass2_model1 = rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  lm(charCount ~ noPrevMentionsIn10, .)
+summary(pass2_model1)
+```
+
+From these results, we see that there *is* a tendency for character counts to be smaller when the number of previous mentions is greater, and we also find that the number of previous mentions in the previous 10 units *is* a significant predictor at the 0.05 significance level.
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>%
+  rez_mutate(gapWordsNew = tokensToLastMention(tokenOrder = docTokenSeqLast, unitDF = rez007$unitDF, zeroProtocol = "unitFinal", zeroCond = (text == "<0>")))
+summary(pass1_model2)
+```
+### Counting competitors
+
+The function `countCompetitors()` is similar to `countPreviousMentions()`, except that it counts the number of referential expressions that are *not* in the same coreference chain, i.e. compete for attention. The syntax is similar to `countPreviousMentions()`. We will add this value to the `trackDF` using the `rez_mutate()` function, which is part of the TidyRez family (`vignette("edit_tidyRez")`), in order to ensure that the resulting data frame will remain in the correct `rezonateR` format. So let's try to add the number of competitors now:
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>%
+  rez_mutate(noCompetitors = countCompetitors(windowSize = 10, between = F))
+rez007$trackDF$default %>% select(id, noCompetitors)  %>% slice(1:20)
+```
+
+Now let's try to draw a scatterplot and fit a linear model, as we have done before:
+
+```{r}
+rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  ggplot(aes(x = noCompetitors, y = charCount)) + geom_count()
+pass2_model1 = rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  lm(charCount ~ noCompetitors, .)
+summary(pass2_model1)
+```
+
+From the graph, there does seem to be a small effect where a greater number of competitors leads to the use of fewer characters. This effect again turns out to be significant at the 0.05 significance level.
+
+However, there is good reason to believe that `noCompetitors` and `noPrevMentionsIn10` may be confounding factors for each other. This is because of there are more non-coreferring expressions in the previous units, there will tend to be fewer coreferring expressions, assuming that the number of referential expressions is relatively stable, i.e. they are negatively correlated. As you can see below, there is certainly a negative correlation:
+
+```{r}
+rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  ggplot(aes(x = noCompetitors, y = noPrevMentionsIn10)) + geom_count()
+cor(rez007$trackDF$default$noCompetitors, rez007$trackDF$default$noPrevMentionsIn10)
+```
+
+So let's try to put both in the model and how the results turn out:
+
+```{r}
+pass2_model3 = rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10, .)
+summary(pass2_model3)
+```
+As we can see, once we put both in the model, `noCompetitors` becomes the only significant predictor. (Of course, this does not mean that `noPrevMentionsIn10` does not matter; we only have very low power, after all.)
+
+As a last attempt, let's also try the lookback-based approach by adding `gapUnits` to the model as well:
+
+```{r}
+pass2_model4 = rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  mutate(gapUnits = as.numeric(gapUnits)) %>%
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnits, .)
+summary(pass2_model4)
+```
+
+Interestingly, this time, *all three* predictors turn out to be significant. The first two are in expected directions: having more competitors leads to longer referential expressions, whereas more recent mentions makes the form smaller. However, the `gapUnits` effect is in the opposite direction as we expect: The greater the gap, the smaller the referential expression! This does not appear to make sense. The next section will explore this in more detail.
+
+### Upgrading `gapWords`
+
+There's an additional thing we could do. The `gapWords` in Rezonator actually has a couple of problems; namely, it treats zeroes as belonging to the position you put the <0< in (which is arbitrary), and it counts non-words such as pauses, breaths or laughter, which you might not want to count. Let's try to use the `rezonateR` function `tokensToLastMention()` instead to deal with these issues. We can treat <0> as belonging to the end of the unit they are annotated at, and define `docWordSeqLast` as the token sequence used in calculation, thus discounting non-words:
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>%
+  rez_mutate(gapWordsNew = tokensToLastMention(tokenOrder = docWordSeqLast, unitDF = rez007$unitDF, zeroProtocol = "unitFinal", zeroCond = (text == "<0>")))
+```
+
+Now we can put this new `gapWords` into the model:
+
+```{r}
+pass2_model5 = rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  mutate(gapUnits = as.numeric(gapUnits)) %>%
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapWordsNew, .)
+summary(pass2_model5)
+```
+This has no significant effect, and indeed takes away the significance of `noPrevMentionsIn10` too.
 
 ## Pass 3: Full analysis
 
-### Linking up non-tree tables with tree-related tables
+### Merging chunks
+
+You have likely suspected by now that there is something wrong with our `gapUnits` measure. And you would be correct! There *is* a mistake in how we have been approaching these calculations.
+
+Let's look at some cases where `gapUnits` is very small, but `charCount` is mysteriously very large, and see what's wrong with them. We'll set the cutoff for `gapUnits` at 1, and the cutoff for `charCount` at 20.
+
+```{r}
+rez007$trackDF$default %>% filter(gapUnits <= 1, charCount > 20)
+```
+
+Notice that some of these do not seem to be actual referential expressions. Some of these are legitimate; for example, *nobody fucks with my lifestyle* happens to have been referred to by a cataphorical *it*:
+
+![Figure 4](sample_fucks.PNG)
+
+However, *(...) in self assertiveness ,* is an error. The problem is that in Rezonator, it is not possible to create chunks that span multiple units. We can only create individual chunks for each unit. So in this screenshot, *a real good lesson for them ,*, *too ,*, and *(...) in self assertiveness ,* are three separate chunks:
+
+![Figure 4](sample_multiline.PNG)
+
+`rezonateR` is equipped with the ability to combine several chunks inside the file into one larger chunk. Before we do this, though, we need to spice up our data frames with information from the trees, which will provide us with some of the information helpful for merging chunks together. This will also be helpful for other types of operations later on too, so let's take a look at this feature.
+
+#### Adding tree information
 
 Inside Rezonator, there are no direct links between trees and entities like tracks and chunks. The function `getAllTreeCorrespondences()` adds a column `treeEntry` to various tables, which gives the corresponding entry in the table `treeEntryDF`:
 
@@ -189,12 +361,11 @@ head(rez007$chunkDF$refexpr %>% select(id, text, treeEntry))
 head(rez007$trackDF$default %>% select(id, text, treeEntry))
 ```
 
-
-### Combining chunks
-In Rezonator, it is not possible to create chunks that span multiple units. `rezonateR` is equipped with the ability to combine several chunks inside the file into one larger chunk. There are two functions for doing this:
+#### Merging chunks
+There are two functions for merging chunks in `rezonateR`:
 
 * `mergeChunksWithTree()`: If there is a treeEntry that corresponds to the concatenation of multiple chunks, then we merge those chunks.
-* `mergeChunksWithIDs()`: We merge chunks by annotating the ID of the larger chunk that it belongs to, in this case in the field `largerChunk`. For example, the first chunk you create this way may have the ID 1, the second chunk 2, the third chunk 3 and so on. In this case, all the component chunks of the first complex chunk should have the value `1` for `largerChunk` and so on.
+* `mergeChunksWithIDs()`: We merge chunks by annotating the ID of the larger chunk that it belongs to. In this dataset, this is done in the field `largerChunk`. For example, the first chunk you create this way may have the ID 1, the second chunk 2, the third chunk 3 and so on. In this case, all the component chunks of the first complex chunk should have the value `1` for `largerChunk` and so on.
 
 The new chunks will be added to the bottom of `chunkDF`. In addition, `chunkDF` will have an extra column `combinedChunk` giving information about chunk combinations:
 
@@ -217,17 +388,163 @@ rez007$trackDF$default %>%
   select(id, name, text, combinedChunk) #Showing only combined chunks and their members
 ```
 
-## Adding information about particular referential expressions
-Recall that our final table will need to contain the following information:
+Using magic, `rezonateR` automatically calculates the values of fields like `noCompetitors` when you combine chunks, so you don't need to worry about recalculating anything for the merged chunks.
 
-* `charCount` (the dependent variable): The number of characters in a referential expression.
-* `noPrevSubjMentionsIn20`: The number of coreferent subject mentions within the 20 previous units.
-* `noPrevNonSubjMentionsIn20`: The number of coreferent non-subject mentions within the 20 previous units.
-* `noCompetitors`: The number of competitors within the five previous units.
-* `Relation`: Is the current mention a subject?
-* `number`: Is the current mention singular or plural?
+### `gapUnits`, take two
 
-The first variable is already computed in Rezonator by default and need not be included again. The middle four will be added in later sections. This section will focus on the final variable.
+Now that we have merged some of these chunks, it's time to redo the `gapUnits` value. We can do this by using the `unitsToLastMention()` function, and setting the value of `exclFrag` to `TRUE` (i.e. excluding fragments of chunks) and `nonFragmentMember` to the rows that do not have the string `"member"` in `combinedChunk`:
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>%
+  rez_mutate(gapUnitsNew = unitsToLastMention(exclFrag = T,
+                                               nonFragmentMember = !str_detect(combinedChunk, "member")))
+```
+
+This new value `gapUnitsNew` has an `NA` value for fragments of chunks, and also ignores them when calculating `gapUnits`.
+
+```{r}
+rez007$trackDF$default %>%
+  filter(!is.na(gapUnitsNew)) %>%
+  mutate(gapUnitsNew = as.integer(gapUnitsNew)) %>%
+  ggplot(aes(x = gapUnitsNew, y = charCount)) + geom_count()
+```
+
+While we still can't see the expected effect, some of the outliers on the top left of the graph are now gone.
+
+The `noPrevMentionsIn10` and `noCompetitors` columns can also be redone to ignore fragments:
+
+```{r}
+
+rez007$trackDF$default = rez007$trackDF$default %>%
+    rez_mutate(noPrevMentionsIn10 = countPrevMentions(10,
+                                    exclFrag = T,
+                                    nonFragmentMember = !str_detect(combinedChunk, "member")))
+rez007$trackDF$default = rez007$trackDF$default %>%
+    rez_mutate(noCompetitors = countCompetitors(windowSize = 10, between = F,
+                                                exclFrag = T,
+                                               nonFragmentMember = !str_detect(combinedChunk, "member")))
+```
+
+Now with the corrected data, let's try to 
+
+```{r}
+pass3_model1 = rez007$trackDF$default %>%
+  filter(!is.na(gapUnitsNew), charCount > 0) %>%
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew, .)
+summary(pass3_model1)
+```
+This time, `noCompetitors` is no longer a good predictor. The coefficient of `gapUnitsNew` is still in the 'wrong' direction, since a larger `gapUnitsNew` still leads to a smaller referential expression, but the effect is not significant any more.
+
+Is there any way we can improve on this model a little more? Let's consider the cases with small `gapUnits` but large character counts again. It turns out that many of them are **predicates** of copular clauses, like the following example, which has the very long expression *what I'm gonna tell  him* coreferential to the subject *that*:
+
+![Figure 1](sample_pred.PNG)
+
+This suggests that it will be useful to add information about grammatical relations. There's good reason to believe that predicates are likely to be heavier referential expressions.
+
+### Adding information about verbs and argument structure
+
+Now let's add the `Relation` variable. We use `addFieldForeign()`, which belongs to the EasyEdit family of functions covered in `vignette("edit_easyEdit")`. Recall that we've put a `treeEntry` column in `trackDF` that gives the ID of the corresponding tree entry. The following code looks into `treeEntryDF`, finds the `Relation` value corresponding to a `treeEntry`, and adds it to `trackDF`, allowing us to know whether each referential expression is a subject:
+
+```{r}
+rez007 = rez007 %>%
+  addFieldForeign("track", "default", "treeEntry", "default", "treeEntry", "Relation", "Relation", fieldaccess = "foreign")
+head(rez007$track$default %>% select(id, chain, text, treeEntry, Relation))
+```
+
+we can also replace the `NA` values in `Relation` by `"NonSubj"`, and turn it into a factor so that it can be used in modelling:
+
+```{r, message=FALSE}
+rez007$trackDF$default = rez007$trackDF$default %>% 
+  rez_mutate(Relation = coalesce(Relation, "NonSubj"), fieldaccess = "flex") %>%
+  stringToFactor(c("Relation"))
+```
+
+Now let's see what `Relation` turns up:
+
+```{r}
+pass3_model2 = rez007$trackDF$default %>%
+  filter(!is.na(gapUnitsNew), charCount > 0) %>%
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + Relation, .)
+summary(pass3_model2)
+```
+As we can see, subjects are likely to be far shorter than non-subjects.
+
+Let's also add information about the verb to the `trackDF`. The following code adds two columns, `verbID` and `verbText`, to the `trackDF`, which tell us the chunk ID and text of the verb that the referential expression depends on (for example, in *I saw you*, the referential expressions *I* and *you* would contain information about *saw*). This process is a bit complicated; see `vignette("track")` for a more detailed explanation of what's going on.
+
+```{r}
+rez007 = rez007 %>%
+  addFieldForeign("track", "default", "treeEntry", "default", "treeEntry", "treeParent", "parent", fieldaccess = "foreign")
+rez007$trackDF$default = rez007$trackDF$default %>%
+  rez_left_join(rez007$chunkDF$verb %>% select(id, text, treeEntry),
+                by = c(treeParent = "treeEntry"),
+                suffix = c("", "_verb"),
+                df2Address = "chunkDF/verb",
+                fkey = "treeParent",
+                df2key = "treeEntry",
+                rezrObj = rez007) %>%
+  rename(verbID = id_verb, verbText = text_verb)
+rez007$trackDF$default %>% select(id, treeParent, verbID, verbText) %>% slice(1:20)
+```
+
+
+### Adding the effect of predicatehood
+
+We can now add a variable to pick out predicates. There's a quick and dirty way to guess which referential expressions are predicates: We can pick out those expressions that are arguments of copulas, i.e. have a copula in the column `verbText`, and also are not subjects. This will incorrectly pick out adjuncts of copula clauses, but those are infrequent enough in our sample that we can get away with it.
+
+In addition, referential expressions that don't belong to any verb are often also predicate-like in behaviour, such as the multiline chunk we've seen before:
+
+![Figure](sample_multiline.PNG)
+
+So we can also include them as 'predicates' as good measure. Let's call the resulting column `isPredOrFree`, with 'free' meaning 'free from a verb'. (Note that this incorrectly picks out phrases that are parts of prepositional phrases as well, but again, there are few enough of these that we can get away with it.) Here's the code for evaluating this:
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>% rez_mutate(isPredOrFree = ((
+  verbText %in% c("is", "was", "were", "are", "am", "'s", "'m", "'re") &
+    is.na(Relation)
+) | is.na(verbText)) %>% coalesce(F))
+```
+
+Now let's compare the character counts of referential expressions that are predicates or free, versus thoose that are not:
+
+```{r}
+rez007$trackDF$default %>%
+  filter(!is.na(gapUnitsNew)) %>%
+  ggplot(aes(x = isPredOrFree, y = charCount)) + geom_violin()
+```
+The tendency should now be clear, so let's add `isPredOrFree` to the model:
+
+```{r}
+pass3_model2 = rez007$trackDF$default %>%
+  filter(!is.na(gapUnitsNew), charCount > 0) %>%
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + Relation + isPredOrFree, .)
+summary(pass3_model2)
+```
+
+Unfortunately, `isPredOrFree`  does not turn out to be a significant predictor.
+
+### Splitting up `noPrevSubjMentions`
+Let's see if we can improve upon the model in any more ways. The first thing we could do is to split up `noPrevMentionsIn10`. It is often proposed in the literature that subjects are more accessible than other types of arguments. So we could split up previous mentions into previous subjects and previous non-subjects.
+
+The function `countPrevMentionsIf()` counts the number of times that a referent was mentioned previously in a specified window of units, along with the `TidyRez` function `rez_mutate()` (note that for non-subjects, we allow `Relation` to be `NA`):
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>%
+  rez_mutate(noPrevSubjMentionsIn10 = countPrevMentionsIf(10, Relation == "Subj", exclFrag = T,
+                                               nonFragmentMember = !str_detect(combinedChunk, "member")),
+             noPrevNonSubjMentionsIn10 = countPrevMentionsIf(10, Relation != "Subj" | is.na(Relation), exclFrag = T,
+                                               nonFragmentMember = !str_detect(combinedChunk, "member")))
+rez007$trackDF$default %>% select(id, noPrevSubjMentionsIn10, noPrevNonSubjMentionsIn10)  %>% slice(1:20)
+```
+```{r}
+pass3_model2 = rez007$trackDF$default %>%
+  filter(!is.na(gapUnitsNew), charCount > 0) %>%
+  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + Relation + isPredOrFree, .)
+summary(pass3_model2)
+```
+
+As we can now see, only subject mentions have a significant effect; non-subject mentions do not!
+
+### Adding information about number
 
 We will first take a guess at what the number of a track in `rez007$trackDF` is using a set of simplistic rules based on the linguistic form. Then we export a `.csv` file from `rezonateR`, and edit the automatic guesses in Microsoft Excel. We then import the `.csv` file back into `rezonateR` and update `rez007$trackDF` from the imported file.
 
@@ -284,64 +601,20 @@ rez007$trackDF$default = rez007$trackDF$default %>%
 head(rez007$trackDF$default %>% select(id, text, number))
 ```
 
-
-## Adding information about argument structure
-Now let's add the `Relation` variable. We use `addFieldForeign()`, which belongs to the EasyEdit family of functions covered in `vignette("edit_easyEdit")`. Recall that we've put a `treeEntry` column in `trackDF` that gives the ID of the corresponding tree entry. The following code looks into `treeEntryDF`, finds the `Relation` value corresponding to a `treeEntry`, and adds it to `trackDF`, allowing us to know whether each referential expression is a subject:
-
-```{r}
-rez007 = rez007 %>%
-  addFieldForeign("track", "default", "treeEntry", "default", "treeEntry", "Relation", "Relation", fieldaccess = "foreign")
-head(rez007$track$default %>% select(id, chain, text, treeEntry, Relation))
-```
-
-
-## Adding information about discourse context
-Now we only have three predictors left to add:
-
-* `noPrevSubjMentionsIn20`: The number of coreferent subject mentions within the 20 previous units.
-* `noPrevNonSubjMentionsIn20`: The number of coreferent non-subject mentions within the 20 previous units.
-* `noCompetitors`: The number of competitors within the five previous units.
-
-We can add the first two using the function `countPrevMentionsIf()`, which counts the number of times that a referent was mentioned previously in a specified window of units, along with the TidyRez function `rez_mutate()` (note that for non-subjects, we allow `Relation` to be `NA`):
-
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
-  rez_mutate(noPrevSubjMentionsIn20 = countPrevMentionsIf(20, Relation == "Subj"),
-             noPrevNonSubjMentionsIn20 = countPrevMentionsIf(20, Relation != "Subj" | is.na(Relation)))
-rez007$trackDF$default %>% select(id, noPrevSubjMentionsIn20, noPrevNonSubjMentionsIn20)  %>% slice(1:20)
+  updateFromDF(changeDF, changeCols = "number")
+head(rez007$trackDF$default %>% select(id, text, number))
 ```
-
-The second one can be added using the function `countCompetitors()`:
 
 ```{r}
-rez007$trackDF$default = rez007$trackDF$default %>%
-  rez_mutate(noCompetitors = countCompetitors(windowSize = 5, between = F))
-rez007$trackDF$default %>% select(id, noCompetitors)  %>% slice(1:20)
+pass3_model2 = rez007$trackDF$default %>%
+  filter(!is.na(gapUnitsNew), charCount > 0) %>%
+  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + number + Relation + isPredOrFree, .)
+summary(pass3_model2)
 ```
 
-## Conducting the analysis
-
-Let's check that `rez007$trackDF` now has all the required elements:
-
-```{r}
-rez007$trackDF$default %>% select(id, charCount, noPrevSubjMentionsIn20, noPrevNonSubjMentionsIn20, noCompetitors, Relation, number)  %>% slice(1:20)
-```
-Before analysis, let's change the NAs in the `Relation` column to `"NonSubj"` and change `Relation` and `number` to factors: 
-
-```{r}
-analysis_df = rez007$trackDF$default %>% 
-  rez_mutate(Relation = coalesce(Relation, "NonSubj"), fieldaccess = "flex") %>%
-  stringToFactor(c("Relation", "number"))
-rez007$trackDF$default %>% select(id, Relation, number)  %>% slice(1:20)
-```
-And so we have our analysis:
-
-```{r}
-lm_nochar = lm(charCount ~ noPrevSubjMentionsIn20 + noPrevNonSubjMentionsIn20 + noCompetitors + Relation + number, data = analysis_df)
-lm_nochar
-anova(lm_nochar)
-```
-As we can see, `noPrevSubjMentionsIn20`, `noCompetitors` and `Relation` emerge as very good predictors, with entities mentioned more in the previous 20 units and which are subjects having a much stronger tendency to be short.
+The number of previous subject mentions and whether the current mention is a subject continue to turn out to be good predictors. The rest of the predictors are not significant, though some of them (particularly the number of competitors and lookback distance i.e. `gapUnits`) may hold some promise on a larger dataset. Grammatical number seems to be hopeless.
 
 ## Where to go from here?
 This simple project shows most of the basic capabilities of `rezonateR`, though it still leaves out a lot, such as *reloads*, which allows you to update certain column automatically after changing other columns. `vignette("overview")` is a less topically focused overview of the package, less focused on a single problem but covering more topics. The series of tutorials starting from `vignette("import_save_basics")` covers most functionality of the package down to the smallest details, and you can pick and choose topics from there to read. Good luck!

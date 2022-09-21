@@ -69,7 +69,7 @@ mergeChunksWithIDs = function(rezrObj, idField, addToTrack = F, selectCond = NUL
 
   #Adding a combinedDF column to the chunkDFs
   for(chunkLayer in names(rezrObj$chunkDF)){
-    if(!("combinedChunk" %in% rezrObj$chunkDF[[chunkLayer]])){
+    if(!("combinedChunk" %in% names(rezrObj$chunkDF[[chunkLayer]]))){
       rezrObj$chunkDF[[chunkLayer]] = rezrObj$chunkDF[[chunkLayer]] %>% rez_mutate(combinedChunk = "")
     }
   }

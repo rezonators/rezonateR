@@ -8,7 +8,8 @@
 countCompetitors(
   cond = NULL,
   windowSize = Inf,
-  tokenOrder = NULL,
+  tokenSeq = NULL,
+  unitSeq = NULL,
   chain = NULL,
   between = T,
   exclFrag = F,
@@ -32,7 +33,7 @@ countMatchingCompetitors(
 
 \item{windowSize}{The size of the window in which you will be counting.}
 
-\item{tokenOrder}{The vector of sequence values values where the mentions appeared. Common choices are docTokenSeqFirst, docTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running \link{addIsWordField} on a rezrObj. By default it's docTokenSeqLast.}
+\item{unitSeq}{The vector of tokenOrder values where the mentions appeared. You can choose tokenOrderFirst, tokenOrderFirst, or maybe an average of the two. By default it's tokenOrderFirst.}
 
 \item{chain}{The chain that each mention belongs to.}
 
@@ -45,6 +46,8 @@ countMatchingCompetitors(
 \item{nonFragmentMember}{Vector indicating whether each entry is a non-fragment member, i.e. a member of a combined chunk that also serves as a meaningful chunk in its own right.}
 
 \item{matchCol}{The column for which a value is to be matched.}
+
+\item{tokenOrder}{The vector of sequence values values where the mentions appeared. Common choices are docTokenSeqFirst, docTokenSeqLast, wordTokenSeqFirst and wordTokenseqLast (the last two are available after running \link{addIsWordField} on a rezrObj. By default it's docTokenSeqLast.}
 }
 \value{
 A vector of number of competitors.

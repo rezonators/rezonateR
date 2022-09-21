@@ -140,7 +140,7 @@ mergeChunksWithTree = function(rezrObj, treeEntryDF = NULL, addToTrack = F, sele
 
   #Adding a combinedDF column to the chunkDFs
   for(chunkLayer in names(rezrObj$chunkDF)){
-    if(!("combinedChunk" %in% rezrObj$chunkDF[[chunkLayer]])){
+    if(!("combinedChunk" %in% names(rezrObj$chunkDF[[chunkLayer]]))){
       rezrObj$chunkDF[[chunkLayer]] = rezrObj$chunkDF[[chunkLayer]] %>% rez_mutate(combinedChunk = "")
     }
   }
