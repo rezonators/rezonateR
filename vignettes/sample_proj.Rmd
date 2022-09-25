@@ -2,7 +2,7 @@
 title: "Toy example of a coreference analysis in rezonateR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Toy example of an analysis in rezonateR}
+  %\VignetteIndexEntry{Toy example of a coreference analysis in rezonateR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -342,11 +342,11 @@ rez007$trackDF$default %>% filter(gapUnits <= 1, charCount > 20)
 
 Notice that some of these do not seem to be actual referential expressions. Some of these are legitimate; for example, *nobody fucks with my lifestyle* happens to have been referred to by a cataphorical *it*:
 
-![Figure 4](sample_fucks.PNG)
+![Figure 4](img/sample_fucks.PNG)
 
 However, *(...) in self assertiveness ,* is an error. The problem is that in Rezonator, it is not possible to create chunks that span multiple units. We can only create individual chunks for each unit. So in this screenshot, *a real good lesson for them ,*, *too ,*, and *(...) in self assertiveness ,* are three separate chunks:
 
-![Figure 4](sample_multiline.PNG)
+![Figure 4](img/sample_multiline.PNG)
 
 `rezonateR` is equipped with the ability to combine several chunks inside the file into one larger chunk. Before we do this, though, we need to spice up our data frames with information from the trees, which will provide us with some of the information helpful for merging chunks together. This will also be helpful for other types of operations later on too, so let's take a look at this feature.
 
@@ -437,7 +437,7 @@ This time, `noCompetitors` is no longer a good predictor. The coefficient of `ga
 
 Is there any way we can improve on this model a little more? Let's consider the cases with small `gapUnits` but large character counts again. It turns out that many of them are **predicates** of copular clauses, like the following example, which has the very long expression *what I'm gonna tell  him* coreferential to the subject *that*:
 
-![Figure 1](sample_pred.PNG)
+![Figure 1](img/sample_pred.PNG)
 
 This suggests that it will be useful to add information about grammatical relations. There's good reason to believe that predicates are likely to be heavier referential expressions.
 
@@ -493,7 +493,7 @@ We can now add a variable to pick out predicates. There's a quick and dirty way 
 
 In addition, referential expressions that don't belong to any verb are often also predicate-like in behaviour, such as the multiline chunk we've seen before:
 
-![Figure](sample_multiline.PNG)
+![Figure](img/sample_multiline.PNG)
 
 So we can also include them as 'predicates' as good measure. Let's call the resulting column `isPredOrFree`, with 'free' meaning 'free from a verb'. (Note that this incorrectly picks out phrases that are parts of prepositional phrases as well, but again, there are few enough of these that we can get away with it.) Here's the code for evaluating this:
 
