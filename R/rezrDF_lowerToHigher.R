@@ -130,7 +130,7 @@ concatStringFields = function(simpleDF, complexDF, complexNodeMap, fieldnames, t
 #' @return A complex DF.
 #' @note Most use cases should be handled by other functions like [rezonateR::addUnitSeq] and [rezonateR::addIsWordField]. If you do call this function, do note that the rezrDF you are changing is the second parameter, not the first. As such, piping should be done like this: someDF %>% getSeqBounds(simpleDF, ., complexNodeMap, ...)
 #' @examples sbc007_stackWithSeq = sbc007
-#' sbc007_stackWithSeq$cardDF = sbc007$cardDF %>% rez_left_join(select(sbc007$unitDF, id, docTokenSeqFirst, docTokenSeqLast), by = c("unit" = "id"), fkey = "unit", df2Address = "unit", df2key = "id")
+#' sbc007_stackWithSeq$cardDF = sbc007$cardDF %>% rez_left_join(select(sbc007$unitDF, id, docTokenSeqFirst, docTokenSeqLast), by = c("unit" = "id"), fkey = "unit", df2Address = "unitDF", df2key = "id")
 #' sbc007_stackWithSeq$stackDF = getSeqBounds(sbc007_stackWithSeq$cardDF, sbc007_stackWithSeq$stackDF, sbc007$nodeMap$stack, tokenListName = "setIDList", fieldnames = c("docTokenSeq"), simpleIsAtom = F, simpleDFAddress = "cardDF", complexNodeMapAddress = "stackDF")
 #' @export
 getSeqBounds = function(simpleDF, complexDF, complexNodeMap, fieldnames, simpleIsAtom = T, seqName = "", tokenListName = "tokenList", exclude0 =  T, ...){

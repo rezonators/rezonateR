@@ -71,6 +71,7 @@ getSourceTableInfo = function(rezrObj, address, df2key, field){
     splitAdd = strsplit(address, "/")[[1]] #Split the address up
     df2Add = splitAdd[-length(splitAdd)] #df2Add is the address without the field name
     df2 = listAt(rezrObj, paste0(df2Add, collapse = "/")) #Extract the source table
+
     if(any(df2key == "")) df2key = names(fieldaccess(df2)[fieldaccess(df2) == "key"]) #Extract the key field of the source table
     df2field = splitAdd[length(splitAdd)] #Extract the source table field
     if(field == ""){ #If target table field isn't specified ...
