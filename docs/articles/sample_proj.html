@@ -178,9 +178,10 @@ be annotated with the help of <code>rezonateR</code>.</p>
 <div class="figure">
 <img src="img/sample_chunk.PNG" style="width:100.0%" alt=""><p class="caption">Figure 4</p>
 </div>
-<div class="section level3">
-<h3 id="our-goal-in-rezonater">Our goal in rezonateR<a class="anchor" aria-label="anchor" href="#our-goal-in-rezonater"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="our-goal-in-rezonater">Our goal in rezonateR<a class="anchor" aria-label="anchor" href="#our-goal-in-rezonater"></a>
+</h2>
 <p>As we said above, our goal is to determine whether several factors
 that are proposed to be relevant to accessibility are associated with
 shorter referential forms.</p>
@@ -223,7 +224,6 @@ corresponds to a referential expresssion, and the columns include all of
 these factors (plus <code>charCount</code>, the number of characters).
 This can be done easily using the <code>rezonateR</code> functions after
 inputting the raw Rezonator data.</p>
-</div>
 </div>
 <div class="section level2">
 <h2 id="importing-the-file">Importing the file<a class="anchor" aria-label="anchor" href="#importing-the-file"></a>
@@ -1069,9 +1069,9 @@ combinations:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2C2FB52C1A11  a real good lesson for them ,                           |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> E818EBA6CB78  too ,                                                   |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2A382D1098989 (...) in self assertiveness ,                           |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> iDSKjR85VQnZJ the only way it 's gon na work , is if we have respect… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1afkSI5tVOvWD (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> RvWKwshmobSLJ a real good lesson for them , too , (...) in self asse… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> ymNwWJ2M9bues the only way it 's gon na work , is if we have respect… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 7vVEbMme8kitf (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> zk36tsgn9N5So a real good lesson for them , too , (...) in self asse… combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 <p><code><a href="../reference/mergedChunksToTrack.html">mergedChunksToTrack()</a></code> puts this information in the
 <code>trackDF</code> too:</p>
@@ -1091,9 +1091,9 @@ combinations:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 129168B539994 weekly house meetings          a real good lesson for … |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 144636EDDE11B weekly house meetings          too ,                    |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 231F6E448A5E7 weekly house meetings          (...) in self assertive… |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> qSUHs76Octd4Z having respect for one another the only way it 's gon … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> B2kUg0sO15yen Trail 81                       (H) &lt;0&gt; going to (...) … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> yZ2m09xbJNTfc weekly house meetings          a real good lesson for … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> OTm6r3HuVcsji having respect for one another the only way it 's gon … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 0OmViQDwpTyLd Trail 81                       (H) &lt;0&gt; going to (...) … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> P5dG7as3zVnMl weekly house meetings          a real good lesson for … combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 <p>Using magic, <code>rezonateR</code> automatically calculates the
 values of fields like <code>noCompetitors</code> when you combine
@@ -1178,7 +1178,7 @@ counts again. It turns out that many of them are
 example, which has the very long expression <em>what I’m gonna tell
 him</em> coreferential to the subject <em>that</em>:</p>
 <div class="figure">
-<img src="img/sample_pred.PNG" alt=""><p class="caption">Figure 1</p>
+<img src="img/sample_pred.PNG" alt=""><p class="caption">Figure 7</p>
 </div>
 <p>On the other hand, very few of these are subjects. This suggests that
 it will be useful to add information about grammatical relations.
@@ -1278,7 +1278,7 @@ infrequent enough in our sample that we can get away with it.</p>
 are often also predicate-like in behaviour, such as the multiline chunk
 we’ve seen before:</p>
 <div class="figure">
-<img src="img/sample_multiline.PNG" alt=""><p class="caption">Figure</p>
+<img src="img/sample_multiline.PNG" alt=""><p class="caption">Figure 8</p>
 </div>
 <p>So we can also include them as ‘predicates’ as good measure. Let’s
 call the resulting column <code>isPredOrFree</code>, with ‘free’ meaning
@@ -1310,7 +1310,7 @@ explanation of what’s going on.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 4</span></span></span>
 <span><span class="co">#&gt;    id            treeParent    verbID        verbText         </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B vM9B6ctW0R2Po said             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B SqMsalpjdcFuV said             </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06  35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 7E5BB65072C   <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1F74D2B049FA4 35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
@@ -1561,8 +1561,8 @@ graph:</p>
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">number</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-46-1.png" width="700">
-Singulars seem to be more concentrated towards the smaller character
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-46-1.png" width="700"></p>
+<p>Singulars seem to be more concentrated towards the smaller character
 counts, but at the same time have more outliers that are very heavy.
 Let’s put these in the model and see what happens:</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">

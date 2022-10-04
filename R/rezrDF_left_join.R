@@ -78,7 +78,9 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
   if(all(fkey == "") | is.null(fkey) | is.na(fkey)){
     if(!is.null(list(...)[["by"]])){
       fkey = names(list(...)[["by"]])[1]
-      message("You didn't give me a foreign key for future updates, so I'm assuming it's the first of your by-fields.")
+      if(fieldaccess == "foreign"){
+        message("You didn't give me a foreign key for future updates, so I'm assuming it's the first of your by-fields.")
+      }
     }
   }
 
@@ -100,7 +102,9 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
       warning("You have more fkeys: " %+% paste(fkey, collapse = ",") %+% " than by-line entries: " %+% paste(names(list(...)[["by"]]), collapse = ",") %+% ". I have removed the fkeys at the end.")
       fkey = fkey[1:length(df2key)]
     }
-    message("You didn't give me a df2 key for future updates, so I've guessed it from your by-line.")
+    if(fieldaccess == "foreign"){
+      message("You didn't give me a df2 key for future updates, so I've guessed it from your by-line.")
+    }
   }
 
   if(!suffixIncl){
@@ -130,26 +134,28 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
   }
 
   #Update function stuff
-  if(all(df2Address == "") | all(fkey == "")){
-    message("You didn't provide an df2Address and/or foreign key, so I won't be adding an update function automatically. Nuh-uh!")
-  } else {
-    for(i in 1:length(newNames)){
-      newName = newNames[i]
-      rightTblName = rightTblNames[i]
-      if(all(df2Address == "tokenChunkDF")){
-        if(str_ends(rightTblName, "First|Last")){
-          updateAddress =
-            c("tokenDF" %+% "/" %+% chompSuffix(rightTblName, "First|Last"),
+  if(fieldaccess == "foreign"){
+    if(all(df2Address == "") | all(fkey == "")){
+      message("You didn't provide an df2Address and/or foreign key, so I won't be adding an update function automatically. Nuh-uh!")
+    } else {
+      for(i in 1:length(newNames)){
+        newName = newNames[i]
+        rightTblName = rightTblNames[i]
+        if(all(df2Address == "tokenChunkDF")){
+          if(str_ends(rightTblName, "First|Last")){
+            updateAddress =
+              c("tokenDF" %+% "/" %+% chompSuffix(rightTblName, "First|Last"),
+                "chunkDF" %+% "/" %+% names(rezrObj$chunkDF) %+% "/" %+% rightTblName)
+          } else {
+            updateAddress =
+            c("tokenDF" %+% "/" %+% rightTblName,
               "chunkDF" %+% "/" %+% names(rezrObj$chunkDF) %+% "/" %+% rightTblName)
+          }
         } else {
-          updateAddress =
-          c("tokenDF" %+% "/" %+% rightTblName,
-            "chunkDF" %+% "/" %+% names(rezrObj$chunkDF) %+% "/" %+% rightTblName)
+          updateAddress = df2Address %+% "/" %+% rightTblName
         }
-      } else {
-        updateAddress = df2Address %+% "/" %+% rightTblName
+        updateFunct(result, newName) = createLeftJoinUpdate(updateAddress, fkey, df2key, newName)
       }
-      updateFunct(result, newName) = createLeftJoinUpdate(updateAddress, fkey, df2key, newName)
     }
   }
 

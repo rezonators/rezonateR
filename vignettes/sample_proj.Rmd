@@ -61,7 +61,7 @@ There are two types of chunks (elements represented by rectangles) in this file:
 
 ![Figure 4](img/sample_chunk.PNG){width=100%}
 
-### Our goal in rezonateR
+## Our goal in rezonateR
 As we said above, our goal is to determine whether several factors that are proposed to be relevant to accessibility are associated with shorter referential forms.
 
 To this end, we will be buildiong a model that predicts the `charCount`, i.e. length (in number of characters) of a certain referential expression. Several predictors will be used to predict `charCount` in our small dataset. Here is a spoiler of the final set of factors:
@@ -450,7 +450,7 @@ This time, `noCompetitors` is no longer a good predictor. The coefficient of `ga
 
 Is there any way we can improve on this model a little more? Let's consider the cases with small `gapUnits` but large character counts again. It turns out that many of them are **predicates** of copular clauses, like the following example, which has the very long expression *what I'm gonna tell  him* coreferential to the subject *that*:
 
-![Figure 1](img/sample_pred.PNG)
+![Figure 7](img/sample_pred.PNG)
 
 On the other hand, very few of these are subjects. This suggests that it will be useful to add information about grammatical relations. Subjects are likely to be biased towards shorter character counts, and predicates towards longer ones. The two following sections will add these elements. First we will add the `Relation` predictor, which is annotated in the data and tells whether a referential expression is the subject of a clause. Then we write code to automatically guess whether something is a predicate.
 
@@ -498,7 +498,7 @@ We can now add a variable to pick out predicates. There's a quick and dirty way 
 
 In addition, referential expressions that don't belong to any verb are often also predicate-like in behaviour, such as the multiline chunk we've seen before:
 
-![Figure](img/sample_multiline.PNG)
+![Figure 8](img/sample_multiline.PNG)
 
 So we can also include them as 'predicates' as good measure. Let's call the resulting column `isPredOrFree`, with 'free' meaning 'free from a verb'. (Note that this incorrectly picks out phrases that are parts of prepositional phrases as well, but again, there are few enough of these that we can get away with it.)
 
@@ -636,6 +636,7 @@ rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew)) %>%
   ggplot(aes(x = number, y = charCount)) + geom_violin()
 ```
+
 Singulars seem to be more concentrated towards the smaller character counts, but at the same time have more outliers that are very heavy. Let's put these in the model and see what happens:
 
 ```{r}
