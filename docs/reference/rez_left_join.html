@@ -6,7 +6,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">rezonateR</a>
 
@@ -26,6 +26,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Overview</h6>
     <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR 0.1.1</a>
+    <a class="dropdown-item" href="../articles/sample_proj.html">Toy example of a coreference analysis in rezonateR</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
     <a class="dropdown-item" href="../articles/import_save_basics.html">Importing .rez files, saving rezrObjs, and basic data structure</a>
@@ -113,12 +114,13 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="va">sbc007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rez_left_join</span><span class="op">(</span></span></span>
-<span class="r-in"><span>y <span class="op">=</span> <span class="va">sbc007</span><span class="op">$</span><span class="va">unitDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="rez_select.html">rez_select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span><span class="op">)</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sbc007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="va">sbc007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">rez_left_join</span><span class="op">(</span></span></span>
+<span class="r-in"><span>y <span class="op">=</span> <span class="va">sbc007</span><span class="op">$</span><span class="va">unitDF</span> <span class="op">%&gt;%</span> <span class="fu"><a href="rez_select.html">rez_select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"unit"</span> <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>fieldaccess <span class="op">=</span> <span class="st">"foreign"</span>,</span></span>
 <span class="r-in"><span>df2Address <span class="op">=</span> <span class="st">"unitDF"</span>,</span></span>
 <span class="r-in"><span>fkey <span class="op">=</span> <span class="st">"unit"</span>,</span></span>
+<span class="r-in"><span>df2key <span class="op">=</span> <span class="st">"id"</span>,</span></span>
 <span class="r-in"><span>rezrObj <span class="op">=</span> <span class="va">sbc007</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>

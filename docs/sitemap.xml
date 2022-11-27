@@ -22,6 +22,9 @@
     <loc>https://rezonators.github.io/rezonateR/articles/overview.html</loc>
   </url>
   <url>
+    <loc>https://rezonators.github.io/rezonateR/articles/sample_proj.html</loc>
+  </url>
+  <url>
     <loc>https://rezonators.github.io/rezonateR/articles/time_seq.html</loc>
   </url>
   <url>
@@ -58,6 +61,9 @@
     <loc>https://rezonators.github.io/rezonateR/reference/addIsWordField.html</loc>
   </url>
   <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/addPositionAmongSiblings.html</loc>
+  </url>
+  <url>
     <loc>https://rezonators.github.io/rezonateR/reference/addRow.html</loc>
   </url>
   <url>
@@ -67,6 +73,9 @@
     <loc>https://rezonators.github.io/rezonateR/reference/bridging.html</loc>
   </url>
   <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/chunkfam.html</loc>
+  </url>
+  <url>
     <loc>https://rezonators.github.io/rezonateR/reference/combineLayer.html</loc>
   </url>
   <url>
@@ -74,6 +83,12 @@
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/concatStringFields.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/containChunk.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/countCompete.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/countCompetitors.html</loc>
@@ -106,10 +121,22 @@
     <loc>https://rezonators.github.io/rezonateR/reference/getAllTreeCorrespondences.html</loc>
   </url>
   <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/getBiluoFromOrder.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/getBiluoFromSeq.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/getOrderFromSeq.html</loc>
+  </url>
+  <url>
     <loc>https://rezonators.github.io/rezonateR/reference/getRezrDFAttr.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/getSeqBounds.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/getSeqFromID.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/getSetFrame.html</loc>
@@ -130,6 +157,9 @@
     <loc>https://rezonators.github.io/rezonateR/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/initfin.html</loc>
+  </url>
+  <url>
     <loc>https://rezonators.github.io/rezonateR/reference/lowerList.html</loc>
   </url>
   <url>
@@ -137,6 +167,9 @@
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/mergecat.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/mergeChunksWithIDs.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/mergeChunksWithTree.html</loc>
@@ -152,6 +185,9 @@
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/obscureUpper.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/orderseq.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/reducedFrameMatrix.html</loc>
@@ -190,10 +226,19 @@
     <loc>https://rezonators.github.io/rezonateR/reference/rez_validate_fieldchange.html</loc>
   </url>
   <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/rmField.html</loc>
+  </url>
+  <url>
     <loc>https://rezonators.github.io/rezonateR/reference/rw.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/saveload.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/sbc007.html</loc>
+  </url>
+  <url>
+    <loc>https://rezonators.github.io/rezonateR/reference/siblingpos.html</loc>
   </url>
   <url>
     <loc>https://rezonators.github.io/rezonateR/reference/stringToFactor.html</loc>

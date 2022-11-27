@@ -18,48 +18,67 @@ library(dplyr)
 ```
 
 
+## Research question
+
+It is often noted that in language, if a referent is more ‘accessible', or more easily accessed mentally - for example, it is salient in the previous discourse or physical context - then we will tend to refer to it using a shorter and simpler form form. Things that are less accessible - for example, things that are mentioned for the first time - tend to be referred to using longer forms. Thus, we should expect that in natural discourse, factors that render a referent more accessible are associated with shorter forms, and factors that make it less accessible are associated with longer forms.
+
+Figure 1 shows an example of this phenomenon where an entity is first mentioned as a full noun phrase, and by the end of the stretch of text is only mentioned by a pronoun:
+
+![Figure 1](img/sample_rq.PNG){width=100%}
+
+When the concept of hard times was first mentioned, it was with a noun phrase *hard times* (line 159), and the same occurred again in the next line. But the third time it appeared, a pronoun *it* was used. Intuitively, *hard times* was quite prominent and therefore accessible by the third reference, and hence a shorter form was used.
+
+But what exactly makes something more accessible, and therefore more likely to be referred to using a shorter form? The best way to investigate this question is to propose some factors that may increase accessibility (e.g. the number of times an entity has been recently mentioned), and then determine whether they are associated with the use of a shorter form in natural discourse. This project is a preliminary investgation of this issue using a snippet of conversation.
+
+## Introduction
+
+The aim of this article is to demonstrate, using a sample, highly simplified project, what type of analysis may be conducted using Rezonator and `rezonateR`. This particular example will examine the choice of referential forms in spoken dialogue: What factors lead to the choice of a longer form (e.g. *the three black cats*) versus a shorter one (e.g. *them*)?
+
+The data here is the same as that used in the series of tutorials starting with `vignette("import_save_basics")`, but this article will have less focus on how to write the code, and more on showing you how to answer the sample research question using `rezonateR`.
+
+This article does not assume that you have read any of the other articles on `rezonateR`. So there is some overlap in the topics covered. I will point you to other tutorials for further details when necessary. However, if you have not installed `rezonateR`, you need to do that now using this code:
+
 ```{r, eval = FALSE}
 install.packages("devtools")
 library(devtools)
 install_github("rezonators/rezonateR")
 ```
 
-
-The aim of this article is to demonstrate, using a sample, highly simplified project, what type of analysis may be conducted using Rezonator and `rezonateR`. This particular example will examine the choice of referential forms in spoken dialogue: What factors lead to the choice of a longer form (e.g. *the three black cats*) versus a shorter one (e.g. *them*)?
-
-The data here is the same as that used in the series of tutorials starting with `vignette("import_save_basics")`, but this article will have less focus on how to write the code, and more on showing you how to answer the sample research question using `rezonateR`.
-
-This article does not assume that you have read any of the other articles on `rezonateR`. So there is some overlap in the topics covered. I will point you to other tutorials for further details when necessary.
-
 You are welcome to follow this tutorial in R. If you are reading this in R using the file `sample_proj.Rmd`, you can simply click on the 'run' button (green 'play' icon on the top right of each box). As long as all the code blocks are run sequentially, the code should work; otherwise, open a ticket on GitHub!
 
-## The research question
-
-It is often noted that in language, if a referent is more ‘accessible', or more easily accessed mentally - for example, it is salient in the previous discourse or physical context - then we will tend to refer to it using a shorter and simpler form form. Things that are less accessible - for example, things that are mentioned for the first time - tend to be referred to using longer forms. Thus, we should expect that in natural discourse, factors that render a referent more accessible are associated with shorter forms, and factors that make it less accessible are associated with longer forms.
-
-But what makes something more accessible, and therefore more likely to be referred to using a shorter form? The best way to investigate this question is to propose some factors that may increase accessibility, and then determine whether they are associated with the use of a shorter form in natural discourse. This project is a preliminary investgation of this issue using a snippet of conversation.
 
 ## The input data from Rezonator
-The data used in this example is from the text *A Tree's Life*, a conversation between two sisters from the Santa Barbara Corpus of Spoken American English. The first 162 lines have been annotated here, which deals with the topic of one of the sisters' roommates.
+The data used in this example is from the text *A Tree's Life*, a conversation between two sisters from the Santa Barbara Corpus of Spoken American English. The first 162 lines have been annotated and will be used in this tutorial; they deal with the topic of one of the sisters' roommates. (The data is also available through the `sbc007` object in the package itself, where a detailed description of the annotations included may be found.)
 
-The file has been annotated for coreference (trails), resonance, as well as argument structure (through trees). For this tutorial, resonance will be ignored. Coreference chains include referential expressions along with non-referring expressions that have been otherwise referred back to (e.g. discourse deixis). Figure 1 shows an example of the data  in the Rezonator interface:
+Figure 2 shows an excerpt close to the beginning of the conversation in Rezonator:
 
-![Figure 1](img/sample_sbc007.PNG){width=100%}
+![Figure 2](img/sample_convo.PNG){width=100%}
 
-Wavy lines indicate coreference links. Each mention or referential expression is a *track* inside the larger trail.   These expressions all form tracks that are part of the trail for Mary:
+In this file, each line is referred to as a *unit*, which in this context is an intonation unit (though lines may be sentences, clauses or other larger structures in other contexts.) Each unit consists of a series of tokens ('words') separate by spaces.
 
-![Figure 2](img/sample_track.PNG){width=100%}
+The file has been annotated for coreference chains, or *trails*. A trail consists of several mentions or referential expressions that refer to the same entity, each of which is individual called a *track*. They are connected by wavy lines in Rezonator. We saw one example of a trail in Figure 1. Here is another example:
 
-In this file, entire clauses that serve as antecedents in cases of discourse deixis are also considered tracks. For example, notice that the two occurrences of *I* on Line 2 are linked together with a purple link, along with the zero on line 3.
+![Figure 3](img/sample_track.PNG){width=100%}
 
-Two-layered trees indicate argument structure of each verb. The verbal complex (including auxiliaries and adverbs that intervene between the auxiliary and verb, but not arguments that intervene between auxiliary and verb) is annotated as blank chunks (with chunkType = "verb") and serves as the root of each tree. Tree links are annotated as Relation = "Subject" when it indicates a subject-verb relation; otherwise Relation is left blank. For example, the tree panel of Figure 3 shows the argument structure of Line 4, with *defeats* as the root with three children: a zero subject, the object *the purpose of getting up in the morning*, and the adverb *kinda*:
+Here, the *Tim* and the two *he*s refer to the same person.
 
-![Figure 3](img/sample_tree.PNG){width=100%}
+When there is a clause with an implicit participant that is not overtly expressed in the linguistic form, the symbol <0> is used to indicate the absence of such a form, and also included in a trail. Here is an example:
 
+![Figure 4](img/sample_I.PNG){width=100%}
 
-There are two types of chunks (elements represented by rectangles) in this file: Chunks that have been created as part of a trail (mostly referential expressions - such as *the purpose of getting up in the morning* the example), and verbs, which are 'blank chunks', i.e. do not belong to any trail and appear with grey borders (such as *said* in the example). Chunks have been annotated for two properties: `chunkType` (which is `verb` for verbs and left blank for referential expressions) and `largerChunk`, i.e. the larger chunk to which a chunk belongs. Note that `number` is NOT annotated; it will instead be annotated with the help of `rezonateR`.
+Notice that the two occurrences of *I* on Line 2 are linked together with a purple link, along with the zero on line 3.
 
-![Figure 4](img/sample_chunk.PNG){width=100%}
+A 'chunk' in a Rezonator is a sequence of tokens within a unit, often a type of phrase such as a noun phrase. There are two types of chunks (elements represented by rectangles) in this file: Chunks that have been created as tracks which form part of a trail (mostly referential expressions - such as *hard times* in Figure 1), and verbal complexes, which are 'blank chunks', i.e. do not belong to any trail and appear with grey borders. The following figure shows some examples of these verbal chunks
+
+![Figure 5](img/sample_verbs.PNG){width=100%}
+
+In this example, auxiliaries, negation and similar elements are placed inside these verbal complexes, as one can see from *wasn't gonna do*.
+
+Chunks have been annotated for two properties inside Rezonator. `chunkType` is `verb` for verbs and left blank for referential expressions, allowing us to distinguish between the two when importing into rezonateR later. `largerChunk` is the larger chunk to which a chunk belongs, which will be discussed later. These are shown in Figure 6:
+
+![Figure 6](img/sample_chunk.PNG){width=100%}
+
+In this image, *said* is a verb and all the other chunks are referential expressions.
 
 ## Our goal in rezonateR
 As we said above, our goal is to determine whether several factors that are proposed to be relevant to accessibility are associated with shorter referential forms.
@@ -176,7 +195,7 @@ For the details of these functions, see `vignette("time_seq")`.
 
 As you may have noticed when using Rezonator, Rezonator automatically calculates the number of distances from each track (mention) to the previous mention in the same trail (coreference chain). This is called `gapUnits`, and it is automatically imported from Rezonator into rezonateR in `trackDF`. The `gapUnits` value is `N/A` for first mentions of things; otherwise it is a nonnegative integer.
 
-Because first mentions are usually not accessible in discourse when they are first introduced, we can expect that they would be referred to using heavier noun phrases. Let's try to verify that this is the case. (This tutorial will use some Tidyverse functions, such as those from `ggplot2`; feel free to click on any functions that you do not recognise to see their documentation).
+Because first mentions are usually not accessible in discourse when they are first introduced, we can expect that they would be referred to using heavier noun phrases. Let's try to verify that this is the case. The following piece of code plots the length of first vs. non-first mentions in the text using a violin plot. (This tutorial will use some Tidyverse functions, such as those from `ggplot2`; feel free to click on any functions that you do not recognise to see their documentation.)
 
 ```{r}
 library(ggplot2)
@@ -359,9 +378,14 @@ However, *(...) in self assertiveness ,* is an error. The problem is that in Rez
 
 This created a situation where *(...) in self assertiveness* is mistakenly taken as long referential expression that occurred right after a previous mention *too ,*.
 
-`rezonateR` is equipped with the ability to combine several chunks inside the file into one larger chunk. Before we do this, though, we need to spice up our data frames with information from the trees, which will provide us with some of the information helpful for merging chunks together. This will also be helpful for other types of operations later on too, so let's take a look at this feature.
+`rezonateR` is equipped with the ability to combine several chunks inside the file into one larger chunk. Before we do this, though, we need to spice up our data frames with information from trees, which will provide us with some of the information helpful for merging chunks together. This will also be helpful for other types of operations later on too, so let's take a look at this feature.
 
 #### Adding tree information
+In Rezonator, trees are structures used to indicate relationships between words/chunks and other words/chunks. In ths file we're working with, there are a number of two-layered trees that indicate argument structure of each verb. The root of each tree is the verb, and the arguments are the leaves. The following figure shows the argument structure of Line 4, with *defeats* as the root with three children: a zero subject, the object *the purpose of getting up in the morning*, and the adverb *kinda*:
+
+![Figure 3](img/sample_tree.PNG){width=100%}
+
+The links between different parts of a tree are also tagged with the field Relation. In this file, tree links are annotated as Relation = "Subject" when it indicates a subject-verb relation; otherwise Relation is left blank.
 
 Inside Rezonator, there are no direct links between trees and entities like tracks and chunks. The function `getAllTreeCorrespondences()` adds a column `treeEntry` to various tables, which gives the ID of the corresponding entry in the table `treeEntryDF`:
 

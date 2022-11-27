@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">rezonateR</a>
 
@@ -43,6 +43,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Overview</h6>
     <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR 0.1.1</a>
+    <a class="dropdown-item" href="../articles/sample_proj.html">Toy example of a coreference analysis in rezonateR</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
     <a class="dropdown-item" href="../articles/import_save_basics.html">Importing .rez files, saving rezrObjs, and basic data structure</a>
@@ -164,7 +165,7 @@ The <code><a href="../reference/reload.html">reload()</a></code> feature calls f
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getRezrDFAttr.html">updateFunct</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">unitDF</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $text</span></span>
 <span><span class="co">#&gt; function(df, rezrObj) updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000021d185fb298&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000204e7cc7968&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -172,7 +173,7 @@ The <code><a href="../reference/reload.html">reload()</a></code> feature calls f
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $transcript</span></span>
 <span><span class="co">#&gt; function(df, rezrObj) updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000021d185d2b28&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000204e7c21fe0&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -180,7 +181,7 @@ The <code><a href="../reference/reload.html">reload()</a></code> feature calls f
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $docTokenSeqFirst</span></span>
 <span><span class="co">#&gt; function(df, rezrObj) updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000021d185d3880&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000204e7c253c0&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -188,7 +189,7 @@ The <code><a href="../reference/reload.html">reload()</a></code> feature calls f
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $docTokenSeqLast</span></span>
 <span><span class="co">#&gt; function(df, rezrObj) updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000021d185d0c68&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000204e7c22460&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -196,7 +197,7 @@ The <code><a href="../reference/reload.html">reload()</a></code> feature calls f
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $docWordSeqFirst</span></span>
 <span><span class="co">#&gt; function(df, rezrObj) updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000021d185d1c98&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000204e7c23420&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -204,7 +205,7 @@ The <code><a href="../reference/reload.html">reload()</a></code> feature calls f
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $docWordSeqLast</span></span>
 <span><span class="co">#&gt; function(df, rezrObj) updateLowerToHigher(df, rezrObj, address, fkeyAddress, action, field, fkeyInDF, seqName)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000021d185c0fd8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000204e7c0c2d0&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -302,7 +303,7 @@ to the table. Let’s try this, and look at both the results and the
 <span><span class="fu"><a href="../reference/getRezrDFAttr.html">updateFunct</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"orthoLength"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (df) </span></span>
 <span><span class="co">#&gt; updateMutate(df, field, x)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000021d176a8cc0&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000204e6df5630&gt;</span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "updateFunction" "function"      </span></span>
 <span><span class="co">#&gt; attr(,"deps")</span></span>
@@ -522,9 +523,6 @@ take time):</p>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">changeFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>,</span>
 <span>                                  fieldName <span class="op">=</span> <span class="st">"text"</span>,</span>
 <span>                                  expression <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">text</span> <span class="op">==</span> <span class="st">"&lt;0&gt;"</span> <span class="op">~</span> <span class="st">"∅"</span>, <span class="cn">T</span> <span class="op">~</span> <span class="va">text</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/get_env.html" class="external-link">get_env</a></span><span class="op">(</span><span class="fu"><a href="../reference/getRezrDFAttr.html">updateFunct</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">entryDF</span>, <span class="st">"wordOrder"</span><span class="op">)</span><span class="op">)</span><span class="op">[[</span><span class="st">"df2key"</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt;      </span></span>
-<span><span class="co">#&gt; "id"</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">entryDF</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">entryDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/reload.html">reload</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">unitDF</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">unitDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/reload.html">reload</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span></span>
 <span></span>
@@ -642,7 +640,7 @@ value in the column.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 21B1DDD41EFB0 sbc007             50 impersonal you                    3 defau…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 368B8B1D9E62C sbc007             56 up there                          1 defau…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 251AE6A659F6F sbc007              3 the purpose of getting up         1 defau…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> CTbZ90w2WFieH sbc007             88 Danae                             1 defau…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Sg8GbsAlUW0LD sbc007             88 Danae                             1 defau…</span></span>
 <span><span class="co">#Note: chainSize is currently flex as it is supplied by Rezonator and not calculated by rezonateR, but this may change in the future.</span></span></code></pre></div>
 </div>
 <div class="section level2">
