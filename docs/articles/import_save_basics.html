@@ -114,17 +114,82 @@ structured, and some basic functions for manipulating
 file. This file contains a minimal amount of annotation - just enough to
 explain the basic workings of RezonateR without being bogged down in
 long loading times that would result from a more extensively annotated
-files. The file is based on the text <em>A Tree’s Life</em>, a
-conversation between two sisters from the Santa Barbara Corpus of Spoken
-American English. The first part of the file, which deals with the topic
-of one of the sisters’ roommates, has been annotated for coreference
-(trails), resonance, as well as argument structure (through trees).
-There are also largely arbitrary stacks drawn throughout the file.</p>
+files.</p>
+<p>The data used in this example is from the text <em>A Tree’s
+Life</em>, a conversation between two sisters from the Santa Barbara
+Corpus of Spoken American English. The first 162 lines have been
+annotated and will be used in this tutorial; they deal with the topic of
+one of the sisters’ roommates. (The data is also available through the
+<code>sbc007</code> object in the package itself, where a detailed
+description of the annotations included may be found.)</p>
+<p>Figure 2 shows an excerpt close to the beginning of the conversation
+in Rezonator:</p>
 <div class="figure">
-<img src="img/iosave-sbc007.PNG" style="width:100.0%" alt=""><p class="caption">Figure 1: An image of the Rezonator interface with
-trail (wavy lines), resonances (straight lines) and a dependency tree in
-the nav window.</p>
+<img src="img/sample_convo.PNG" style="width:100.0%" alt=""><p class="caption">Figure 2</p>
 </div>
+<p>In this file, each line is referred to as a <em>unit</em>, which in
+this context is an intonation unit (though lines may be sentences,
+clauses or other larger structures in other contexts.) Each unit
+consists of a series of tokens (‘words’) separate by spaces.</p>
+<p>The file has been annotated for coreference chains, or
+<em>trails</em>. A trail consists of several mentions or referential
+expressions that refer to the same entity, each of which is individual
+called a <em>track</em>. They are connected by wavy lines in Rezonator.
+We saw one example of a trail in Figure 1. Here is another example:</p>
+<div class="figure">
+<img src="img/sample_track.PNG" style="width:100.0%" alt=""><p class="caption">Figure 3</p>
+</div>
+<p>Here, the <em>Tim</em> and the two <em>he</em>s refer to the same
+person.</p>
+<p>When there is a clause with an implicit participant that is not
+overtly expressed in the linguistic form, the symbol &lt;0&gt; is used
+to indicate the absence of such a form, and also included in a trail.
+Here is an example:</p>
+<div class="figure">
+<img src="img/sample_I.PNG" style="width:100.0%" alt=""><p class="caption">Figure 4</p>
+</div>
+<p>Notice that the two occurrences of <em>I</em> on Line 2 are linked
+together with a purple link, along with the zero on line 3.</p>
+<p>A ‘chunk’ in a Rezonator is a sequence of tokens within a unit, often
+a type of phrase such as a noun phrase. There are two types of chunks
+(elements represented by rectangles) in this file: Chunks that have been
+created as tracks which form part of a trail (mostly referential
+expressions - such as <em>hard times</em> in Figure 1), and verbal
+complexes, which are ‘blank chunks’, i.e. do not belong to any trail and
+appear with grey borders. The following figure shows some examples of
+these verbal chunks</p>
+<div class="figure">
+<img src="img/sample_verbs.PNG" style="width:100.0%" alt=""><p class="caption">Figure 5</p>
+</div>
+<p>In this example, auxiliaries, negation and similar elements are
+placed inside these verbal complexes, as one can see from <em>wasn’t
+gonna do</em>.</p>
+<p>Chunks have been annotated for two properties inside Rezonator.
+<code>chunkType</code> is <code>verb</code> for verbs and left blank for
+referential expressions, allowing us to distinguish between the two when
+importing into rezonateR later. <code>largerChunk</code> is the larger
+chunk to which a chunk belongs, which will be discussed later. These are
+shown in Figure 6:</p>
+<div class="figure">
+<img src="img/sample_chunk.PNG" style="width:100.0%" alt=""><p class="caption">Figure 6</p>
+</div>
+<p>In this image, <em>said</em> is a verb and all the other chunks are
+referential expressions.</p>
+<p>In Rezonator, trees are structures used to indicate relationships
+between words/chunks and other words/chunks. In ths file we’re working
+with, there are a number of two-layered trees that indicate argument
+structure of each verb. The root of each tree is the verb, and the
+arguments are the leaves. The following figure shows the argument
+structure of Line 4, with <em>defeats</em> as the root with three
+children: a zero subject, the object <em>the purpose of getting up in
+the morning</em>, and the adverb <em>kinda</em>:</p>
+<div class="figure">
+<img src="img/sample_tree.PNG" style="width:100.0%" alt=""><p class="caption">Figure 7</p>
+</div>
+<p>The links between different parts of a tree are also tagged with the
+field Relation. In this file, tree links are annotated as Relation =
+“Subject” when it indicates a subject-verb relation; otherwise Relation
+is left blank.</p>
 <div class="section level3">
 <h3 id="node-maps-the-secret-life-of-rezonator-files">Node maps: The secret life of Rezonator files<a class="anchor" aria-label="anchor" href="#node-maps-the-secret-life-of-rezonator-files"></a>
 </h3>
@@ -349,7 +414,7 @@ separate from the other things we’ve been discussing so far. Here is an
 example of a tree from this file, containing the word ‘midnight’ we have
 discussed some time ago:</p>
 <div class="figure">
-<img src="img/iosave-tree.PNG" style="width:100.0%" alt=""><p class="caption">Figure 2: An image of a dependency tree in the
+<img src="img/iosave-tree.PNG" style="width:100.0%" alt=""><p class="caption">Figure 8: An image of a dependency tree in the
 Rezonator interface, with the root word ‘’m’, linked to the dependents
 <em>I</em>, <em>up</em>, <em>after midnight</em>.</p>
 </div>
