@@ -70,9 +70,21 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="rezonater">rezonateR<a class="anchor" aria-label="anchor" href="#rezonater"></a>
 </h1></div>
-<p>rezonateR (pronounced “resonate R”) uses R (statistics software) to analyze and visualize data about resonance in natural language. The data that rezonateR takes as input are those created by the companion tool <a href="https://github.com/johnwdubois/rezonator" class="external-link">Rezonator</a>.<br>
-In addition, rezonateR can provide some pre-processing of natural language data to prepare them for importing into Rezonator.</p>
-<p>Resonance represents the activation of affinities across utterances in natural language. Resonance plays a key part in creating links between parallel structures, thereby inviting the perception of parallel meanings. Resonance is a key factor in the creation of coherence in dialogue, and the organization of engagement between co-participants in conversation.</p>
+<p>rezonateR (pronounced “resonate R”) uses R (statistics software) to analyze and visualize data about natural language discourse. The data that rezonateR takes as input are those created by the companion tool <a href="https://github.com/johnwdubois/rezonator" class="external-link">Rezonator</a>. While the Rezonator tool is used for manual annotating and visualising discourse features and useful for qualitative analysis, rezonateR takes Rezonator input and helps perform automated or semi-automated annotation and prepare the data for quantitative analysis in R.</p>
+<p>Some examples of research questions you could investigate with Rezonator + rezonateR include:</p>
+<ul>
+<li>In spoken English discourse, what factors can be used to predict when a speaker will use a pronoun instead of a noun phrase to refer to some entity?</li>
+<li>Do speakers tend to repeat syntactic structures just used by their interlocutor if they agree with them, or if they disagree with them?</li>
+<li>What factors affect the ordering of noun-phrase arguments within the clause in Tibetan, an overwhelmingly verb-final language with flexible word order among arguments?</li>
+<li>In English, the form <em>that</em> is often said to perform different functions, such as a complementiser, demonstrative determiner, demonstrative pronoun, etc. What are the discourse profiles of these different uses, and is there any way they are similar?</li>
+</ul>
+<p>If you’re starting out, this site contains different resources that you can use to learn how to use the tool, including:</p>
+<ul>
+<li>If you aren’t very familiar with the companion tool Rezonator and want to know what can be done with this tool, the toy example <code><a href="articles/sample_proj.html">vignette("sample_proj")</a></code> gives a concrete example of a mini-research project using Rezonator and <code>rezonateR</code>, and will give you a feel of what sorts of projects are possible with Rezonator + rezonateR.</li>
+<li>If you are already familiar with how Rezonator works but want to know how rezonateR can extend and enhance your work in Rezonator, the tutorial <code><a href="articles/overview.html">vignette("overview")</a></code> is a bird’s eye view of the most important functionality of the package.</li>
+<li>If you are already confident that rezonateR is the tool you want to be using, the series of tutorials starting from <code><a href="articles/import_save_basics.html">vignette("import_save_basics")</a></code> goes into the nitty-gritty of how to use <code>rezonateR</code>. This doubles as a reference to look up how to do different things in rezonateR.</li>
+<li>If you need more detailed explanation of how individual functions, especially less frequently used functions work, click the ‘Reference’ tab on top of this page.</li>
+</ul>
 <p>For the public-facing website for this project, see <a href="https://rezonator.com/" class="external-link">Rezonator.com</a>.</p>
 </div>
   </main><aside class="col-md-3"><div class="license">

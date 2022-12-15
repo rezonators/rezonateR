@@ -42,7 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Overview</h6>
-    <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR 0.1.1</a>
+    <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR for Rezonator users</a>
     <a class="dropdown-item" href="../articles/sample_proj.html">Toy example of a coreference analysis in rezonateR</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
@@ -82,84 +82,118 @@
     
     
 <p>Hello! If you’re reading this tutorial, you’re probably wondering how
-exactly RezonateR works, how to import data into RezonateR and how to
-understand how the data is then structured internally. If this desribes
-your situation, then this tutorial is for you!</p>
-<p>You may or may not have read the introduction
-<code><a href="../articles/overview.html">vignette("overview")</a></code> that gives an overview to RezonateR,
-and it’s fine either way - everything overed in that introduction that
-you’ll need will be repeated here, in greater detail. The only exception
-is if you have not installed rezonateR at all - in that case, please do
-install it using the instructions from that tutorial first!</p>
-<p>In this tutorial, we will:</p>
+exactly rezonateR works, how to import data into rezonateR and how to
+understand how the data is then structured internally. If this describes
+your situation, then this tutorial is for you! If you are not yet
+familiar with what rezonateR does and want to see if this is the right
+tool for you, there are tutorials more suitable for you. If you are not
+very familiar with the <a href="http://rezonator.com/" class="external-link">Rezonator</a>
+program that this package is the companion tool of, I recommend going
+through the toy example <code><a href="../articles/sample_proj.html">vignette("sample_proj")</a></code> first,
+which gives a concrete example of a mini-research project in
+<code>rezonateR</code>. If you are familiar with Rezonator but not yet
+with what <code>rezonateR</code> does, the overview
+<code><a href="../articles/overview.html">vignette("overview")</a></code> gives a bird’s-eye view of how
+<code>rezonateR</code> can be useful for accompanying your Rezonator
+work. (None of the content in those tutorials is strictly prerequisites
+for this one, but they help motivate why <code>rezonateR</code> is
+useful and help you decide whether <code>rezonateR</code> is a useful
+tool for you to learn. This tutorial gets into the nitty gritty of how
+to code with <code>rezonateR</code>, rather than discussing the big
+picture.)</p>
+<p>In this tutorial, you will learn about:</p>
 <ol style="list-style-type: decimal">
-<li>Meet the .rez file that we need to import, along with a brief
-introduction on how Rezonator’s internal JSON format, <code>.rez</code>
-files, are structured</li>
-<li>Learn how to import files into <code>rezonateR</code>
+<li>The structure of Rezonator (<code>.rez</code>) files, including a
+brief introduction to the structure of Rezonator’s internal JSON
+format</li>
+<li>How to import your Rezonator files into <code>rezonateR</code>
 </li>
-<li>Learn how to save and load <code>rezrObj</code> objects, the central
-data structure of <code>rezonateR</code>
+<li>How to save and load your data as <code>rezrObj</code> objects, the
+central data structure of <code>rezonateR</code>
 </li>
-<li>Learn how the <code>nodeMap</code> inside a <code>rezrObj</code> is
-structured</li>
-<li>Learn how the <code>rezrDF</code> inside a <code>rezrObj</code> is
-structured, and some basic functions for manipulating
-<code>rezrDF</code>s</li>
+<li>Learn how the linguistic data is structured as a
+<code>nodeMap</code> inside a <code>rezrObj</code>
+</li>
+<li>Learn how the data.frame <code>rezrDF</code> inside a
+<code>rezrObj</code> is structured, and some basic functions for
+manipulating these data frames (<code>rezrDF</code>s)</li>
 </ol>
 <div class="section level2">
-<h2 id="meet-our-file">Meet our file!<a class="anchor" aria-label="anchor" href="#meet-our-file"></a>
+<h2 id="rezonator-file-structure">Rezonator file structure<a class="anchor" aria-label="anchor" href="#rezonator-file-structure"></a>
 </h2>
-<p>To begin with, in this tutorial we will be using a simple Rezonator
-file. This file contains a minimal amount of annotation - just enough to
-explain the basic workings of RezonateR without being bogged down in
-long loading times that would result from a more extensively annotated
-files.</p>
-<p>The data used in this example is from the text <em>A Tree’s
-Life</em>, a conversation between two sisters from the Santa Barbara
+<p>Before we start talking about the details of importing, saving and
+loading in <code>rezonateR</code>, we need to familiarise ourselves with
+how Rezonator data is formatted first. In this section, we will:</p>
+<ul>
+<li><p>Learn the different elements of a Rezonator file (such as tracks,
+trails, chunks and trees)</p></li>
+<li><p>Install and import <code>rezonateR</code></p></li>
+<li><p>Learn, on a high level, how these elements are represented in
+<em>node maps</em>, the format behind <code>.rez</code> files</p></li>
+</ul>
+<div class="section level3">
+<h3 id="elements-in-a-rezonator-file">Elements in a Rezonator file<a class="anchor" aria-label="anchor" href="#elements-in-a-rezonator-file"></a>
+</h3>
+<p>To discuss the different elements of a Rezonator file, in this
+tutorial we will be using a simple Rezonator file. This file contains a
+minimal amount of annotation - just enough to explain the basic workings
+of <code>rezonateR</code> without being bogged down in long loading
+times that would result from a more extensively annotated files.</p>
+<p>The data used in this example is from the text <em>A Tree’s Life</em>
+(SBC007), a conversation between two sisters from the Santa Barbara
 Corpus of Spoken American English. The first 162 lines have been
 annotated and will be used in this tutorial; they deal with the topic of
 one of the sisters’ roommates. (The data is also available through the
 <code>sbc007</code> object in the package itself, where a detailed
 description of the annotations included may be found.)</p>
-<p>Figure 2 shows an excerpt close to the beginning of the conversation
+<p>Figure 1 shows an excerpt close to the beginning of the conversation
 in Rezonator:</p>
 <div class="figure">
-<img src="img/sample_convo.PNG" style="width:100.0%" alt=""><p class="caption">Figure 2</p>
+<img src="img/sample_convo.PNG" style="width:100.0%" alt=""><p class="caption">Figure 1</p>
 </div>
 <p>In this file, each line is referred to as a <em>unit</em>, which in
 this context is an intonation unit (though lines may be sentences,
 clauses or other larger structures in other contexts.) Each unit
 consists of a series of tokens (‘words’) separate by spaces.</p>
+<div class="section level4">
+<h4 id="tracks-and-trails">Tracks and trails<a class="anchor" aria-label="anchor" href="#tracks-and-trails"></a>
+</h4>
 <p>The file has been annotated for coreference chains, or
 <em>trails</em>. A trail consists of several mentions or referential
 expressions that refer to the same entity, each of which is individual
 called a <em>track</em>. They are connected by wavy lines in Rezonator.
-We saw one example of a trail in Figure 1. Here is another example:</p>
+Here is one example:</p>
 <div class="figure">
-<img src="img/sample_track.PNG" style="width:100.0%" alt=""><p class="caption">Figure 3</p>
+<img src="img/sample_track.PNG" style="width:100.0%" alt=""><p class="caption">Figure 2</p>
 </div>
 <p>Here, the <em>Tim</em> and the two <em>he</em>s refer to the same
 person.</p>
+</div>
+<div class="section level4">
+<h4 id="zeroes">Zeroes<a class="anchor" aria-label="anchor" href="#zeroes"></a>
+</h4>
 <p>When there is a clause with an implicit participant that is not
 overtly expressed in the linguistic form, the symbol &lt;0&gt; is used
 to indicate the absence of such a form, and also included in a trail.
 Here is an example:</p>
 <div class="figure">
-<img src="img/sample_I.PNG" style="width:100.0%" alt=""><p class="caption">Figure 4</p>
+<img src="img/sample_I.PNG" style="width:100.0%" alt=""><p class="caption">Figure 3</p>
 </div>
 <p>Notice that the two occurrences of <em>I</em> on Line 2 are linked
 together with a purple link, along with the zero on line 3.</p>
+</div>
+<div class="section level4">
+<h4 id="chunks">Chunks<a class="anchor" aria-label="anchor" href="#chunks"></a>
+</h4>
 <p>A ‘chunk’ in a Rezonator is a sequence of tokens within a unit, often
 a type of phrase such as a noun phrase. There are two types of chunks
 (elements represented by rectangles) in this file: Chunks that have been
 created as tracks which form part of a trail (mostly referential
-expressions - such as <em>hard times</em> in Figure 1), and verbal
-complexes, which are ‘blank chunks’, i.e. do not belong to any trail and
-appear with grey borders. The following figure shows some examples of
-these verbal chunks</p>
+expressions), and verbal complexes, which are ‘blank chunks’, i.e. do
+not belong to any trail and appear with grey borders. The following
+figure shows some examples of these verbal chunks:</p>
 <div class="figure">
-<img src="img/sample_verbs.PNG" style="width:100.0%" alt=""><p class="caption">Figure 5</p>
+<img src="img/sample_verbs.PNG" style="width:100.0%" alt=""><p class="caption">Figure 4</p>
 </div>
 <p>In this example, auxiliaries, negation and similar elements are
 placed inside these verbal complexes, as one can see from <em>wasn’t
@@ -169,12 +203,16 @@ gonna do</em>.</p>
 referential expressions, allowing us to distinguish between the two when
 importing into rezonateR later. <code>largerChunk</code> is the larger
 chunk to which a chunk belongs, which will be discussed later. These are
-shown in Figure 6:</p>
+shown in Figure 5:</p>
 <div class="figure">
-<img src="img/sample_chunk.PNG" style="width:100.0%" alt=""><p class="caption">Figure 6</p>
+<img src="img/sample_chunk.PNG" style="width:100.0%" alt=""><p class="caption">Figure 5</p>
 </div>
 <p>In this image, <em>said</em> is a verb and all the other chunks are
 referential expressions.</p>
+</div>
+<div class="section level4">
+<h4 id="trees">Trees<a class="anchor" aria-label="anchor" href="#trees"></a>
+</h4>
 <p>In Rezonator, trees are structures used to indicate relationships
 between words/chunks and other words/chunks. In ths file we’re working
 with, there are a number of two-layered trees that indicate argument
@@ -184,12 +222,24 @@ structure of Line 4, with <em>defeats</em> as the root with three
 children: a zero subject, the object <em>the purpose of getting up in
 the morning</em>, and the adverb <em>kinda</em>:</p>
 <div class="figure">
-<img src="img/sample_tree.PNG" style="width:100.0%" alt=""><p class="caption">Figure 7</p>
+<img src="img/sample_tree.PNG" style="width:100.0%" alt=""><p class="caption">Figure 6</p>
 </div>
 <p>The links between different parts of a tree are also tagged with the
 field Relation. In this file, tree links are annotated as Relation =
 “Subject” when it indicates a subject-verb relation; otherwise Relation
 is left blank.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="installing-rezonater">Installing <code>rezonateR</code><a class="anchor" aria-label="anchor" href="#installing-rezonater"></a>
+</h3>
+<p>In the sections below, you may benefit by following along with the
+code. To do this, use the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"rezonators/rezonateR"</span><span class="op">)</span></span></code></pre></div>
+</div>
 <div class="section level3">
 <h3 id="node-maps-the-secret-life-of-rezonator-files">Node maps: The secret life of Rezonator files<a class="anchor" aria-label="anchor" href="#node-maps-the-secret-life-of-rezonator-files"></a>
 </h3>
@@ -198,7 +248,10 @@ through the Rezonator interface, but they lead a secret double life!
 Internally, they are represented by a structure called a node map. All
 entities inside <code>.rez</code> files are represented as nodes, which
 store information in the form of text, numbers and pointers to other
-nodes.</p>
+nodes. In this section, we will quickly explore the node map, which you
+usually don’t need to deal with directly inside <code>rezonateR</code>,
+but provides an important basis to understand how <code>rezonateR</code>
+works.</p>
 <p>To get an idea of what the node map looks like, let’s load a
 <code>.rez</code> file. (You will never need to do this directly when
 working in <code>rezonateR</code>, as the import function will handle it
@@ -207,7 +260,7 @@ node map from the <code>.rez</code> file after importing it into R, and
 then store it in the variable <code>rez007_nm</code>. The R package
 <code>rjson</code> converts the JSON format into a list format suitable
 for access using R code.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rezonators.github.io/rezonateR/">rezonateR</a></span><span class="op">)</span></span>
 <span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sbc007.rez"</span>, package <span class="op">=</span> <span class="st">"rezonateR"</span>, mustWork <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span></span>
@@ -224,7 +277,7 @@ tokens are the basic unit that you may interact with. Let’s try the word
 has an ID of <code>28A862601A235</code>, and that’s the key we access it
 from the node map by. Let’s go ahead and examine some of the information
 embeddded inside the node:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">midnight</span> <span class="op">=</span> <span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"28A862601A235"</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"type: "</span>, <span class="va">midnight</span><span class="op">$</span><span class="va">type</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "type: token"</span></span>
@@ -258,70 +311,74 @@ contain the token. (These ‘lists’ in <code>.rez</code> files are
 represented by vectors, not lists, in R.) <code>inEntryList</code>,
 <code>inChainsList</code> and <code>inChunkList</code> give the entries,
 chains and chunks in which ‘midnight’ are found. We will discuss entries
-in the next section. A chain can be a Track chain, i.e. trail, or a Rez
-chain, i.e. a resonance. In this case, ‘midnight’ was put in a trail,
-albeit one that contains only itself (i.e. it is a singleton), which is
-why you see a coloured box around the word, but no links emanating from
-it. So we do see a pointer to the track chain. It does not belong to any
-chunks, i.e. the larger rectangles typically consisting of multiple
-words.</p>
+in the next section. (If you are using later versions of Rezonator,
+<code>inChainsList</code> will be replaced by
+<code>inResonanceList</code> and <code>inTrailList</code>. (???)) A
+chain can be a Track chain, i.e. trail, or a Rez chain, i.e. a
+resonance. In this case, ‘midnight’ was put in a trail, albeit one that
+contains only itself (i.e. it is a singleton), which is why you see a
+coloured box around the word, but no links emanating from it. So we do
+see a pointer to the track chain. It does not belong to any chunks,
+i.e. the larger rectangles typically consisting of multiple words.</p>
 <p>The <code>tagMap</code> of a specific node includes the tags that
 were given when the raw file was first imported into Rezonator, as well
 as tags that were created by Rezonator or manually added in Rezonator.
 The tags in this specific example were all given during import; we will
 see examples of these later.</p>
-</div>
-<div class="section level3">
-<h3 id="tokens-and-units">Tokens and units<a class="anchor" aria-label="anchor" href="#tokens-and-units"></a>
-</h3>
-<p>An entry is a leftover structure in Rezonator that currently serves
-no real purpose, except as the intermediate layer between units and
-tokens. As a general rule, entries correspond one-to-one with tokens.
-This is a technicality that you will occasionally need to know when
-working in RezonateR.</p>
+<div class="section level4">
+<h4 id="tokens-and-units">Tokens and units<a class="anchor" aria-label="anchor" href="#tokens-and-units"></a>
+</h4>
+<p>An entry is the intermediate layer between units and tokens. As a
+general rule, entries correspond one-to-one with tokens. This is a
+technicality that you will occasionally need to know when working in
+rezonateR.</p>
 <p>Basically, a unit only contains pointers to the entries that consists
 of it, in the attribute <code>entryList</code>. To look up individual
 tokens from a unit, then, you will have to go to individual entries’
 nodes to look up the corresponding token. For example, here is the
 <code>entryList</code> of the unit <code>2D1B3667B6110</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># entryList of unit 2D1B3667B6110:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"2D1B3667B6110"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">"entryList"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "24796648BFF31" "13E3DECAC86FF" "1D064F5FF52FD" "B2985F3730E0" </span></span>
 <span><span class="co">#&gt; [5] "B6CC005C893A"  "28B6FB7D926CC" "3794C89559C6D"</span></span></code></pre></div>
 <p>To look up the first token in this unit, the word <em>if</em>, you
 need to look at the token value of the associated entry:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Token corresponding to entry 24796648BFF31:</span></span>
 <span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"24796648BFF31"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">"token"</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt; [1] "A27E39A69272"</span></span></code></pre></div>
 <p>Let’s now verify that this token is indeed the word <em>if</em>:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Text of the token A27E39A69272:</span></span>
 <span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"A27E39A69272"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">tagMap</span><span class="op">$</span><span class="va">text</span></span>
 <span><span class="co">#&gt; [1] "if"</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="chunks">Chunks<a class="anchor" aria-label="anchor" href="#chunks"></a>
-</h3>
-<p>Chunks are the large rectangular boxes that typically span more than
-one token. A chunk is automatically created whenever you add a track or
-rez entry that spans more than one token, but not when you add a
-single-token track or rez entry. So, for example, <em>midnight</em> was
-not put inside a chunk, but <em>the purpose of getting up in the
-morning</em> was put in a chunk the moment it became part of a track
-chain.</p>
+<div class="section level4">
+<h4 id="chunks-1">Chunks<a class="anchor" aria-label="anchor" href="#chunks-1"></a>
+</h4>
+<p>A ‘chunk’ in a Rezonator is a sequence of tokens within a unit, often
+a type of phrase such as a noun phrase. A chunk is automatically created
+whenever you add a track or rez entry that spans more than one token,
+but not when you add a single-token track or rez entry. So, for example,
+in the following figure: <em>midnight</em> was not put inside a chunk,
+but <em>the purpose of getting up in the morning</em> was put in a chunk
+the moment it became part of a track chain.</p>
+<div class="figure">
+<img src="images/paste-38B9B749.png" alt=""><p class="caption">Figure 7: A Rezonator screenshot with several chunks
+and two trails.</p>
+</div>
 <p>There are also chunks that do not belong to any chains, sometimes
 called <em>blank chunks</em>. In this document, blank chunks are used to
 mark verbal complexes in English, including verbs and auxiliaries, as
-well as any intervening adverbs. When a nominal intervenes between the
-auxiliary and the verb, the auxiliary is excluded from the verb
-chunk.</p>
+well as any intervening adverbs, as you can see in the figure. When a
+nominal intervenes between the auxiliary and the verb, the auxiliary is
+excluded from the verb chunk.</p>
 <p>The word <em>Stay</em> on line 3 belongs to a blank chunk containing
 only <em>Stay</em>, and a chunk <em>Stay up late</em> in a track chain.
 Let’s look at those two chunks. The ID for the token <em>Stay</em> is
 <code>1A0742C9033E5</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Chunks that contain 1A0742C9033E5:</span></span>
 <span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"1A0742C9033E5"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">inChunkList</span></span>
 <span><span class="co">#&gt; [1] "35E3E0AB6803A" "15B9BB5D5086C"</span></span></code></pre></div>
@@ -331,7 +388,7 @@ Let’s look at those two chunks. The ID for the token <em>Stay</em> is
 the larger chunk that belongs to a chain (note that the individual token
 <em>Stay</em> <code>1A0742C9033E5</code> does <em>not</em> belong in the
 chain):</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Chains that contain 35E3E0AB6803A:</span></span>
 <span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"35E3E0AB6803A"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">inChainsList</span></span>
 <span><span class="co">#&gt; [1] "2A01379C5D049"</span></span>
@@ -341,7 +398,7 @@ chain):</p>
 <p>A manually added field in this file, <code>chunkType</code>,
 specifies the type of chunk that a certain chunk is. The field is blank
 for mentions in track chains, but filled for verbs:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#chunkType of 35E3E0AB6803A:</span></span>
 <span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"35E3E0AB6803A"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">tagMap</span><span class="op">$</span><span class="va">chunkType</span></span>
 <span><span class="co">#&gt; [1] ""</span></span>
@@ -351,24 +408,51 @@ for mentions in track chains, but filled for verbs:</p>
 <p>This point will be important later on when we import, as it will be
 used to separate chunks into layers.</p>
 </div>
-<div class="section level3">
-<h3 id="entries-links-and-chains">Entries, links and chains<a class="anchor" aria-label="anchor" href="#entries-links-and-chains"></a>
-</h3>
+<div class="section level4">
+<h4 id="entries-links-and-chains">Entries, links and chains<a class="anchor" aria-label="anchor" href="#entries-links-and-chains"></a>
+</h4>
 <p>Rezonator currently has three data types that are termed ‘chains’.
 Each of them have specific names for their entries. They are:</p>
 <ul>
-<li>A chain of track entities (i.e. mentions) is called a <em>trail</em>
-- i.e. a coreference chain containing mentions</li>
-<li>A chain of rez entities is a <em>resonances</em> - a rez entity is a
-specific instance of a word that is resonated somewhere else in the
-document, and a resonance is a collection of resonating tokens</li>
-<li>A chain of cards is a <em>stack</em>.</li>
+<li>
+<p>A chain of track entities (i.e. mentions) is called a
+<em>trail</em> - i.e. a coreference chain containing mentions. For
+example, in the following screenshot contains a single trail, marked in
+blue, with three visible tracks: <em>this</em>, <em>stay up late</em>,
+and the &lt;0&gt;. Each track can be a token or chunk.</p>
+<div class="figure">
+<img src="images/paste-61600615.png" alt=""><p class="caption">Figure X</p>
+</div>
+</li>
+<li>
+<p>A chain of rez entities is a <em>resonance</em> - a rez entity is
+a specific instance of a word that is resonated somewhere else in the
+document, and a resonance is a collection of resonating tokens. The
+following screenshot has four resonances, each with two rezzes of the
+same word (<em>usually</em>, <em>I</em>, <em>do</em>, <em>n’t</em>). In
+this figure, each rez consists of a single token, but other annotations
+might allow for rezzes as chunks as well.</p>
+<div class="figure">
+<img src="images/paste-8B4E9183.png" width="433" alt=""><p class="caption">Figure 9</p>
+</div>
+</li>
+<li>
+<p>A chain of cards is a <em>stack</em>. A card corresponds to a
+unit, and a stack is basically a collection of units that make up some
+larger structure, for example a group of units inside a prosodic
+sentence or a turn. The following screenshot shows four stacks (in red,
+purple, beige and green, respectively). The first two and last stack
+have only one card, but the third beige stack has two cards,
+corresponding to the two units <em>Her husband .</em> and <em>Gary
+Bighare ?</em>.</p>
+<div class="figure">
+<img src="images/paste-77E754F7.png" width="467" alt=""><p class="caption">Figure 9</p>
+</div>
+</li>
 </ul>
-<p>The first two types of entries correspond to words and chunks, and
-the third type of entries correspond to units.</p>
 <p>Let’s look at the track 1BF2260B4AB78, which corresponds to the chunk
-<em>Stay up late</em> 35E3E0AB6803A that we have seen before:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<em>Stay up late</em> 35E3E0AB6803A in Figure 8 above:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"1BF2260B4AB78"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">chain</span></span>
 <span><span class="co">#&gt; [1] "2A01379C5D049"</span></span>
 <span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"1BF2260B4AB78"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">token</span></span>
@@ -380,11 +464,11 @@ the third type of entries correspond to units.</p>
 be important to remember when working in rezonateR) 35E3E0AB6803A.
 <code>goalLinkList</code> is a list of links that starts from this
 entry. Links live in a world of their own and are not particularly
-important for working in RezonateR, so we can safely ignore them for
+important for working in rezonateR, so we can safely ignore them for
 now.</p>
 <p>To find out the member entries that a chain contains, you can look at
 its <code>setIDList</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"2A01379C5D049"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">setIDList</span></span>
 <span><span class="co">#&gt; [1] "1BF2260B4AB78" "6B37B5A80F2A"  "1F74D2B049FA4" "3098AB24A0FA6"</span></span>
 <span><span class="co">#&gt; [5] "2E01153F693D3" "36B8918BB6E64"</span></span></code></pre></div>
@@ -398,7 +482,7 @@ as counts for the number of tokens and characters inside the track. The
 tag <code>chainSize</code> indicates the number of entries inside the
 chain. These are all automatically generated by Rezonator and will be
 covered in more detail when discussing coreference.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"1BF2260B4AB78"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">tagMap</span>, <span class="va">c</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   gapWords  charCount tokenCount   gapUnits </span></span>
 <span><span class="co">#&gt;          5         12          3          1</span></span>
@@ -406,15 +490,15 @@ covered in more detail when discussing coreference.</p>
 <span><span class="co">#&gt; chainSize </span></span>
 <span><span class="co">#&gt;         6</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="the-tree-map">The tree map<a class="anchor" aria-label="anchor" href="#the-tree-map"></a>
-</h3>
+<div class="section level4">
+<h4 id="the-tree-map">The tree map<a class="anchor" aria-label="anchor" href="#the-tree-map"></a>
+</h4>
 <p>Information related to trees reside in a sub-map of their own,
 separate from the other things we’ve been discussing so far. Here is an
 example of a tree from this file, containing the word ‘midnight’ we have
 discussed some time ago:</p>
 <div class="figure">
-<img src="img/iosave-tree.PNG" style="width:100.0%" alt=""><p class="caption">Figure 8: An image of a dependency tree in the
+<img src="img/iosave-tree.PNG" style="width:100.0%" alt=""><p class="caption">Figure 11: An image of a dependency tree in the
 Rezonator interface, with the root word ‘’m’, linked to the dependents
 <em>I</em>, <em>up</em>, <em>after midnight</em>.</p>
 </div>
@@ -425,8 +509,9 @@ Rezonator interface, with the root word ‘’m’, linked to the dependents
 <li>A <code>treeEntry</code> is a ‘node’ of a tree. It may contain one
 or multiple tokens - <em>after midnight</em> in our example, for
 example, contains two tokens, while the other two contain a single
-token. The one from which everything else branches out, in layer 0, is
-called the root.</li>
+token, but each of them corresponds to only one <code>treeEntry</code>,
+i.e. node in the tree. The <code>treeEntry</code> from which everything
+else branches out, in layer 0, is called the root.</li>
 <li>A <code>treeLink</code> is a link between two <code>treeEntry</code>
 entities</li>
 </ul>
@@ -435,7 +520,7 @@ working with rezonateR!</p>
 <p>The ID for the tree you see in the image is
 <code>10F850E894052</code>. Let’s first see which tokens and
 <code>treeEntry</code>s it consists of:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007_nm</span><span class="op">$</span><span class="va">treeMap</span><span class="op">[[</span><span class="st">"10F850E894052"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">tokenList</span></span>
 <span><span class="co">#&gt; [1] "A27E39A69272"  "3424455C58367" "35B9A7BEFAE4F" "13CB401695D9D"</span></span>
 <span><span class="co">#&gt; [5] "176B4A79BFF4C" "28A862601A235" "2BFC755BC21BF"</span></span>
@@ -452,7 +537,7 @@ can examine some of its attributes. The <code>sourceLink</code>
 attribute gives the ID of the link to <em>after midnight</em> link from
 <em>’m</em>, and <code>tokenList</code> gives the token IDs for the two
 tokens <em>after</em> and <em>midnight</em>:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rez007_nm</span><span class="op">$</span><span class="va">treeMap</span><span class="op">[[</span><span class="st">"31630BD346EC7"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">sourceLink</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "3FCE9430713C"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rez007_nm</span><span class="op">$</span><span class="va">treeMap</span><span class="op">[[</span><span class="st">"31630BD346EC7"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">tokenList</span><span class="op">)</span></span>
@@ -461,7 +546,7 @@ tokens <em>after</em> and <em>midnight</em>:</p>
 source (parent) and goal (child) <code>treeEntry</code> IDs, as well as
 its tag <code>Relation</code>, which I’ve annotated as
 <code>Subj</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rez007_nm</span><span class="op">$</span><span class="va">treeMap</span><span class="op">[[</span><span class="st">"2CBAF1D3EE0C8"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">source</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "23BEEC722C8A0"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rez007_nm</span><span class="op">$</span><span class="va">treeMap</span><span class="op">[[</span><span class="st">"2CBAF1D3EE0C8"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">goal</span><span class="op">)</span></span>
@@ -470,18 +555,35 @@ its tag <code>Relation</code>, which I’ve annotated as
 <span><span class="co">#&gt; [1] "Subj"</span></span></code></pre></div>
 </div>
 </div>
+</div>
 <div class="section level2">
-<h2 id="importing-our-file">Importing our file<a class="anchor" aria-label="anchor" href="#importing-our-file"></a>
+<h2 id="importing-rezonator-files-and-savingloading-rezonater-files">Importing Rezonator files and saving/loading rezonateR files<a class="anchor" aria-label="anchor" href="#importing-rezonator-files-and-savingloading-rezonater-files"></a>
 </h2>
+<p>Now that we’ve studied the basic structure of a Rezonator file, it’s
+time to actually start using <code>rezonateR</code>. In this section of
+the tutorial, we will:</p>
+<ul>
+<li><p>Learn how to import a <code>.rez</code> file into R as a
+<code>rezrObj</code></p></li>
+<li><p>Save and load the <code>rezrObj</code> that we created</p></li>
+<li><p>Look at how the node map is represented in
+<code>rezrObj</code></p></li>
+<li><p>Most importantly, look at how the different data frames
+corresponding to nodes, called <code>rezrDF</code>s, are
+structured</p></li>
+</ul>
+<div class="section level3">
+<h3 id="importing-rezonator-files">Importing Rezonator files<a class="anchor" aria-label="anchor" href="#importing-rezonator-files"></a>
+</h3>
 <p>Let’s now actually import the file into <code>rezonateR</code>!
 Obviously our first step is to import the package:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rezonators.github.io/rezonateR/">rezonateR</a></span><span class="op">)</span></span></code></pre></div>
 <p>The import function is <code><a href="../reference/importRez.html">importRez()</a></code>. When importing,
 there are two important settings you will need to set. We will store the
 values of these settings in variables before importing. The first one is
 <code>layerRegex</code>:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">layerRegex</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>chunk <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>field <span class="op">=</span> <span class="st">"chunkType"</span>,</span>
 <span>                               regex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"verb"</span><span class="op">)</span>,</span>
 <span>                               names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"verb"</span>, <span class="st">"refexpr"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -517,7 +619,7 @@ as <code>treeEntry</code> or <code>resonance</code>) are all put in a
 layer called <code>default</code>. We will see how this works later
 on.</p>
 <p>The other setting is <code>concatFields</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">concatFields</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"text"</span>, <span class="st">"transcript"</span><span class="op">)</span></span></code></pre></div>
 <p>When we are just looking at <code>nodeMap</code>s, we often feel lost
 because many nodes do not have any semblance of text on them. This is
@@ -530,7 +632,7 @@ vector passed to <code>concatFields</code>.</p>
 <p>Here is the import function, using the settings from above. If you’re
 following on in R, do note that this takes long to run! The tree-related
 steps should, in particular, take extra time to process.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/importRez.html">importRez</a></span><span class="op">(</span><span class="va">path</span>,</span>
 <span>                   layerRegex <span class="op">=</span> <span class="va">layerRegex</span>,</span>
 <span>                   concatFields <span class="op">=</span> <span class="va">concatFields</span><span class="op">)</span></span>
@@ -547,6 +649,10 @@ steps should, in particular, take extra time to process.</p>
 <span><span class="co">#&gt; Splitting rezrDFs into layers ...</span></span>
 <span><span class="co">#&gt; A few finishing touches ...</span></span>
 <span><span class="co">#&gt; Done!</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="saving-and-loading-rezonater-objects">Saving and loading rezonateR objects<a class="anchor" aria-label="anchor" href="#saving-and-loading-rezonater-objects"></a>
+</h3>
 <p>The variable <code>rez007</code> belongs to the class
 <code>rezrObj</code>. To save the imported <code>rezrObj</code>
 (something you will definitely want to do - nobody wants to import
@@ -554,7 +660,7 @@ again!), use the function <code><a href="../reference/saveload.html">rez_save()<
 the function <code><a href="../reference/saveload.html">rez_load()</a></code>. Both functions are quite easy:
 <code><a href="../reference/saveload.html">rez_save()</a></code> simply requires a <code>rezrObj</code> and a
 save path, and <code><a href="../reference/saveload.html">rez_load()</a></code> only a path to load from.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">savePath</span> <span class="op">=</span> <span class="st">"rez007.Rdata"</span></span>
 <span><span class="fu"><a href="../reference/saveload.html">rez_save</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="va">savePath</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Saving rezrObj ...</span></span>
@@ -563,6 +669,7 @@ save path, and <code><a href="../reference/saveload.html">rez_load()</a></code> 
 <p>A <code>rezrObj</code> consists of two components: a
 <code>nodeMap</code> and a bunch of <code>rezrDF</code>s. Let’s look at
 the <code>nodeMap</code> object first.</p>
+</div>
 <div class="section level3">
 <h3 id="meeting-our-nodemap-again">Meeting our nodeMap again<a class="anchor" aria-label="anchor" href="#meeting-our-nodemap-again"></a>
 </h3>
@@ -573,7 +680,7 @@ in <code>.rez</code> files (phew)! The only major difference is that in
 <code>rezonateR</code> <code>nodeMap</code>s, every item type belongs to
 its own list. So the nodes in <code>rez007</code>’s <code>nodeMap</code>
 are organised into these categories:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">nodeMap</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "entry"     "token"     "unit"      "link"      "card"      "trail"    </span></span>
 <span><span class="co">#&gt;  [7] "chunk"     "track"     "rez"       "stack"     "resonance" "doc"      </span></span>
@@ -608,17 +715,18 @@ that is directly accessed from the <code>rezrObj</code>. For example, to
 access the <code>rezrDF</code> corresponding to tokens, you would use
 <code>rez007$tokenDF</code>. Other than <code>nodeMap</code>, all the
 top-level entries of a rezrObj are <code>rezrDF</code>s:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "nodeMap"     "chunkDF"     "docDF"       "entryDF"     "linkDF"     </span></span>
-<span><span class="co">#&gt;  [6] "mergedDF"    "resonanceDF" "rezDF"       "tokenDF"     "trackDF"    </span></span>
-<span><span class="co">#&gt; [11] "trailDF"     "treeDF"      "treeEntryDF" "treeLinkDF"  "unitDF"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "nodeMap"     "cardDF"      "chunkDF"     "docDF"       "entryDF"    </span></span>
+<span><span class="co">#&gt;  [6] "linkDF"      "mergedDF"    "resonanceDF" "rezDF"       "stackDF"    </span></span>
+<span><span class="co">#&gt; [11] "tokenDF"     "trackDF"     "trailDF"     "treeDF"      "treeEntryDF"</span></span>
+<span><span class="co">#&gt; [16] "treeLinkDF"  "unitDF"</span></span></code></pre></div>
 <p>Here is the beginning of the <code>tokenDF</code>. Notice the
 <code>id</code> column at the beginning, and the tags all getting their
 own columns:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 18</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 19</span></span></span>
 <span><span class="co">#&gt;   id         doc   unit  docTo…¹ token…² kind  place text  trans…³ endNote order</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 31F282855… sbc0… 2AD1…       1       1 Pause <span style="color: #949494;">""</span>    (...) (...)   <span style="color: #949494;">""</span>      1    </span></span>
@@ -627,19 +735,23 @@ own columns:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 37EFCBECF… sbc0… BDD7…       4       1 Word  <span style="color: #949494;">"</span>1<span style="color: #949494;">"</span>   I     I       <span style="color: #949494;">""</span>      1    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 12D677568… sbc0… BDD7…       5       2 Word  <span style="color: #949494;">"</span>2<span style="color: #949494;">"</span>   said  said    <span style="color: #949494;">""</span>      2    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71… sbc0… BDD7…       6       3 Word  <span style="color: #949494;">"</span>3<span style="color: #949494;">"</span>   I     I       <span style="color: #949494;">""</span>      3    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 7 more variables: negPlace &lt;chr&gt;, corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   POS_dft &lt;chr&gt;, tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, and</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   abbreviated variable names ¹​docTokenSeq, ²​tokenOrder, ³​transcript</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 8 more variables: negPlace &lt;chr&gt;, corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   POS_dft &lt;chr&gt;, tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   largerChunk &lt;chr&gt;, and abbreviated variable names ¹​docTokenSeq,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​tokenOrder, ³​transcript</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span></code></pre></div>
+<div class="section level4">
+<h4 id="layers-of-rezdfs">Layers of rezDFs<a class="anchor" aria-label="anchor" href="#layers-of-rezdfs"></a>
+</h4>
 <p>For entity types with more than one layer, such as chunk or trail,
 there is a list of <code>rezrDF</code>s instead of a single
 <code>rezrDF</code>. For example, <code>rez007$chunkDF</code> contains
 two <code>rezrDF</code>s. Note that there is a column <code>layer</code>
 that contains the name of the layer, which will be identical across all
 rows in a <code>rezrDF</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 22</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 23</span></span></span>
 <span><span class="co">#&gt;   id           doc   name   nest kind  place text  trans…¹ endNote order negPl…²</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 35E3E0AB680… sbc0… Chun…     2 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    Stay… Stay u… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
@@ -648,13 +760,14 @@ rows in a <code>rezrDF</code>:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 158B579C1BA… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    the … the mo… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2B6521E8813… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    all … all th… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 5B854594DD34 sbc0… Chun…     2 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    the … the wa… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 11 more variables: corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, tokenOrderFirst &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   docTokenSeqFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;, docTokenSeqLast &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   layer &lt;chr&gt;, and abbreviated variable names ¹​transcript, ²​negPlace</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 12 more variables: corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, largerChunk &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   tokenOrderFirst &lt;dbl&gt;, docTokenSeqFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   docTokenSeqLast &lt;dbl&gt;, layer &lt;chr&gt;, and abbreviated variable names</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ¹​transcript, ²​negPlace</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">verb</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 22</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 23</span></span></span>
 <span><span class="co">#&gt;   id           doc   name   nest kind  place text  trans…¹ endNote order negPl…²</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 210FB26A315A sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    said  said    <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
@@ -663,24 +776,25 @@ rows in a <code>rezrDF</code>:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1A14BB68EDA… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    defe… defeats <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2CCD5F5A950… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    know  know    <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1F1135429F3… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    's    's      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 11 more variables: corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, tokenOrderFirst &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   docTokenSeqFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;, docTokenSeqLast &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   layer &lt;chr&gt;, and abbreviated variable names ¹​transcript, ²​negPlace</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 12 more variables: corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, largerChunk &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   tokenOrderFirst &lt;dbl&gt;, docTokenSeqFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   docTokenSeqLast &lt;dbl&gt;, layer &lt;chr&gt;, and abbreviated variable names</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ¹​transcript, ²​negPlace</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span></code></pre></div>
 <p>Meanwhile, <code>rez007$trailDF</code> contains only one,
 <code>default</code>:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trailDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
-<span><span class="co">#&gt;   id            doc    chainCreateSeq name                               chain…¹</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2053E98E98EDE sbc007             10 the way they were feeling                2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2DFABF7A78227 sbc007             68 right now                                1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 13B30F106D8DF sbc007             27 The two couples                         10</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 21E91EA9BEFE2 sbc007             49 ànything positive about Tim's unc…       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 14CE0A33F22EB sbc007             71 the thing that really scares Alice       3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2B670736C6823 sbc007             87 Trail 87                                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span></span></span>
+<span><span class="co">#&gt;   id            doc    chainCreateSeq name                         chain…¹ layer</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2053E98E98EDE sbc007             10 the way they were feeling          2 defa…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2DFABF7A78227 sbc007             68 right now                          1 defa…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 13B30F106D8DF sbc007             27 The two couples                   10 defa…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 21E91EA9BEFE2 sbc007             49 ànything positive about Tim…       1 defa…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 14CE0A33F22EB sbc007             71 the thing that really scare…       3 defa…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2B670736C6823 sbc007             87 Trail 87                           1 defa…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​chainSize</span></span></span></code></pre></div>
 <p>When you have multiple layers, in many cases you will need to combine
 information from all layers to perform certain actions in
@@ -692,9 +806,9 @@ and the entity type as a string. There is an additional parameter,
 <code>"union"</code>. This determines whether fields not present in all
 layers will be removed, or retained with <code>NA</code> values for rows
 in <code>rezrDF</code>s that don’t have that column.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/combineLayer.html">combineLayers</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"chunk"</span>, type <span class="op">=</span> <span class="st">"intersect"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 22</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 23</span></span></span>
 <span><span class="co">#&gt;   id           doc   name   nest kind  place text  trans…¹ endNote order negPl…²</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 35E3E0AB680… sbc0… Chun…     2 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    Stay… Stay u… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
@@ -703,17 +817,23 @@ in <code>rezrDF</code>s that don’t have that column.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 158B579C1BA… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    the … the mo… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2B6521E8813… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    all … all th… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 5B854594DD34 sbc0… Chun…     2 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    the … the wa… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 11 more variables: corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, tokenOrderFirst &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   docTokenSeqFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;, docTokenSeqLast &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   layer &lt;chr&gt;, and abbreviated variable names ¹​transcript, ²​negPlace</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 12 more variables: corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, largerChunk &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   tokenOrderFirst &lt;dbl&gt;, docTokenSeqFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   docTokenSeqLast &lt;dbl&gt;, layer &lt;chr&gt;, and abbreviated variable names</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ¹​transcript, ²​negPlace</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span>
 <span><span class="co">#head(combineChunks(rez007, type = "intersect")) #Does the same thing</span></span></code></pre></div>
-<p>In the <code>nodeMap</code>, we often see lists of values, e.g. units
-contain a list of entries inside it. However, these lists are all
-eliminated from <code>rezrDF</code> representations. Notice the lack of
-entry lists in the <code>unitDF</code>:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+</div>
+<div class="section level4">
+<h4 id="correspondence-between-higher-level-and-lower-level-structures">Correspondence between higher-level and lower-level structures<a class="anchor" aria-label="anchor" href="#correspondence-between-higher-level-and-lower-level-structures"></a>
+</h4>
+<p>In the <code>nodeMap</code>, we often see lists of values when a
+higher-level structure consists of several elements of a lower
+structure, e.g. units contain a list of entries inside it. However,
+these lists are all eliminated from <code>rezrDF</code> representations.
+Notice the lack of entry lists in the <code>unitDF</code>:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">unitDF</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 21</span></span></span>
 <span><span class="co">#&gt;   id    doc   unitS…¹ unitEnd unitSeq pID   unitId unitS…² docId unitDur pSent…³</span></span>
@@ -738,7 +858,7 @@ each individual component of a larger entity. The function
 <code><a href="../reference/lowerList.html">getLowerFieldList()</a></code> is a way, if somewhat clumsy, of doing
 this. In this example, we extract the ‘kinds’ (Word, Pause, etc.) of the
 tokens of certain units:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/lowerList.html">getLowerFieldList</a></span><span class="op">(</span><span class="va">rez007</span>,</span>
 <span>  fieldName <span class="op">=</span> <span class="st">"kind"</span>,</span>
 <span>  simpleDF <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">entryDF</span>,</span>
@@ -756,21 +876,27 @@ tokens of certain units:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`2752E3B395FC1`</span></span>
 <span><span class="co">#&gt; [1] "Pause"   ""        "Word"    "Word"    "Word"    "EndNote"</span></span></code></pre></div>
-<p>The arguments to this function are: * <code>fieldName</code> is the
-attribute we’re extracting * <code>simpleDF</code> is the
-<code>rezrDF</code> of the ‘smaller’ entity * <code>complexDF</code> is
-the <code>rezrDF</code> of the ‘larger’ entity *
-<code>complexNodeMap</code> is the nodeMap of the ‘larger’ entity *
-<code>listName</code> is the name of the list inside each node of the
-<code>complexNodeMap</code> that gives the lower-level entries *
-<code>complexIDs</code> gives the IDs of the ‘larger’ entities (in this
-case units) you want to extract values for. If left blank, this will be
-every single complex node (in this case every unit).</p>
+<p>The arguments to this function are:</p>
+<ul>
+<li><p><code>fieldName</code> is the attribute we’re extracting</p></li>
+<li><p><code>simpleDF</code> is the <code>rezrDF</code> of the ‘smaller’
+entity</p></li>
+<li><p><code>complexDF</code> is the <code>rezrDF</code> of the ‘larger’
+entity</p></li>
+<li><p><code>complexNodeMap</code> is the nodeMap of the ‘larger’
+entity</p></li>
+<li><p><code>listName</code> is the name of the list inside each node of
+the <code>complexNodeMap</code> that gives the lower-level
+entries</p></li>
+<li><p><code>complexIDs</code> gives the IDs of the ‘larger’ entities
+(in this case units) you want to extract values for. If left blank, this
+will be every single complex node (in this case every unit).</p></li>
+</ul>
 <p>This is a very complicated function. One annoying use case is to get
 properties of tokens from track entries, so I provide the function
 <code><a href="../reference/lowerList.html">getTrackTokens()</a></code> to do this easily. For example, this code
 extracts the <code>kind</code> value of tracks:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/lowerList.html">getTrackTokens</a></span><span class="op">(</span><span class="va">rez007</span>, fieldName <span class="op">=</span> <span class="st">"kind"</span>, trackDF <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="co">#&gt; $`1096E4AFFFE65`</span></span>
 <span><span class="co">#&gt; [1] "Word"</span></span>
@@ -782,8 +908,15 @@ extracts the <code>kind</code> value of tracks:</p>
 <span><span class="co">#&gt; [1] "Word" "Word" "Word" "Word" "Word"</span></span></code></pre></div>
 <p>In general, though, it is preferable to minimise this type of
 extraction. The coming tutorials will explain how we can do common
-operations without resorting to using
-<code><a href="../reference/lowerList.html">getLowerFieldList()</a></code>.</p>
+operations without resorting to using <code><a href="../reference/lowerList.html">getLowerFieldList()</a></code>;
+for example, <code><a href="../reference/acFieldForeign.html">addFieldForeign()</a></code> in <code>EasyEdit</code>
+(see <code><a href="../articles/edit_easyEdit.html">vignette("edit_easyEdit")</a></code>) will allow you to add a
+field to the table with the higher-level (e.g. structure that is created
+by getting a single summary value of a field in a a lower-level
+structure), and <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code> in <code>TidyRez</code>
+allows you to perform similar operations with a tidyverse syntax (see
+<code><a href="../articles/edit_tidyRez.html">vignette("edit_tidyRez")</a></code>.</p>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -792,7 +925,7 @@ operations without resorting to using
 <p>Now that you know your way around <code>.rez</code> files and
 <code>rezrObj</code>s, you can go to the next tutorial to see how time
 is handled in Rezonator. If you’re up for that,go to
-<code>vignette("time_seq.Rmd")</code>!</p>
+<code><a href="../articles/time_seq.html">vignette("time_seq")</a></code>!</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
