@@ -33,9 +33,9 @@ But what exactly makes something more accessible, and therefore more likely to b
 
 The aim of this article is to demonstrate, using a sample, highly simplified project, what type of analysis may be conducted using Rezonator and `rezonateR`. This particular example will examine the choice of referential forms in spoken dialogue: What factors lead to the choice of a longer form (e.g. *the three black cats*) versus a shorter one (e.g. *them*)?
 
-The data here is the same as that used in the series of tutorials starting with `vignette("import_save_basics")`, but this article will have less focus on how to write the code, and more on showing you how to answer the sample research question using `rezonateR`.
+The data here is the same as that used in the [series of detailed tutorials](https://rezonators.github.io/rezonateR/articles/import_save_basics.html) (`vignette("import_save_basics")`), but this article will have less focus on how to write the code, and more on showing you how to answer the sample research question using `rezonateR`. So don't worry if you don't understand the details of how the code works - that can come later, as you read the detailed tutorials and documentation.
 
-This article does not assume that you have read any of the other articles on `rezonateR`. So there is some overlap in the topics covered. I will point you to other tutorials for further details when necessary. However, if you have not installed `rezonateR`, you need to do that now using this code:
+This article does not assume that you have read any of the other articles on `rezonateR`. So there is some overlap in the topics covered. I will point you to other tutorials for further details when necessary. However, if you have not installed `rezonateR`, please do it now using this code:
 
 ```{r, eval = FALSE}
 install.packages("devtools")
@@ -43,7 +43,7 @@ library(devtools)
 install_github("rezonators/rezonateR")
 ```
 
-You are welcome to follow this tutorial in R. If you are reading this in R using the file `sample_proj.Rmd`, you can simply click on the 'run' button (green 'play' icon on the top right of each box). As long as all the code blocks are run sequentially, the code should work; otherwise, open a ticket on GitHub!
+You are welcome to follow this tutorial in R. If you are reading this in R using the file `sample_proj.Rmd`, you can simply click on the 'run' button (green 'play' icon on the top right of each box) to run the code. As long as all the code blocks are run sequentially, the code should work; otherwise, please [submit a ticket](https://github.com/rezonators/rezonateR/issues) on GitHub!
 
 ## The input data from Rezonator
 
@@ -383,13 +383,13 @@ rez007$trackDF$default %>% filter(gapUnits <= 1, charCount > 20)
 
 Notice that some of these do not seem to be actual referential expressions. Some of these are legitimate; for example, *nobody fucks with my lifestyle* happens to have been referred to by a cataphorical *it*:
 
-![Figure 5](images/paste-D976B13F.png){width="463"}
+![Figure 5](images/paste-AA63E6C5.png){width="437"}
 
 Since this is a case of cataphora and one of the expressions is a full clause, it is not surprising that it throws a monkey wrench into our hypothesis that shorter gapUnits should lead to shorter orthographic length, which is largely based on expectations about *anaphora*, not cataphora.
 
 However, *(...) in self assertiveness ,* is an error. The problem is that in Rezonator, it is not possible to create chunks that span multiple units. We can only create individual chunks for each unit. So in this screenshot, *a real good lesson for them ,*, *too ,*, and *(...) in self assertiveness ,* are three separate chunks, when they should really only be a single chunk:
 
-![Figure 6](images/paste-CF31F3E3.png){width="462"}
+![Figure 6](images/paste-F5ED0106.png){width="430"}
 
 This created a situation where *(...) in self assertiveness* is mistakenly taken as long referential expression that occurred right after a previous mention *too ,*.
 
@@ -492,7 +492,7 @@ This time, `noCompetitors` is no longer a good predictor. The coefficient of `ga
 
 Is there any way we can improve on this model a little more? Let's consider the cases with small `gapUnits` but large character counts again. It turns out that many of them are **predicates** of copular clauses, like the following example, which has the very long expression *what I'm gonna tell him* coreferential to the subject *that*:
 
-![Figure 7](img/sample_pred.PNG)
+![Figure 7](images/paste-EA1377C0.png){width="530"}
 
 On the other hand, very few of these are subjects. This suggests that it will be useful to add information about grammatical relations. Subjects are likely to be biased towards shorter character counts, and predicates towards longer ones. The two following sections will add these elements. First we will add the `Relation` predictor, which is annotated in the data and tells whether a referential expression is the subject of a clause. Then we write code to automatically guess whether something is a predicate.
 
@@ -539,11 +539,11 @@ We can now add a variable to pick out predicates. There's a quick and dirty way 
 
 In addition, referential expressions that don't belong to any verb are often also predicate-like in behaviour, such as the multiline chunk we've seen before:
 
-![Figure 8](images/paste-CF31F3E3.png){alt="Figure 6" width="462"}
+![Figure 8](images/paste-F5ED0106.png){alt="Figure 6" width="430"}
 
 So we can also include them as 'predicates' as good measure. Let's call the resulting column `isPredOrFree`, with 'free' meaning 'free from a verb'. (Note that this incorrectly picks out phrases that are parts of prepositional phrases as well, but again, there are few enough of these that we can get away with it.)
 
-The first step in this process is to add information about the verb to the `trackDF`. The following code adds two columns, `verbID` and `verbText`, to the `trackDF`, which tell us the chunk ID and text of the verb that the referential expression depends on (for example, in *I saw you*, the referential expressions *I* and *you* would contain information about *saw*). This process is a bit complicated; see `vignette("track")` for a more detailed explanation of what's going on.
+The first step in this process is to add information about the verb to the `trackDF`. The following code adds two columns, `verbID` and `verbText`, to the `trackDF`, which tell us the chunk ID and text of the verb that the referential expression depends on (for example, in *I saw you*, the referential expressions *I* and *you* would contain information about *saw*). This process is a bit complicated; see the [tutorial on coreference](https://rezonators.github.io/rezonateR/articles/track.html) `vignette("track")` for a more detailed explanation of what's going on.
 
 ```{r}
 rez007 = rez007 %>%
@@ -677,8 +677,9 @@ Now let's graph the difference between the singulars and plurals in a graph:
 
 ```{r}
 rez007$trackDF$default %>%
-  filter(!is.na(gapUnitsNew)) %>%
+  filter(!is.na(gapUnitsNew), !is.na(number)) %>%
   ggplot(aes(x = number, y = charCount)) + geom_violin()
+  
 ```
 
 Singulars seem to be more concentrated towards the smaller character counts, but at the same time have more outliers that are very heavy. Let's put these in the model and see what happens:

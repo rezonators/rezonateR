@@ -122,25 +122,28 @@ Rezonator and <code>rezonateR</code>. This particular example will
 examine the choice of referential forms in spoken dialogue: What factors
 lead to the choice of a longer form (e.g. <em>the three black cats</em>)
 versus a shorter one (e.g. <em>them</em>)?</p>
-<p>The data here is the same as that used in the series of tutorials
-starting with <code><a href="../articles/import_save_basics.html">vignette("import_save_basics")</a></code>, but this
-article will have less focus on how to write the code, and more on
-showing you how to answer the sample research question using
-<code>rezonateR</code>.</p>
+<p>The data here is the same as that used in the <a href="https://rezonators.github.io/rezonateR/articles/import_save_basics.html">series
+of detailed tutorials</a> (<code><a href="../articles/import_save_basics.html">vignette("import_save_basics")</a></code>),
+but this article will have less focus on how to write the code, and more
+on showing you how to answer the sample research question using
+<code>rezonateR</code>. So don’t worry if you don’t understand the
+details of how the code works - that can come later, as you read the
+detailed tutorials and documentation.</p>
 <p>This article does not assume that you have read any of the other
 articles on <code>rezonateR</code>. So there is some overlap in the
 topics covered. I will point you to other tutorials for further details
 when necessary. However, if you have not installed
-<code>rezonateR</code>, you need to do that now using this code:</p>
+<code>rezonateR</code>, please do it now using this code:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"rezonators/rezonateR"</span><span class="op">)</span></span></code></pre></div>
 <p>You are welcome to follow this tutorial in R. If you are reading this
 in R using the file <code>sample_proj.Rmd</code>, you can simply click
-on the ‘run’ button (green ‘play’ icon on the top right of each box). As
-long as all the code blocks are run sequentially, the code should work;
-otherwise, open a ticket on GitHub!</p>
+on the ‘run’ button (green ‘play’ icon on the top right of each box) to
+run the code. As long as all the code blocks are run sequentially, the
+code should work; otherwise, please <a href="https://github.com/rezonators/rezonateR/issues" class="external-link">submit a
+ticket</a> on GitHub!</p>
 </div>
 <div class="section level2">
 <h2 id="the-input-data-from-rezonator">The input data from Rezonator<a class="anchor" aria-label="anchor" href="#the-input-data-from-rezonator"></a>
@@ -161,7 +164,7 @@ later in the tutorial as the need arises.</p>
 <p>Figure 2 shows an excerpt close to the beginning of the conversation
 in Rezonator:</p>
 <div class="figure">
-<img src="img/sample_convo.PNG" style="width:100.0%" alt=""><p class="caption">Figure 2</p>
+<img src="img/sample_convo.PNG" style="width:84.0%" alt=""><p class="caption">Figure 2</p>
 </div>
 <p>In this file, each line is referred to as a <em>unit</em>, which in
 this context is an intonation unit (though lines may be sentences,
@@ -1019,7 +1022,7 @@ expressions. Some of these are legitimate; for example, <em>nobody fucks
 with my lifestyle</em> happens to have been referred to by a
 cataphorical <em>it</em>:</p>
 <div class="figure">
-<img src="images/paste-D976B13F.png" width="463" alt=""><p class="caption">Figure 5</p>
+<img src="images/paste-AA63E6C5.png" width="437" alt=""><p class="caption">Figure 5</p>
 </div>
 <p>Since this is a case of cataphora and one of the expressions is a
 full clause, it is not surprising that it throws a monkey wrench into
@@ -1033,7 +1036,7 @@ So in this screenshot, <em>a real good lesson for them ,</em>, <em>too
 ,</em>, and <em>(…) in self assertiveness ,</em> are three separate
 chunks, when they should really only be a single chunk:</p>
 <div class="figure">
-<img src="images/paste-CF31F3E3.png" width="462" alt=""><p class="caption">Figure 6</p>
+<img src="images/paste-F5ED0106.png" width="430" alt=""><p class="caption">Figure 6</p>
 </div>
 <p>This created a situation where <em>(…) in self assertiveness</em> is
 mistakenly taken as long referential expression that occurred right
@@ -1148,9 +1151,9 @@ combinations:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2C2FB52C1A11  a real good lesson for them ,                           |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> E818EBA6CB78  too ,                                                   |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2A382D1098989 (...) in self assertiveness ,                           |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 48N6Z3ADiQjmz the only way it 's gon na work , is if we have respect… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 0kObWtpmVTIDu (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> scuPxmWaK4GFd a real good lesson for them , too , (...) in self asse… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 3zLeNPH5XgD0y the only way it 's gon na work , is if we have respect… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> ywo3Xvg7hLBka (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> LQMH7nK65lAzi a real good lesson for them , too , (...) in self asse… combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 <p><code><a href="../reference/mergedChunksToTrack.html">mergedChunksToTrack()</a></code> puts this information in the
 <code>trackDF</code> too:</p>
@@ -1170,9 +1173,9 @@ combinations:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 129168B539994 weekly house meetings          a real good lesson for … |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 144636EDDE11B weekly house meetings          too ,                    |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 231F6E448A5E7 weekly house meetings          (...) in self assertive… |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> v8YcwGka6s9jB having respect for one another the only way it 's gon … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> q9WXRwdxnzkTS Trail 81                       (H) &lt;0&gt; going to (...) … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> fOC5cJ2pYkvFd weekly house meetings          a real good lesson for … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> bzhnLePMkEBFv having respect for one another the only way it 's gon … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> qmI2CH4Go57se Trail 81                       (H) &lt;0&gt; going to (...) … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> RLAZDi0JcMFpw weekly house meetings          a real good lesson for … combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 <p>Using magic, <code>rezonateR</code> automatically calculates the
 values of fields like <code>noCompetitors</code> when you combine
@@ -1260,7 +1263,7 @@ counts again. It turns out that many of them are
 example, which has the very long expression <em>what I’m gonna tell
 him</em> coreferential to the subject <em>that</em>:</p>
 <div class="figure">
-<img src="img/sample_pred.PNG" alt=""><p class="caption">Figure 7</p>
+<img src="images/paste-EA1377C0.png" width="530" alt=""><p class="caption">Figure 7</p>
 </div>
 <p>On the other hand, very few of these are subjects. This suggests that
 it will be useful to add information about grammatical relations.
@@ -1361,7 +1364,7 @@ infrequent enough in our sample that we can get away with it.</p>
 are often also predicate-like in behaviour, such as the multiline chunk
 we’ve seen before:</p>
 <div class="figure">
-<img src="images/paste-CF31F3E3.png" alt="Figure 6" width="462"><p class="caption">Figure 8</p>
+<img src="images/paste-F5ED0106.png" alt="Figure 6" width="430"><p class="caption">Figure 8</p>
 </div>
 <p>So we can also include them as ‘predicates’ as good measure. Let’s
 call the resulting column <code>isPredOrFree</code>, with ‘free’ meaning
@@ -1375,7 +1378,8 @@ to the <code>trackDF</code>. The following code adds two columns,
 that the referential expression depends on (for example, in <em>I saw
 you</em>, the referential expressions <em>I</em> and <em>you</em> would
 contain information about <em>saw</em>). This process is a bit
-complicated; see <code><a href="../articles/track.html">vignette("track")</a></code> for a more detailed
+complicated; see the <a href="https://rezonators.github.io/rezonateR/articles/track.html">tutorial
+on coreference</a> <code><a href="../articles/track.html">vignette("track")</a></code> for a more detailed
 explanation of what’s going on.</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="va">rez007</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -1393,7 +1397,7 @@ explanation of what’s going on.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 4</span></span></span>
 <span><span class="co">#&gt;    id            treeParent    verbID        verbText         </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B RQKMOYfFxUXwm said             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B pzHDxSXJOTlAM said             </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06  35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 7E5BB65072C   <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1F74D2B049FA4 35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
@@ -1642,7 +1646,7 @@ the <code>number</code> column:</p>
 graph:</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">number</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">number</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="sample_proj_files/figure-html/unnamed-chunk-46-1.png" width="700"></p>
 <p>Singulars seem to be more concentrated towards the smaller character
