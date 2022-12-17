@@ -1,5 +1,5 @@
 ---
-title: "Toy example of a coreference analysis in rezonateR"
+title: "Sample mini-project: Analysing coreference in rezonateR"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Toy example of a coreference analysis in rezonateR}
@@ -17,14 +17,13 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 library(dplyr)
 ```
 
-
 ## Research question
 
-It is often noted that in language, if a referent is more ‘accessible', or more easily accessed mentally - for example, it is salient in the previous discourse or physical context - then we will tend to refer to it using a shorter and simpler form form. Things that are less accessible - for example, things that are mentioned for the first time - tend to be referred to using longer forms. Thus, we should expect that in natural discourse, factors that render a referent more accessible are associated with shorter forms, and factors that make it less accessible are associated with longer forms.
+It is often noted that in language, if a referent is more 'accessible', or more easily accessed mentally - for example, it is salient in the previous discourse or physical context - then we will tend to refer to it using a shorter and simpler form form. Referents that are less accessible - for example, things that are mentioned for the first time - tend to be referred to using longer forms. Thus, we should expect that in natural discourse, factors that render a referent more accessible are associated with shorter forms, and factors that make it less accessible are associated with longer forms.
 
 Figure 1 shows an example of this phenomenon where an entity is first mentioned as a full noun phrase, and by the end of the stretch of text is only mentioned by a pronoun:
 
-![Figure 1](img/sample_rq.PNG){width=100%}
+![Figure 1](images/paste-F849630B.png)
 
 When the concept of hard times was first mentioned, it was with a noun phrase *hard times* (line 159), and the same occurred again in the next line. But the third time it appeared, a pronoun *it* was used. Intuitively, *hard times* was quite prominent and therefore accessible by the third reference, and hence a shorter form was used.
 
@@ -46,68 +45,79 @@ install_github("rezonators/rezonateR")
 
 You are welcome to follow this tutorial in R. If you are reading this in R using the file `sample_proj.Rmd`, you can simply click on the 'run' button (green 'play' icon on the top right of each box). As long as all the code blocks are run sequentially, the code should work; otherwise, open a ticket on GitHub!
 
-
 ## The input data from Rezonator
+
 The data used in this example is from the text *A Tree's Life*, a conversation between two sisters from the Santa Barbara Corpus of Spoken American English. The first 162 lines have been annotated and will be used in this tutorial; they deal with the topic of one of the sisters' roommates. (The data is also available through the `sbc007` object in the package itself, where a detailed description of the annotations included may be found.)
+
+In this section, we will explore the basic structure of a Rezonator file using this text. More advanced data structures will be introduced later in the tutorial as the need arises.
+
+### Units and tokens
 
 Figure 2 shows an excerpt close to the beginning of the conversation in Rezonator:
 
-![Figure 2](img/sample_convo.PNG){width=100%}
+![Figure 2](img/sample_convo.PNG){width="84%"}
 
-In this file, each line is referred to as a *unit*, which in this context is an intonation unit (though lines may be sentences, clauses or other larger structures in other contexts.) Each unit consists of a series of tokens ('words') separate by spaces.
+In this file, each line is referred to as a *unit*, which in this context is an intonation unit (though lines may be sentences, clauses or other larger structures in other contexts.) Each unit consists of a series of tokens (roughly similar to 'words') separated by spaces.
+
+#### Tracks and trails
 
 The file has been annotated for coreference chains, or *trails*. A trail consists of several mentions or referential expressions that refer to the same entity, each of which is individual called a *track*. They are connected by wavy lines in Rezonator. We saw one example of a trail in Figure 1. Here is another example:
 
-![Figure 3](img/sample_track.PNG){width=100%}
+![Figure 3](img/sample_track.PNG){width="100%"}
 
 Here, the *Tim* and the two *he*s refer to the same person.
 
-When there is a clause with an implicit participant that is not overtly expressed in the linguistic form, the symbol <0> is used to indicate the absence of such a form, and also included in a trail. Here is an example:
+#### Zeroes
 
-![Figure 4](img/sample_I.PNG){width=100%}
+When there is a clause with an implicit participant that is not overtly expressed in the linguistic form, the symbol \<0\> is used to indicate the absence of such a form, and also included in a trail. Here is an example:
+
+![Figure 4](img/sample_I.PNG){width="100%"}
 
 Notice that the two occurrences of *I* on Line 2 are linked together with a purple link, along with the zero on line 3.
 
+#### Chunks
+
 A 'chunk' in a Rezonator is a sequence of tokens within a unit, often a type of phrase such as a noun phrase. There are two types of chunks (elements represented by rectangles) in this file: Chunks that have been created as tracks which form part of a trail (mostly referential expressions - such as *hard times* in Figure 1), and verbal complexes, which are 'blank chunks', i.e. do not belong to any trail and appear with grey borders. The following figure shows some examples of these verbal chunks
 
-![Figure 5](img/sample_verbs.PNG){width=100%}
+![Figure 5](img/sample_verbs.PNG){width="100%"}
 
 In this example, auxiliaries, negation and similar elements are placed inside these verbal complexes, as one can see from *wasn't gonna do*.
 
-Chunks have been annotated for two properties inside Rezonator. `chunkType` is `verb` for verbs and left blank for referential expressions, allowing us to distinguish between the two when importing into rezonateR later. `largerChunk` is the larger chunk to which a chunk belongs, which will be discussed later. These are shown in Figure 6:
+Chunks have been annotated for two properties inside Rezonator. `chunkType` is `verb` for verbs and left blank for referential expressions, allowing us to distinguish between the two when importing into `rezonateR` later. `largerChunk` is the larger chunk to which a chunk belongs, which will be discussed later. These are shown in Figure 6:
 
-![Figure 6](img/sample_chunk.PNG){width=100%}
+![Figure 6](img/sample_chunk.PNG){width="100%"}
 
 In this image, *said* is a verb and all the other chunks are referential expressions.
 
 ## Our goal in rezonateR
+
 As we said above, our goal is to determine whether several factors that are proposed to be relevant to accessibility are associated with shorter referential forms.
 
-To this end, we will be buildiong a model that predicts the `charCount`, i.e. length (in number of characters) of a certain referential expression. Several predictors will be used to predict `charCount` in our small dataset. Here is a spoiler of the final set of factors:
+To this end, we will be building a model that predicts the `charCount`, i.e. length (in number of characters) of a certain referential expression. Several predictors will be used to predict `charCount` in our small dataset. Here is a spoiler of the final set of factors:
 
-* `noPrevSubjMentionsIn10`: The number of coreferent subject mentions within the 10 previous intonation units. That is, how many times was the referent of a form mentioned in the 10 previous intonation units in subject position?
-* `noPrevNonSubjMentionsIn10`: The number of coreferent non-subject mentions within the 10 previous units. That is, how many times was the referent of a form mentioned in the 10 previous intonation units, outside of subject position?
-* `gapUnits`: How many units are there between the previous mention and the current one?
-* `noCompetitors`: The number of competitors within the five previous units. That is, how many times were entities other than the referent of the current referential expression mentioned within the five previous intonation units?
-* `Relation`: Is the current referential expression a subject? 
-* `isPredOrFree`: Is the current mention either a nominal predicate (copula complement) or not tied to a particular clause?
-* `number`: Is the current referential expression singular or plural?
+-   `noPrevSubjMentionsIn10`: The number of coreferent subject mentions within the 10 previous intonation units. That is, how many times was the referent of a form mentioned in the 10 previous intonation units in subject position?
+-   `noPrevNonSubjMentionsIn10`: The number of coreferent non-subject mentions within the 10 previous units. That is, how many times was the referent of a form mentioned in the 10 previous intonation units, outside of subject position?
+-   `gapUnits`: How many units are there between the previous mention and the current one?
+-   `noCompetitors`: The number of competitors within the five previous units. That is, how many times were entities other than the referent of the current referential expression mentioned within the five previous intonation units?
+-   `Relation`: Is the current referential expression a subject?
+-   `isPredOrFree`: Is the current mention either a nominal predicate (copula complement) or not tied to a particular clause?
+-   `number`: Is the current referential expression singular or plural?
 
-Thus, our goal within R is to create a data frame where each row corresponds to a referential expresssion, and the columns include all of these factors (plus `charCount`, the number of characters). This can be done easily using the `rezonateR` functions after inputting the raw Rezonator data.
+Thus, our goal within R is to create a data frame where each row corresponds to a referential expression, and the columns include all of these factors (plus `charCount`, the number of characters). This can be done easily using the `rezonateR` functions after inputting the raw Rezonator data.
 
 ## Importing the file
 
 The first step is to import the file. When importing a file, an object called `rezrObj` is created. `rezrObj` contains two kinds of elements:
 
-* A `nodeMap`, which contains the data in the form of a series of interconnected nodes with attributes
-* A series of `rezrDF`s, which are data frames containing information about different elements of the file.
+-   A `nodeMap`, which contains the data in the form of a series of interconnected nodes with attributes
+-   A series of `rezrDF`s, which are data frames containing information about different elements of the file.
 
-Some important `rezrDF`s include: `tokenDF`, which contains the information about individual tokens of the original file, `chunkDF`, which contains information about chunks, `trackDF`, which contains information about entries of trails (i.e. mentions in coreference chains), and `treeEntryDF`, which contains information about entries on a tree.
+In this tutorial, we will only work with `rezrDF`s. Some important `rezrDF`s include: `tokenDF`, which contains the information about individual tokens of the original file; `chunkDF`, which contains information about chunks; and `trackDF`, which contains information about entries of trails (i.e. mentions in coreference chains).
 
-Here's the import code. It contains two kinds of information: 
+Here's the import code. It contains two kinds of information:
 
-* How to divide the chunks into layers. Here, we divide the chunks into two layers, `verb` and `refexpr` (for 'referential expressions', including the entire clauses we've seen before). Chunks in the two layers are put into two separate `rezrDF`s. Since no layers are specified for `trackDF` and `treeDF`, there will be only one `rezrDF` for them, with the layer name `default`.
-* Which fields of a token contains text to be concatenated in `concatFields`. The fields `text` and `transcript` of the Santa Barbara Corpus are concatenated to form `text` and `transcript` fields of larger structures like units and chunks. Telling this information to `rezonateR` is important for the text to appear in tables like `chunkDF` or `unitDF`.
+-   How to divide the chunks into layers. Here, we divide the chunks into two layers, `verb` and `refexpr` (for 'referential expressions', including the entire clauses we've seen before). Chunks in the two layers are put into two separate `rezrDF`s. Since no layers are specified for `trackDF` and `treeDF`, there will be only one `rezrDF` for them, with the layer name `default`.
+-   Which fields of a token contains text to be concatenated in `concatFields`. The fields `text` and `transcript` of the Santa Barbara Corpus are concatenated to form `text` and `transcript` fields of larger structures like units and chunks. Telling this information to `rezonateR` is important for the text to appear in tables like `chunkDF` or `unitDF`.
 
 ```{r}
 library(rezonateR)
@@ -129,7 +139,7 @@ head(rez007$chunkDF)
 head(rez007$trackDF$default)
 ```
 
-More information about the import process and the various objects created can be found in `vignette("import_save_basics")`.
+More information about the import process and the various objects created can be found in the [detailed tutorial on imports and data structure](https://rezonators.github.io/rezonateR/articles/import_save_basics.html) (`vignette("import_save_basics")`).
 
 Each line of the table `rez007$trackDF$default` contains a referential expression whose size we want to predict. The goal of using `rezonateR` for this project will be to produce a version of the data frame `rez007$trackDF` that contains all the predictors and the dependent variable on each line, and may be fed to models such as `lm()`.
 
@@ -140,24 +150,23 @@ savePath = "rez007.Rdata"
 rez_save(rez007, savePath)
 ```
 
-
 ## Augmenting the file with basic information about order and sequence
 
-After importing the file, there are a few simple operations that we usually call to add additional information to the table which was not added during the original import process, before beginning the process of editing.
+After importing the file, there are a few simple operations that we usually call to add additional information to the table which was not added during the original import process, before beginning the process of editing. In this section, we will do two of these: Defining which tokens are 'words' and adding corresponding sequence information, and adding unit sequence information.
 
 ### Words vs tokens
 
-By default Rezonator  provides two fields related to the position of a token, which you will see in `tokenDF` as columns:
+By default Rezonator provides two fields related to the position of a token, which you will see in `tokenDF` as columns:
 
-* `docTokenSeq` - refers to the order of a token within the entire text
-* `tokenOrder` -  refers to the position of a token within its intonation unit
+-   `docTokenSeq` - refers to the order of a token within the entire text
+-   `tokenOrder` - refers to the position of a token within its intonation unit
 
 Structures that span multiple tokens, like chunks and units, have four token sequence-related fields:
 
-* `docTokenSeqFirst` - refers to the `docTokenSeq` of the first token.
-* `docTokenSeqLast` - refers to the `docTokenSeq` of the last token.
-* `tokenOrderFirst` - refers to the `tokenOrder` of the first token.
-* `tokenOrderLast` - refers to the `tokenOrder` of the last token.
+-   `docTokenSeqFirst` - refers to the `docTokenSeq` of the first token.
+-   `docTokenSeqLast` - refers to the `docTokenSeq` of the last token.
+-   `tokenOrderFirst` - refers to the `tokenOrder` of the first token.
+-   `tokenOrderLast` - refers to the `tokenOrder` of the last token.
 
 Here are some examples:
 
@@ -187,9 +196,11 @@ rez007 = addUnitSeq(rez007, "track")
 head(rez007$chunkDF$refexpr %>% select(id, text, unitSeqFirst, unitSeqLast))
 ```
 
-For the details of these functions, see `vignette("time_seq")`.
+For the details of these functions, see [the tutorial on time and sequence](https://rezonators.github.io/rezonateR/articles/time_seq.html) (`vignette("time_seq")`).
 
-## Pass 1: Predicting length from lookback distance
+## Pass 1: Predicting orthographic length of referential expressions from lookback distance
+
+After the initial process of importing and simple preprocessing, we are now ready to explore the data and test our research hypotheses. In this section, we will use some default predictors created automatically by Rezonator: `gapUnits` and `gapWords`.
 
 ### `gapUnits`: Lookback distance in R
 
@@ -205,10 +216,9 @@ rez007$trackDF$default %>%
   ggplot(aes(x = isFirst, y = charCount)) + geom_violin()
 ```
 
-
 Clearly, we can see that first mentions have a much higher tendency to be referred to using a noun phrase that has more characters.
 
-Among the non-first mentions, can we also predict whether the character count from `gapUnits`? Let's again do a quick visualisation. If we exclude non-first mentions, and plot the relationship betwee `gapUnits` and `charCount`, this is what we get:
+Among the non-first mentions, can we also predict whether the character count from `gapUnits`? Let's again do a quick visualisation. If we exclude non-first mentions, and plot the relationship between `gapUnits` and `charCount`, this is what we get:
 
 ```{r}
 rez007$trackDF$default %>%
@@ -228,12 +238,12 @@ pass1_model1 = rez007$trackDF$default %>%
   lm(charCount ~ gapUnits, .)
 summary(pass1_model1)
 ```
+
 As we can see, although there is a negative coefficient that says a larger `gapUnits` leads to a smaller character count (as expected), it is not significant.
 
 ### A finer-grained distance metric?
 
 There is another value, `gapWords`, that is automatically calculated in Rezonator and calculates the number of tokens from the current mention to the previous one. Would this finer-grained measure do better than `gapUnits`? Let's try:
-
 
 ```{r}
 rez007$trackDF$default %>%
@@ -251,19 +261,20 @@ The pattern is not much clearer from the diagram this time than last time, and t
 
 There are ways we can potentially improve on these measures as well as other predictors of character count that we can potentially explore. We'll continue doing this throughout the tutorial.
 
+## Pass 2: Adding predictors with EasyTrack
 
-## Pass 2: Adding predictors with EasyTrack 
-
-Having attempted to predict character count from predictors imported directly from Rezonator, let's try to derive some predictors using `rezonateR` functions. This section will cover some basic functions in the `EasyTrack` series of functions. See `vignette("track")` for details about them.
+Having attempted to predict character count from predictors imported directly from Rezonator, let's try to derive some predictors using `rezonateR` functions. This section will cover some basic functions in the `EasyTrack` series of functions. See the [tutorial on coreference](https://rezonators.github.io/rezonateR/articles/track.html) (`vignette("track")`) for details about them.
 
 ### Counting previous mentions
-The function `countPrevMentions()` in `rezonateR` is one function we can use. In its simplest form, you can simply specify a window of units in which to look for referential expressions that corefer with the each mention. We will look at the 10 previous units. We will add this value to the `trackDF` using the `rez_mutate()` function, which is part of the TidyRez family (`vignette("edit_tidyRez")`). (We use this function rather than `dplyr::mutate()` in order to ensure that the resulting data frame will remain in the correct `rezonateR` format.) Here is the code, along with a line of code that displays the first couple of values of this predictor:
+
+The function `countPrevMentions()` in `rezonateR` is one function we can use. In its simplest form, you can simply specify a window of units in which to look for referential expressions that corefer with the each mention. We will look at the 10 previous units. We will add this value to the `trackDF` using the `rez_mutate()` function, which is part of the [TidyRez family](https://rezonators.github.io/rezonateR/articles/edit_tidyRez.html) (`vignette("edit_tidyRez")`). (We use this function rather than `dplyr::mutate()` in order to ensure that the resulting data frame will remain in the correct `rezonateR` format.) Here is the code, along with a line of code that displays the first couple of values of this predictor:
 
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
   rez_mutate(noPrevMentionsIn10 = countPrevMentions(10))
 rez007$trackDF$default %>% select(id, text, noPrevMentionsIn10)  %>% slice(1:20)
 ```
+
 Now let's try to draw a scatterplot and fit a linear model plotting this predictor against `charCount`, as we have done before:
 
 ```{r}
@@ -302,7 +313,7 @@ summary(pass2_model1)
 
 From the graph, there does seem to be a small effect where a greater number of competitors leads to the use of fewer characters. This effect again turns out to be significant at the 0.05 significance level.
 
-However, there is good reason to believe that `noCompetitors` and `noPrevMentionsIn10` may be highly correlated, and thus some of the effect we see for `noCompetitors` may actually due to the presence of previous mentions, or vice versa. This is because of there are more non-coreferring expressions in the previous units, there will tend to be fewer coreferring expressions, assuming that the number of referential expressions is relatively stable, i.e. our two competitors are negatively correlated are negatively correlated. The code below plots them in a graph and calculates the Pearson correlation coefficient, which is somewhat negative:
+However, there is good reason to believe that `noCompetitors` and `noPrevMentionsIn10` may be highly correlated, and thus some of the effect we see for `noCompetitors` may actually due to the presence of previous mentions, or vice versa. This is because of there are more non-coreferring expressions in the previous units, there will tend to be fewer coreferential expressions, assuming that the number of referential expressions is relatively stable, i.e. our two competitors are negatively correlated are negatively correlated. The code below plots them in a graph and calculates the Pearson correlation coefficient, which is somewhat negative:
 
 ```{r}
 rez007$trackDF$default %>%
@@ -319,6 +330,7 @@ pass2_model3 = rez007$trackDF$default %>%
   lm(charCount ~ noCompetitors + noPrevMentionsIn10, .)
 summary(pass2_model3)
 ```
+
 As we can see, once we put both in the model, `noCompetitors` becomes the only significant predictor. (Of course, this does not mean that `noPrevMentionsIn10` does not matter; we only have very low power, after all.)
 
 As a last attempt, let's also try the lookback-based approach by adding `gapUnits` to the model as well:
@@ -354,6 +366,7 @@ pass2_model5 = rez007$trackDF$default %>%
   lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapWordsNew, .)
 summary(pass2_model5)
 ```
+
 This has no significant effect, and indeed takes away the significance of `noPrevMentionsIn10` too.
 
 ## Pass 3: Full analysis
@@ -370,20 +383,23 @@ rez007$trackDF$default %>% filter(gapUnits <= 1, charCount > 20)
 
 Notice that some of these do not seem to be actual referential expressions. Some of these are legitimate; for example, *nobody fucks with my lifestyle* happens to have been referred to by a cataphorical *it*:
 
-![Figure 5](img/sample_fucks.PNG)
+![Figure 5](images/paste-D976B13F.png){width="463"}
+
+Since this is a case of cataphora and one of the expressions is a full clause, it is not surprising that it throws a monkey wrench into our hypothesis that shorter gapUnits should lead to shorter orthographic length, which is largely based on expectations about *anaphora*, not cataphora.
 
 However, *(...) in self assertiveness ,* is an error. The problem is that in Rezonator, it is not possible to create chunks that span multiple units. We can only create individual chunks for each unit. So in this screenshot, *a real good lesson for them ,*, *too ,*, and *(...) in self assertiveness ,* are three separate chunks, when they should really only be a single chunk:
 
-![Figure 6](img/sample_multiline.PNG)
+![Figure 6](images/paste-CF31F3E3.png){width="462"}
 
 This created a situation where *(...) in self assertiveness* is mistakenly taken as long referential expression that occurred right after a previous mention *too ,*.
 
 `rezonateR` is equipped with the ability to combine several chunks inside the file into one larger chunk. Before we do this, though, we need to spice up our data frames with information from trees, which will provide us with some of the information helpful for merging chunks together. This will also be helpful for other types of operations later on too, so let's take a look at this feature.
 
 #### Adding tree information
+
 In Rezonator, trees are structures used to indicate relationships between words/chunks and other words/chunks. In ths file we're working with, there are a number of two-layered trees that indicate argument structure of each verb. The root of each tree is the verb, and the arguments are the leaves. The following figure shows the argument structure of Line 4, with *defeats* as the root with three children: a zero subject, the object *the purpose of getting up in the morning*, and the adverb *kinda*:
 
-![Figure 3](img/sample_tree.PNG){width=100%}
+![Figure 3](img/sample_tree.PNG){width="100%"}
 
 The links between different parts of a tree are also tagged with the field Relation. In this file, tree links are annotated as Relation = "Subject" when it indicates a subject-verb relation; otherwise Relation is left blank.
 
@@ -398,11 +414,12 @@ head(rez007$trackDF$default %>% select(id, text, treeEntry))
 
 This will be useful later on for other things as well, not just for merging chunks.
 
-#### `mergeChunksWithTree()` and `mergeChunksWithIDs()`
+#### Merging chunks with trees vs. IDs
+
 There are two functions for merging chunks in `rezonateR`:
 
-* `mergeChunksWithTree()`: If there is a treeEntry that corresponds to the concatenation of multiple chunks, then we merge those chunks.
-* `mergeChunksWithIDs()`: We merge chunks by assigning IDs to individual chunks that indicate the merged chunk it is supposed to belong to. In this dataset, this is done in the field `largerChunk` on chunks. For example, the first chunk you create this way may have the ID 1, the second chunk 2, the third chunk 3 and so on. In this case, all the component chunks of the first complex chunk should have the value `1` for `largerChunk` and so on.
+-   `mergeChunksWithTree()`: If there is a treeEntry that corresponds to the concatenation of multiple chunks, then we merge those chunks.
+-   `mergeChunksWithIDs()`: We merge chunks by assigning IDs to individual chunks that indicate the merged chunk it is supposed to belong to. In this dataset, this is done in the field `largerChunk` on chunks. For example, the first chunk you create this way may have the ID 1, the second chunk 2, the third chunk 3 and so on. In this case, all the component chunks of the first complex chunk should have the value `1` for `largerChunk` and so on.
 
 The new chunks will be added to the bottom of `chunkDF`. In addition, `chunkDF` will have an extra column `combinedChunk` giving information about chunk combinations:
 
@@ -429,7 +446,7 @@ Using magic, `rezonateR` automatically calculates the values of fields like `noC
 
 ### `gapUnits`, take two
 
-Now that we have merged some of these chunks, it's time to redo the `gapUnits` value. We can do this by using the `unitsToLastMention()` function, and setting the value of `exclFrag` to `TRUE` (i.e. excluding fragments of chunks) and `nonFragmentMember` to the rows that do not have the string `"member"` in `combinedChunk`:
+Now that we have merged some of these chunks, it's time to redo the `gapUnits` value to exclude 'tracks' that are in fact just fragments of chunks that have now been merged. We can do this by using the `unitsToLastMention()` function. By setting the value of `exclFrag` to `TRUE` (i.e. excluding fragments of chunks) and `nonFragmentMember` to the rows that do not have the string `"member"` in `combinedChunk`, we create a new value of `gapUnits` that excludes these dubious mentions:
 
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
@@ -470,9 +487,10 @@ pass3_model1 = rez007$trackDF$default %>%
   lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew, .)
 summary(pass3_model1)
 ```
+
 This time, `noCompetitors` is no longer a good predictor. The coefficient of `gapUnitsNew` is still in the 'wrong' direction, since a larger `gapUnitsNew` still leads to a smaller referential expression, but the effect is not significant any more.
 
-Is there any way we can improve on this model a little more? Let's consider the cases with small `gapUnits` but large character counts again. It turns out that many of them are **predicates** of copular clauses, like the following example, which has the very long expression *what I'm gonna tell  him* coreferential to the subject *that*:
+Is there any way we can improve on this model a little more? Let's consider the cases with small `gapUnits` but large character counts again. It turns out that many of them are **predicates** of copular clauses, like the following example, which has the very long expression *what I'm gonna tell him* coreferential to the subject *that*:
 
 ![Figure 7](img/sample_pred.PNG)
 
@@ -480,7 +498,7 @@ On the other hand, very few of these are subjects. This suggests that it will be
 
 ### Adding information about verbs and argument structure
 
-Now let's add the `Relation` variable, which determines whether a certain referential expression is the subject of a verb, a factor frequently argued to be increasing accessibility. We use `addFieldForeign()`, which belongs to the EasyEdit family of functions covered in `vignette("edit_easyEdit")`. Recall that we've put a `treeEntry` column in `trackDF` that gives the ID of the corresponding tree entry. The following code looks into `treeEntryDF`, finds the `Relation` value corresponding to a `treeEntry`, and adds it to `trackDF`, allowing us to know whether each referential expression is a subject:
+Now let's add the `Relation` variable, which determines whether a certain referential expression is the subject of a verb, a factor frequently argued to be increasing accessibility. We use `addFieldForeign()`, which belongs to the EasyEdit family of functions covered in the [EasyEdit tutorial](https://rezonators.github.io/rezonateR/articles/edit_easyEdit.html) (`vignette("edit_easyEdit")`). Recall that we've put a `treeEntry` column in `trackDF` that gives the ID of the corresponding tree entry. The following code looks into `treeEntryDF`, finds the `Relation` value corresponding to a `treeEntry`, and adds it to `trackDF`, allowing us to know whether each referential expression is a subject:
 
 ```{r}
 rez007 = rez007 %>%
@@ -504,7 +522,6 @@ rez007$trackDF$default %>%
   ggplot(aes(x = Relation, y = charCount)) + geom_violin()
 ```
 
-
 The pattern overwhelmingly supports our hypothesis. Now let's see what `Relation` turns up if we put it in the linear model:
 
 ```{r}
@@ -513,8 +530,8 @@ pass3_model2 = rez007$trackDF$default %>%
   lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + Relation, .)
 summary(pass3_model2)
 ```
-As we can see, subjects are likely to be far shorter than non-subjects. The effects of the other factors are gone in this model.
 
+As we can see, subjects are likely to be far shorter than non-subjects. The effects of the other factors are gone in this model.
 
 ### Adding the effect of predicatehood
 
@@ -522,7 +539,7 @@ We can now add a variable to pick out predicates. There's a quick and dirty way 
 
 In addition, referential expressions that don't belong to any verb are often also predicate-like in behaviour, such as the multiline chunk we've seen before:
 
-![Figure 8](img/sample_multiline.PNG)
+![Figure 8](images/paste-CF31F3E3.png){alt="Figure 6" width="462"}
 
 So we can also include them as 'predicates' as good measure. Let's call the resulting column `isPredOrFree`, with 'free' meaning 'free from a verb'. (Note that this incorrectly picks out phrases that are parts of prepositional phrases as well, but again, there are few enough of these that we can get away with it.)
 
@@ -569,9 +586,10 @@ pass3_model2 = rez007$trackDF$default %>%
 summary(pass3_model2)
 ```
 
-Unfortunately, `isPredOrFree`  does not turn out to be a significant predictor.
+Unfortunately, `isPredOrFree` does not turn out to be a significant predictor.
 
 ### Splitting up `noPrevSubjMentions`
+
 Let's see if we can improve upon the model in any more ways. The first thing we could do is to split up `noPrevMentionsIn10`. It is often proposed in the literature that subjects are more accessible than other types of arguments, and when the previous mention is a subject, the expression will subsequently be more accessible as well. So we could split up previous mentions into previous subjects and previous non-subjects.
 
 The function `countPrevMentionsIf()` counts the number of times that a referent was mentioned previously in a specified window of units, along with the `TidyRez` function `rez_mutate()` (note that for non-subjects, we allow `Relation` to be `NA`):
@@ -584,6 +602,7 @@ rez007$trackDF$default = rez007$trackDF$default %>%
                                                nonFragmentMember = !str_detect(combinedChunk, "member")))
 rez007$trackDF$default %>% select(id, noPrevSubjMentionsIn10, noPrevNonSubjMentionsIn10)  %>% slice(1:20)
 ```
+
 ```{r}
 pass3_model2 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
@@ -597,9 +616,9 @@ As we can now see, non-subjects have no effect at all, although the effect for s
 
 Let's take a final crack at the problem by seeing whether number (singular vs plural) has an effect on referential choice. Our steps are as follows:
 
-1. We will first take a guess at what the number of a track in `rez007$trackDF` is using a set of simplistic rules based on the linguistic form.
-2. Then we export a `.csv` file from `rezonateR`, and edit the automatic guesses in Microsoft Excel (or any other spreadsheet program of your choice).
-3. We then import the `.csv` file back into `rezonateR` and update `rez007$trackDF` from the imported file.
+1.  We will first take a guess at what the number of a track in `rez007$trackDF` is using a set of simplistic rules based on the linguistic form.
+2.  Then we export a `.csv` file from `rezonateR`, and edit the automatic guesses in Microsoft Excel (or any other spreadsheet program of your choice).
+3.  We then import the `.csv` file back into `rezonateR` and update `rez007$trackDF` from the imported file.
 
 Let's say we want to annotate the number of the referential expressions inside `trackDF$default`. A good approximation will be to mark everything that ends with \<s\> as plural, along with common plural pronouns and demonstratives, mark coordinate noun phrases as plural, mark noun phrases with singular demonstratives as singular, mark *you* as uncertain, and then mark the rest as singular:
 
@@ -638,9 +657,9 @@ rez_write_csv(rez007$trackDF$default, "rez007_refexpr.csv", c("id", "unitLastTex
 
 An editing best practice is to copy the `.csv` file and edit from the copy, rather from the `.csv` you export directly. Figure 7 shows what the exported `.csv` looks like in Excel:
 
-![Figure 7](img/sample-excel.PNG){width=100%}
+![Figure 7](img/sample-excel.PNG){width="100%"}
 
-After editing the CSV in a spreadsheet program, we import it back using `rez_read_csv()` (specifying the original `rezrDF` makes the import processes smoother and less error-prone):
+After editing the CSV in a spreadsheet program to fix the mistakes and get rid of the ?s, we import it back using `rez_read_csv()` (specifying the original `rezrDF` makes the import processes smoother and less error-prone):
 
 ```{r}
 changeDF = rez_read_csv("rez007_refexpr_edited_sampleproj.csv", origDF = rez007$trackDF$default)
@@ -653,6 +672,7 @@ rez007$trackDF$default = rez007$trackDF$default %>%
   updateFromDF(changeDF, changeCols = "number")
 head(rez007$trackDF$default %>% select(id, text, number))
 ```
+
 Now let's graph the difference between the singulars and plurals in a graph:
 
 ```{r}
@@ -670,8 +690,33 @@ pass3_model3 = rez007$trackDF$default %>%
 summary(pass3_model3)
 ```
 
-Whether the current mention is a subject continues to turn out to be good predictors, and the noumber of previous subject mentions continues to be close to significance. The rest of the predictors are not significant, though some of them (particularly the number of competitors and lookback distance i.e. `gapUnits`) may hold some promise on a larger dataset. Grammatical number seems to be hopeless.
+Whether the current mention is a subject continues to turn out to be a good predictor, and the number of previous subject mentions continues to be close to significance. The rest of the predictors are not significant, though some of them (particularly the number of competitors and lookback distance i.e. `gapUnits`) may hold some promise on a larger dataset. Grammatical number seems to be hopeless.
+
+## A post-mortem: Where did all the effects go?
+
+It may be disappointing that only one predictor was significant. Even though we know from previous studies that previous mentions are generally important in determining the choice of referential form, only one predictor turned out to be close to significant, and even the effect size of that is not too large.
+
+Of course, our power is very small because of the tiny sample size, and we have only been studying a small portion of a single text, which may have unusual properties. So what might those unusual properties be? Let's explore the data a little more to find out.
+
+Let's start with the lengths of the chains. A text with little coreference will naturally have fewer referents that have been mentioned enough times to become accessible. The `chainSize` column of `trailDF` gives us the chain size, so we can plot it as a histogram:
+
+```{r}
+rez007$trailDF$default %>% ggplot(aes(x = chainSize)) + geom_histogram(, binwidth = 1) + scale_x_continuous(breaks = seq(1, 40, 2))
+```
+
+We have a small number of very long chains, a small number of moderately-sized chains, and a very large number of short (1-3) chains - and this is ignoring the fact that some of these lengths are longer than the real length, because they contain chunks that are two parts of a larger, multi-unit chunk.
+
+Now let's look at the top chains - say, the ones with more than 10 tracks. What are they? We can extract them from `trailDF` first, then explore the corresponding tracks in the `trackDF`:
+
+```{r}
+longestChains = rez007$trailDF$default %>% filter(chainSize > 10) %>% pull(id)
+rez007$trackDF$default %>% filter(chain %in% longestChains) %>% select(name, text) %>% group_split(name) %>% head
+```
+
+As we can see in this table, the top referents are all humans, and they are mostly referred to using pronouns. 'I' and 'you', in particular, are virtually always pronouns, since they are the two speech act participants, so there is little distinction. Moreover, 'Tim' happens to be a very short name  - with the same number of letters as 'him', in fact. These four chains make up so much of the proportion of the data that naturally, whatever effects we end up finding are small.
+
+The fact that 'Tim' (and in fact many other names in this text, like Ron and Mary) are orthographically short also compels us to consider other dimensions of accessibility theory. In this project, our response measure is orthographic length, which is a proxy for phonological length. As defined by Ariel (2001), however, the form-function correlations claimed by accessibility theory are not based on phonological size alone. There are also two other dimensions: informativity (amount of lexical information contained), rigidity (ability of a form to pick a unique referent). Because forms like *Tim* are more rigid and informative than forms like *him*, it stands to reason that a dependent measure based on informativity and/or rigidity may reveal greater effects in this particular text snippet than phonological size.
 
 ## Where to go from here?
-This simple project shows most of the basic capabilities of `rezonateR`, though it still leaves out a lot, such as *reloads*, which allows you to update certain column automatically after changing other columns. `vignette("overview")` is a less topically focused overview of the package, less focused on a single problem but covering more topics. The series of tutorials starting from `vignette("import_save_basics")` is based on the same dataset as this tutorial, but covers most functionality of the package down to the smallest details, and you can pick and choose topics from there to read. Good luck!
 
+This simple project shows most of the basic capabilities of `rezonateR`, though it still leaves out a lot, such as *reloads*, which allows you to update certain column automatically after changing other columns. The [overview](https://rezonators.github.io/rezonateR/articles/overview.html) (`vignette("overview")`) is a less topically focused overview of the package, less focused on a single problem but covering more topics. The series of tutorials, starting from an introduction to [imports, saving and data structure](https://rezonators.github.io/rezonateR/articles/import_save_basics.html) (`vignette("import_save_basics")`), is based on the same dataset as this tutorial, but covers most functionality of the package down to the smallest details, and you can pick and choose topics from there to read. Good luck!

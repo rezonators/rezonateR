@@ -1,5 +1,5 @@
 ---
-title: "Importing .rez files, saving rezrObjs, and basic data structure"
+title: "Importing Rezonator files, saving rezonateR objects, and basic data structure"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Importing .rez files, saving rezrObjs, and basic data structure}
@@ -26,21 +26,35 @@ library(rezonateR)
 Hello! If you're reading this tutorial, you're probably wondering how
 exactly rezonateR works, how to import data into rezonateR and how to
 understand how the data is then structured internally. If this describes
-your situation, then this tutorial is for you! If you are not yet
-familiar with what rezonateR does and want to see if this is the right
-tool for you, there are tutorials more suitable for you. If you are not
-very familiar with the [Rezonator](http://rezonator.com/) program that
-this package is the companion tool of, I recommend going through the toy
-example `vignette("sample_proj")` first, which gives a concrete example
-of a mini-research project in `rezonateR`. If you are familiar with
-Rezonator but not yet with what `rezonateR` does, the overview
-`vignette("overview")` gives a bird's-eye view of how `rezonateR` can be
-useful for accompanying your Rezonator work. (None of the content in
-those tutorials is strictly prerequisites for this one, but they help
-motivate why `rezonateR` is useful and help you decide whether
-`rezonateR` is a useful tool for you to learn. This tutorial gets into
-the nitty gritty of how to code with `rezonateR`, rather than discussing
-the big picture.)
+your situation, then this tutorial is for you!
+
+If you are not yet familiar with what rezonateR does and want to see if
+this is the right tool for you, here are some pages that will work
+better for you:
+
++---------------------------------------------------------------------+
+| -   If you are not very familiar with the                           |
+|     [Rezonator](http://rezonator.com/) program that this package is |
+|     the companion tool of, I recommend going through the [toy       |
+|     example                                                         |
+| ](https://rezonators.github.io/rezonateR/articles/sample_proj.html) |
+|     `vignette("sample_proj")` first, which gives a concrete example |
+|     of a mini-research project in `rezonateR`.                      |
+|                                                                     |
+| -   If you are familiar with Rezonator but not yet with what        |
+|     `rezonateR` does, the                                           |
+|     [overview](h                                                    |
+| ttps://rezonators.%20github.io/rezonateR/articles/sample_proj.html) |
+|     `vignette("overview")` gives a bird's-eye view of how           |
+|     `rezonateR` can be useful for accompanying your Rezonator work. |
+|                                                                     |
+|     None of the content in those tutorials is strictly              |
+|     prerequisites for this one, but they help motivate why          |
+|     `rezonateR` is useful and help you decide whether `rezonateR`   |
+|     is a useful tool for you to learn. This tutorial gets into the  |
+|     nitty gritty of how to code with `rezonateR`, rather than       |
+|     discussing the big picture.                                     |
++---------------------------------------------------------------------+
 
 In this tutorial, you will learn about:
 
@@ -88,7 +102,7 @@ annotations included may be found.)
 Figure 1 shows an excerpt close to the beginning of the conversation in
 Rezonator:
 
-![Figure 1](img/sample_convo.PNG){width="100%"}
+![Figure 1](img/sample_convo.PNG){width="77%"}
 
 In this file, each line is referred to as a *unit*, which in this
 context is an intonation unit (though lines may be sentences, clauses or
@@ -293,7 +307,7 @@ purpose of getting up in the morning* was put in a chunk the moment it
 became part of a track chain.
 
 ![Figure 7: A Rezonator screenshot with several chunks and two
-trails.](images/paste-38B9B749.png)
+trails.](images/paste-AD3BF2F3.png){width="576"}
 
 There are also chunks that do not belong to any chains, sometimes called
 *blank chunks*. In this document, blank chunks are used to mark verbal
@@ -348,7 +362,7 @@ of them have specific names for their entries. They are:
     three visible tracks: *this*, *stay up late*, and the \<0\>. Each
     track can be a token or chunk.
 
-    ![Figure X](images/paste-61600615.png)
+    ![](images/paste-F920E37E.png){width="624"}
 
 -   A chain of rez entities is a *resonance* - a rez entity is a
     specific instance of a word that is resonated somewhere else in the
@@ -358,7 +372,7 @@ of them have specific names for their entries. They are:
     rez consists of a single token, but other annotations might allow
     for rezzes as chunks as well.
 
-    ![Figure 9](images/paste-8B4E9183.png){width="433"}
+    ![](images/paste-18E5C37D.png){width="632"}
 
 -   A chain of cards is a *stack*. A card corresponds to a unit, and a
     stack is basically a collection of units that make up some larger
@@ -719,9 +733,10 @@ getTrackTokens(rez007, fieldName = "kind", trackDF = rez007$trackDF$default)[1:3
 In general, though, it is preferable to minimise this type of
 extraction. The coming tutorials will explain how we can do common
 operations without resorting to using `getLowerFieldList()`; for
-example, `addFieldForeign()` in `EasyEdit` (see
-`vignette("edit_easyEdit")`) will allow you to add a field to the table
-with the higher-level (e.g. structure that is created by getting a
+example, `addFieldForeign()` in `EasyEdit` (see the [EasyEdit
+tutorial](https://rezonators.github.io/rezonateR/articles/edit_easyEdit.html)
+at `vignette("edit_easyEdit")`) will allow you to add a field to the
+table with the higher-level (e.g. structure that is created by getting a
 single summary value of a field in a a lower-level structure), and
 `rez_left_join()` in `TidyRez` allows you to perform similar operations
 with a tidyverse syntax (see `vignette("edit_tidyRez")`.
@@ -730,4 +745,7 @@ with a tidyverse syntax (see `vignette("edit_tidyRez")`.
 
 Now that you know your way around `.rez` files and `rezrObj`s, you can
 go to the next tutorial to see how time is handled in Rezonator. If
-you're up for that,go to `vignette("time_seq")`!
+you're up for that, go to the [tutorial on time and
+sequence](https://rezonators.github.io/rezonateR/articles/time_seq.html)
+(`vignette("time_seq")`)!
+
