@@ -14,7 +14,8 @@ countCompetitors(
   between = T,
   exclFrag = F,
   combinedChunk = NULL,
-  nonFragmentMember = F
+  nonFragmentMember = F,
+  windowType = "unit"
 )
 
 countMatchingCompetitors(

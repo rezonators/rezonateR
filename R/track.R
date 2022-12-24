@@ -364,6 +364,7 @@ getNextMentionField = function(field, tokenOrder = NULL, chain = NULL, exclFrag 
 #'
 #' @param cond The condition under which something counts as a competitor. Leave blank if anything goes.
 #' @param between Do we only count competitors between the current mention and previous mention? (If `T`, then the value is `NA` for first mentions.)
+#' @windowType (for countCompetitors only) Is the window type in units or tokens?
 #' @inheritParams lastMentionToken
 #' @rdname countCompete
 #' @examples sbc007$trackDF$default %>%
@@ -372,8 +373,8 @@ getNextMentionField = function(field, tokenOrder = NULL, chain = NULL, exclFrag 
 #'             noMatchingCompetitors = countMatchingCompetitors(isZero, windowSize = 40, between = F))
 #' @return A vector of number of competitors.
 #' @export
-countCompetitors = function(cond = NULL, windowSize = Inf, tokenSeq = NULL, unitSeq = NULL, chain = NULL, between = T, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
-  grabFromDF(tokenSeq = "docTokenSeqLast", chain = "chain", combinedChunk = "combinedChunk", unitOrder = "unitSeqLast")
+countCompetitors = function(cond = NULL, windowSize = Inf, tokenSeq = NULL, unitSeq = NULL, chain = NULL, between = T, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F, windowType = "unit"){
+  grabFromDF(tokenSeq = "docTokenSeqLast", chain = "chain", combinedChunk = "combinedChunk", unitSeq = "unitSeqLast")
   if(exclFrag) frag = isFrag(combinedChunk, nonFragmentMember) else frag = F
 
   if(between) lastMentionPos = lastMentionToken(tokenSeq, chain, exclFrag, combinedChunk, nonFragmentMember)
@@ -384,16 +385,30 @@ countCompetitors = function(cond = NULL, windowSize = Inf, tokenSeq = NULL, unit
   }
 
   sapply(1:length(tokenSeq), function(x){
-    if(between){
-      result = sum(tokenSeq < tokenSeq[x] & tokenSeq > lastMentionPos[x] &
-                     condition & unitSeq > unitSeq[x] - windowSize &
-                     chain[x] != chain & !frag, na.rm = T)
-      result[is.na(result)] = 0
-      result
-    } else {
-      sum(tokenSeq < tokenSeq[x] & condition &
-            tokenSeq > tokenSeq[x] - windowSize &
-                     chain[x] != chain & !frag, na.rm = T)
+    if(windowType == "token"){
+      if(between){
+        result = sum(tokenSeq < tokenSeq[x] & tokenSeq > lastMentionPos[x] &
+                       condition & tokenSeq > tokenSeq[x] - windowSize &
+                       chain[x] != chain & !frag, na.rm = T)
+        result[is.na(result)] = 0
+        result
+      } else {
+        sum(tokenSeq < tokenSeq[x] & condition &
+              tokenSeq > tokenSeq[x] - windowSize &
+                       chain[x] != chain & !frag, na.rm = T)
+      }
+    } else if(windowType == "unit"){
+      if(between){
+        result = sum(tokenSeq < tokenSeq[x] & tokenSeq > lastMentionPos[x] &
+                       condition & unitSeq > unitSeq[x] - windowSize &
+                       chain[x] != chain & !frag, na.rm = T)
+        result[is.na(result)] = 0
+      } else {
+        sum(tokenSeq < tokenSeq[x] & condition &
+              unitSeq > unitSeq[x] - windowSize &
+              chain[x] != chain & !frag, na.rm = T)
+
+      }
     }
   })
 }
