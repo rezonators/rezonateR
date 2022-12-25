@@ -32,29 +32,29 @@ If you are not yet familiar with what rezonateR does and want to see if
 this is the right tool for you, here are some pages that will work
 better for you:
 
-+---------------------------------------------------------------------+
-| -   If you are not very familiar with the                           |
-|     [Rezonator](http://rezonator.com/) program that this package is |
-|     the companion tool of, I recommend going through the [toy       |
-|     example                                                         |
-| ](https://rezonators.github.io/rezonateR/articles/sample_proj.html) |
-|     `vignette("sample_proj")` first, which gives a concrete example |
-|     of a mini-research project in `rezonateR`.                      |
-|                                                                     |
-| -   If you are familiar with Rezonator but not yet with what        |
-|     `rezonateR` does, the                                           |
-|     [overview](h                                                    |
-| ttps://rezonators.%20github.io/rezonateR/articles/sample_proj.html) |
-|     `vignette("overview")` gives a bird's-eye view of how           |
-|     `rezonateR` can be useful for accompanying your Rezonator work. |
-|                                                                     |
-|     None of the content in those tutorials is strictly              |
-|     prerequisites for this one, but they help motivate why          |
-|     `rezonateR` is useful and help you decide whether `rezonateR`   |
-|     is a useful tool for you to learn. This tutorial gets into the  |
-|     nitty gritty of how to code with `rezonateR`, rather than       |
-|     discussing the big picture.                                     |
-+---------------------------------------------------------------------+
++----------------------------------------------------------------------+
+| -   If you are not very familiar with the                            |
+|     [Rezonator](http://rezonator.com/) program that this package is  |
+|     the companion tool of, I recommend going through the [toy exampl |
+|                                                                      |
+| e]                                                                   |
+| (<https://rezonators.github.io/rezonateR/articles/sample_proj.html>) |
+| `vignette("sample_proj")` first, which gives a concrete example of a |
+| mini-research project in `rezonateR`.                                |
+|                                                                      |
+| -   If you are familiar with Rezonator but not yet with what         |
+|     `rezonateR` does, the                                            |
+|     [overview](h%2%20%20%20                                          |
+| 0ttps://rezonators.%20github.io/rezonateR/articles/sample_proj.html) |
+|     `vignette("overview")` gives a bird's-eye view of how            |
+|     `rezonateR` can be useful for accompanying your Rezonator work.  |
+|                                                                      |
+|     None of the content in those tutorials is strictly prerequisites |
+|     for this one, but they help motivate why `rezonateR` is useful   |
+|     and help you decide whether `rezonateR` is a useful tool for you |
+|     to learn. This tutorial gets into the nitty gritty of how to     |
+|     code with `rezonateR`, rather than discussing the big picture.   |
++----------------------------------------------------------------------+
 
 In this tutorial, you will learn about:
 
@@ -748,4 +748,3 @@ go to the next tutorial to see how time is handled in Rezonator. If
 you're up for that, go to the [tutorial on time and
 sequence](https://rezonators.github.io/rezonateR/articles/time_seq.html)
 (`vignette("time_seq")`)!
-
