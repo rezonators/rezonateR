@@ -455,3 +455,21 @@ getLastMentionProp = function(column, chain = NULL, tokenOrder = NULL, inclRelat
   }
   result
 }
+
+#' Get the position of a chain entry (track or rez) in a chain (trail or resonance).
+#' @inheritParams lastMentionToken
+#' @return The
+#' @export
+#'
+#' @examples
+getPosInChain = function(tokenOrder = NULL, chain = NULL, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
+  grabFromDF(tokenOrder = "docTokenSeqFirst", chain = "chain", combinedChunk = "combinedChunk")
+  if(exclFrag) frag = isFrag(combinedChunk, nonFragmentMember) else frag = F
+
+  result = integer(length(chain))
+  for(currChain in unique(chain)){
+    positions = sort.int(tokenOrder[chain == currChain & !frag], index.return = T)$ix
+    result[chain == currChain & !frag][positions] = 1:sum(chain == currChain & !frag)
+  }
+  result
+}

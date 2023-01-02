@@ -17,7 +17,9 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 library(dplyr)
 ```
 
-## Research question: Choice of referential expressions in discourse
+## Research question: Referent accessibility and referential choice
+
+In this tutorial, we will be using Rezonator and `rezonateR` to address a research question using a simple sample data set: We will look at the relationship between the accessibility of a referent, i.e. the ease of cognitively 'getting at' a referent, and the choice of a linguistic expression used to refer to that form. Before elaborating on our research question, we will first introduce basic assumptions about the research topic.
 
 In language, we often refer to different entities and concepts in the world: The people around us, the places we pass through, the things we see and remember. These things are called *referents*, and when we use linguistic expressions to refer to them, those linguistic elements are called *referential expressions*.
 
@@ -190,7 +192,7 @@ During the import process, we will need to specify two types of information:
 
 -   **Which fields of a token contains text to be concatenated:** When you are browsing data frames containing data structures above the level of a token, such as `chunkDF`or`unitDF`, you want to be able to see the text. For example, take the following line:
 
-    ![Figure 14: A unit containing the chunk \*\'m also going to suggest\*](images/paste-5FB50E2C.png){width="444"}
+    ![Figure 14: A unit containing the chunk \*'m also going to suggest\*](images/paste-5FB50E2C.png){width="444"}
 
     When browsing the `unitDF`, you would want to see all the text in this unit, *(...) (H) I 'm also going to suggest ,*, in one of the columns. Similarly, when browsing `chunkDF`, you would want a column that gives you *'m also going to suggest*. Thus, we have to tell Rezonator where to look for the textual content of individual tokens so that they can be concatenated in the `rezrDF`s for higher structures like chunks and units.
 
@@ -511,6 +513,22 @@ summary(pass2_model5)
 
 This has no significant effect, unfortunately, so it does not seem that `gapWords` is a useful predictor after all.
 
+### Sequential position of tracks in trails
+
+```{r}
+rez007$trackDF$default = rez007$trackDF$default %>%
+  rez_mutate(placeInChain = getPosInChain(tokenOrder = docWordSeqLast))
+rez007$trackDF$default %>% select(id, name, text, placeInChain) %>% head
+```
+
+```{r}
+pass2_model5 = rez007$trackDF$default %>%
+  filter(gapWords != "N/A", charCount > 0) %>%
+  mutate(gapUnits = as.numeric(gapUnits)) %>%
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapWordsNew + placeInChain, .)
+summary(pass2_model5)
+```
+
 Now that we have explored the `EasyTrack` family of functions a little bit, let us explore the other options in `rezonateR` that allow us to extract other types of predictors.
 
 ## Pass 3: Full analysis of predictors of orthographic length in our dataset
@@ -634,6 +652,8 @@ rez007$trackDF$default = rez007$trackDF$default %>%
 rez007$trackDF$default = rez007$trackDF$default %>%
     rez_mutate(noCompetitors = countCompetitors(windowSize = 10, between = F,
                                                 exclFrag = T))
+rez007$trackDF$default = rez007$trackDF$default %>%
+  rez_mutate(placeInChain = getPosInChain(tokenOrder = docWordSeqLast, exclFrag = T))
 ```
 
 Now with the corrected data, let's try to refit the linear model:
@@ -641,11 +661,11 @@ Now with the corrected data, let's try to refit the linear model:
 ```{r}
 pass3_model1 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew, .)
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + placeInChain, .)
 summary(pass3_model1)
 ```
 
-This time, `noCompetitors` is no longer a good predictor. The coefficient of `gapUnitsNew` is still in the 'wrong' direction, since a larger `gapUnitsNew` still leads to a smaller referential expression, but the effect is not significant any more. On the other hand, the predictor `noPrevMentionsin10` remains significant and in the expected direction: The more the number of previous mentions, the shorter the form.
+This time, `noCompetitors` is no longer a good predictor. The coefficient of `gapUnitsNew` is still in the 'wrong' direction, since a larger `gapUnitsNew` still leads to a smaller referential expression, but the effect is not significant any more. The predictor `noPrevMentionsin10` is also insignificant even though the estimate is in the expected direction: The more the number of previous mentions, the shorter the form. The predictor `placeInChain` is remains significant and in the expected direction - the farther along in the chain, the shorter the form - though the p-value has increased somewhat.
 
 Is there any way we can improve on this model a little more? Let's consider the cases with small `gapUnits` but large character counts again. It turns out that many of them are **predicates** of copular clauses, like the following example, which has the very long expression *what I'm gonna tell him* coreferential to the subject *that*:
 
@@ -688,11 +708,11 @@ Now let's see what `Relation` turns up if we put it in the linear model:
 ```{r}
 pass3_model2 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + Relation, .)
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + placeInChain + Relation, .)
 summary(pass3_model2)
 ```
 
-As we can see, subjects are likely to be far shorter than non-subjects. The effects of the other factors are almost gone in this model, except `noPrevMentionsIn10`, which remains marginally significant.
+As we can see, subjects are likely to be far shorter than non-subjects. The effects of the other factors are almost gone in this model, except `placeInChain`, which remains marginally significant.
 
 ### Adding the effect of predicatehood
 
@@ -745,7 +765,7 @@ So let's add `isPredOrFree` to the model to see if it works as a predictor:
 ```{r}
 pass3_model2 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + Relation + isPredOrFree, .)
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + placeInChain + Relation + isPredOrFree, .)
 summary(pass3_model2)
 ```
 
@@ -753,7 +773,7 @@ Unfortunately, `isPredOrFree` does not turn out to be a significant predictor, a
 
 ### Splitting up `noPrevSubjMentions`
 
-Let's see if we can improve upon the model in any more ways. The first thing we could do is to split up `noPrevMentionsIn10`. It is often proposed in the literature that subjects are more accessible than other types of arguments, and when the previous mention is a subject, the expression will subsequently be more accessible as well (e.g. Arnold 2008). So we could split up previous mentions into previous subjects and previous non-subjects to see whether they have different effects.
+Let's see if we can improve upon the model in any more ways. The first thing we could do is to split up `noPrevMentionsIn10` to see if it performs better that way. It is often proposed in the literature that subjects are more accessible than other types of arguments, and when the previous mention is a subject, the expression will subsequently be more accessible as well (e.g. Arnold 2008). So we could split up previous mentions into previous subjects and previous non-subjects to see whether they have different effects.
 
 The function `countPrevMentionsIf()` counts the number of times that a referent was mentioned previously in a specified window of units, along with the `TidyRez` function `rez_mutate()` (note that for non-subjects, we allow `Relation` to be `NA`):
 
@@ -769,11 +789,11 @@ Now that we've added these values to the table, we can rerun the linear model, b
 ```{r}
 pass3_model2 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + Relation + isPredOrFree, .)
+  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + placeInChain + Relation + isPredOrFree, .)
 summary(pass3_model2)
 ```
 
-As we can now see, non-subject previous mentions have no effect on referential expression length at all, although the effect for subject previous mentions nears significance, and the estimate is in the expected direction (the more previous mentions, the shorter the form).
+Unfortunately, splitting up `noPrevSubjMentions` does not help much.
 
 ### Adding information about number
 
@@ -865,15 +885,15 @@ Singulars seem to be more concentrated towards the smaller character counts, but
 ```{r}
 pass3_model3 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + number + Relation + isPredOrFree, .)
+  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + placeInChain + number + Relation + isPredOrFree, .)
 summary(pass3_model3)
 ```
 
-Whether the current mention is a subject continues to turn out to be a good predictor, and the number of previous subject mentions is marginally significant. The rest of the predictors are not significant, though some of them (particularly the number of competitors and lookback distance i.e. `gapUnits`) may hold some promise on a larger dataset. Grammatical number seems to be hopeless, and probably not worth pursuing.
+Whether the current mention is a subject continues to turn out to be a good predictor, and the place in the chain is close to significance. The rest of the predictors are not significant, though some of them (particularly lookback distance, i.e. `gapUnits`) may hold some promise on a larger dataset. Grammatical number seems to be hopeless, and probably not worth pursuing.
 
 ## A post-mortem: Where did all the effects go?
 
-It may be disappointing that only two predictors, number of previous subject mentions and the subject/non-subject contrast, were significant. Even though we know from previous studies that previous mentions are generally important in determining the choice of referential form, only the number of preceding subject mentions turned out to be significant, and even then only marginally.
+It may be disappointing that only two predictors, the place in the chain and the subject/non-subject contrast, were significant or close to significance. Even though we know from previous studies that previous mentions are generally important in determining the choice of referential form, only the number of preceding subject mentions turned out to be significant, and even then only marginally.
 
 Of course, our power is very small because of the tiny sample size, and we have only been studying a small portion of a single text, which may have unusual properties. So what might those unusual properties be? Let's explore the data a little more to find out.
 
@@ -914,24 +934,24 @@ Zeldes, Amir. 2022. Can we fix the scope for coreference?: problems and solution
 
 van Deemter, Kees & Rodger Kibble. 2000. On coreferring: Coreference in MUC and related annotation schemes. *Computational linguistics*. 26(4). 629--637.
 
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Further reading                                                                                                                                                                                                                                                                                                                                                                           |
-+===========================================================================================================================================================================================================================================================================================================================================================================================+
-| Ariel, Mira. 1994. Interpreting anaphoric expressions: A cognitive versus a pragmatic approach. *Journal of Linguistics*. 30(1). 3--42.                                                                                                                                                                                                                                                   |
-|                                                                                                                                                                                                                                                                                                                                                                                           |
-| Almor, Amit, Jefferson de Carvalho Maia, Maria Luiza Cunha Lima, Mirta Vernice & Carlos Gelormini-Lezama. 2017. Language processing, acceptability, and statistical distribution: A study of null and overt subjects in Brazilian Portuguese. *Journal of Memory and Language* 92. 98--113. <https://doi.org/10.1016/j.jml.2016.06.001.>                                                  |
-|                                                                                                                                                                                                                                                                                                                                                                                           |
-| Arnold, Jennifer E. 2010. How speakers refer: The role of accessibility. *Language and Linguistics Compass* 4(4). 187--203.                                                                                                                                                                                                                                                               |
-|                                                                                                                                                                                                                                                                                                                                                                                           |
-| Brennan, Susan E. 1995. Centering attention in discourse. *Language and Cognitive Processes* 10(2). 137--167. <https://doi.org/10.1080/01690969508407091.>                                                                                                                                                                                                                                |
-|                                                                                                                                                                                                                                                                                                                                                                                           |
-| Chen, Guanyi, Fahime Same & Kees van Deemter. 2023. Neural referential form selection: Generalisability and interpretability. Computer Speech & Language 79. 101466. <https://doi.org/10.1016/j.csl.2022.101466.>                                                                                                                                                                         |
-|                                                                                                                                                                                                                                                                                                                                                                                           |
-| Gordon, Peter C., Barbara J. Grosz & Laura A. Gilliom. 1993. Pronouns, names, and the centering of attention in discourse. *Cognitive Science* 17(3). 311--347.                                                                                                                                                                                                                           |
-|                                                                                                                                                                                                                                                                                                                                                                                           |
-| Gundel, Jeanette K., Nancy Hedberg & Ron Zacharski. 1993. Cognitive status and the form of referring expressions in discourse. *Language.* 274--307.                                                                                                                                                                                                                                      |
-|                                                                                                                                                                                                                                                                                                                                                                                           |
-| Kibrik, Andrej A., Mariya V. Khudyakova, Grigory B. Dobrov, Anastasia Linnik & Dmitrij A. Zalmanov. 2016. Referential Choice: Predictability and Its Limits. *Frontiers in Psychology*. Frontiers 7. <https://doi.org/10.3389/fpsyg.2016.01429>.                                                                                                                                          |
-|                                                                                                                                                                                                                                                                                                                                                                                           |
-| Same, Fahime & Kees van Deemter. 2020. A Linguistic Perspective on Reference: Choosing a Feature Set for Generating Referring Expressions in Context. In Proceedings of the 28th International Conference on Computational Linguistics, 4575--4586. Barcelona, Spain (Online): International Committee on Computational Linguistics. <https://doi.org/10.18653/v1/2020.coling-main.403.>  |
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Further reading                                                                                                                                                                                                                                                                                                                                                                          |
++==========================================================================================================================================================================================================================================================================================================================================================================================+
+| Ariel, Mira. 1994. Interpreting anaphoric expressions: A cognitive versus a pragmatic approach. *Journal of Linguistics*. 30(1). 3--42.                                                                                                                                                                                                                                                  |
+|                                                                                                                                                                                                                                                                                                                                                                                          |
+| Almor, Amit, Jefferson de Carvalho Maia, Maria Luiza Cunha Lima, Mirta Vernice & Carlos Gelormini-Lezama. 2017. Language processing, acceptability, and statistical distribution: A study of null and overt subjects in Brazilian Portuguese. *Journal of Memory and Language* 92. 98--113. <https://doi.org/10.1016/j.jml.2016.06.001.>                                                 |
+|                                                                                                                                                                                                                                                                                                                                                                                          |
+| Arnold, Jennifer E. 2010. How speakers refer: The role of accessibility. *Language and Linguistics Compass* 4(4). 187--203.                                                                                                                                                                                                                                                              |
+|                                                                                                                                                                                                                                                                                                                                                                                          |
+| Brennan, Susan E. 1995. Centering attention in discourse. *Language and Cognitive Processes* 10(2). 137--167. <https://doi.org/10.1080/01690969508407091.>                                                                                                                                                                                                                               |
+|                                                                                                                                                                                                                                                                                                                                                                                          |
+| Chen, Guanyi, Fahime Same & Kees van Deemter. 2023. Neural referential form selection: Generalisability and interpretability. Computer Speech & Language 79. 101466. <https://doi.org/10.1016/j.csl.2022.101466.>                                                                                                                                                                        |
+|                                                                                                                                                                                                                                                                                                                                                                                          |
+| Gordon, Peter C., Barbara J. Grosz & Laura A. Gilliom. 1993. Pronouns, names, and the centering of attention in discourse. *Cognitive Science* 17(3). 311--347.                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                                                                                                                                          |
+| Gundel, Jeanette K., Nancy Hedberg & Ron Zacharski. 1993. Cognitive status and the form of referring expressions in discourse. *Language.* 274--307.                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                                                                                                                                          |
+| Kibrik, Andrej A., Mariya V. Khudyakova, Grigory B. Dobrov, Anastasia Linnik & Dmitrij A. Zalmanov. 2016. Referential Choice: Predictability and Its Limits. *Frontiers in Psychology*. Frontiers 7. <https://doi.org/10.3389/fpsyg.2016.01429>.                                                                                                                                         |
+|                                                                                                                                                                                                                                                                                                                                                                                          |
+| Same, Fahime & Kees van Deemter. 2020. A Linguistic Perspective on Reference: Choosing a Feature Set for Generating Referring Expressions in Context. In Proceedings of the 28th International Conference on Computational Linguistics, 4575--4586. Barcelona, Spain (Online): International Committee on Computational Linguistics. <https://doi.org/10.18653/v1/2020.coling-main.403.> |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
