@@ -97,7 +97,7 @@ We will be building a model that predicts the `charCount` from several predictor
 -   `noPrevNonSubjMentionsIn10`: The number of coreferent non-subject mentions within the 10 previous intonation units. That is, how many times was the referent of a form mentioned in the 10 previous intonation units, outside of subject position?
 -   `gapUnits`: How many intonation units are there between the previous mention and the current one?
 -   `noCompetitors`: The number of competitors within the ten previous intonation units. That is, how many times were entities other than the referent of the current referential expression mentioned within the ten previous intonation units?
--   `orderInTrail`: The position of a mention in its coreference chain. That is, is it the first mention of somunething, or the second, third, etc.?
+-   `seqInTrail`: The position of a mention in its coreference chain. That is, is it the first mention of something, or the second, third, etc.?
 -   `Relation`: Is the current referential expression a subject?
 -   `isPredOrFree`: Is the current mention either a nominal predicate (copula complement) or not tied to a particular clause?
 -   `number`: Is the current referential expression singular or plural?
@@ -197,7 +197,7 @@ During the import process, we will need to specify two types of information:
 
 -   **Which fields of a token contains text to be concatenated:** When you are browsing data frames containing data structures above the level of a token, such as `chunkDF`or`unitDF`, you want to be able to see the text. For example, take the following line:
 
-    ![Figure 16: A unit containing the chunk \*\'m also going to suggest\*](images/paste-5FB50E2C.png){width="444"}
+    ![Figure 16: A unit containing the chunk \*'m also going to suggest\*](images/paste-5FB50E2C.png){width="444"}
 
     When browsing the `unitDF`, you would want to see all the text in this unit, *(...) (H) I 'm also going to suggest ,*, in one of the columns. Similarly, when browsing `chunkDF`, you would want a column that gives you *'m also going to suggest*. Thus, we have to tell Rezonator where to look for the textual content of individual tokens so that they can be concatenated in the `rezrDF`s for higher structures like chunks and units.
 
@@ -271,7 +271,7 @@ What if we want a version of fields like `tokenOrder` and `docTokenSeq` that exc
 rez007 = addIsWordField(rez007, kind == "Word")
 ```
 
-This adds the fields `wordOrder` and `docWordSeq` to `tokenDF` (and also its counterparts in places like `chunkDF` and `unitDF`, e.g. `wordOrderFirst`, `wordOrderLast`, `docWordSeqFirst`, `docWordSeqLast`). These are counterparts of the `token`-related fields we have seen above, except that these new fields discount non-real words, which get the value `0`. Here's an example in `tokenDF`:
+This function adds a a column to the `tokenDF` that states whether a token is a word, and in addition, it adds the fields `wordOrder` and `docWordSeq` to `tokenDF` (and also its counterparts in places like `chunkDF` and `unitDF`, e.g. `wordOrderFirst`, `wordOrderLast`, `docWordSeqFirst`, `docWordSeqLast`). These are counterparts of the `token`-related fields we have seen above, except that these new fields discount non-real words, which get the value `0`. Here's an example in `tokenDF`:
 
 ```{r}
 head(rez007$tokenDF %>% select(id, text, tokenOrder, docTokenSeq, wordOrder, docWordSeq))
@@ -316,7 +316,7 @@ rez007$trackDF$default %>%
 
 Clearly, we can see that first mentions have a much higher tendency to be referred to using a noun phrase that has more characters. In fact, non-first mentions are highly concentrated at the bottom of the graph with the shortest referential expressions, whereas first mentions are well spread out across the range of lengths.
 
-Among the non-first mentions, can we also predict the character count from `gapUnits`? Let's again do a quick visualisation, excluding first mentions. In the following plot, the the y-axis is gives the character count, the x-axis the gapUnits, and the size of the dots in the graph indicates the number of referential expressions with that combination of `charCount` and `gapUnits`:
+Among the non-first mentions, can we also predict the character count from `gapUnits`? Let's again do a quick visualisation, excluding first mentions. In the following plot, the the y-axis is gives the character count, the x-axis the `gapUnits`, and the size of the dots in the graph indicates the number of referential expressions with that combination of `charCount` and `gapUnits`:
 
 ```{r}
 rez007$trackDF$default %>%
@@ -524,8 +524,8 @@ A final variable we could add to the model is the sequential position of a track
 
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
-  rez_mutate(orderInTrail = getPosInChain(tokenOrder = docWordSeqLast))
-rez007$trackDF$default %>% select(id, name, text, orderInTrail) %>% head
+  rez_mutate(seqInTrail = getPosInChain(tokenOrder = docWordSeqLast))
+rez007$trackDF$default %>% select(id, name, text, seqInTrail) %>% head
 ```
 
 Now we can plot the character count against this value in a graph:
@@ -533,20 +533,20 @@ Now we can plot the character count against this value in a graph:
 ```{r}
 rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
-  ggplot(aes(x = orderInTrail, y = charCount)) + geom_count()
+  ggplot(aes(x = seqInTrail, y = charCount)) + geom_count()
 ```
 
-It does seem that larger character counts are much rare as the `orderInTrail` value gets larger. Let's put the variable inside our model and see what happens:
+It does seem that larger character counts are much rare as the `seqInTrail` value gets larger. Let's put the variable inside our model and see what happens:
 
 ```{r}
 pass2_model5 = rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
   mutate(gapUnits = as.numeric(gapUnits)) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapWordsNew + orderInTrail, .)
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapWordsNew + seqInTrail, .)
 summary(pass2_model5)
 ```
 
-It turns out that `orderInTrail` is a significant variable, and in the expected direction: The farther along we are in a trail, the shorter the form of the referential expression.
+It turns out that `seqInTrail` is a significant variable, and in the expected direction: The farther along we are in a trail, the shorter the form of the referential expression.
 
 Now that we have explored the `EasyTrack` family of functions a little bit, let us explore the other options in `rezonateR` that allow us to extract other types of predictors.
 
@@ -672,7 +672,7 @@ rez007$trackDF$default = rez007$trackDF$default %>%
     rez_mutate(noCompetitors = countCompetitors(windowSize = 10, between = F,
                                                 exclFrag = T))
 rez007$trackDF$default = rez007$trackDF$default %>%
-  rez_mutate(orderInTrail = getPosInChain(tokenOrder = docWordSeqLast, exclFrag = T))
+  rez_mutate(seqInTrail = getPosInChain(tokenOrder = docWordSeqLast, exclFrag = T))
 ```
 
 Now with the corrected data, let's try to refit the linear model:
@@ -680,11 +680,11 @@ Now with the corrected data, let's try to refit the linear model:
 ```{r}
 pass3_model1 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + orderInTrail, .)
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + seqInTrail, .)
 summary(pass3_model1)
 ```
 
-This time, `noCompetitors` is no longer a good predictor, although still close to significance. The coefficient of `gapUnitsNew` is still in the 'wrong' direction, since a larger `gapUnitsNew` still leads to a smaller referential expression, but the effect is not significant any more. The predictor `noPrevMentionsin10` is also insignificant even though the estimate is in the expected direction: The more the number of previous mentions, the shorter the form. The predictor `orderInTrail` is remains significant and in the expected direction - the farther along in the chain, the shorter the form - though the p-value has increased somewhat.
+This time, `noCompetitors` is no longer a good predictor, although still close to significance. The coefficient of `gapUnitsNew` is still in the 'wrong' direction, since a larger `gapUnitsNew` still leads to a smaller referential expression, but the effect is not significant any more. The predictor `noPrevMentionsin10` is also insignificant even though the estimate is in the expected direction: The more the number of previous mentions, the shorter the form. The predictor `seqInTrail` is remains significant and in the expected direction - the farther along in the chain, the shorter the form - though the p-value has increased somewhat.
 
 Is there any way we can improve on this model a little more? Let's consider the cases with small `gapUnits` but large character counts again. It turns out that many of them are **predicates** of copular clauses, like the following example, which has the very long expression *what I'm gonna tell him* coreferential to the subject *that*:
 
@@ -727,11 +727,11 @@ Now let's see what `Relation` turns up if we put it in the linear model:
 ```{r}
 pass3_model2 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + orderInTrail + Relation, .)
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + seqInTrail + Relation, .)
 summary(pass3_model2)
 ```
 
-As we can see, subjects are likely to be far shorter than non-subjects. The effects of the other factors are almost gone in this model, except `orderInTrail`, which remains significant.
+As we can see, subjects are likely to be far shorter than non-subjects. The effects of the other factors are almost gone in this model, except `seqInTrail`, which remains significant.
 
 ### Adding the effect of predicatehood
 
@@ -784,7 +784,7 @@ So let's add `isPredOrFree` to the model to see if it works as a predictor:
 ```{r}
 pass3_model2 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + orderInTrail + Relation + isPredOrFree, .)
+  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + seqInTrail + Relation + isPredOrFree, .)
 summary(pass3_model2)
 ```
 
@@ -808,7 +808,7 @@ Now that we've added these values to the table, we can rerun the linear model, b
 ```{r}
 pass3_model2 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + orderInTrail + Relation + isPredOrFree, .)
+  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + seqInTrail + Relation + isPredOrFree, .)
 summary(pass3_model2)
 ```
 
@@ -904,15 +904,15 @@ Singulars seem to be more concentrated towards the smaller character counts, but
 ```{r}
 pass3_model3 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + orderInTrail + number + Relation + isPredOrFree, .)
+  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + seqInTrail + number + Relation + isPredOrFree, .)
 summary(pass3_model3)
 ```
 
-Whether the current mention is a subject continues to turn out to be a good predictor, as does the order of a mention in the trail. The rest of the predictors are not significant, though some of them (particularly lookback distance, i.e. `gapUnits`) may hold some promise on a larger dataset. Grammatical number seems to be hopeless, and probably not worth pursuing.
+Whether the current mention is a subject continues to turn out to be a good predictor, as does the sequence of a mention in the trail. The rest of the predictors are not significant, though some of them (particularly lookback distance, i.e. `gapUnits`) may hold some promise on a larger dataset. Grammatical number seems to be hopeless, and probably not worth pursuing.
 
 ## A post-mortem: Where did all the effects go?
 
-It may be disappointing that only two predictors, the order of a track in the trail and the subject/non-subject contrast, were significant. Even though we know from previous studies that previous mentions are generally important in determining the choice of referential form, only the order of a track in the trail turned out to be significant, and other context-related variables did not.
+It may be disappointing that only two predictors, the sequence of a track in the trail and the subject/non-subject contrast, were significant. Even though we know from previous studies that previous mentions are generally important in determining the choice of referential form, only the order of a track in the trail turned out to be significant, and other context-related variables did not.
 
 Of course, our power is very small because of the tiny sample size, and we have only been studying a small portion of a single text, which may have unusual properties. So what might those unusual properties be? Let's explore the data a little more to find out.
 
@@ -937,7 +937,7 @@ The fact that 'Tim' (and in fact many other names in this text, like Ron and Mar
 
 ## Conclusion
 
-In this tutorial, we have explored the topic of referential accessibility and referential choice using a small snippet of natural conversation. We derived a number of predictors hypothesised to be associated with higher accessibility, and explored their relationship with the length of referential expressions. We have seen that there is a large discrepancy between subjects and non-subjects - subjects tend to be much shorter than non-subjects - as well as an effect of position in the coreference chain - that is, the more times a referent has been mentioned before, the shorter the form used to refer to it. We have also discussed why other factors do not seem to have much of an effect in our small sample.
+In this tutorial, we have explored the topic of referent accessibility and referential choice using a small snippet of natural conversation. We derived a number of predictors hypothesised to be associated with higher accessibility, and explored their relationship with the length of referential expressions. We have seen that there is a large discrepancy between subjects and non-subjects - subjects tend to be much shorter than non-subjects - as well as an effect of position in the coreference chain - that is, the more times a referent has been mentioned before, the shorter the form used to refer to it. We have also discussed why other factors do not seem to have much of an effect in our small sample.
 
 In the process, we have explored many of the major features of `rezonateR`. We have explored the structure of a Rezonator file, and imported a file into `rezonateR`. We have explored the various ways that the sequence and order of entities in discourse are represented in `rezonateR`. We have explored the use of functions for deriving predictors related to the context preceding a referential expression, such as the number of previous mentions, the number of competitors, and the sequential position of an entity in a chain. We have seen how to merge chunks spanning multiple units in Rezonator and add information from trees in Rezonator. We have also done some automatic annotation in `rezonateR`, exported a table containing those automatic annotations, did some manual corrections in a spreadsheet, and imported the results back into `rezonateR`. Throughout this process, we used a number of functions from different parts of `rezonateR`, and applied it to a real research question.
 
