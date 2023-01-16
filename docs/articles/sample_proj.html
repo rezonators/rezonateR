@@ -104,10 +104,10 @@ referential expressions:</p>
 <img src="images/paste-9B4A5FCB.png" width="648" alt=""><p class="caption">Figure 1: A short excerpt of a conversation with
 several referential expressions</p>
 </div>
-<p>There are several examples of referential expressions in this
-snippet. For example, in the first line in the screenshot (line 361),
-Mary refers to a cattle guard with the phrase <em>the first cattle guard
-you go over</em>. She refers back to it in line 363 using the expression
+<p>There are several examples of referential expressions in Figure 1.
+For example, in the first line in the screenshot (line 361), Mary refers
+to a cattle guard with the phrase <em>the first cattle guard you go
+over</em>. She refers back to it in line 363 using the expression
 <em>that</em>. In the same line 363, she also uses the expression
 <em>I</em> to refer to herself. Alice’s reply mentions a new referent,
 <em>the tunnel</em> (366). All of these phrases refer to people or
@@ -121,11 +121,11 @@ the discourse. The relationship between two referential expressions with
 the same referent in a text is called <em>coreference</em>. Each
 referential expression may be referred to as a <em>mention</em> of a
 certain referent.</p>
-<p>In the following image, we have marked up the two expressions
-referring to the cattle guard with green rectangles, and drawn a line
-between them, showing the coreference relation. The resulting structure,
-with lines linking up different referential expressions, is often
-referred to as a <em>coreference chain</em>:</p>
+<p>In the following image (Figure 2), we have marked up the two
+expressions referring to the cattle guard with green rectangles, and
+drawn a line between them, showing the coreference relation. The
+resulting structure, with lines linking up different referential
+expressions, is often referred to as a <em>coreference chain</em>:</p>
 <div class="figure">
 <img src="images/paste-5875E3E1.png" width="590" alt=""><p class="caption">Figure 2: Coreference chain containing two mentions
 of the first cattle guard</p>
@@ -139,9 +139,10 @@ relation:</p>
 <img src="images/paste-0904E75C.png" width="347" alt=""><p class="caption">Figure 3: Coreference chain containing two mentions
 of the tunnel</p>
 </div>
-<p>Here is how the whole excerpt we have shown at the beginning would
-look like with all the coreference chains marked (including the first,
-truncated referential expression <em>the</em> in line 365):</p>
+<p>The next figure shows how the whole excerpt we have shown at the
+beginning would look like with all the coreference chains marked
+(including the first, truncated referential expression <em>the</em> in
+line 365):</p>
 <div class="figure">
 <img src="images/paste-4C24C25A.png" width="619" alt=""><p class="caption">Figure 4: A version of Figure 1 with all the
 referential expressions marked.</p>
@@ -194,11 +195,11 @@ of purple:</p>
 <img src="images/paste-F7704C5B.png" width="660" alt=""><p class="caption">Figure 6: A separate chain for the two instances of
 they with a different referent</p>
 </div>
-<p>The fact that the roommates were referred to by the short and simple
-one-word expression <em>they</em> probably suggests that they were quite
-prominent in context. Indeed, in the context preceding these two lines,
-they have been mentioned numerous times, and were the main topic of
-discussion.</p>
+<p>In Figure 6, the fact that the roommates were referred to by the
+short and simple one-word expression <em>they</em> probably suggests
+that they were quite prominent in context. Indeed, in the context
+preceding these two lines, they have been mentioned numerous times, and
+were the main topic of discussion.</p>
 <p>So far, we have talked about notions like accessibility and
 prominence in rather vague and general terms. But what exactly makes
 something more accessible, and therefore more likely to be referred to
@@ -227,11 +228,12 @@ simplified project, what type of analysis may be conducted using
 Rezonator and <code>rezonateR</code>. This particular example will
 examine the choice of referential forms in spoken dialogue: What factors
 lead to the choice of a longer form versus a shorter one? The following
-snippet of conversation, for example, has two referential expressions
-referring to the same entity - a dog - but the first one is a rather
-long noun phrase (<em>this darn dog</em>) while the second is a simple,
-one-word pronoun (<em>her</em>). Can we tell what factors are at play
-here that motivated the speaker’s choice of referential expression?</p>
+snippet of conversation (Figure 7), for example, has two referential
+expressions referring to the same entity - a dog - but the first one is
+a rather long noun phrase (<em>this darn dog</em>) while the second is a
+simple, one-word pronoun (<em>her</em>). Can we tell what factors are at
+play here that motivated the speaker’s choice of referential
+expression?</p>
 <div class="figure">
 <img src="images/paste-CF41A72C.png" width="577" alt=""><p class="caption">Figure 7: Coreference chain containing two mentions
 of a dog</p>
@@ -368,10 +370,10 @@ structure of similar length, we can set the Rezonator unit to those
 structures instead.</p>
 <p>Each unit consists of a series of tokens separated by spaces. In this
 file, most of the tokens are English words, like <em>usually</em>,
-<em>I</em> and <em>do</em> in line 7 of the screenshot. Also considered
-tokens are contractions like <em>’nt</em> for <em>not</em> on lines 7
-and 9 or <em>’s</em> for <em>is</em> on lines 10 and 12, which are
-considered separate tokens in this project even though they are not
+<em>I</em> and <em>do</em> in line 7 of the screenshot in Figure 8. Also
+considered tokens are contractions like <em>’nt</em> for <em>not</em> on
+lines 7 and 9 or <em>’s</em> for <em>is</em> on lines 10 and 12, which
+are considered separate tokens in this project even though they are not
 separated by whitespace from the previous token in English writing
 conventions.</p>
 <p>However, there are also other elements that are considered tokens.
@@ -404,9 +406,9 @@ tutorial. Here is another example:</p>
 <div class="figure">
 <img src="img/sample_track.PNG" style="width:100.0%" alt=""><p class="caption">Figure 9: Coreference chain for the referent Tim</p>
 </div>
-<p>Here, the proper name <em>Tim</em> and three instances of the pronoun
-<em>he</em> all refer to the same person, Tim, and hence are four
-<em>tracks</em> of the same purple <em>trail</em>.</p>
+<p>In Figure 9, the proper name <em>Tim</em> and three instances of the
+pronoun <em>he</em> all refer to the same person, Tim, and hence are
+four <em>tracks</em> of the same purple <em>trail</em>.</p>
 </div>
 <div class="section level4">
 <h4 id="zeroes">Zeroes<a class="anchor" aria-label="anchor" href="#zeroes"></a>
@@ -424,19 +426,19 @@ expressions are placed in the same purple trail as a zero:</p>
 <img src="images/paste-11E68D36.png" width="604" alt=""><p class="caption">Figure 10: Coreference chain for the referent Mary,
 including two first-person pronouns and a zero</p>
 </div>
-<p>Notice that the two occurrences of <em>I</em> on Line 2 are linked
-together with a purple link. In the third line, the person who is
-implied to be staying up late is Mary herself, even though there is no
-explicit mention. Thus, a zero was inserted before <em>stay</em>, and
-added to the same trail as the two occurrences of <em>I</em>.</p>
-<p>The zero in line 4 does not refer back to <em>I</em>, but to the
-action of staying up late. Thus, it is not in the same chain, as
-indicated by the lack of a purple border around it (even though the fact
-that the purple line runs through the &lt;0&gt; might lead one to
-mistakenly believe that it belongs to the same chain). In fact, the
-&lt;0&gt; on line 4 belongs to the same chain as <em>this</em> on line 2
-and <em>stay up late</em> on line 3, both of which refer to the action
-of staying up late:</p>
+<p>Notice that the two occurrences of <em>I</em> on Line 2 in Figure 10
+are linked together with a purple link. In the third line, the person
+who is implied to be staying up late is Mary herself, even though there
+is no explicit mention. Thus, a zero was inserted before <em>stay</em>,
+and added to the same trail as the two occurrences of <em>I</em>.</p>
+<p>In Figure 10, the zero in line 4 does not refer back to <em>I</em>,
+but to the action of staying up late. Thus, it is not in the same chain,
+as indicated by the lack of a purple border around it (even though the
+fact that the purple line runs through the &lt;0&gt; might lead one to
+mistakenly believe that it belongs to the same chain). In fact, as shown
+in Figure 11, the &lt;0&gt; on line 4 belongs to the same chain as
+<em>this</em> on line 2 and <em>stay up late</em> on line 3, both of
+which refer to the action of staying up late:</p>
 <div class="figure">
 <img src="images/paste-3973BFDF.png" width="614" alt=""><p class="caption">Figure 11: Coreference chain for the action of
 staying up late, including a demonstrative pronoun, the phrase <em>stay
@@ -459,32 +461,24 @@ rest of the trail that they belong to:</p>
 staying up late</p>
 </div>
 <p>In the file we are working with, chunks corresponding to tracks are
-mostly referential expressions like pronouns and noun phrases. We
-include predicates and clauses when there are referential expressions
-that co-refer with them; for example, <em>this</em> and <em>stay up
-late</em> both refer to the action of staying up late here.</p>
+mostly referential expressions like pronouns and noun phrases. As is
+visible in Figure 12, we include predicates and clauses when there are
+referential expressions that co-refer with them; for example,
+<em>this</em> and <em>stay up late</em> both refer to the action of
+staying up late here.</p>
 <p>The second type of chunks is called ‘blank chunks’. These chunks do
 not belong to any trail and appear with grey rectangular borders with
 angled corners around them. In this file, verbal complexes are marked as
 blank chunks. The following figure shows some examples of these verbal
-chunks</p>
+chunks:</p>
 <div class="figure">
-<img src="img/sample_verbs.PNG" style="width:100.0%" alt=""><p class="caption">Figure 13: Some examples of ‘blank chunks’,
+<img src="images/paste-18EEFFB5.png" width="666" alt=""><p class="caption">Figure 13: Some examples of ‘blank chunks’,
 indicating verbal complexes</p>
 </div>
-<p>In this example, auxiliaries, negation and similar elements
-expressing verbal categories are placed inside these verbal complexes,
-such as <em>wasn’t gonna</em> in <em>wasn’t gonna do</em>. The particle
-<em>up</em> is not placed inside the verbal complex because particles in
-particle verbs can be separated from verbs by the object of the clause.
-Consider the following example:</p>
-<div class="figure">
-<img src="images/paste-5DE5A9C5.png" width="430" alt=""><p class="caption">Figure 14: An example of a particle verb where the
-particle is separated from the verb by an object</p>
-</div>
-<p>Although <em>stay up</em> is intransitive and therefore cannot be
-separated, we still exclude <em>up</em> from the verbal complex to
-maintain consistency between particle verbs.</p>
+<p>In this example (Figure 13), auxiliaries, negation and similar
+elements expressing verbal categories are placed inside these verbal
+complexes, such as <em>wasn’t gonna</em> in <em>wasn’t gonna
+do</em>.</p>
 <p>Chunks have been tagged for two properties inside Rezonator. The
 field <code>chunkType</code> is annotated as <code>verb</code> for verbs
 and left blank for referential expressions, allowing us to distinguish
@@ -493,10 +487,10 @@ field <code>largerChunk</code> is the larger chunk to which a chunk
 belongs, which will be discussed later. These two columns are shown in
 the navigation pane of Rezonator as follows:</p>
 <div class="figure">
-<img src="images/paste-F4175735.png" alt=""><p class="caption">Figure 15: The navigation pane showing two chunk
+<img src="images/paste-F4175735.png" alt=""><p class="caption">Figure 14: The navigation pane showing two chunk
 properties, <code>chunkType</code> and <code>largerChunk</code></p>
 </div>
-<p>In this image, <em>said</em> and <em>wasn’t gonna do</em> are verbal
+<p>In Figure 14, <em>said</em> and <em>wasn’t gonna do</em> are verbal
 complexes and hence tagged as <em>verb</em> under
 <code>chunkType</code>, the first column on the right side of Figure 15
 (without grey shading). The other expressions have blank values,
@@ -569,7 +563,7 @@ structures above the level of a token, such as
 <code>chunkDF</code>or<code>unitDF</code>, you want to be able to see
 the text. For example, take the following line:</p>
 <div class="figure">
-<img src="images/paste-5FB50E2C.png" width="444" alt=""><p class="caption">Figure 16: A unit containing the chunk *’m also going
+<img src="images/paste-5FB50E2C.png" width="444" alt=""><p class="caption">Figure 15: A unit containing the chunk *’m also going
 to suggest*</p>
 </div>
 <p>When browsing the <code>unitDF</code>, you would want to see all the
@@ -755,7 +749,7 @@ In the Santa Barbara Corpus text we are using, there are various types
 of non-word tokens that these values will count. For example, in the
 following screenshot:</p>
 <div class="figure">
-<img src="img/sample_convo.PNG" alt="Figure 7: Units and tokens." style="width:74.0%"><p class="caption">Figure 17: Units and tokens.</p>
+<img src="img/sample_convo.PNG" alt="Figure 7: Units and tokens." style="width:74.0%"><p class="caption">Figure 16: Units and tokens.</p>
 </div>
 <p>Values like <code>doctokenSeq</code> include in their counting
 various tokens that are not exactly words. This includes endnotes (such
@@ -851,7 +845,7 @@ nonnegative integer.</p>
 <p>As an example, let’s look the trail for staying up late at the
 beginning of the conversation again:</p>
 <div class="figure">
-<img src="images/paste-224A955C.png" width="598" alt=""><p class="caption">Figure 18: A trail containing four mentions of the
+<img src="images/paste-224A955C.png" width="598" alt=""><p class="caption">Figure 17: A trail containing four mentions of the
 action of staying up late, spanning units 2-6.</p>
 </div>
 <p>If we consider the zero on line 4, <code>gapUnits</code> is just 1,
@@ -881,7 +875,7 @@ not recognise to see their documentation.)</p>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>isFirst <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">gapUnits</span> <span class="op">==</span> <span class="st">"N/A"</span> <span class="op">~</span> <span class="st">"First"</span>,</span>
 <span>                             <span class="cn">T</span> <span class="op">~</span> <span class="st">"NonFirst"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">isFirst</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">isFirst</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="sample_proj_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>Clearly, we can see that first mentions have a much higher tendency
 to be referred to using a noun phrase that has more characters. In fact,
@@ -908,37 +902,48 @@ quite a few small-<code>gapUnits</code> phrases that are quite long.
 This seems to go against the usual expectation that a shorter lookback
 distance leads to higher accessibility and should be associated with
 shorter referential forms.</p>
+<p>The bottom left of the above diagram was a little messy; we can log
+the character count to get a better view:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapUnits</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gapUnits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">gapUnits</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gapUnits</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p>There is still a slight visible pattern whereby longer gapUnits tends
+to be associated with shorter character counts, contrary to
+expectation.</p>
 <p>In the rest of the tutorial, we will partially account for this
 weirdness (though some of it is certainly due to our small, biased
 dataset). But for now, let’s try to apply a simple linear model to this
-data to see what happens when we try to predict <code>charCount</code>
-from <code>gapUnits</code>. (Note: This is not the best model
-specification for the data we’re looking at, but let’s keep it simple
-for this tutorial.)</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+data to see what happens when we try to predict the logged
+<code>charCount</code> from <code>gapUnits</code>. (Note: This is not
+the best model specification for the data we’re looking at, but let’s
+keep it simple for this tutorial.)</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass1_model1</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapUnits</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gapUnits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">gapUnits</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">gapUnits</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">gapUnits</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass1_model1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ gapUnits, data = .)</span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ gapUnits, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
-<span><span class="co">#&gt; -5.859 -4.729 -3.729 -2.035 43.271 </span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -1.2529 -0.5447 -0.1392  0.1636  2.6742 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)   6.8588     0.8635   7.943 3.21e-13 ***</span></span>
-<span><span class="co">#&gt; gapUnits     -0.1303     0.0926  -1.407    0.161    </span></span>
+<span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)  1.252905   0.089304  14.030   &lt;2e-16 ***</span></span>
+<span><span class="co">#&gt; gapUnits    -0.015094   0.009577  -1.576    0.117    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 9.641 on 161 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.01214,    Adjusted R-squared:  0.006003 </span></span>
-<span><span class="co">#&gt; F-statistic: 1.978 on 1 and 161 DF,  p-value: 0.1615</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.9972 on 161 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.01519,    Adjusted R-squared:  0.009077 </span></span>
+<span><span class="co">#&gt; F-statistic: 2.484 on 1 and 161 DF,  p-value: 0.117</span></span></code></pre></div>
 <p>As we can see, although there is a negative coefficient that says a
 larger <code>gapUnits</code> leads to a smaller character count (as
 expected from our graph - though contrary to our usual expectations), it
@@ -949,50 +954,51 @@ is not significant.</p>
 </h3>
 <p>There is another value, <code>gapWords</code>, that is automatically
 calculated in Rezonator and calculates the number of tokens from the
-current mention to the previous one. Would this finer-grained measure do
-better than <code>gapUnits</code>? Let’s try to make the same plot that
-we just did, except with <code>gapWords</code> instead of
-<code>gapUnits</code> on the x-axis:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+current mention to the previous one. Would this finer-grained measure be
+a better operationalisation of lookback distance than
+<code>gapUnits</code>? Let’s try to make the same plot that we just did
+with logged <code>charCount</code>, except with <code>gapWords</code>
+instead of <code>gapUnits</code> on the x-axis:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gapWords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">gapWords</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gapWords</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gapWords</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 <p>The pattern is not much clearer from the diagram this time than last
 time. We still don’t see our expected effect: A shorter lookback
 distance should be associated with shorter referential expressions.
 Let’s try to put <code>gapWords</code> again into the linear regression
 model:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass1_model2</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gapWords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">gapWords</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">gapWords</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">gapWords</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass1_model2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ gapWords, data = .)</span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ gapWords, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
-<span><span class="co">#&gt; -5.824 -4.719 -3.635 -1.971 43.197 </span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -1.2447 -0.5436 -0.1370  0.1667  2.6696 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)  6.86637    0.86620   7.927 3.52e-13 ***</span></span>
-<span><span class="co">#&gt; gapWords    -0.02106    0.01498  -1.406    0.162    </span></span>
+<span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)  1.249282   0.089672  13.932   &lt;2e-16 ***</span></span>
+<span><span class="co">#&gt; gapWords    -0.002282   0.001551  -1.471    0.143    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 9.642 on 161 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.01213,    Adjusted R-squared:  0.005991 </span></span>
-<span><span class="co">#&gt; F-statistic: 1.976 on 1 and 161 DF,  p-value: 0.1617</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.9981 on 161 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.01327,    Adjusted R-squared:  0.00714 </span></span>
+<span><span class="co">#&gt; F-statistic: 2.165 on 1 and 161 DF,  p-value: 0.1431</span></span></code></pre></div>
 <p>As we can see, there is little change with the linear model either:
 The negative coefficient indicates that a shorter <code>gapWords</code>
 is associated with longer referential expressions, contrary to usual
 expectations, although the relationship is not significant, with a
-p-value around 0.2.</p>
+p-value around 0.14.</p>
 <p>There are ways we can potentially improve on these measures as well
 as other predictors of character count that we can potentially explore.
 We’ll continue doing this throughout the tutorial.</p>
@@ -1013,11 +1019,17 @@ them.</p>
 mentions instead of the distance to the previous mention, and also try
 to count the number of mentions to <em>different</em> entities in the
 surrounding context. We will also try to improve on
-<code>gapWords</code> to see if modifying its definition a little will
-improve its predictive power.</p>
+<code>gapWords</code> to see if modifying its operationalisation a
+little will be more revealing of the effect of lookback distance.</p>
 <div class="section level3">
 <h3 id="counting-previous-mentions">Counting previous mentions<a class="anchor" aria-label="anchor" href="#counting-previous-mentions"></a>
 </h3>
+<p>Apart from the time to the previous time that an entity was
+mentioned, the number of previous mentions within a specified time
+window may also affect accessibility: An entity that was just mentioned
+in the previous intonation unit but never before that might conceivably
+be less accessible than one that was just mentioned in the previous
+intonation unit as well as several intonation units before that.</p>
 <p>The function <code><a href="../reference/trackPrevContext.html">countPrevMentions()</a></code> in
 <code>rezonateR</code> is one function we can use to count the number of
 times the referent of a referential expression was referred to in its
@@ -1027,7 +1039,7 @@ the each mention.</p>
 <p>In this example, we will look at a window of 10 previous units. Refer
 to the following example:</p>
 <div class="figure">
-<img src="images/paste-E52A7A24.png" width="586" alt=""><p class="caption">Figure 19: A trail containing five mentions of the
+<img src="images/paste-E52A7A24.png" width="586" alt=""><p class="caption">Figure 18: A trail containing five mentions of the
 action of staying up late, spanning units 2-8.</p>
 </div>
 <p>If we consider the <em>it</em> on the last line (line 8), among the
@@ -1044,7 +1056,7 @@ function rather than <code><a href="https://dplyr.tidyverse.org/reference/mutate
 that the resulting data frame will remain in the correct
 <code>rezonateR</code> format.) Here is the code, along with a line of
 code that displays the first couple of values of this predictor:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>noPrevMentionsIn10 <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">countPrevMentions</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">noPrevMentionsIn10</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
@@ -1075,43 +1087,43 @@ code that displays the first couple of values of this predictor:</p>
 to draw a scatterplot, as we have done before, with the y-axis being
 character count and the x-axis giving the number of previous mentions in
 the ten preceding units:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">noPrevMentionsIn10</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">noPrevMentionsIn10</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 <p>From the graph, we see that there <em>is</em> a tendency for
 character counts to be smaller when the number of previous mentions is
 greater, albeit somewhat weak. The very large referential expressions
-are absent when there are more than 5 previous mentions, and after about
-five mentions, we can see the modal character length decreasing as
+are absent when there are more than five previous mentions, and after
+about five mentions, we can see the modal character length decreasing as
 well.</p>
-<p>Now let’s fit a linear model plotting this predictor against
+<p>Now let’s fit a linear model plotting this predictor against logged
 <code>charCount</code></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass2_model1</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noPrevMentionsIn10</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noPrevMentionsIn10</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass2_model1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noPrevMentionsIn10, data = .)</span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noPrevMentionsIn10, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
-<span><span class="co">#&gt; -6.974 -4.746 -3.489 -1.146 44.997 </span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -1.4467 -0.5291 -0.2339  0.2229  2.9221 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)          7.9741     1.1286   7.066 4.57e-11 ***</span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10  -0.7427     0.3674  -2.022   0.0449 *  </span></span>
+<span><span class="co">#&gt; (Intercept)         1.44669    0.11510  12.569   &lt;2e-16 ***</span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.11420    0.03747  -3.048   0.0027 ** </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 9.58 on 161 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.02476,    Adjusted R-squared:  0.0187 </span></span>
-<span><span class="co">#&gt; F-statistic: 4.087 on 1 and 161 DF,  p-value: 0.04488</span></span></code></pre></div>
-<p>From the linear model, We also find that the number of previous
+<span><span class="co">#&gt; Residual standard error: 0.977 on 161 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.05455,    Adjusted R-squared:  0.04867 </span></span>
+<span><span class="co">#&gt; F-statistic: 9.289 on 1 and 161 DF,  p-value: 0.002696</span></span></code></pre></div>
+<p>From the linear model, we also find that the number of previous
 mentions in the previous 10 units <em>is</em> a significant predictor at
 the 0.05 significance level. It seems that pure lookback distance is not
 enough - we need to look beyond the previous mention. This might be a
@@ -1145,7 +1157,7 @@ only at mentions between the current and previous one. Let’s look at the
 first seven lines of the text again to see how many competitors the
 <em>it</em> on line 8, referring to staying up late, has:</p>
 <div class="figure">
-<img src="images/paste-E203783D.png" width="512" alt=""><p class="caption">Figure 20: Competing mentions to the <em>it</em>,
+<img src="images/paste-E203783D.png" width="512" alt=""><p class="caption">Figure 19: Competing mentions to the <em>it</em>,
 referring to the action of staying up late, on line 8.</p>
 </div>
 <p>From the graph, there nine mentions previous mentions in the previous
@@ -1155,7 +1167,7 @@ late,</em> so we expect that the value we get from
 <p>We will add this value to the <code>trackDF</code> using the
 <code><a href="../reference/rez_mutate.html">rez_mutate()</a></code> function again. So let’s try to add the number
 of competitors now:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>noCompetitors <span class="op">=</span> <span class="fu"><a href="../reference/countCompete.html">countCompetitors</a></span><span class="op">(</span>windowSize <span class="op">=</span> <span class="fl">10</span>, between <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">noCompetitors</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
@@ -1184,39 +1196,40 @@ of competitors now:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> 17608A48A8CCB I                                                    3</span></span></code></pre></div>
 <p>Now let’s try to draw a scatterplot and fit a linear model, as we
 have done before:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">noCompetitors</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
-<p>If we focus on the bottom part of the graph where the bulk of the
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">noCompetitors</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<p>If we focus on the bottom half of the graph where the bulk of the
 data are lying, there does seem to be a small effect where a greater
 number of competitors leads to the use of more characters. Above around
 16 competitors, it is much less common to have very short (length &lt;
-3) referential expressions.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+3) referential expressions. Let’s put the number of competitors in our
+linear model now:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass2_model1</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noCompetitors</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noCompetitors</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass2_model1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noCompetitors, data = .)</span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noCompetitors, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
-<span><span class="co">#&gt; -9.856 -4.968 -3.079 -0.515 40.186 </span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -1.8009 -0.5622 -0.1972  0.3521  2.4736 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; (Intercept)     0.4298     1.9449   0.221  0.82537   </span></span>
-<span><span class="co">#&gt; noCompetitors   0.5213     0.1607   3.244  0.00143 **</span></span>
+<span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)    0.40002    0.19692   2.031   0.0439 *  </span></span>
+<span><span class="co">#&gt; noCompetitors  0.07004    0.01627   4.305 2.89e-05 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 9.398 on 161 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.06136,    Adjusted R-squared:  0.05553 </span></span>
-<span><span class="co">#&gt; F-statistic: 10.52 on 1 and 161 DF,  p-value: 0.001433</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.9515 on 161 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.1032, Adjusted R-squared:  0.09765 </span></span>
+<span><span class="co">#&gt; F-statistic: 18.53 on 1 and 161 DF,  p-value: 2.893e-05</span></span></code></pre></div>
 <p>As we can see from here, there is a small effect whereby a larger
 number of competitors is associated the use of longer referential
 expressions, which is just as we expect. However, we shouldn’t conclude
@@ -1225,48 +1238,48 @@ accessibility.</p>
 <p>There is good reason to believe that <code>noCompetitors</code> and
 <code>noPrevMentionsIn10</code> may be highly correlated, and thus some
 of the effect we see for <code>noCompetitors</code> may actually due to
-the presence of previous mentions, or vice versa. This is because of
-there are more non-coreferring expressions in the previous units, there
-will tend to be fewer coreferential expressions, assuming that the
-number of referential expressions is relatively stable, i.e. our two
-competitors are negatively correlated are negatively correlated. The
-code below plots them in a graph and calculates the Pearson correlation
-coefficient:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+a confounding factor: the presence of previous mentions, or vice versa.
+This is because of there are more non-coreferring expressions in the
+previous units, there will tend to be fewer coreferential expressions,
+assuming that the number of referential expressions is relatively
+stable, i.e. our two competitors are negatively correlated are
+negatively correlated. The code below plots them in a graph and
+calculates the Pearson correlation coefficient:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">noCompetitors</span>, y <span class="op">=</span> <span class="va">noPrevMentionsIn10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Pearson correlation: "</span>,</span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span><span class="op">$</span><span class="va">noCompetitors</span>, <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span><span class="op">$</span><span class="va">noPrevMentionsIn10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 <p>As we can see, there is a weak but clear negative correlation between
 the number of mentions and the number of compoetitors in the previous
 context. So let’s try to put both in the model and how the results turn
 out:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass2_model3</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass2_model3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noCompetitors + noPrevMentionsIn10, </span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noCompetitors + noPrevMentionsIn10, </span></span>
 <span><span class="co">#&gt;     data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
-<span><span class="co">#&gt; -9.780 -5.019 -2.838 -0.337 41.168 </span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -1.7867 -0.5755 -0.2145  0.3787  2.4320 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; (Intercept)          1.8717     2.5547   0.733  0.46484   </span></span>
-<span><span class="co">#&gt; noCompetitors        0.4624     0.1744   2.651  0.00883 **</span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10  -0.3409     0.3913  -0.871  0.38487   </span></span>
+<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)         0.66546    0.25724   2.587  0.01057 *  </span></span>
+<span><span class="co">#&gt; noCompetitors       0.05920    0.01756   3.371  0.00094 ***</span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.06276    0.03940  -1.593  0.11311    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 9.405 on 160 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.06579,    Adjusted R-squared:  0.05411 </span></span>
-<span><span class="co">#&gt; F-statistic: 5.634 on 2 and 160 DF,  p-value: 0.004321</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.947 on 160 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.1172, Adjusted R-squared:  0.1062 </span></span>
+<span><span class="co">#&gt; F-statistic: 10.62 on 2 and 160 DF,  p-value: 4.655e-05</span></span></code></pre></div>
 <p>As we can see, once we put both in the model,
 <code>noCompetitors</code> becomes the only significant predictor. Of
 course, this does not mean that <code>noPrevMentionsIn10</code> does not
@@ -1274,43 +1287,45 @@ matter; we only have very low power, after all. In any case, both
 coefficient estimates are in the expected direction: The larger the
 number of previous mentions and smaller the number of competitors, the
 shorter the form.</p>
-<p>As a last attempt, let’s also try the lookback-based approach by
+<p>In case lookback distance and number of recent mentions have
+independent effects, let’s also try the lookback-based approach by
 adding <code>gapUnits</code> to the model as well:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass2_model4</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gapUnits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">gapUnits</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnits</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnits</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass2_model4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noCompetitors + noPrevMentionsIn10 + </span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noCompetitors + noPrevMentionsIn10 + </span></span>
 <span><span class="co">#&gt;     gapUnits, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -10.991  -5.033  -2.512   0.035  40.558 </span></span>
+<span><span class="co">#&gt; -1.9429 -0.5194 -0.2067  0.4325  2.4333 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; (Intercept)         3.34207    2.56593   1.302  0.19464   </span></span>
-<span><span class="co">#&gt; noCompetitors       0.50520    0.17190   2.939  0.00378 **</span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.68408    0.40467  -1.690  0.09290 . </span></span>
-<span><span class="co">#&gt; gapUnits           -0.25700    0.09584  -2.682  0.00810 **</span></span>
+<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)         0.85499    0.25461   3.358 0.000982 ***</span></span>
+<span><span class="co">#&gt; noCompetitors       0.06471    0.01706   3.794 0.000210 ***</span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.10700    0.04015  -2.665 0.008502 ** </span></span>
+<span><span class="co">#&gt; gapUnits           -0.03313    0.00951  -3.484 0.000639 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 9.228 on 159 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.1062, Adjusted R-squared:  0.08935 </span></span>
-<span><span class="co">#&gt; F-statistic: 6.298 on 3 and 159 DF,  p-value: 0.0004592</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.9157 on 159 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.1798, Adjusted R-squared:  0.1644 </span></span>
+<span><span class="co">#&gt; F-statistic: 11.62 on 3 and 159 DF,  p-value: 6.302e-07</span></span></code></pre></div>
 <p>Interestingly, this time, all three predictors are significant or
 close to significant. The first two are in expected directions: having
 more competitors leads to longer referential expressions, whereas more
 recent mentions makes the form smaller. However, the
-<code>gapUnits</code> effect is in the opposite direction as we expect:
-The greater the gap, the smaller the referential expression! This does
-not appear to make sense. We will continue to improve this model in the
-following sections to see what happens to <code>gapUnits</code>.</p>
+<code>gapUnits</code> effect is still in the opposite direction as we
+expect: The greater the gap, the smaller the referential expression!
+This does not appear to make sense. We will continue to improve this
+model in the following sections to see what happens to
+<code>gapUnits</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="upgrading-gapwords">Upgrading <code>gapWords</code><a class="anchor" aria-label="anchor" href="#upgrading-gapwords"></a>
@@ -1324,20 +1339,20 @@ count.</p>
 <p>To use the example of staying up late again, refer to the following
 screenshot:</p>
 <div class="figure">
-<img src="images/paste-3973BFDF.png" alt="Figure 11: Coreference chain for the action of staying up late" width="614"><p class="caption">Figure 21: Coreference chain for the action of
+<img src="images/paste-3973BFDF.png" alt="Figure 11: Coreference chain for the action of staying up late" width="614"><p class="caption">Figure 20: Coreference chain for the action of
 staying up late</p>
 </div>
-<p>Under <code>gapWords</code> value for the second mention, <em>stay up
-late</em>, would be 5. However, you might not want to count the period
-on line 2 or the pause and zero on line 3 in the calculation of
-<code>gapWords</code>.</p>
+<p>Currently, the <code>gapWords</code> value for the second mention,
+<em>stay up late</em>, would be 5. However, you might not want to count
+the period on line 2 or the pause and zero on line 3 in the calculation
+of <code>gapWords</code>.</p>
 <p>Let’s try to use the <code>rezonateR</code> function
 <code><a href="../reference/trackPrevContext.html">tokensToLastMention()</a></code> instead to deal with these issues. In
 this sample code, we will treat <code>&lt;0&gt;</code> as belonging to
 the end of the intonation unit they are annotated at, and define
 <code>docWordSeqLast</code> as the token sequence used in calculation,
 thus discounting non-words:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>gapWordsNew <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">tokensToLastMention</a></span><span class="op">(</span>tokenOrder <span class="op">=</span> <span class="va">docWordSeqLast</span>,</span>
 <span>                                               unitDF <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">unitDF</span>,</span>
@@ -1360,34 +1375,34 @@ thus discounting non-words:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 224 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span></span></code></pre></div>
 <p>Now we can put this new <code>gapWords</code> into the model:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass2_model5</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gapUnits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">gapUnits</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapWordsNew</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapWordsNew</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass2_model5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noCompetitors + noPrevMentionsIn10 + </span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noCompetitors + noPrevMentionsIn10 + </span></span>
 <span><span class="co">#&gt;     gapWordsNew, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
-<span><span class="co">#&gt; -9.918 -4.782 -2.743 -0.316 40.889 </span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -1.7947 -0.5776 -0.2112  0.3650  2.4197 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; (Intercept)         1.47307    2.72035   0.542  0.58895   </span></span>
-<span><span class="co">#&gt; noCompetitors       0.48616    0.18001   2.701  0.00769 **</span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.27820    0.40638  -0.685  0.49463   </span></span>
-<span><span class="co">#&gt; gapWordsNew        -0.04609    0.04297  -1.073  0.28505   </span></span>
+<span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
+<span><span class="co">#&gt; (Intercept)         0.671725   0.272805   2.462  0.01491 * </span></span>
+<span><span class="co">#&gt; noCompetitors       0.059212   0.018052   3.280  0.00128 **</span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.061301   0.040753  -1.504  0.13457   </span></span>
+<span><span class="co">#&gt; gapWordsNew        -0.006517   0.004309  -1.512  0.13247   </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 9.296 on 154 degrees of freedom</span></span>
+<span><span class="co">#&gt; Residual standard error: 0.9323 on 154 degrees of freedom</span></span>
 <span><span class="co">#&gt;   (5 observations deleted due to missingness)</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.07469,    Adjusted R-squared:  0.05666 </span></span>
-<span><span class="co">#&gt; F-statistic: 4.143 on 3 and 154 DF,  p-value: 0.007409</span></span></code></pre></div>
+<span><span class="co">#&gt; Multiple R-squared:  0.1295, Adjusted R-squared:  0.1126 </span></span>
+<span><span class="co">#&gt; F-statistic:  7.64 on 3 and 154 DF,  p-value: 8.55e-05</span></span></code></pre></div>
 <p>This has no significant effect, unfortunately, so it does not seem
 that <code>gapWords</code> is a useful predictor after all.</p>
 </div>
@@ -1395,10 +1410,12 @@ that <code>gapWords</code> is a useful predictor after all.</p>
 <h3 id="sequential-position-of-tracks-in-trails">Sequential position of tracks in trails<a class="anchor" aria-label="anchor" href="#sequential-position-of-tracks-in-trails"></a>
 </h3>
 <p>A final variable we could add to the model is the sequential position
-of a track within a trail. We might expect that the second mention of a
+of a track within a trail, which might also contribute to accessibility
+in a different way by giving the overall discourse prominent, rather
+than just a local effect. We might expect that the second mention of a
 referent, for example, might be longer than a fifth mention. We can get
 this variable using <code><a href="../reference/getPosInChain.html">getPosInChain()</a></code>:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>seqInTrail <span class="op">=</span> <span class="fu"><a href="../reference/getPosInChain.html">getPosInChain</a></span><span class="op">(</span>tokenOrder <span class="op">=</span> <span class="va">docWordSeqLast</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">name</span>, <span class="va">text</span>, <span class="va">seqInTrail</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">head</span></span>
@@ -1413,46 +1430,49 @@ this variable using <code><a href="../reference/getPosInChain.html">getPosInChai
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 6B37B5A80F2A  Staying up late &lt;0&gt;                   1</span></span></code></pre></div>
 <p>Now we can plot the character count against this value in a
 graph:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">seqInTrail</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">seqInTrail</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
 <p>It does seem that larger character counts are much rare as the
 <code>seqInTrail</code> value gets larger. Let’s put the variable inside
 our model and see what happens:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass2_model5</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapWords</span> <span class="op">!=</span> <span class="st">"N/A"</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gapUnits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">gapUnits</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapWordsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapWordsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass2_model5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noCompetitors + noPrevMentionsIn10 + </span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noCompetitors + noPrevMentionsIn10 + </span></span>
 <span><span class="co">#&gt;     gapWordsNew + seqInTrail, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
-<span><span class="co">#&gt; -8.931 -5.401 -2.479  1.761 37.594 </span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -1.2554 -0.5820 -0.2281  0.3892  2.0978 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         2.94655    2.61804   1.125  0.26215    </span></span>
-<span><span class="co">#&gt; noCompetitors       0.52476    0.17184   3.054  0.00267 ** </span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10  0.42532    0.42424   1.003  0.31767    </span></span>
-<span><span class="co">#&gt; gapWordsNew        -0.06141    0.04113  -1.493  0.13742    </span></span>
-<span><span class="co">#&gt; seqInTrail         -0.33745    0.08302  -4.065 7.67e-05 ***</span></span>
+<span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)         0.876811   0.249070   3.520 0.000568 ***</span></span>
+<span><span class="co">#&gt; noCompetitors       0.064585   0.016348   3.951 0.000119 ***</span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10  0.036618   0.040361   0.907 0.365691    </span></span>
+<span><span class="co">#&gt; gapWordsNew        -0.008649   0.003912  -2.211 0.028545 *  </span></span>
+<span><span class="co">#&gt; seqInTrail         -0.046968   0.007898  -5.947 1.79e-08 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 8.861 on 153 degrees of freedom</span></span>
+<span><span class="co">#&gt; Residual standard error: 0.843 on 153 degrees of freedom</span></span>
 <span><span class="co">#&gt;   (5 observations deleted due to missingness)</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.1649, Adjusted R-squared:  0.143 </span></span>
-<span><span class="co">#&gt; F-statistic: 7.551 on 4 and 153 DF,  p-value: 1.407e-05</span></span></code></pre></div>
+<span><span class="co">#&gt; Multiple R-squared:  0.293,  Adjusted R-squared:  0.2745 </span></span>
+<span><span class="co">#&gt; F-statistic: 15.85 on 4 and 153 DF,  p-value: 7.111e-11</span></span></code></pre></div>
 <p>It turns out that <code>seqInTrail</code> is a significant variable,
 and in the expected direction: The farther along we are in a trail, the
-shorter the form of the referential expression.</p>
+shorter the form of the referential expression.
+<code>noPrevMentionsIn10</code>, which we can expect is quite highly
+correlated to <code>seqInTrail</code> especially in smaller chains, is
+no longer significant.</p>
 <p>Now that we have explored the <code>EasyTrack</code> family of
 functions a little bit, let us explore the other options in
 <code>rezonateR</code> that allow us to extract other types of
@@ -1486,7 +1506,7 @@ calculations.</p>
 but <code>charCount</code> is mysteriously very large, and see what’s
 wrong with them. We’ll set the cutoff for <code>gapUnits</code> at 1,
 and the cutoff for <code>charCount</code> at 20.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gapUnits</span> <span class="op">&lt;=</span> <span class="fl">1</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">gapUnits</span>, <span class="va">charCount</span>, <span class="va">text</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 13 × 4</span></span></span>
 <span><span class="co">#&gt;    id            gapUnits charCount text                                        </span></span>
@@ -1509,7 +1529,7 @@ expressions. Some of these cases are legitimate; for example, <em>nobody
 fucks with my lifestyle</em> happens to have been referred to by a
 cataphorical <em>it</em>:</p>
 <div class="figure">
-<img src="images/paste-AA63E6C5.png" width="437" alt=""><p class="caption">Figure 22: A case of cataphoric <em>it</em> creating
+<img src="images/paste-AA63E6C5.png" width="437" alt=""><p class="caption">Figure 21: A case of cataphoric <em>it</em> creating
 an exception to the general rule that shorter <code>gapUnits</code> is
 associated with shorter length.</p>
 </div>
@@ -1528,7 +1548,7 @@ for each unit. So in this screenshot, <em>a real good lesson for them
 three separate chunks, when they should really only be a single
 chunk:</p>
 <div class="figure">
-<img src="images/paste-F5ED0106.png" width="430" alt=""><p class="caption">Figure 23: A case where three separates should in
+<img src="images/paste-F5ED0106.png" width="430" alt=""><p class="caption">Figure 22: A case where three separates should in
 reality be treated as a single chunk.</p>
 </div>
 <p>This created a situation where <em>(…) in self assertiveness</em> is
@@ -1556,7 +1576,7 @@ following figure shows the argument structure of Line 4, with
 object <em>the purpose of getting up in the morning</em>, and the adverb
 <em>kinda</em>:</p>
 <div class="figure">
-<img src="img/sample_tree.PNG" style="width:100.0%" alt=""><p class="caption">Figure 24: An example of a tree in our file.</p>
+<img src="img/sample_tree.PNG" style="width:100.0%" alt=""><p class="caption">Figure 23: An example of a tree in our file.</p>
 </div>
 <p>The four ‘nodes’ in this tree are known as <code>treeEntry</code>
 objects in Rezonator, and the three links between them, shown by an
@@ -1571,7 +1591,7 @@ function <code><a href="../reference/getAllTreeCorrespondences.html">getAllTreeC
 <code>treeEntry</code> to tables like <code>chunkDF</code> and
 <code>trackDF</code>, giving the ID of the corresponding entry in the
 table <code>treeEntryDF</code>. Here is an example:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/getAllTreeCorrespondences.html">getAllTreeCorrespondences</a></span><span class="op">(</span><span class="va">rez007</span>, entity <span class="op">=</span> <span class="st">"track"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">treeEntry</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
@@ -1621,7 +1641,7 @@ one another</em> are in separate chunks. However, they correspond to one
 single tree entry, as we can see here.</p>
 <p><img src="images/paste-D742A118.png" width="497"></p>
 <div class="figure">
-<img src="images/paste-0C261A8B.png" width="483" alt=""><p class="caption">Figure 25: An example where two chunks that should
+<img src="images/paste-0C261A8B.png" width="483" alt=""><p class="caption">Figure 24: An example where two chunks that should
 belong together can be merged using the fact that they belong to the
 same tree entry.</p>
 </div>
@@ -1636,9 +1656,9 @@ and so on. In this case, all the component chunks of the first complex
 chunk should have the value <code>1</code> for <code>largerChunk</code>
 and so on.</p>
 <p>We can use this technique in action for merging the same two chunks
-we saw in Figure 15:</p>
+we saw in Figure 24:</p>
 <div class="figure">
-<img src="images/paste-65C42935.png" alt=""><p class="caption">Figure 26: The same two chunks that need to be merged
+<img src="images/paste-65C42935.png" alt=""><p class="caption">Figure 25: The same two chunks that need to be merged
 into a single chunk have been annotated as `largeChunk = 2`, indicating
 that they belong in the same larger chunk.</p>
 </div>
@@ -1648,7 +1668,7 @@ that they belong in the same larger chunk.</p>
 In addition, <code>chunkDF</code> will have an extra column
 <code>combinedChunk</code> giving information about chunk
 combinations:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/mergeChunksWithIDs.html">mergeChunksWithIDs</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"largerChunk"</span><span class="op">)</span></span>
 <span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/mergeChunksWithTree.html">mergeChunksWithTree</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">)</span></span>
 <span><span class="co">#Show combined referential expressions</span></span>
@@ -1669,15 +1689,15 @@ combinations:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2C2FB52C1A11  a real good lesson for them ,                           |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> E818EBA6CB78  too ,                                                   |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 2A382D1098989 (...) in self assertiveness ,                           |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> o1IENlOxy5fBh the only way it 's gon na work , is if we have respect… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> KCajJTERZ2LD9 (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> RSdx1vHJnyAML a real good lesson for them , too , (...) in self asse… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> NpYwoMkKIfVg8 when Ron gets home from work , (...) I wan na &lt;0&gt; spen… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> P61DpkcWAz0mv (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> zLJtmxC8rWsYu the only way it 's gon na work , is if we have respect… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> MH64sUNIzdfCw (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> tGj1zYnu7yqJ0 a real good lesson for them , too , (...) in self asse… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> DvFxH732q4Oef when Ron gets home from work , (...) I wan na &lt;0&gt; spen… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> wbvU7LKYdryHP (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 <p>The function <code><a href="../reference/mergedChunksToTrack.html">mergedChunksToTrack()</a></code> puts this information
 in the <code>trackDF</code> too:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/mergedChunksToTrack.html">mergedChunksToTrack</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"default"</span><span class="op">)</span></span>
 <span><span class="co">#Show combined track members</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -1697,11 +1717,11 @@ in the <code>trackDF</code> too:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 129168B539994 weekly house meetings          a real good lesson for … |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 144636EDDE11B weekly house meetings          too ,                    |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 231F6E448A5E7 weekly house meetings          (...) in self assertive… |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> YGQKz0D7N9ZPE having respect for one another the only way it 's gon … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> lhMnB0fOs7bDS complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> XrTw6vxNKhA0b weekly house meetings          a real good lesson for … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> kXCPt9hV3RONQ what they don't realize        when Ron gets home from… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 8ERvUcxL74fYZ complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> MKoCD8eALvpnU having respect for one another the only way it 's gon … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> qCc4v56PHKtgm complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> SkgvcoVlAxIP9 weekly house meetings          a real good lesson for … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> IcqdMSOlepDQA what they don't realize        when Ron gets home from… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> Yt32aDpv9kxEV complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 </div>
 </div>
@@ -1716,24 +1736,24 @@ the <code><a href="../reference/trackPrevContext.html">unitsToLastMention()</a><
 <code>exclFrag</code> to <code>TRUE</code> (i.e. excluding fragments of
 chunks), we create a new value of <code>gapUnits</code> that excludes
 these dubious mentions:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>gapUnitsNew <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">unitsToLastMention</a></span><span class="op">(</span>exclFrag <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>This new value <code>gapUnitsNew</code> has an <code>NA</code> value
 for fragments of chunks, and also ignores them when calculating
 <code>gapUnits</code>. Let’s try to plot the relationship between
 <code>gapUnitsNew</code> and <code>charCount</code> again:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gapUnitsNew <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gapUnitsNew</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-33-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gapUnitsNew</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-34-1.png" width="700"></p>
 <p>While we still can’t see the expected effect, some of the outliers on
 the top left of the graph are now gone.</p>
 <p>The <code>noPrevMentionsIn10</code> and <code>noCompetitors</code>
 columns can also be redone to ignore fragments:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>noPrevMentionsIn10 <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">countPrevMentions</a></span><span class="op">(</span><span class="fl">10</span>,</span>
 <span>                                    exclFrag <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
@@ -1743,52 +1763,50 @@ columns can also be redone to ignore fragments:</p>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>seqInTrail <span class="op">=</span> <span class="fu"><a href="../reference/getPosInChain.html">getPosInChain</a></span><span class="op">(</span>tokenOrder <span class="op">=</span> <span class="va">docWordSeqLast</span>, exclFrag <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Now with the corrected data, let’s try to refit the linear model:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass3_model1</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnitsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnitsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass3_model1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noCompetitors + noPrevMentionsIn10 + </span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noCompetitors + noPrevMentionsIn10 + </span></span>
 <span><span class="co">#&gt;     gapUnitsNew + seqInTrail, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -6.5151 -3.6891 -2.0612  0.6468 27.6876 </span></span>
+<span><span class="co">#&gt; -1.2384 -0.4773 -0.1628  0.2887  2.1109 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; (Intercept)         5.59253    2.09383   2.671  0.00842 **</span></span>
-<span><span class="co">#&gt; noCompetitors       0.25099    0.14457   1.736  0.08465 . </span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.29984    0.37292  -0.804  0.42269   </span></span>
-<span><span class="co">#&gt; gapUnitsNew        -0.10107    0.07297  -1.385  0.16816   </span></span>
-<span><span class="co">#&gt; seqInTrail         -0.19454    0.06753  -2.881  0.00457 **</span></span>
+<span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)         1.057993   0.234937   4.503 1.36e-05 ***</span></span>
+<span><span class="co">#&gt; noCompetitors       0.050126   0.016221   3.090   0.0024 ** </span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.030539   0.041843  -0.730   0.4667    </span></span>
+<span><span class="co">#&gt; gapUnitsNew        -0.015440   0.008188  -1.886   0.0613 .  </span></span>
+<span><span class="co">#&gt; seqInTrail         -0.034400   0.007577  -4.540 1.17e-05 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 6.952 on 146 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.1264, Adjusted R-squared:  0.1024 </span></span>
-<span><span class="co">#&gt; F-statistic:  5.28 on 4 and 146 DF,  p-value: 0.0005324</span></span></code></pre></div>
-<p>This time, <code>noCompetitors</code> is no longer a good predictor,
-although still close to significance. The coefficient of
-<code>gapUnitsNew</code> is still in the ‘wrong’ direction, since a
-larger <code>gapUnitsNew</code> still leads to a smaller referential
-expression, but the effect is not significant any more. The predictor
-<code>noPrevMentionsin10</code> is also insignificant even though the
-estimate is in the expected direction: The more the number of previous
-mentions, the shorter the form. The predictor <code>seqInTrail</code> is
-remains significant and in the expected direction - the farther along in
-the chain, the shorter the form - though the p-value has increased
-somewhat.</p>
-<p>Is there any way we can improve on this model a little more? Let’s
+<span><span class="co">#&gt; Residual standard error: 0.78 on 146 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.2518, Adjusted R-squared:  0.2314 </span></span>
+<span><span class="co">#&gt; F-statistic: 12.29 on 4 and 146 DF,  p-value: 1.226e-08</span></span></code></pre></div>
+<p>This time, <code>noCompetitors</code> is still significant. The
+coefficient of <code>gapUnitsNew</code> is still in the ‘wrong’
+direction, since a larger <code>gapUnitsNew</code> still leads to a
+smaller referential expression, but the effect is not significant. The
+predictor <code>noPrevMentionsin10</code> is also insignificant even
+though the estimate is in the expected direction: The more the number of
+previous mentions, the shorter the form. The predictor
+<code>seqInTrail</code> is remains significant and in the expected
+direction - the farther along in the chain, the shorter the form.</p>
+<p>Are there any more predictors that we can consider testing? Let’s
 consider the cases with small <code>gapUnits</code> but large character
 counts again. It turns out that many of them are
 <strong>predicates</strong> of copular clauses, like the following
 example, which has the very long expression <em>what I’m gonna tell
 him</em> coreferential to the subject <em>that</em>:</p>
 <div class="figure">
-<img src="images/paste-EA1377C0.png" width="530" alt=""><p class="caption">Figure 27: A screenshot of containing a copular
+<img src="images/paste-EA1377C0.png" width="530" alt=""><p class="caption">Figure 26: A screenshot of containing a copular
 clause with the contracted copula <em>’s</em>. The referential
 expression <em>what I’m gonna tell him</em> is very long, and is very
 close to the previous mention, which is just the copular subject.</p>
@@ -1802,7 +1820,7 @@ maintain the position that predicates should be marked as referential
 expressions.</p>
 <p>On the other hand, very few of the long referential expressions with
 small <code>gapUnits</code> are subjects. This suggests that it will be
-useful to add information about grammatical relations. Subjects are
+informative to test the effect of grammatical relations. Subjects are
 likely to be biased towards shorter character counts, and predicates
 towards longer ones. The two following sections will add these elements.
 First we will add the <code>Relation</code> predictor, which is
@@ -1825,7 +1843,7 @@ the ID of the corresponding tree entry. The following code looks into
 corresponding to a <code>treeEntry</code>, and adds it to
 <code>trackDF</code>, allowing us to know whether each referential
 expression is a subject:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="va">rez007</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/acFieldForeign.html">addFieldForeign</a></span><span class="op">(</span><span class="st">"track"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"Relation"</span>, <span class="st">"Relation"</span>, fieldaccess <span class="op">=</span> <span class="st">"foreign"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">track</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">chain</span>, <span class="va">text</span>, <span class="va">treeEntry</span>, <span class="va">Relation</span><span class="op">)</span><span class="op">)</span></span>
@@ -1842,69 +1860,70 @@ expression is a subject:</p>
 <code>Relation</code> by <code>"NonSubj"</code>, and turn it into a
 factor with <code><a href="../reference/stringToFactor.html">stringToFactor()</a></code> so that it can be used in
 modelling:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>Relation <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/coalesce.html" class="external-link">coalesce</a></span><span class="op">(</span><span class="va">Relation</span>, <span class="st">"NonSubj"</span><span class="op">)</span>, fieldaccess <span class="op">=</span> <span class="st">"flex"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/stringToFactor.html">stringToFactor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Relation"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We can now plot the <code>charCount</code> values of subjects and
 non-subjects:</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Relation</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-38-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Relation</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-39-1.png" width="700"></p>
 <p>The pattern overwhelmingly supports our hypothesis that subjects
 should be more accessible that nonsubjects, and hence be referred to
 using a shorter referential expression.</p>
 <p>Now let’s see what <code>Relation</code> turns up if we put it in the
 linear model:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass3_model2</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnitsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span> <span class="op">+</span> <span class="va">Relation</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnitsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span> <span class="op">+</span> <span class="va">Relation</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass3_model2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noCompetitors + noPrevMentionsIn10 + </span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noCompetitors + noPrevMentionsIn10 + </span></span>
 <span><span class="co">#&gt;     gapUnitsNew + seqInTrail + Relation, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
-<span><span class="co">#&gt; -8.202 -3.773 -1.171  1.256 25.407 </span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -1.35709 -0.52422 -0.08944  0.36090  1.85158 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         8.48687    2.08375   4.073 7.61e-05 ***</span></span>
-<span><span class="co">#&gt; noCompetitors       0.17465    0.13751   1.270  0.20607    </span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.21383    0.35237  -0.607  0.54492    </span></span>
-<span><span class="co">#&gt; gapUnitsNew        -0.08954    0.06889  -1.300  0.19579    </span></span>
-<span><span class="co">#&gt; seqInTrail         -0.16877    0.06398  -2.638  0.00926 ** </span></span>
-<span><span class="co">#&gt; RelationSubj       -4.79792    1.09960  -4.363 2.42e-05 ***</span></span>
+<span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)         1.412553   0.230841   6.119 8.33e-09 ***</span></span>
+<span><span class="co">#&gt; noCompetitors       0.040775   0.015233   2.677  0.00829 ** </span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.020003   0.039036  -0.512  0.60914    </span></span>
+<span><span class="co">#&gt; gapUnitsNew        -0.014027   0.007632  -1.838  0.06813 .  </span></span>
+<span><span class="co">#&gt; seqInTrail         -0.031243   0.007088  -4.408 2.02e-05 ***</span></span>
+<span><span class="co">#&gt; RelationSubj       -0.587752   0.121816  -4.825 3.51e-06 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 6.559 on 145 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.2278, Adjusted R-squared:  0.2011 </span></span>
-<span><span class="co">#&gt; F-statistic: 8.554 on 5 and 145 DF,  p-value: 4.031e-07</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.7266 on 145 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.3553, Adjusted R-squared:  0.3331 </span></span>
+<span><span class="co">#&gt; F-statistic: 15.99 on 5 and 145 DF,  p-value: 1.57e-12</span></span></code></pre></div>
 <p>As we can see, subjects are likely to be far shorter than
-non-subjects. The effects of the other factors are almost gone in this
-model, except <code>seqInTrail</code>, which remains significant.</p>
+non-subjects. The variables <code>seqInTrail</code> and
+<code>noCompetitors</code> remain significant.</p>
 </div>
 <div class="section level3">
 <h3 id="adding-the-effect-of-predicatehood">Adding the effect of predicatehood<a class="anchor" aria-label="anchor" href="#adding-the-effect-of-predicatehood"></a>
 </h3>
-<p>We can now add a variable to pick out predicates. There’s a quick and
-dirty way to guess which referential expressions are predicates: We can
-pick out those expressions that are arguments of copulas, i.e. have a
-copula in the column <code>verbText</code>, and also are not subjects.
-This will incorrectly pick out adjuncts of copula clauses, but those are
-infrequent enough in our sample that we can get away with it.</p>
+<p>We can now also add a variable to pick out predicates. There’s a
+quick and dirty way to guess which referential expressions are
+predicates: We can pick out those expressions that are arguments of
+copulas, i.e. have a copula in the column <code>verbText</code>, and
+also are not subjects. This will incorrectly pick out adjuncts of copula
+clauses, but those are infrequent enough in our sample that we can get
+away with it.</p>
 <p>In addition, referential expressions that don’t belong to any verb -
 so-called ‘free NPs’ (Helasvuo 2019), with ‘free’ meaning ‘free from a
 verb’ - are often also predicate-like in behaviour, such as the
 multiline chunk we’ve seen before:</p>
 <div class="figure">
-<img src="images/paste-F5ED0106.png" alt="Figure 6" width="430"><p class="caption">Figure 28: An example of a free NP.</p>
+<img src="images/paste-F5ED0106.png" alt="Figure 6" width="430"><p class="caption">Figure 27: An example of a free NP.</p>
 </div>
 <p>So we can also include them as ‘predicates’ as good measure. Let’s
 call the resulting column <code>isPredOrFree</code>. (Note that this
@@ -1921,7 +1940,7 @@ contain information about <em>saw</em>). This process is a bit
 complicated; see the <a href="https://rezonators.github.io/rezonateR/articles/track.html">tutorial
 on coreference</a> <code><a href="../articles/track.html">vignette("track")</a></code> for a more detailed
 explanation of what’s going on.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="va">rez007</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/acFieldForeign.html">addFieldForeign</a></span><span class="op">(</span><span class="st">"track"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"default"</span>, <span class="st">"treeEntry"</span>, <span class="st">"treeParent"</span>, <span class="st">"parent"</span>, fieldaccess <span class="op">=</span> <span class="st">"foreign"</span><span class="op">)</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -1937,7 +1956,7 @@ explanation of what’s going on.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 4</span></span></span>
 <span><span class="co">#&gt;    id            treeParent    verbID        verbText         </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B rUhMwNSikby5z said             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B LYIZmNK8G6QsR said             </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06  35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 1F74D2B049FA4 35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2485C4F740FC0 27760709F2C9B <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>
@@ -1959,72 +1978,74 @@ explanation of what’s going on.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> 17608A48A8CCB 12D1FF751C0C0 3052814F6CEBE ca n't</span></span></code></pre></div>
 <p>Here’s the code for getting our variable <code>isPredOrFree</code>
 from this:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>isPredOrFree <span class="op">=</span> <span class="op">(</span><span class="op">(</span></span>
 <span>  <span class="va">verbText</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"is"</span>, <span class="st">"was"</span>, <span class="st">"were"</span>, <span class="st">"are"</span>, <span class="st">"am"</span>, <span class="st">"'s"</span>, <span class="st">"'m"</span>, <span class="st">"'re"</span><span class="op">)</span> <span class="op">&amp;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Relation</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">verbText</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/coalesce.html" class="external-link">coalesce</a></span><span class="op">(</span><span class="cn">F</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Now let’s compare the character counts of referential expressions
 that are predicates or free, versus those that are not:</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">isPredOrFree</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-42-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">isPredOrFree</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-43-1.png" width="700"></p>
 <p>As we can see, there is somewhat of a tendency where predicates and
 free NPs are more likely to have very long character counts, compared to
 referential expressions that are neither predicative nor free.</p>
 <p>So let’s add <code>isPredOrFree</code> to the model to see if it
 works as a predictor:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass3_model2</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnitsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span> <span class="op">+</span> <span class="va">Relation</span> <span class="op">+</span> <span class="va">isPredOrFree</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnitsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span> <span class="op">+</span> <span class="va">Relation</span> <span class="op">+</span> <span class="va">isPredOrFree</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass3_model2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noCompetitors + noPrevMentionsIn10 + </span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noCompetitors + noPrevMentionsIn10 + </span></span>
 <span><span class="co">#&gt;     gapUnitsNew + seqInTrail + Relation + isPredOrFree, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
-<span><span class="co">#&gt; -7.926 -3.764 -1.121  1.338 25.230 </span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -1.34234 -0.52101 -0.09161  0.36257  1.86703 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         8.01945    2.36527   3.391 0.000901 ***</span></span>
-<span><span class="co">#&gt; noCompetitors       0.17960    0.13840   1.298 0.196449    </span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.21200    0.35340  -0.600 0.549521    </span></span>
-<span><span class="co">#&gt; gapUnitsNew        -0.09162    0.06927  -1.323 0.188038    </span></span>
-<span><span class="co">#&gt; seqInTrail         -0.17053    0.06430  -2.652 0.008896 ** </span></span>
-<span><span class="co">#&gt; RelationSubj       -4.41934    1.42176  -3.108 0.002267 ** </span></span>
-<span><span class="co">#&gt; isPredOrFreeTRUE    0.59934    1.42072   0.422 0.673756    </span></span>
+<span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)         1.456093   0.262075   5.556 1.30e-07 ***</span></span>
+<span><span class="co">#&gt; noCompetitors       0.040314   0.015334   2.629  0.00949 ** </span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.020172   0.039157  -0.515  0.60723    </span></span>
+<span><span class="co">#&gt; gapUnitsNew        -0.013833   0.007675  -1.802  0.07357 .  </span></span>
+<span><span class="co">#&gt; seqInTrail         -0.031079   0.007125  -4.362 2.44e-05 ***</span></span>
+<span><span class="co">#&gt; RelationSubj       -0.623016   0.157533  -3.955  0.00012 ***</span></span>
+<span><span class="co">#&gt; isPredOrFreeTRUE   -0.055827   0.157417  -0.355  0.72337    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 6.577 on 144 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.2287, Adjusted R-squared:  0.1966 </span></span>
-<span><span class="co">#&gt; F-statistic: 7.117 on 6 and 144 DF,  p-value: 1.173e-06</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.7288 on 144 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.3559, Adjusted R-squared:  0.3291 </span></span>
+<span><span class="co">#&gt; F-statistic: 13.26 on 6 and 144 DF,  p-value: 6.307e-12</span></span></code></pre></div>
 <p>Unfortunately, <code>isPredOrFree</code> does not turn out to be a
-significant predictor, and the p-value is very large.</p>
+significant predictor, and the p-value is very large. Subjecthood, it
+seems, is enough.</p>
 </div>
 <div class="section level3">
 <h3 id="splitting-up-noprevsubjmentions">Splitting up <code>noPrevSubjMentions</code><a class="anchor" aria-label="anchor" href="#splitting-up-noprevsubjmentions"></a>
 </h3>
-<p>Let’s see if we can improve upon the model in any more ways. The
+<p>Let’s see if we can improve upon our variables in any more ways. The
 first thing we could do is to split up <code>noPrevMentionsIn10</code>
-to see if it performs better that way. It is often proposed in the
-literature that subjects are more accessible than other types of
-arguments, and when the previous mention is a subject, the expression
-will subsequently be more accessible as well (e.g. Arnold 2008). So we
-could split up previous mentions into previous subjects and previous
-non-subjects to see whether they have different effects.</p>
+to see if there are differential effects of different types of previous
+mentions that we are ignoring. It is often proposed in the literature
+that subjects are more accessible than other types of arguments, and
+when the previous mention is a subject, the expression will subsequently
+be more accessible as well (e.g. Arnold 2008). So we could split up
+previous mentions into previous subjects and previous non-subjects to
+see whether they have different effects.</p>
 <p>The function <code><a href="../reference/trackPrevContext.html">countPrevMentionsIf()</a></code> counts the number of
 times that a referent was mentioned previously in a specified window of
 units, along with the <code>TidyRez</code> function
 <code><a href="../reference/rez_mutate.html">rez_mutate()</a></code> (note that for non-subjects, we allow
 <code>Relation</code> to be <code>NA</code>):</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>noPrevSubjMentionsIn10 <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">countPrevMentionsIf</a></span><span class="op">(</span><span class="fl">10</span>, <span class="va">Relation</span> <span class="op">==</span> <span class="st">"Subj"</span>, exclFrag <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,</span>
 <span>             noPrevNonSubjMentionsIn10 <span class="op">=</span> <span class="fu"><a href="../reference/trackPrevContext.html">countPrevMentionsIf</a></span><span class="op">(</span><span class="fl">10</span>, <span class="va">Relation</span> <span class="op">!=</span> <span class="st">"Subj"</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Relation</span><span class="op">)</span>, exclFrag <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
@@ -2054,37 +2075,37 @@ units, along with the <code>TidyRez</code> function
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> 17608A48A8CCB                      2                         0</span></span></code></pre></div>
 <p>Now that we’ve added these values to the table, we can rerun the
 linear model, but with <code>noPrevMentionsIn10</code> split up:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass3_model2</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevSubjMentionsIn10</span> <span class="op">+</span> <span class="va">noPrevNonSubjMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnitsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span> <span class="op">+</span> <span class="va">Relation</span> <span class="op">+</span> <span class="va">isPredOrFree</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevSubjMentionsIn10</span> <span class="op">+</span> <span class="va">noPrevNonSubjMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnitsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span> <span class="op">+</span> <span class="va">Relation</span> <span class="op">+</span> <span class="va">isPredOrFree</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass3_model2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noCompetitors + noPrevSubjMentionsIn10 + </span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noCompetitors + noPrevSubjMentionsIn10 + </span></span>
 <span><span class="co">#&gt;     noPrevNonSubjMentionsIn10 + gapUnitsNew + seqInTrail + Relation + </span></span>
 <span><span class="co">#&gt;     isPredOrFree, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
-<span><span class="co">#&gt; -7.848 -3.760 -1.243  1.339 25.297 </span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -1.33588 -0.52408 -0.08787  0.36193  1.86026 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                           Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)                8.09568    2.37769   3.405 0.000859 ***</span></span>
-<span><span class="co">#&gt; noCompetitors              0.19642    0.14360   1.368 0.173508    </span></span>
-<span><span class="co">#&gt; noPrevSubjMentionsIn10    -0.11020    0.41888  -0.263 0.792857    </span></span>
-<span><span class="co">#&gt; noPrevNonSubjMentionsIn10 -0.44740    0.62632  -0.714 0.476187    </span></span>
-<span><span class="co">#&gt; gapUnitsNew               -0.09752    0.07065  -1.380 0.169671    </span></span>
-<span><span class="co">#&gt; seqInTrail                -0.17755    0.06629  -2.678 0.008265 ** </span></span>
-<span><span class="co">#&gt; RelationSubj              -4.52120    1.44309  -3.133 0.002099 ** </span></span>
-<span><span class="co">#&gt; isPredOrFreeTRUE           0.54288    1.43001   0.380 0.704780    </span></span>
+<span><span class="co">#&gt;                            Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)                1.459545   0.263611   5.537 1.43e-07 ***</span></span>
+<span><span class="co">#&gt; noCompetitors              0.041075   0.015921   2.580 0.010888 *  </span></span>
+<span><span class="co">#&gt; noPrevSubjMentionsIn10    -0.015563   0.046440  -0.335 0.738025    </span></span>
+<span><span class="co">#&gt; noPrevNonSubjMentionsIn10 -0.030831   0.069440  -0.444 0.657715    </span></span>
+<span><span class="co">#&gt; gapUnitsNew               -0.014100   0.007833  -1.800 0.073962 .  </span></span>
+<span><span class="co">#&gt; seqInTrail                -0.031397   0.007350  -4.272 3.52e-05 ***</span></span>
+<span><span class="co">#&gt; RelationSubj              -0.627628   0.159993  -3.923 0.000135 ***</span></span>
+<span><span class="co">#&gt; isPredOrFreeTRUE          -0.058384   0.158543  -0.368 0.713231    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 6.595 on 143 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.2298, Adjusted R-squared:  0.1921 </span></span>
-<span><span class="co">#&gt; F-statistic: 6.097 on 7 and 143 DF,  p-value: 3.054e-06</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.7312 on 143 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.3561, Adjusted R-squared:  0.3245 </span></span>
+<span><span class="co">#&gt; F-statistic:  11.3 on 7 and 143 DF,  p-value: 2.391e-11</span></span></code></pre></div>
 <p>Unfortunately, splitting up <code>noPrevSubjMentions</code> does not
 help much.</p>
 </div>
@@ -2119,7 +2140,7 @@ singular</p></li>
 <li><p>mark the rest as singular.</p></li>
 </ul>
 <p>The following code performs these actions:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_mutate.html">rez_mutate</a></span><span class="op">(</span>number <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">text</span>, <span class="st">" and "</span><span class="op">)</span> <span class="op">~</span> <span class="st">"pl"</span>,</span>
 <span>  <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html" class="external-link">str_ends</a></span><span class="op">(</span><span class="va">text</span>, <span class="st">"s"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"pl"</span>,</span>
@@ -2149,7 +2170,7 @@ multi-line chunks. Here is the code. We are using
 the <code>text</code> column of the unit whose <code>unitSeq</code> in
 <code>unitDF</code> corresponds to the <code>unitSeqLast</code> of a
 referential expression in <code>trackDF</code>:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rez_left_join.html">rez_left_join</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">unitDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/rez_select.html">rez_select</a></span><span class="op">(</span><span class="va">unitSeq</span>, <span class="va">text</span><span class="op">)</span>,</span>
 <span>                by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>unitSeqLast <span class="op">=</span> <span class="st">"unitSeq"</span><span class="op">)</span>,</span>
@@ -2177,25 +2198,25 @@ the table.</p>
 <p>We then write the <code>csv</code> file. We only export a subset of
 the columns in the <code>trackDF</code> so that our screen is cleaner
 and easier to work with:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rw.html">rez_write_csv</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span>, <span class="st">"rez007_refexpr.csv"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"unitLastText"</span>, <span class="st">"tokenOrderLast"</span>, <span class="st">"text"</span>, <span class="st">"name"</span>, <span class="st">"number"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>An editing best practice is to copy the <code>.csv</code> file and
 edit from the copy, rather from the <code>.csv</code> you export
 directly. Figure 7 shows what the exported <code>.csv</code> looks like
 in Excel:</p>
 <div class="figure">
-<img src="img/sample-excel.PNG" style="width:100.0%" alt=""><p class="caption">Figure 29: A screenshot of the .csv file in
+<img src="img/sample-excel.PNG" style="width:100.0%" alt=""><p class="caption">Figure 28: A screenshot of the .csv file in
 Excel.</p>
 </div>
 <p>After editing the CSV in a spreadsheet program to fix the mistakes
 and get rid of the ?s, we import it back using
 <code><a href="../reference/rw.html">rez_read_csv()</a></code> (specifying the original <code>rezrDF</code>
 makes the import processes smoother and less error-prone):</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">changeDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/rw.html">rez_read_csv</a></span><span class="op">(</span><span class="st">"rez007_refexpr_edited_sampleproj.csv"</span>, origDF <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, we use the <code><a href="../reference/updateFromDF.html">updateFromDF()</a></code> function to change
 the <code>number</code> column:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/updateFromDF.html">updateFromDF</a></span><span class="op">(</span><span class="va">changeDF</span>, changeCols <span class="op">=</span> <span class="st">"number"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      </span></span>
@@ -2213,53 +2234,53 @@ the <code>number</code> column:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 6B37B5A80F2A  &lt;0&gt;          sg</span></span></code></pre></div>
 <p>Now let’s graph the difference between the singulars and plurals in a
 graph:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">number</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">number</span>, y <span class="op">=</span> <span class="va">charCount</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-51-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">number</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-52-1.png" width="700"></p>
 <p>Singulars seem to be more concentrated towards the smaller character
 counts, but at the same time have more outliers that are very heavy.
 Let’s put these in the model and see what happens:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pass3_model3</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gapUnitsNew</span><span class="op">)</span>, <span class="va">charCount</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">charCount</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevSubjMentionsIn10</span> <span class="op">+</span> <span class="va">noPrevNonSubjMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnitsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span> <span class="op">+</span> <span class="va">number</span> <span class="op">+</span> <span class="va">Relation</span> <span class="op">+</span> <span class="va">isPredOrFree</span>, <span class="va">.</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">charCount</span><span class="op">)</span> <span class="op">~</span> <span class="va">noCompetitors</span> <span class="op">+</span> <span class="va">noPrevSubjMentionsIn10</span> <span class="op">+</span> <span class="va">noPrevNonSubjMentionsIn10</span> <span class="op">+</span> <span class="va">gapUnitsNew</span> <span class="op">+</span> <span class="va">seqInTrail</span> <span class="op">+</span> <span class="va">number</span> <span class="op">+</span> <span class="va">Relation</span> <span class="op">+</span> <span class="va">isPredOrFree</span>, <span class="va">.</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pass3_model3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = charCount ~ noCompetitors + noPrevSubjMentionsIn10 + </span></span>
+<span><span class="co">#&gt; lm(formula = log(charCount) ~ noCompetitors + noPrevSubjMentionsIn10 + </span></span>
 <span><span class="co">#&gt;     noPrevNonSubjMentionsIn10 + gapUnitsNew + seqInTrail + number + </span></span>
 <span><span class="co">#&gt;     Relation + isPredOrFree, data = .)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -6.8878 -3.1076 -1.1019  0.9459 26.1631 </span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -1.27550 -0.48588 -0.07187  0.35337  1.99953 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                           Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; (Intercept)                7.43302    2.65200   2.803  0.00579 **</span></span>
-<span><span class="co">#&gt; noCompetitors              0.13563    0.13916   0.975  0.33144   </span></span>
-<span><span class="co">#&gt; noPrevSubjMentionsIn10    -0.20659    0.39134  -0.528  0.59840   </span></span>
-<span><span class="co">#&gt; noPrevNonSubjMentionsIn10 -0.56899    0.58349  -0.975  0.33118   </span></span>
-<span><span class="co">#&gt; gapUnitsNew               -0.08415    0.06526  -1.289  0.19940   </span></span>
-<span><span class="co">#&gt; seqInTrail                -0.14986    0.06313  -2.374  0.01896 * </span></span>
-<span><span class="co">#&gt; numbersg                   0.59293    1.37074   0.433  0.66600   </span></span>
-<span><span class="co">#&gt; RelationSubj              -3.81653    1.34391  -2.840  0.00519 **</span></span>
-<span><span class="co">#&gt; isPredOrFreeTRUE           0.40747    1.33946   0.304  0.76143   </span></span>
+<span><span class="co">#&gt;                            Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)                1.733582   0.304561   5.692 7.16e-08 ***</span></span>
+<span><span class="co">#&gt; noCompetitors              0.028126   0.015982   1.760 0.080624 .  </span></span>
+<span><span class="co">#&gt; noPrevSubjMentionsIn10    -0.035508   0.044943  -0.790 0.430828    </span></span>
+<span><span class="co">#&gt; noPrevNonSubjMentionsIn10 -0.049998   0.067009  -0.746 0.456849    </span></span>
+<span><span class="co">#&gt; gapUnitsNew               -0.013956   0.007495  -1.862 0.064701 .  </span></span>
+<span><span class="co">#&gt; seqInTrail                -0.025856   0.007250  -3.567 0.000497 ***</span></span>
+<span><span class="co">#&gt; numbersg                  -0.258458   0.157419  -1.642 0.102882    </span></span>
+<span><span class="co">#&gt; RelationSubj              -0.585831   0.154338  -3.796 0.000219 ***</span></span>
+<span><span class="co">#&gt; isPredOrFreeTRUE          -0.043474   0.153827  -0.283 0.777892    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 6.07 on 139 degrees of freedom</span></span>
+<span><span class="co">#&gt; Residual standard error: 0.6971 on 139 degrees of freedom</span></span>
 <span><span class="co">#&gt;   (3 observations deleted due to missingness)</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.2048, Adjusted R-squared:  0.159 </span></span>
-<span><span class="co">#&gt; F-statistic: 4.474 on 8 and 139 DF,  p-value: 7.526e-05</span></span></code></pre></div>
+<span><span class="co">#&gt; Multiple R-squared:  0.3454, Adjusted R-squared:  0.3078 </span></span>
+<span><span class="co">#&gt; F-statistic: 9.169 on 8 and 139 DF,  p-value: 4.404e-10</span></span></code></pre></div>
 <p>Whether the current mention is a subject continues to turn out to be
 a good predictor, as does the sequence of a mention in the trail. The
 rest of the predictors are not significant, though some of them
-(particularly lookback distance, i.e. <code>gapUnits</code>) may hold
-some promise on a larger dataset. Grammatical number seems to be
-hopeless, and probably not worth pursuing.</p>
+(particularly the number of competitors) may hold some promise on a
+larger dataset. Grammatical number does not seem particularly
+promising.</p>
 </div>
 </div>
 <div class="section level2">
@@ -2280,9 +2301,9 @@ coreference will naturally have fewer referents that have been mentioned
 enough times to become accessible. The <code>chainSize</code> column of
 <code>trailDF</code> gives us the chain size, so we can plot it as a
 histogram:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trailDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">chainSize</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">40</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sample_proj_files/figure-html/unnamed-chunk-53-1.png" width="700"></p>
+<p><img src="sample_proj_files/figure-html/unnamed-chunk-54-1.png" width="700"></p>
 <p>We have a small number of very long chains, a small number of
 moderately-sized chains, and a very large number of short (1-3) chains -
 and this is ignoring the fact that some of these lengths are longer than
@@ -2292,7 +2313,7 @@ larger, multi-unit chunk.</p>
 tracks. What are they? We can extract them from <code>trailDF</code>
 first, then explore the corresponding tracks in the
 <code>trackDF</code>:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">longestChains</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trailDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">chainSize</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">chain</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">longestChains</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_split.html" class="external-link">group_split</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">head</span></span>
 <span><span class="co">#&gt; &lt;list_of&lt;</span></span>

@@ -27,11 +27,11 @@ In the following example, we see a short snippet of conversation between two sis
 
 ![Figure 1: A short excerpt of a conversation with several referential expressions](images/paste-9B4A5FCB.png){width="648"}
 
-There are several examples of referential expressions in this snippet. For example, in the first line in the screenshot (line 361), Mary refers to a cattle guard with the phrase *the first cattle guard you go over*. She refers back to it in line 363 using the expression *that*. In the same line 363, she also uses the expression *I* to refer to herself. Alice's reply mentions a new referent, *the tunnel* (366). All of these phrases refer to people or entities in the world.
+There are several examples of referential expressions in Figure 1. For example, in the first line in the screenshot (line 361), Mary refers to a cattle guard with the phrase *the first cattle guard you go over*. She refers back to it in line 363 using the expression *that*. In the same line 363, she also uses the expression *I* to refer to herself. Alice's reply mentions a new referent, *the tunnel* (366). All of these phrases refer to people or entities in the world.
 
 In the above example, the same referent (the cattle guard) was referred to using two distinct expressions: a noun phrase with a relative clause *that first cattle guard you go over* (line 361) and a demonstrative pronoun *that* (line 363). When people do this, we say that they are tracking referents across different parts of the discourse. The relationship between two referential expressions with the same referent in a text is called *coreference*. Each referential expression may be referred to as a *mention* of a certain referent.
 
-In the following image, we have marked up the two expressions referring to the cattle guard with green rectangles, and drawn a line between them, showing the coreference relation. The resulting structure, with lines linking up different referential expressions, is often referred to as a *coreference chain*:
+In the following image (Figure 2), we have marked up the two expressions referring to the cattle guard with green rectangles, and drawn a line between them, showing the coreference relation. The resulting structure, with lines linking up different referential expressions, is often referred to as a *coreference chain*:
 
 ![Figure 2: Coreference chain containing two mentions of the first cattle guard](images/paste-5875E3E1.png){width="590"}
 
@@ -39,7 +39,7 @@ We do the same thing with the two appearances of the referential expression *the
 
 ![Figure 3: Coreference chain containing two mentions of the tunnel](images/paste-0904E75C.png){width="347"}
 
-Here is how the whole excerpt we have shown at the beginning would look like with all the coreference chains marked (including the first, truncated referential expression *the* in line 365):
+The next figure shows how the whole excerpt we have shown at the beginning would look like with all the coreference chains marked (including the first, truncated referential expression *the* in line 365):
 
 ![Figure 4: A version of Figure 1 with all the referential expressions marked.](images/paste-4C24C25A.png){width="619"}
 
@@ -57,7 +57,7 @@ Note that the word *they* in lines 158 and 159, although having the same form as
 
 ![Figure 6: A separate chain for the two instances of they with a different referent](images/paste-F7704C5B.png){width="660"}
 
-The fact that the roommates were referred to by the short and simple one-word expression *they* probably suggests that they were quite prominent in context. Indeed, in the context preceding these two lines, they have been mentioned numerous times, and were the main topic of discussion.
+In Figure 6, the fact that the roommates were referred to by the short and simple one-word expression *they* probably suggests that they were quite prominent in context. Indeed, in the context preceding these two lines, they have been mentioned numerous times, and were the main topic of discussion.
 
 So far, we have talked about notions like accessibility and prominence in rather vague and general terms. But what exactly makes something more accessible, and therefore more likely to be referred to using a shorter form? To understand how exactly people choose referential expressions in natural discourse, we need to turn factors affecting accessibility into a more concrete, readily operationalisable form.
 
@@ -65,7 +65,7 @@ In this project, we will propose some factors that may increase accessibility (e
 
 ## Introduction to the tutorial
 
-The aim of this article is to demonstrate, using a sample, highly simplified project, what type of analysis may be conducted using Rezonator and `rezonateR`. This particular example will examine the choice of referential forms in spoken dialogue: What factors lead to the choice of a longer form versus a shorter one? The following snippet of conversation, for example, has two referential expressions referring to the same entity - a dog - but the first one is a rather long noun phrase (*this darn dog*) while the second is a simple, one-word pronoun (*her*). Can we tell what factors are at play here that motivated the speaker's choice of referential expression?
+The aim of this article is to demonstrate, using a sample, highly simplified project, what type of analysis may be conducted using Rezonator and `rezonateR`. This particular example will examine the choice of referential forms in spoken dialogue: What factors lead to the choice of a longer form versus a shorter one? The following snippet of conversation (Figure 7), for example, has two referential expressions referring to the same entity - a dog - but the first one is a rather long noun phrase (*this darn dog*) while the second is a simple, one-word pronoun (*her*). Can we tell what factors are at play here that motivated the speaker's choice of referential expression?
 
 ![Figure 7: Coreference chain containing two mentions of a dog](images/paste-CF41A72C.png){width="577"}
 
@@ -118,7 +118,7 @@ Figure 8 shows an excerpt close to the beginning of the conversation in Rezonato
 
 In this file, each line is referred to as a *unit*, which in this context is an *intonation unit*, or a short burst of speech under a single intonation contour. In other research projects where we are working with other basic units such as the sentence, clause or other structure of similar length, we can set the Rezonator unit to those structures instead.
 
-Each unit consists of a series of tokens separated by spaces. In this file, most of the tokens are English words, like *usually*, *I* and *do* in line 7 of the screenshot. Also considered tokens are contractions like *'nt* for *not* on lines 7 and 9 or *'s* for *is* on lines 10 and 12, which are considered separate tokens in this project even though they are not separated by whitespace from the previous token in English writing conventions.
+Each unit consists of a series of tokens separated by spaces. In this file, most of the tokens are English words, like *usually*, *I* and *do* in line 7 of the screenshot in Figure 8. Also considered tokens are contractions like *'nt* for *not* on lines 7 and 9 or *'s* for *is* on lines 10 and 12, which are considered separate tokens in this project even though they are not separated by whitespace from the previous token in English writing conventions.
 
 However, there are also other elements that are considered tokens. For example, the symbol at the end of each line in the screenshot is called an *endnote* in the context of discourse-functional transcription (DFT), the transcription conventions used in the Santa Barbara Corpus. It denotes the intonational contour type of the intonation unit. In the line 7, the dash indicates that the intonation unit was truncated. In line 8, the period represents final (falling) intonation, whereas in line 10, the comma represents continuing intonation, which is associated with a relatively stable pitch near the end. Line 11 ends with a question mark indicating question intonation, which is associated with rising pitch near the end.
 
@@ -130,7 +130,7 @@ Coreference chains have been annotated in this file. In the Rezonator context, c
 
 ![Figure 9: Coreference chain for the referent Tim](img/sample_track.PNG){width="100%"}
 
-Here, the proper name *Tim* and three instances of the pronoun *he* all refer to the same person, Tim, and hence are four *tracks* of the same purple *trail*.
+In Figure 9, the proper name *Tim* and three instances of the pronoun *he* all refer to the same person, Tim, and hence are four *tracks* of the same purple *trail*.
 
 #### Zeroes
 
@@ -138,9 +138,9 @@ When there is a clause with an implicit participant that is not overtly expresse
 
 ![Figure 10: Coreference chain for the referent Mary, including two first-person pronouns and a zero](images/paste-11E68D36.png){width="604"}
 
-Notice that the two occurrences of *I* on Line 2 are linked together with a purple link. In the third line, the person who is implied to be staying up late is Mary herself, even though there is no explicit mention. Thus, a zero was inserted before *stay*, and added to the same trail as the two occurrences of *I*.
+Notice that the two occurrences of *I* on Line 2 in Figure 10 are linked together with a purple link. In the third line, the person who is implied to be staying up late is Mary herself, even though there is no explicit mention. Thus, a zero was inserted before *stay*, and added to the same trail as the two occurrences of *I*.
 
-The zero in line 4 does not refer back to *I*, but to the action of staying up late. Thus, it is not in the same chain, as indicated by the lack of a purple border around it (even though the fact that the purple line runs through the \<0\> might lead one to mistakenly believe that it belongs to the same chain). In fact, the \<0\> on line 4 belongs to the same chain as *this* on line 2 and *stay up late* on line 3, both of which refer to the action of staying up late:
+In Figure 10, the zero in line 4 does not refer back to *I*, but to the action of staying up late. Thus, it is not in the same chain, as indicated by the lack of a purple border around it (even though the fact that the purple line runs through the \<0\> might lead one to mistakenly believe that it belongs to the same chain). In fact, as shown in Figure 11, the \<0\> on line 4 belongs to the same chain as *this* on line 2 and *stay up late* on line 3, both of which refer to the action of staying up late:
 
 ![Figure 11: Coreference chain for the action of staying up late, including a demonstrative pronoun, the phrase *stay up late*, and a zero](images/paste-3973BFDF.png){width="614"}
 
@@ -152,23 +152,19 @@ There are two types of chunks. Some chunks correspond to tracks. For example, *s
 
 ![Figure 12: Coreference chain for the action of staying up late](images/paste-3973BFDF.png){width="614"}
 
-In the file we are working with, chunks corresponding to tracks are mostly referential expressions like pronouns and noun phrases. We include predicates and clauses when there are referential expressions that co-refer with them; for example, *this* and *stay up late* both refer to the action of staying up late here.
+In the file we are working with, chunks corresponding to tracks are mostly referential expressions like pronouns and noun phrases. As is visible in Figure 12, we include predicates and clauses when there are referential expressions that co-refer with them; for example, *this* and *stay up late* both refer to the action of staying up late here.
 
-The second type of chunks is called 'blank chunks'. These chunks do not belong to any trail and appear with grey rectangular borders with angled corners around them. In this file, verbal complexes are marked as blank chunks. The following figure shows some examples of these verbal chunks
+The second type of chunks is called 'blank chunks'. These chunks do not belong to any trail and appear with grey rectangular borders with angled corners around them. In this file, verbal complexes are marked as blank chunks. The following figure shows some examples of these verbal chunks:
 
-![Figure 13: Some examples of 'blank chunks', indicating verbal complexes](img/sample_verbs.PNG){width="100%"}
+![Figure 13: Some examples of 'blank chunks', indicating verbal complexes](images/paste-18EEFFB5.png){width="666"}
 
-In this example, auxiliaries, negation and similar elements expressing verbal categories are placed inside these verbal complexes, such as *wasn't gonna* in *wasn't gonna do*. The particle *up* is not placed inside the verbal complex because particles in particle verbs can be separated from verbs by the object of the clause. Consider the following example:
-
-![Figure 14: An example of a particle verb where the particle is separated from the verb by an object](images/paste-5DE5A9C5.png){width="430"}
-
-Although *stay up* is intransitive and therefore cannot be separated, we still exclude *up* from the verbal complex to maintain consistency between particle verbs.
+In this example (Figure 13), auxiliaries, negation and similar elements expressing verbal categories are placed inside these verbal complexes, such as *wasn't gonna* in *wasn't gonna do*.
 
 Chunks have been tagged for two properties inside Rezonator. The field `chunkType` is annotated as `verb` for verbs and left blank for referential expressions, allowing us to distinguish between the two when importing into `rezonateR` later. The field `largerChunk` is the larger chunk to which a chunk belongs, which will be discussed later. These two columns are shown in the navigation pane of Rezonator as follows:
 
-![Figure 15: The navigation pane showing two chunk properties, `chunkType` and `largerChunk`](images/paste-F4175735.png)
+![Figure 14: The navigation pane showing two chunk properties, `chunkType` and `largerChunk`](images/paste-F4175735.png)
 
-In this image, *said* and *wasn't gonna do* are verbal complexes and hence tagged as *verb* under `chunkType`, the first column on the right side of Figure 15 (without grey shading). The other expressions have blank values, indicating that they are referential expressions. The second column on the right side, `largerChunk`, is annotated for chunks 67 and 68 as '2', indicating that they are part of the same larger chunk that will be merged in `rezonateR`, as we will soon see.
+In Figure 14, *said* and *wasn't gonna do* are verbal complexes and hence tagged as *verb* under `chunkType`, the first column on the right side of Figure 15 (without grey shading). The other expressions have blank values, indicating that they are referential expressions. The second column on the right side, `largerChunk`, is annotated for chunks 67 and 68 as '2', indicating that they are part of the same larger chunk that will be merged in `rezonateR`, as we will soon see.
 
 ## Importing the file
 
@@ -197,7 +193,7 @@ During the import process, we will need to specify two types of information:
 
 -   **Which fields of a token contains text to be concatenated:** When you are browsing data frames containing data structures above the level of a token, such as `chunkDF`or`unitDF`, you want to be able to see the text. For example, take the following line:
 
-    ![Figure 16: A unit containing the chunk \*'m also going to suggest\*](images/paste-5FB50E2C.png){width="444"}
+    ![Figure 15: A unit containing the chunk \*'m also going to suggest\*](images/paste-5FB50E2C.png){width="444"}
 
     When browsing the `unitDF`, you would want to see all the text in this unit, *(...) (H) I 'm also going to suggest ,*, in one of the columns. Similarly, when browsing `chunkDF`, you would want a column that gives you *'m also going to suggest*. Thus, we have to tell Rezonator where to look for the textual content of individual tokens so that they can be concatenated in the `rezrDF`s for higher structures like chunks and units.
 
@@ -261,7 +257,7 @@ head(rez007$chunkDF$refexpr %>% select(id, text, tokenOrderFirst, tokenOrderLast
 
 These values count all tokens in the file, including non-word tokens. In the Santa Barbara Corpus text we are using, there are various types of non-word tokens that these values will count. For example, in the following screenshot:
 
-![Figure 17: Units and tokens.](img/sample_convo.PNG){alt="Figure 7: Units and tokens." width="74%"}
+![Figure 16: Units and tokens.](img/sample_convo.PNG){alt="Figure 7: Units and tokens." width="74%"}
 
 Values like `doctokenSeq` include in their counting various tokens that are not exactly words. This includes endnotes (such as `,` and `.`), which, as we discussed before, denote the intonational contours of IUs. Also included are pauses like `(...)`, *vocalisms* - sounds we make during speech that are often considered paralinguistic such as `(H)` for in-breaths and `@@@` for laughter - and so on.
 
@@ -300,7 +296,7 @@ As you might have noticed when using Rezonator, Rezonator automatically calculat
 
 As an example, let's look the trail for staying up late at the beginning of the conversation again:
 
-![Figure 18: A trail containing four mentions of the action of staying up late, spanning units 2-6.](images/paste-224A955C.png){width="598"}
+![Figure 17: A trail containing four mentions of the action of staying up late, spanning units 2-6.](images/paste-224A955C.png){width="598"}
 
 If we consider the zero on line 4, `gapUnits` is just 1, since the previous mention was right in the previous unit. The *it* in the last line, line 6, should have a `gapUnits` value of 2, since the previous mention was on line 4, which is two units away.
 
@@ -311,7 +307,7 @@ library(ggplot2)
 rez007$trackDF$default %>%
   mutate(isFirst = case_when(gapUnits == "N/A" ~ "First",
                              T ~ "NonFirst")) %>%
-  ggplot(aes(x = isFirst, y = charCount)) + geom_violin()
+  ggplot(aes(x = isFirst, y = log(charCount))) + geom_violin()
 ```
 
 Clearly, we can see that first mentions have a much higher tendency to be referred to using a noun phrase that has more characters. In fact, non-first mentions are highly concentrated at the bottom of the graph with the shortest referential expressions, whereas first mentions are well spread out across the range of lengths.
@@ -327,13 +323,24 @@ rez007$trackDF$default %>%
 
 Oh no, what's going on? It seems that `gapUnits` is not predicting what we would usually expect to see. Most of the long-`gapUnits` noun phrases are fairly light, and there are quite a few small-`gapUnits` phrases that are quite long. This seems to go against the usual expectation that a shorter lookback distance leads to higher accessibility and should be associated with shorter referential forms.
 
-In the rest of the tutorial, we will partially account for this weirdness (though some of it is certainly due to our small, biased dataset). But for now, let's try to apply a simple linear model to this data to see what happens when we try to predict `charCount` from `gapUnits`. (Note: This is not the best model specification for the data we're looking at, but let's keep it simple for this tutorial.)
+The bottom left of the above diagram was a little messy; we can log the character count to get a better view:
+
+```{r}
+rez007$trackDF$default %>%
+  filter(gapUnits != "N/A", charCount > 0) %>%
+  mutate(gapUnits = as.integer(gapUnits)) %>%
+  ggplot(aes(x = gapUnits, y = log(charCount))) + geom_count()
+```
+
+There is still a slight visible pattern whereby longer gapUnits tends to be associated with shorter character counts, contrary to expectation.
+
+In the rest of the tutorial, we will partially account for this weirdness (though some of it is certainly due to our small, biased dataset). But for now, let's try to apply a simple linear model to this data to see what happens when we try to predict the logged `charCount` from `gapUnits`. (Note: This is not the best model specification for the data we're looking at, but let's keep it simple for this tutorial.)
 
 ```{r}
 pass1_model1 = rez007$trackDF$default %>%
   filter(gapUnits != "N/A", charCount > 0) %>%
   mutate(gapUnits = as.integer(gapUnits)) %>%
-  lm(charCount ~ gapUnits, .)
+  lm(log(charCount) ~ gapUnits, .)
 summary(pass1_model1)
 ```
 
@@ -341,13 +348,13 @@ As we can see, although there is a negative coefficient that says a larger `gapU
 
 ### A finer-grained distance metric?
 
-There is another value, `gapWords`, that is automatically calculated in Rezonator and calculates the number of tokens from the current mention to the previous one. Would this finer-grained measure do better than `gapUnits`? Let's try to make the same plot that we just did, except with `gapWords` instead of `gapUnits` on the x-axis:
+There is another value, `gapWords`, that is automatically calculated in Rezonator and calculates the number of tokens from the current mention to the previous one. Would this finer-grained measure be a better operationalisation of lookback distance than `gapUnits`? Let's try to make the same plot that we just did with logged `charCount`, except with `gapWords` instead of `gapUnits` on the x-axis:
 
 ```{r}
 rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
   mutate(gapWords = as.integer(gapWords)) %>%
-  ggplot(aes(x = gapWords, y = charCount)) + geom_count()
+  ggplot(aes(x = gapWords, y = log(charCount))) + geom_count()
 
 ```
 
@@ -357,11 +364,11 @@ The pattern is not much clearer from the diagram this time than last time. We st
 pass1_model2 = rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
   mutate(gapWords = as.integer(gapWords)) %>%
-  lm(charCount ~ gapWords, .)
+  lm(log(charCount) ~ gapWords, .)
 summary(pass1_model2)
 ```
 
-As we can see, there is little change with the linear model either: The negative coefficient indicates that a shorter `gapWords` is associated with longer referential expressions, contrary to usual expectations, although the relationship is not significant, with a p-value around 0.2.
+As we can see, there is little change with the linear model either: The negative coefficient indicates that a shorter `gapWords` is associated with longer referential expressions, contrary to usual expectations, although the relationship is not significant, with a p-value around 0.14.
 
 There are ways we can potentially improve on these measures as well as other predictors of character count that we can potentially explore. We'll continue doing this throughout the tutorial.
 
@@ -369,15 +376,17 @@ There are ways we can potentially improve on these measures as well as other pre
 
 Having attempted to predict character count from predictors imported directly from Rezonator, let's try to derive some predictors using `rezonateR` functions too. This section will cover some basic functions in the `EasyTrack` series of functions, which is dedicated to analysing coreference phenomena. See the [tutorial on coreference](https://rezonators.github.io/rezonateR/articles/track.html) (`vignette("track")`) for details about them.
 
-In particular, we will try to count the *number* of previous mentions instead of the distance to the previous mention, and also try to count the number of mentions to *different* entities in the surrounding context. We will also try to improve on `gapWords` to see if modifying its definition a little will improve its predictive power.
+In particular, we will try to count the *number* of previous mentions instead of the distance to the previous mention, and also try to count the number of mentions to *different* entities in the surrounding context. We will also try to improve on `gapWords` to see if modifying its operationalisation a little will be more revealing of the effect of lookback distance.
 
 ### Counting previous mentions
+
+Apart from the time to the previous time that an entity was mentioned, the number of previous mentions within a specified time window may also affect accessibility: An entity that was just mentioned in the previous intonation unit but never before that might conceivably be less accessible than one that was just mentioned in the previous intonation unit as well as several intonation units before that.
 
 The function `countPrevMentions()` in `rezonateR` is one function we can use to count the number of times the referent of a referential expression was referred to in its previous context. In its simplest form, you can simply specify a window of units in which to look for referential expressions that corefer with the each mention.
 
 In this example, we will look at a window of 10 previous units. Refer to the following example:
 
-![Figure 19: A trail containing five mentions of the action of staying up late, spanning units 2-8.](images/paste-E52A7A24.png){width="586"}
+![Figure 18: A trail containing five mentions of the action of staying up late, spanning units 2-8.](images/paste-E52A7A24.png){width="586"}
 
 If we consider the *it* on the last line (line 8), among the previous 10 units (actually seven, since there are only seven preceding units), there have been four mentions of the action of staying up late, so the value we expect to get from this function is 4. If we had set the window to five units instead, the value would be only 3, since the first mention on line 2, *this*, is not within the five-unit window.
 
@@ -394,22 +403,22 @@ Now that we have counted the number of previous mentions, let's try to draw a sc
 ```{r}
 rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
-  ggplot(aes(x = noPrevMentionsIn10, y = charCount)) + geom_count()
+  ggplot(aes(x = noPrevMentionsIn10, y = log(charCount))) + geom_count()
 
 ```
 
-From the graph, we see that there *is* a tendency for character counts to be smaller when the number of previous mentions is greater, albeit somewhat weak. The very large referential expressions are absent when there are more than 5 previous mentions, and after about five mentions, we can see the modal character length decreasing as well.
+From the graph, we see that there *is* a tendency for character counts to be smaller when the number of previous mentions is greater, albeit somewhat weak. The very large referential expressions are absent when there are more than five previous mentions, and after about five mentions, we can see the modal character length decreasing as well.
 
-Now let's fit a linear model plotting this predictor against `charCount`
+Now let's fit a linear model plotting this predictor against logged `charCount`
 
 ```{r}
 pass2_model1 = rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
-  lm(charCount ~ noPrevMentionsIn10, .)
+  lm(log(charCount) ~ noPrevMentionsIn10, .)
 summary(pass2_model1)
 ```
 
-From the linear model, We also find that the number of previous mentions in the previous 10 units *is* a significant predictor at the 0.05 significance level. It seems that pure lookback distance is not enough - we need to look beyond the previous mention. This might be a suggestion that a single mention of something - even close by - is not sufficient warrant to produce a shorter expression. Instead, we need to consider how often it has been mentioned.
+From the linear model, we also find that the number of previous mentions in the previous 10 units *is* a significant predictor at the 0.05 significance level. It seems that pure lookback distance is not enough - we need to look beyond the previous mention. This might be a suggestion that a single mention of something - even close by - is not sufficient warrant to produce a shorter expression. Instead, we need to consider how often it has been mentioned.
 
 Now that we've tried two different operationalisations of the idea that something more prominent in the previous context should be more salient and referred to using a simpler form, let's try to explore other possible predictors of referential choice.
 
@@ -421,7 +430,7 @@ The function `countCompetitors()` is similar to `countPrevMentions()`, except th
 
 We will again be using a window of 10 units, and will not be looking only at mentions between the current and previous one. Let's look at the first seven lines of the text again to see how many competitors the *it* on line 8, referring to staying up late, has:
 
-![Figure 20: Competing mentions to the *it*, referring to the action of staying up late, on line 8.](images/paste-E203783D.png){width="512"}
+![Figure 19: Competing mentions to the *it*, referring to the action of staying up late, on line 8.](images/paste-E203783D.png){width="512"}
 
 From the graph, there nine mentions previous mentions in the previous 10-unit window that belong to a different chain as *stay up late,* so we expect that the value we get from `countCompetitors()`will be 9.
 
@@ -438,22 +447,22 @@ Now let's try to draw a scatterplot and fit a linear model, as we have done befo
 ```{r}
 rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
-  ggplot(aes(x = noCompetitors, y = charCount)) + geom_count()
+  ggplot(aes(x = noCompetitors, y = log(charCount))) + geom_count()
 
 ```
 
-If we focus on the bottom part of the graph where the bulk of the data are lying, there does seem to be a small effect where a greater number of competitors leads to the use of more characters. Above around 16 competitors, it is much less common to have very short (length \< 3) referential expressions.
+If we focus on the bottom half of the graph where the bulk of the data are lying, there does seem to be a small effect where a greater number of competitors leads to the use of more characters. Above around 16 competitors, it is much less common to have very short (length \< 3) referential expressions. Let's put the number of competitors in our linear model now:
 
 ```{r}
 pass2_model1 = rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
-  lm(charCount ~ noCompetitors, .)
+  lm(log(charCount) ~ noCompetitors, .)
 summary(pass2_model1)
 ```
 
 As we can see from here, there is a small effect whereby a larger number of competitors is associated the use of longer referential expressions, which is just as we expect. However, we shouldn't conclude so soon that the data supports our hypothesis that competitors affect accessibility.
 
-There is good reason to believe that `noCompetitors` and `noPrevMentionsIn10` may be highly correlated, and thus some of the effect we see for `noCompetitors` may actually due to the presence of previous mentions, or vice versa. This is because of there are more non-coreferring expressions in the previous units, there will tend to be fewer coreferential expressions, assuming that the number of referential expressions is relatively stable, i.e. our two competitors are negatively correlated are negatively correlated. The code below plots them in a graph and calculates the Pearson correlation coefficient:
+There is good reason to believe that `noCompetitors` and `noPrevMentionsIn10` may be highly correlated, and thus some of the effect we see for `noCompetitors` may actually due to a confounding factor: the presence of previous mentions, or vice versa. This is because of there are more non-coreferring expressions in the previous units, there will tend to be fewer coreferential expressions, assuming that the number of referential expressions is relatively stable, i.e. our two competitors are negatively correlated are negatively correlated. The code below plots them in a graph and calculates the Pearson correlation coefficient:
 
 ```{r}
 rez007$trackDF$default %>%
@@ -467,23 +476,23 @@ As we can see, there is a weak but clear negative correlation between the number
 ```{r}
 pass2_model3 = rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10, .)
+  lm(log(charCount) ~ noCompetitors + noPrevMentionsIn10, .)
 summary(pass2_model3)
 ```
 
 As we can see, once we put both in the model, `noCompetitors` becomes the only significant predictor. Of course, this does not mean that `noPrevMentionsIn10` does not matter; we only have very low power, after all. In any case, both coefficient estimates are in the expected direction: The larger the number of previous mentions and smaller the number of competitors, the shorter the form.
 
-As a last attempt, let's also try the lookback-based approach by adding `gapUnits` to the model as well:
+In case lookback distance and number of recent mentions have independent effects, let's also try the lookback-based approach by adding `gapUnits` to the model as well:
 
 ```{r}
 pass2_model4 = rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
   mutate(gapUnits = as.numeric(gapUnits)) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnits, .)
+  lm(log(charCount) ~ noCompetitors + noPrevMentionsIn10 + gapUnits, .)
 summary(pass2_model4)
 ```
 
-Interestingly, this time, all three predictors are significant or close to significant. The first two are in expected directions: having more competitors leads to longer referential expressions, whereas more recent mentions makes the form smaller. However, the `gapUnits` effect is in the opposite direction as we expect: The greater the gap, the smaller the referential expression! This does not appear to make sense. We will continue to improve this model in the following sections to see what happens to `gapUnits`.
+Interestingly, this time, all three predictors are significant or close to significant. The first two are in expected directions: having more competitors leads to longer referential expressions, whereas more recent mentions makes the form smaller. However, the `gapUnits` effect is still in the opposite direction as we expect: The greater the gap, the smaller the referential expression! This does not appear to make sense. We will continue to improve this model in the following sections to see what happens to `gapUnits`.
 
 ### Upgrading `gapWords`
 
@@ -491,9 +500,9 @@ There's an additional thing we could do. The `gapWords` in Rezonator actually ha
 
 To use the example of staying up late again, refer to the following screenshot:
 
-![Figure 21: Coreference chain for the action of staying up late](images/paste-3973BFDF.png){alt="Figure 11: Coreference chain for the action of staying up late" width="614"}
+![Figure 20: Coreference chain for the action of staying up late](images/paste-3973BFDF.png){alt="Figure 11: Coreference chain for the action of staying up late" width="614"}
 
-Under `gapWords` value for the second mention, *stay up late*, would be 5. However, you might not want to count the period on line 2 or the pause and zero on line 3 in the calculation of `gapWords`.
+Currently, the `gapWords` value for the second mention, *stay up late*, would be 5. However, you might not want to count the period on line 2 or the pause and zero on line 3 in the calculation of `gapWords`.
 
 Let's try to use the `rezonateR` function `tokensToLastMention()` instead to deal with these issues. In this sample code, we will treat `<0>` as belonging to the end of the intonation unit they are annotated at, and define `docWordSeqLast` as the token sequence used in calculation, thus discounting non-words:
 
@@ -512,7 +521,7 @@ Now we can put this new `gapWords` into the model:
 pass2_model5 = rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
   mutate(gapUnits = as.numeric(gapUnits)) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapWordsNew, .)
+  lm(log(charCount) ~ noCompetitors + noPrevMentionsIn10 + gapWordsNew, .)
 summary(pass2_model5)
 ```
 
@@ -520,7 +529,7 @@ This has no significant effect, unfortunately, so it does not seem that `gapWord
 
 ### Sequential position of tracks in trails
 
-A final variable we could add to the model is the sequential position of a track within a trail. We might expect that the second mention of a referent, for example, might be longer than a fifth mention. We can get this variable using `getPosInChain()`:
+A final variable we could add to the model is the sequential position of a track within a trail, which might also contribute to accessibility in a different way by giving the overall discourse prominent, rather than just a local effect. We might expect that the second mention of a referent, for example, might be longer than a fifth mention. We can get this variable using `getPosInChain()`:
 
 ```{r}
 rez007$trackDF$default = rez007$trackDF$default %>%
@@ -533,7 +542,7 @@ Now we can plot the character count against this value in a graph:
 ```{r}
 rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
-  ggplot(aes(x = seqInTrail, y = charCount)) + geom_count()
+  ggplot(aes(x = seqInTrail, y = log(charCount))) + geom_count()
 ```
 
 It does seem that larger character counts are much rare as the `seqInTrail` value gets larger. Let's put the variable inside our model and see what happens:
@@ -542,11 +551,11 @@ It does seem that larger character counts are much rare as the `seqInTrail` valu
 pass2_model5 = rez007$trackDF$default %>%
   filter(gapWords != "N/A", charCount > 0) %>%
   mutate(gapUnits = as.numeric(gapUnits)) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapWordsNew + seqInTrail, .)
+  lm(log(charCount) ~ noCompetitors + noPrevMentionsIn10 + gapWordsNew + seqInTrail, .)
 summary(pass2_model5)
 ```
 
-It turns out that `seqInTrail` is a significant variable, and in the expected direction: The farther along we are in a trail, the shorter the form of the referential expression.
+It turns out that `seqInTrail` is a significant variable, and in the expected direction: The farther along we are in a trail, the shorter the form of the referential expression. `noPrevMentionsIn10`, which we can expect is quite highly correlated to `seqInTrail` especially in smaller chains, is no longer significant.
 
 Now that we have explored the `EasyTrack` family of functions a little bit, let us explore the other options in `rezonateR` that allow us to extract other types of predictors.
 
@@ -572,13 +581,13 @@ rez007$trackDF$default %>% filter(gapUnits <= 1, charCount > 20) %>% select(id, 
 
 Notice that some of these cases do not seem to be actual referential expressions. Some of these cases are legitimate; for example, *nobody fucks with my lifestyle* happens to have been referred to by a cataphorical *it*:
 
-![Figure 22: A case of cataphoric *it* creating an exception to the general rule that shorter `gapUnits` is associated with shorter length.](images/paste-AA63E6C5.png){width="437"}
+![Figure 21: A case of cataphoric *it* creating an exception to the general rule that shorter `gapUnits` is associated with shorter length.](images/paste-AA63E6C5.png){width="437"}
 
 Since this is a case of cataphora and one of the expressions is a full clause, it is not surprising that it throws a monkey wrench into our hypothesis that shorter `gapUnits` should lead to shorter orthographic length, which is largely based on expectations about *anaphora* - where expressions refer to things mentioned *before* them - not cataphora, where an expression points to something mentioned later in the utterance.
 
 However, the case of *(...) in self assertiveness ,* is an error. The problem is that in Rezonator, it is not possible to create chunks that span multiple units. We can only create individual chunks for each unit. So in this screenshot, *a real good lesson for them ,*, *too ,*, and *(...) in self assertiveness ,* are three separate chunks, when they should really only be a single chunk:
 
-![Figure 23: A case where three separates should in reality be treated as a single chunk.](images/paste-F5ED0106.png){width="430"}
+![Figure 22: A case where three separates should in reality be treated as a single chunk.](images/paste-F5ED0106.png){width="430"}
 
 This created a situation where *(...) in self assertiveness* is mistakenly taken as long referential expression that occurred right after a previous mention *too ,*.
 
@@ -590,7 +599,7 @@ In Rezonator, trees are structures used to indicate syntactic or semantic relati
 
 In ths file we're working with, there are a number of two-layered trees that indicate argument structure of each verb. The 'root' of each tree is the verb, and the arguments are the children of that root. The following figure shows the argument structure of Line 4, with *defeats* as the root with three children: a zero subject, the object *the purpose of getting up in the morning*, and the adverb *kinda*:
 
-![Figure 24: An example of a tree in our file.](img/sample_tree.PNG){width="100%"}
+![Figure 23: An example of a tree in our file.](img/sample_tree.PNG){width="100%"}
 
 The four 'nodes' in this tree are known as `treeEntry` objects in Rezonator, and the three links between them, shown by an arrow in the screenshot, is called a `treeLink`. These links are tagged with the field `Relation`. In this file, tree links are annotated as `Relation` = `"Subject"` when it indicates a subject-verb relation; otherwise `Relation` is left blank.
 
@@ -613,13 +622,13 @@ There are two functions for merging chunks in `rezonateR`:
 
     ![](images/paste-D742A118.png){width="497"}
 
-    ![Figure 25: An example where two chunks that should belong together can be merged using the fact that they belong to the same tree entry.](images/paste-0C261A8B.png){width="483"}
+    ![Figure 24: An example where two chunks that should belong together can be merged using the fact that they belong to the same tree entry.](images/paste-0C261A8B.png){width="483"}
 
 -   `mergeChunksWithIDs()`: We merge chunks by assigning IDs to individual chunks that indicate the merged chunk it is supposed to belong to. In this dataset, this is done in the field `largerChunk` on chunks. For example, the first chunk you create this way may have the ID 1, the second chunk 2, the third chunk 3 and so on. In this case, all the component chunks of the first complex chunk should have the value `1` for `largerChunk` and so on.
 
-    We can use this technique in action for merging the same two chunks we saw in Figure 15:
+    We can use this technique in action for merging the same two chunks we saw in Figure 24:
 
-    ![Figure 26: The same two chunks that need to be merged into a single chunk have been annotated as \`largeChunk = 2\`, indicating that they belong in the same larger chunk.](images/paste-65C42935.png)
+    ![Figure 25: The same two chunks that need to be merged into a single chunk have been annotated as \`largeChunk = 2\`, indicating that they belong in the same larger chunk.](images/paste-65C42935.png)
 
 The new chunks will be added to the bottom of `chunkDF`. In addition, `chunkDF` will have an extra column `combinedChunk` giving information about chunk combinations:
 
@@ -657,7 +666,7 @@ This new value `gapUnitsNew` has an `NA` value for fragments of chunks, and also
 rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew)) %>%
   mutate(gapUnitsNew = as.integer(gapUnitsNew)) %>%
-  ggplot(aes(x = gapUnitsNew, y = charCount)) + geom_count()
+  ggplot(aes(x = gapUnitsNew, y = log(charCount))) + geom_count()
 ```
 
 While we still can't see the expected effect, some of the outliers on the top left of the graph are now gone.
@@ -680,19 +689,19 @@ Now with the corrected data, let's try to refit the linear model:
 ```{r}
 pass3_model1 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + seqInTrail, .)
+  lm(log(charCount) ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + seqInTrail, .)
 summary(pass3_model1)
 ```
 
-This time, `noCompetitors` is no longer a good predictor, although still close to significance. The coefficient of `gapUnitsNew` is still in the 'wrong' direction, since a larger `gapUnitsNew` still leads to a smaller referential expression, but the effect is not significant any more. The predictor `noPrevMentionsin10` is also insignificant even though the estimate is in the expected direction: The more the number of previous mentions, the shorter the form. The predictor `seqInTrail` is remains significant and in the expected direction - the farther along in the chain, the shorter the form - though the p-value has increased somewhat.
+This time, `noCompetitors` is still significant. The coefficient of `gapUnitsNew` is still in the 'wrong' direction, since a larger `gapUnitsNew` still leads to a smaller referential expression, but the effect is not significant. The predictor `noPrevMentionsin10` is also insignificant even though the estimate is in the expected direction: The more the number of previous mentions, the shorter the form. The predictor `seqInTrail` is remains significant and in the expected direction - the farther along in the chain, the shorter the form.
 
-Is there any way we can improve on this model a little more? Let's consider the cases with small `gapUnits` but large character counts again. It turns out that many of them are **predicates** of copular clauses, like the following example, which has the very long expression *what I'm gonna tell him* coreferential to the subject *that*:
+Are there any more predictors that we can consider testing? Let's consider the cases with small `gapUnits` but large character counts again. It turns out that many of them are **predicates** of copular clauses, like the following example, which has the very long expression *what I'm gonna tell him* coreferential to the subject *that*:
 
-![Figure 27: A screenshot of containing a copular clause with the contracted copula *'s*. The referential expression *what I'm gonna tell him* is very long, and is very close to the previous mention, which is just the copular subject.](images/paste-EA1377C0.png){width="530"}
+![Figure 26: A screenshot of containing a copular clause with the contracted copula *'s*. The referential expression *what I'm gonna tell him* is very long, and is very close to the previous mention, which is just the copular subject.](images/paste-EA1377C0.png){width="530"}
 
 There is in fact some discussion on whether predicates should count as referential expressions at all. Many annotation schemes, such as OntoNotes, exclude them, based on discussion in work like van Deemter & Kibble (2000); however, recent work has highlighted the potential referring value of referential expressions (e.g. Zeldes 2022). Here, we maintain the position that predicates should be marked as referential expressions.
 
-On the other hand, very few of the long referential expressions with small `gapUnits` are subjects. This suggests that it will be useful to add information about grammatical relations. Subjects are likely to be biased towards shorter character counts, and predicates towards longer ones. The two following sections will add these elements. First we will add the `Relation` predictor, which is annotated in the data and tells whether a referential expression is the subject of a clause. Then we write code to automatically guess whether something is a predicate.
+On the other hand, very few of the long referential expressions with small `gapUnits` are subjects. This suggests that it will be informative to test the effect of grammatical relations. Subjects are likely to be biased towards shorter character counts, and predicates towards longer ones. The two following sections will add these elements. First we will add the `Relation` predictor, which is annotated in the data and tells whether a referential expression is the subject of a clause. Then we write code to automatically guess whether something is a predicate.
 
 ### Adding information about verbs and argument structure
 
@@ -717,7 +726,7 @@ We can now plot the `charCount` values of subjects and non-subjects:
 ```{r}
 rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew)) %>%
-  ggplot(aes(x = Relation, y = charCount)) + geom_violin()
+  ggplot(aes(x = Relation, y = log(charCount))) + geom_violin()
 ```
 
 The pattern overwhelmingly supports our hypothesis that subjects should be more accessible that nonsubjects, and hence be referred to using a shorter referential expression.
@@ -727,19 +736,19 @@ Now let's see what `Relation` turns up if we put it in the linear model:
 ```{r}
 pass3_model2 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + seqInTrail + Relation, .)
+  lm(log(charCount) ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + seqInTrail + Relation, .)
 summary(pass3_model2)
 ```
 
-As we can see, subjects are likely to be far shorter than non-subjects. The effects of the other factors are almost gone in this model, except `seqInTrail`, which remains significant.
+As we can see, subjects are likely to be far shorter than non-subjects. The variables `seqInTrail` and `noCompetitors` remain significant.
 
 ### Adding the effect of predicatehood
 
-We can now add a variable to pick out predicates. There's a quick and dirty way to guess which referential expressions are predicates: We can pick out those expressions that are arguments of copulas, i.e. have a copula in the column `verbText`, and also are not subjects. This will incorrectly pick out adjuncts of copula clauses, but those are infrequent enough in our sample that we can get away with it.
+We can now also add a variable to pick out predicates. There's a quick and dirty way to guess which referential expressions are predicates: We can pick out those expressions that are arguments of copulas, i.e. have a copula in the column `verbText`, and also are not subjects. This will incorrectly pick out adjuncts of copula clauses, but those are infrequent enough in our sample that we can get away with it.
 
 In addition, referential expressions that don't belong to any verb - so-called 'free NPs' (Helasvuo 2019), with 'free' meaning 'free from a verb' - are often also predicate-like in behaviour, such as the multiline chunk we've seen before:
 
-![Figure 28: An example of a free NP.](images/paste-F5ED0106.png){alt="Figure 6" width="430"}
+![Figure 27: An example of a free NP.](images/paste-F5ED0106.png){alt="Figure 6" width="430"}
 
 So we can also include them as 'predicates' as good measure. Let's call the resulting column `isPredOrFree`. (Note that this incorrectly picks out phrases that are parts of prepositional phrases as well, but again, there are few enough of these that we can get away with it.)
 
@@ -774,7 +783,7 @@ Now let's compare the character counts of referential expressions that are predi
 ```{r}
 rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew)) %>%
-  ggplot(aes(x = isPredOrFree, y = charCount)) + geom_violin()
+  ggplot(aes(x = isPredOrFree, y = log(charCount))) + geom_violin()
 ```
 
 As we can see, there is somewhat of a tendency where predicates and free NPs are more likely to have very long character counts, compared to referential expressions that are neither predicative nor free.
@@ -784,15 +793,15 @@ So let's add `isPredOrFree` to the model to see if it works as a predictor:
 ```{r}
 pass3_model2 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + seqInTrail + Relation + isPredOrFree, .)
+  lm(log(charCount) ~ noCompetitors + noPrevMentionsIn10 + gapUnitsNew + seqInTrail + Relation + isPredOrFree, .)
 summary(pass3_model2)
 ```
 
-Unfortunately, `isPredOrFree` does not turn out to be a significant predictor, and the p-value is very large.
+Unfortunately, `isPredOrFree` does not turn out to be a significant predictor, and the p-value is very large. Subjecthood, it seems, is enough.
 
 ### Splitting up `noPrevSubjMentions`
 
-Let's see if we can improve upon the model in any more ways. The first thing we could do is to split up `noPrevMentionsIn10` to see if it performs better that way. It is often proposed in the literature that subjects are more accessible than other types of arguments, and when the previous mention is a subject, the expression will subsequently be more accessible as well (e.g. Arnold 2008). So we could split up previous mentions into previous subjects and previous non-subjects to see whether they have different effects.
+Let's see if we can improve upon our variables in any more ways. The first thing we could do is to split up `noPrevMentionsIn10` to see if there are differential effects of different types of previous mentions that we are ignoring. It is often proposed in the literature that subjects are more accessible than other types of arguments, and when the previous mention is a subject, the expression will subsequently be more accessible as well (e.g. Arnold 2008). So we could split up previous mentions into previous subjects and previous non-subjects to see whether they have different effects.
 
 The function `countPrevMentionsIf()` counts the number of times that a referent was mentioned previously in a specified window of units, along with the `TidyRez` function `rez_mutate()` (note that for non-subjects, we allow `Relation` to be `NA`):
 
@@ -808,7 +817,7 @@ Now that we've added these values to the table, we can rerun the linear model, b
 ```{r}
 pass3_model2 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + seqInTrail + Relation + isPredOrFree, .)
+  lm(log(charCount) ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + seqInTrail + Relation + isPredOrFree, .)
 summary(pass3_model2)
 ```
 
@@ -874,7 +883,7 @@ rez_write_csv(rez007$trackDF$default, "rez007_refexpr.csv", c("id", "unitLastTex
 
 An editing best practice is to copy the `.csv` file and edit from the copy, rather from the `.csv` you export directly. Figure 7 shows what the exported `.csv` looks like in Excel:
 
-![Figure 29: A screenshot of the .csv file in Excel.](img/sample-excel.PNG){width="100%"}
+![Figure 28: A screenshot of the .csv file in Excel.](img/sample-excel.PNG){width="100%"}
 
 After editing the CSV in a spreadsheet program to fix the mistakes and get rid of the ?s, we import it back using `rez_read_csv()` (specifying the original `rezrDF` makes the import processes smoother and less error-prone):
 
@@ -895,7 +904,7 @@ Now let's graph the difference between the singulars and plurals in a graph:
 ```{r}
 rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), !is.na(number)) %>%
-  ggplot(aes(x = number, y = charCount)) + geom_violin()
+  ggplot(aes(x = number, y = log(charCount))) + geom_violin()
   
 ```
 
@@ -904,11 +913,11 @@ Singulars seem to be more concentrated towards the smaller character counts, but
 ```{r}
 pass3_model3 = rez007$trackDF$default %>%
   filter(!is.na(gapUnitsNew), charCount > 0) %>%
-  lm(charCount ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + seqInTrail + number + Relation + isPredOrFree, .)
+  lm(log(charCount) ~ noCompetitors + noPrevSubjMentionsIn10 + noPrevNonSubjMentionsIn10 + gapUnitsNew + seqInTrail + number + Relation + isPredOrFree, .)
 summary(pass3_model3)
 ```
 
-Whether the current mention is a subject continues to turn out to be a good predictor, as does the sequence of a mention in the trail. The rest of the predictors are not significant, though some of them (particularly lookback distance, i.e. `gapUnits`) may hold some promise on a larger dataset. Grammatical number seems to be hopeless, and probably not worth pursuing.
+Whether the current mention is a subject continues to turn out to be a good predictor, as does the sequence of a mention in the trail. The rest of the predictors are not significant, though some of them (particularly the number of competitors) may hold some promise on a larger dataset. Grammatical number does not seem particularly promising.
 
 ## A post-mortem: Where did all the effects go?
 
