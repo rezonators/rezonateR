@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="index.html">rezonateR</a>
 
@@ -42,11 +42,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Overview</h6>
-    <a class="dropdown-item" href="articles/overview.html">An overview of rezonateR 0.1.1</a>
-    <a class="dropdown-item" href="articles/sample_proj.html">Toy example of an analysis in rezonateR</a>
+    <a class="dropdown-item" href="articles/overview.html">An overview of rezonateR for Rezonator users</a>
+    <a class="dropdown-item" href="articles/sample_proj.html">Sample mini-project: Analysing coreference in rezonateR</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
-    <a class="dropdown-item" href="articles/import_save_basics.html">Importing .rez files, saving rezrObjs, and basic data structure</a>
+    <a class="dropdown-item" href="articles/import_save_basics.html">Importing Rezonator files, saving rezonateR objects, and basic data structure</a>
     <a class="dropdown-item" href="articles/time_seq.html">Time and sequence</a>
     <a class="dropdown-item" href="articles/edit_easyEdit.html">Editing I: Using EasyEdit</a>
     <a class="dropdown-item" href="articles/edit_tidyRez.html">Editing II: Using TidyRez</a>
@@ -70,9 +70,25 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="rezonater">rezonateR<a class="anchor" aria-label="anchor" href="#rezonater"></a>
 </h1></div>
-<p>rezonateR (pronounced “resonate R”) uses R (statistics software) to analyze and visualize data about resonance in natural language. The data that rezonateR takes as input are those created by the companion tool <a href="https://github.com/johnwdubois/rezonator" class="external-link">Rezonator</a>.<br>
-In addition, rezonateR can provide some pre-processing of natural language data to prepare them for importing into Rezonator.</p>
-<p>Resonance represents the activation of affinities across utterances in natural language. Resonance plays a key part in creating links between parallel structures, thereby inviting the perception of parallel meanings. Resonance is a key factor in the creation of coherence in dialogue, and the organization of engagement between co-participants in conversation.</p>
+<p><code>rezonateR</code> (pronounced “resonate R”) uses R (statistics software) to analyze and visualize data about natural language discourse. The data that <code>rezonateR</code> takes as input are those created by the companion tool <a href="https://github.com/johnwdubois/rezonator" class="external-link">Rezonator</a>. While the Rezonator tool is used for manual annotating and visualising discourse features and useful for qualitative analysis, <code>rezonateR</code> takes Rezonator input and helps perform automated or semi-automated annotation and prepare the data for quantitative analysis in R.</p>
+<p>Some examples of research questions you could investigate with Rezonator + <code>rezonateR</code> include:</p>
+<ul>
+<li>In spoken English discourse, what factors can be used to predict when a speaker will use a pronoun instead of a noun phrase to refer to some entity?</li>
+<li>Do speakers tend to repeat syntactic structures just used by their interlocutor if they agree with them, or if they disagree with them?</li>
+<li>What factors affect the ordering of noun-phrase arguments within the clause in Tibetan, an overwhelmingly verb-final language with flexible word order among arguments?</li>
+<li>In English, the form <em>that</em> is often said to perform different functions, such as a complementiser, demonstrative determiner, demonstrative pronoun, etc. What are the discourse profiles of these different uses, and is there any way they are similar?</li>
+</ul>
+<p>If you’re starting out, this site contains different resources that you can use to learn how to use the tool, including:</p>
+<ul>
+<li>
+<strong>Toy example</strong>: If you aren’t very familiar with the companion tool Rezonator and want to know what can be done with this tool, the <a href="https://rezonators.github.io/rezonateR/articles/sample_proj.html">toy example</a> <code><a href="articles/sample_proj.html">vignette("sample_proj")</a></code> gives a concrete example of a mini-research project using Rezonator and <code>rezonateR</code>, and will give you a feel of what sorts of projects are possible with Rezonator + <code>rezonateR</code>. It would also be helpful to check out the <a href="https://rezonator.com/guide/" class="external-link">official Rezonator guides</a> and try some simple annotations in Rezonator to get a feel of how it works.</li>
+<li>
+<strong>Overview for Rezonator users</strong>: If you are already familiar with how Rezonator works but want to know how rezonateR can extend and enhance your work in Rezonator, the <a href="https://rezonators.github.io/rezonateR/articles/import_save_basics.html">tutorial</a> <code><a href="articles/overview.html">vignette("overview")</a></code> is a bird’s eye view of the most important functionality of the package.</li>
+<li>
+<strong>Detailed walkthrough</strong>: If you are already confident that <code>rezonateR</code> is the tool you want to be using, the series of tutorials starting from the one on <a href="https://rezonators.github.io/rezonateR/articles/import_save_basics.html">imports, saves, and data structure</a> <code><a href="articles/import_save_basics.html">vignette("import_save_basics")</a></code> goes into the nitty-gritty of how to use <code>rezonateR</code>. This doubles as a reference to look up how to do different things in <code>rezonateR</code>.</li>
+<li>
+<strong>Documentation</strong>: If you need more detailed explanation of how individual functions, you can access the documentation of <code>rezonateR</code> with the <a href="https://rezonators.github.io/rezonateR/reference/index.html">reference tab</a> if you’re on the website, or with <code><a href="https://rezonators.github.io/rezonateR/reference">help(package = "rezonateR")</a></code> if you’re on your local machine.</li>
+</ul>
 <p>For the public-facing website for this project, see <a href="https://rezonator.com/" class="external-link">Rezonator.com</a>.</p>
 </div>
   </main><aside class="col-md-3"><div class="license">

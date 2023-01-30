@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">rezonateR</a>
 
@@ -43,6 +43,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Overview</h6>
     <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR 0.1.1</a>
+    <a class="dropdown-item" href="../articles/sample_proj.html">Toy example of a coreference analysis in rezonateR</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
     <a class="dropdown-item" href="../articles/import_save_basics.html">Importing .rez files, saving rezrObjs, and basic data structure</a>
@@ -101,7 +102,7 @@ error-prone experience.</p>
 <h2 id="the-workflow">The workflow<a class="anchor" aria-label="anchor" href="#the-workflow"></a>
 </h2>
 <p>In general, the workflow when working externally is to first finish
-at least some annotations in Rezonator. You then import it to
+at least some annotations in Rezonator. You then export it from
 <code>rezonateR</code> and, typically, use the editing functions from
 the previous tutorials to add some annotations automatically.</p>
 <p>You will then export a <code>.csv</code> file from
@@ -238,6 +239,9 @@ the <code>rezrDF</code> afterwards? By default, ‘yes’.</li>
 <p>Here is one example:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/updateFromDF.html">updateFromDF</a></span><span class="op">(</span><span class="va">changeDF</span>, changeCols <span class="op">=</span> <span class="st">"number"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      </span></span>
+<span><span class="co">#&gt; "id" </span></span>
+<span><span class="co">#&gt; NULL</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">number</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
 <span><span class="co">#&gt;   id            text              number</span></span>

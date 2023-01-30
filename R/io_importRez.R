@@ -144,7 +144,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
       fieldaccess(treeEntryDF, concatFields) = "foreign"
       treeEntryDF = treeEntryDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
       treeEntryDF = treeEntryDF %>% getTreeOfEntry(treeLinkDF, fullNodeMap$tree)
-      treeEntryDF = suppressMessages(treeEntryDF %>% rez_left_join(treeLinkDF %>% select(-goal, -doc, -type), df2Address = "treeLink", fkey = "sourceLink", by = c("sourceLink" = "id"), df2key = "id") %>% rez_rename(parent = source))
+      treeEntryDF = suppressMessages(treeEntryDF %>% rez_left_join(treeLinkDF %>% select(-goal, -doc, -type), df2Address = "treeLinkDF", fkey = "sourceLink", by = c("sourceLink" = "id"), df2key = "id") %>% rez_rename(parent = source))
 
       treeDF = getSeqBounds(tokenDF, treeDF, fullNodeMap[["tree"]], c("tokenOrder", "docTokenSeq"), simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree")
       treeDF = concatStringFields(tokenDF, treeDF, fullNodeMap[["tree"]], concatFields, simpleDFAddress = "tokenDF", complexNodeMapAddress = "tree", separator = separator)

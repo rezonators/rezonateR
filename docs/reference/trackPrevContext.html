@@ -6,7 +6,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">rezonateR</a>
 
@@ -26,6 +26,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Overview</h6>
     <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR 0.1.1</a>
+    <a class="dropdown-item" href="../articles/sample_proj.html">Toy example of a coreference analysis in rezonateR</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
     <a class="dropdown-item" href="../articles/import_save_basics.html">Importing .rez files, saving rezrObjs, and basic data structure</a>
@@ -53,7 +54,7 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>See also <a href="countCompetitors.html">countCompetitors</a>.</p>
+    <p>See also <a href="countCompete.html">countCompetitors</a>.</p>
     </div>
 
     <div class="section level2">
@@ -88,6 +89,7 @@
 <span>  zeroProtocol <span class="op">=</span> <span class="st">"literal"</span>,</span>
 <span>  zeroCond <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unitSeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  unitTokenSeqName <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unitDF <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  exclFrag <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>  combinedChunk <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -162,6 +164,7 @@
 <span>  zeroProtocol <span class="op">=</span> <span class="st">"literal"</span>,</span>
 <span>  zeroCond <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unitSeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  unitTokenSeqName <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unitDF <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  exclFrag <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>  combinedChunk <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -242,11 +245,15 @@
 
 
 <dt>zeroProtocol</dt>
-<dd><p>If 'literal', I will take the seq values of the zeroes at face value. (If you set zeros as non-words and use docWordSeqFirst or discourseWordSeLast as your tokenOrder, this will lead to meaningless values.) If 'unitFinal', I will treat zeroes as if they were the final word of the unit. If 'unitFirst', I will treat zeroes as if they were the first word of the unit.</p></dd>
+<dd><p>If <code>literal</code>, I will take the seq values of the zeroes at face value. (If you set zeros as non-words and use <code>docWordSeqFirst</code> or <code>discourseWordSeLast</code> as your <code>tokenOrder</code>, this will lead to meaningless values.) If <code>unitFinal</code>, I will treat zeroes as if they were the final word of the unit. If <code>unitFirst</code>, I will treat zeroes as if they were the first word of the unit.</p></dd>
 
 
 <dt>zeroCond</dt>
-<dd><p>A condition for determining whether a token is zero. For most people, this should be (word column) == "&lt;0&gt;".</p></dd>
+<dd><p>A condition for determining whether a token is zero. For most people, this should be <code>(word column) == "&lt;0&gt;"</code>.</p></dd>
+
+
+<dt>unitTokenSeqName</dt>
+<dd><p>The name of the corresponding tokenSeq column in the unit column. By default, <code>docTokenSeqLast</code> is used.</p></dd>
 
 
 <dt>windowSize</dt>
@@ -276,7 +283,7 @@
 <span class="r-in"><span>zeroCond <span class="op">=</span> <span class="op">(</span><span class="va">text</span> <span class="op">==</span> <span class="st">"&lt;0&gt;"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>unitDF <span class="op">=</span> <span class="va">sbc007</span><span class="op">$</span><span class="va">unitDF</span><span class="op">)</span><span class="op">)</span> <span class="co">#Additional argument for unitFinal protocol</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .f(df, ...):</span> Problem while computing `wordsToLastMention = tokensToLastMention(...)`.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `grabFromDF()`:</span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> object 'docWordSeqLast' not found</span>
 <span class="r-in"><span><span class="co">#Get the character length of the previous mention</span></span></span>
 <span class="r-in"><span><span class="va">sbc007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">=</span> <span class="va">sbc007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">%&gt;%</span></span></span>
@@ -288,7 +295,7 @@
 <span class="r-in"><span><span class="fu"><a href="rez_mutate.html">rez_mutate</a></span><span class="op">(</span>isZero <span class="op">=</span> <span class="va">text</span> <span class="op">==</span> <span class="st">"&lt;0&gt;"</span><span class="op">)</span> <span class="op">%&gt;%</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="rez_mutate.html">rez_mutate</a></span><span class="op">(</span>noPrevZeroMentionsIn20 <span class="op">=</span> <span class="fu">countPrevMentionsIf</span><span class="op">(</span><span class="fl">20</span>, <span class="va">isZero</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>            noPrevZeroMentionsIn20 <span class="op">=</span> <span class="fu">countPrevMentionsMatch</span><span class="op">(</span><span class="fl">20</span>, <span class="va">isZero</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 236 × 39</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 236 × 37</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id      doc   chain sourc…¹ token gapWo…² charC…³ token…⁴ gapUn…⁵ kind  place</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 1096E4… sbc0… 278D… <span style="color: #949494;">""</span>      37EF… N/A           1       1 N/A     <span style="color: #949494;">"</span>Wor… <span style="color: #949494;">"</span>1<span style="color: #949494;">"</span>  </span>
@@ -301,13 +308,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 259C2C… sbc0… 251A… <span style="color: #949494;">""</span>      1F6B… N/A          40       8 N/A     <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 1D1F2B… sbc0… 10FA… <span style="color: #949494;">""</span>      24FE… N/A          25       5 N/A     <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 1FA380… sbc0… 3067… <span style="color: #949494;">""</span>      158B… N/A          11       2 N/A     <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 226 more rows, 28 more variables: text &lt;chr&gt;, transcript &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 226 more rows, 26 more variables: text &lt;chr&gt;, transcript &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   endNote &lt;chr&gt;, order &lt;chr&gt;, negPlace &lt;chr&gt;, corpusSeq &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;, tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   turnOrder &lt;chr&gt;, largerChunk &lt;chr&gt;, tokenOrderFirst &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   tokenOrderLast &lt;dbl&gt;, docTokenSeqFirst &lt;dbl&gt;, docTokenSeqLast &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   chainCreateSeq &lt;dbl&gt;, name &lt;chr&gt;, chainSize &lt;dbl&gt;, layer &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   unitSeqFirst &lt;dbl&gt;, unitSeqLast &lt;dbl&gt;, unitSeqFirst_lower &lt;dbl&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   unitSeqFirst &lt;dbl&gt;, unitSeqLast &lt;dbl&gt;, unitsToLastMention &lt;dbl&gt;, …</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
 </code></pre></div>
     </div>
