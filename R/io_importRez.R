@@ -113,6 +113,8 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
       fieldaccess(chunkDF, concatFields) = "foreign"
       chunkDF = chunkDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
       mergedDF = mergeTokenChunk(tokenDF, chunkDF)
+    } else {
+      mergedDF = tokenDF
     }
 
 
