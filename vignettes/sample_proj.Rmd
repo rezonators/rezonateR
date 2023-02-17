@@ -17,13 +17,29 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 library(dplyr)
 ```
 
+## Introduction to the tutorial
+
+This tutorial is a sample project in `rezonateR` aiming to predict the length of referential expressions in natural discourse based on several discourse and grammatical factors. `rezonateR` is an R package mainly designed to import, organise and analyse data produced by the annotation and discourse visualisation software [Rezonator](http://rezonator.com/), which handles a variety of linguistic annotations, including span annotations, coreference chains, dependency trees, and more, with a focus on spoken discourse. `rezonateR` aims to simplify the process of working with Rezonator data using a wealth of built-in functions for data wrangling and feature engineering in R. This tutorial will cover some of the most important functions, including:
+
+-   Importing a .rez file (the Rezonator data format) and reading annotations imported
+
+-   Defining whether a token counts as a word
+
+-   Deriving measures predictive of the choice of referential form (which may also be useful for a variety of other applications like coreference resolution)
+
+-   Connecting information from dependency trees to information about coreference chains
+
+-   Merging chunks (Rezonator's implementation of span annotations)
+
+-   Doing automatic annotations within `rezonateR`, then exporting the results to a spreadsheet and importing it back into R
+
 ## Research question: Referent accessibility and referential choice
 
 In this tutorial, we will be using Rezonator and `rezonateR` to address a research question using a simple sample data set: We will look at the relationship between the accessibility of a referent, i.e. the ease of cognitively 'getting at' a referent, and the choice of a linguistic expression used to refer to that form. Before elaborating on our research question, we will first introduce basic assumptions about the research topic.
 
 In language, we often refer to different entities and concepts in the world: The people around us, the places we pass through, the things we see and remember. These things are called *referents*, and when we use linguistic expressions to refer to them, those linguistic elements are called *referential expressions*.
 
-In the following example, we see a short snippet of conversation between two sisters. Just in this short passage, we can see different referential expressions:
+In the following example, we see a short snippet of conversation between two sisters from the text *A Tree's Life*, a conversation between two sisters from the Santa Barbara Corpus of Spoken American English (Du Bois et al. 2000). Just in this short passage, we can see different referential expressions:
 
 ![Figure 1: A short excerpt of a conversation with several referential expressions](images/paste-9B4A5FCB.png){width="648"}
 
@@ -63,7 +79,7 @@ So far, we have talked about notions like accessibility and prominence in rather
 
 In this project, we will propose some factors that may increase accessibility (e.g. the number of times an entity has been recently mentioned), and then determine whether they are associated with the use of a shorter form in natural discourse. For example, if certain referents have just been mentioned a lot in the previous context, we might expect that they are relatively mentally accessible. If such referents are statistically more likely to be referred to using shorter, simpler forms - like the example of *they* that we have just discussed - then we have support for the idea that people choose to use shorter, simpler forms when referents are more accessible in discourse. This project is a preliminary investigation of this issue using a short snippet of conversation.
 
-## Introduction to the tutorial
+## What we will do
 
 The aim of this article is to demonstrate, using a sample, highly simplified project, what type of analysis may be conducted using Rezonator and `rezonateR`. This particular example will examine the choice of referential forms in spoken dialogue: What factors lead to the choice of a longer form versus a shorter one? The following snippet of conversation (Figure 7), for example, has two referential expressions referring to the same entity - a dog - but the first one is a rather long noun phrase (*this darn dog*) while the second is a simple, one-word pronoun (*her*). Can we tell what factors are at play here that motivated the speaker's choice of referential expression?
 
@@ -106,7 +122,7 @@ Thus, our goal within R is to create a data frame where each row corresponds to 
 
 ## The input data from Rezonator
 
-The data used in this example is from the text *A Tree's Life*, a conversation between two sisters from the Santa Barbara Corpus of Spoken American English (Du Bois et al. 2000). The first 162 lines have been annotated and will be used in this tutorial; they deal with the topic of one of the sisters' roommates. The data is also available through the `sbc007` object in the package itself, where a detailed description of the annotations included may be found. The full corpus, with text and audio files, can be downloaded at the [Santa Barbara Corpus page on the UC Santa Barbara Linguistics Department Website](https://www.linguistics.ucsb.edu/research/santa-barbara-corpus). The corpus in `.rez` format, the file format which is used by the Rezonator program and can be imported into R using `rezonateR`, is shipped with Rezonator, which can be downloaded on the [Rezonator website](http://rezonator.com/).
+The first 162 lines have been annotated and will be used in this tutorial; they deal with the topic of one of the sisters' roommates. The data is also available through the `sbc007` object in the package itself, where a detailed description of the annotations included may be found. The full corpus, with text and audio files, can be downloaded at the [Santa Barbara Corpus page on the UC Santa Barbara Linguistics Department Website](https://www.linguistics.ucsb.edu/research/santa-barbara-corpus). The corpus in `.rez` format, the file format which is used by the Rezonator program and can be imported into R using `rezonateR`, is shipped with Rezonator, which can be downloaded on the [Rezonator website](http://rezonator.com/).
 
 In this section, we will explore the basic structure of a Rezonator file using this text. More advanced data structures will be introduced later in the tutorial as the need arises.
 
@@ -380,7 +396,7 @@ In particular, we will try to count the *number* of previous mentions instead of
 
 ### Counting previous mentions
 
-Apart from the time to the previous time that an entity was mentioned, the number of previous mentions within a specified time window may also affect accessibility: An entity that was just mentioned in the previous intonation unit but never before that might conceivably be less accessible than one that was just mentioned in the previous intonation unit as well as several intonation units before that.
+Apart from the number of intonation units to the previous instance that an entity was mentioned, the number of previous mentions within a specified time window may also affect accessibility: An entity that was just mentioned in the previous intonation unit but never before that might conceivably be less accessible than one that was just mentioned in the previous intonation unit as well as several intonation units before that.
 
 The function `countPrevMentions()` in `rezonateR` is one function we can use to count the number of times the referent of a referential expression was referred to in its previous context. In its simplest form, you can simply specify a window of units in which to look for referential expressions that corefer with the each mention.
 
