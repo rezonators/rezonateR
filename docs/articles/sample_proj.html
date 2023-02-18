@@ -82,6 +82,61 @@
     
     
 <div class="section level2">
+<h2 id="introduction-to-the-tutorial">Introduction to the tutorial<a class="anchor" aria-label="anchor" href="#introduction-to-the-tutorial"></a>
+</h2>
+<p>This tutorial is a sample project in <code>rezonateR</code> aiming to
+predict the length of referential expressions in natural discourse based
+on several discourse and grammatical factors. <code>rezonateR</code> is
+an R package mainly designed to import, organise and analyse data
+produced by the annotation and discourse visualisation software <a href="http://rezonator.com/" class="external-link">Rezonator</a>, Rezonator, developed at the
+University of California, Santa Barbara led by John W Du Bois, handles a
+variety of linguistic annotations, including span annotations,
+coreference chains, dependency trees, and more, with a focus on spoken
+discourse. The package <code>rezonateR</code>, created by the author
+(Ryan Ka Yau Lai), aims to simplify the process of working with
+Rezonator data using a wealth of built-in functions for data wrangling,
+feature engineering, and combining Rezonator data with other sources of
+annotations.</p>
+<p>This tutorial will cover some of the most important functions,
+including:</p>
+<ul>
+<li><p>Importing a .rez file (the Rezonator data format) and reading
+annotations imported</p></li>
+<li><p>Defining whether a token counts as a word</p></li>
+<li><p>Deriving measures predictive of the choice of referential form
+(which may also be useful for a variety of other applications like
+coreference resolution)</p></li>
+<li><p>Connecting information from dependency trees to information about
+coreference chains</p></li>
+<li><p>Merging chunks (Rezonator’s implementation of span
+annotations)</p></li>
+<li><p>Doing automatic annotations within <code>rezonateR</code>, then
+exporting the results to a spreadsheet and importing it back into
+R</p></li>
+</ul>
+<p>This simple project shows most of the basic capabilities of
+<code>rezonateR</code>. The longer series of tutorials starting from an
+introduction to <a href="https://rezonators.github.io/rezonateR/articles/import_save_basics.html">imports,
+saving and data structure</a>
+(<code><a href="../articles/import_save_basics.html">vignette("import_save_basics")</a></code>) is based on the same
+dataset as this page, but covers most functionality of the package down
+to the smallest details, and you can pick and choose topics from there
+to read. If you are already familiar with using Rezonator, you may want
+to consult the <a href="https://rezonators.github.io/rezonateR/articles/overview.html">overview</a>
+for Rezonator users (<code><a href="../articles/overview.html">vignette("overview")</a></code>), a less
+topically focused overview that tells you how <code>rezonateR</code> can
+support your Rezonator work, covering more topics about different
+aspects of <code>rezonateR</code> than this page.</p>
+<p>This article does not assume that you have read any of these other
+articles, so there is some overlap in the topics covered. However, this
+article will have less focus on how to write the code, and more on
+showing you how to answer the sample research question using
+<code>rezonateR</code>. So don’t worry if you don’t understand the
+details of how the code works - that can come later, as you read the
+detailed tutorials and documentation. I will point you to other
+tutorials for further details when relevant.</p>
+</div>
+<div class="section level2">
 <h2 id="research-question-referent-accessibility-and-referential-choice">Research question: Referent accessibility and referential
 choice<a class="anchor" aria-label="anchor" href="#research-question-referent-accessibility-and-referential-choice"></a>
 </h2>
@@ -98,8 +153,10 @@ see and remember. These things are called <em>referents</em>, and when
 we use linguistic expressions to refer to them, those linguistic
 elements are called <em>referential expressions</em>.</p>
 <p>In the following example, we see a short snippet of conversation
-between two sisters. Just in this short passage, we can see different
-referential expressions:</p>
+between two sisters from the text <em>A Tree’s Life</em>, a conversation
+between two sisters from the Santa Barbara Corpus of Spoken American
+English (Du Bois et al. 2000). Just in this short passage, we can see
+different referential expressions:</p>
 <div class="figure">
 <img src="images/paste-9B4A5FCB.png" width="648" alt=""><p class="caption">Figure 1: A short excerpt of a conversation with
 several referential expressions</p>
@@ -221,7 +278,7 @@ This project is a preliminary investigation of this issue using a short
 snippet of conversation.</p>
 </div>
 <div class="section level2">
-<h2 id="introduction-to-the-tutorial">Introduction to the tutorial<a class="anchor" aria-label="anchor" href="#introduction-to-the-tutorial"></a>
+<h2 id="this-tutorial-in-a-nutshell">This tutorial in a nutshell<a class="anchor" aria-label="anchor" href="#this-tutorial-in-a-nutshell"></a>
 </h2>
 <p>The aim of this article is to demonstrate, using a sample, highly
 simplified project, what type of analysis may be conducted using
@@ -244,19 +301,9 @@ the number of times the referent has been mentioned recently, or whether
 the expression is the subject of a clause. We will then use this
 information and attempt to see whether some of these properties are
 associated with the use of shorter, simpler referential expressions and
-others with longer, more complex expressions.</p>
-<p>The data here is the same as that used in the <a href="https://rezonators.github.io/rezonateR/articles/import_save_basics.html">series
-of detailed tutorials</a> (<code><a href="../articles/import_save_basics.html">vignette("import_save_basics")</a></code>),
-but this article will have less focus on how to write the code, and more
-on showing you how to answer the sample research question using
-<code>rezonateR</code>. So don’t worry if you don’t understand the
-details of how the code works - that can come later, as you read the
-detailed tutorials and documentation.</p>
-<p>This article does not assume that you have read any of the other
-articles on <code>rezonateR</code>. So there is some overlap in the
-topics covered. I will point you to other tutorials for further details
-when necessary. However, if you have not installed
-<code>rezonateR</code>, please do it now using this code:</p>
+others with longer, more complex expressions. The only prerequisite of
+this tutorial is that you have installed <code>rezonateR</code>. If you
+have not, please do it now using this code:</p>
 <table style="width:57%;" class="table">
 <colgroup><col width="56%"></colgroup>
 <thead><tr class="header">
@@ -337,14 +384,12 @@ inputting the raw Rezonator data.</p>
 <div class="section level2">
 <h2 id="the-input-data-from-rezonator">The input data from Rezonator<a class="anchor" aria-label="anchor" href="#the-input-data-from-rezonator"></a>
 </h2>
-<p>The data used in this example is from the text <em>A Tree’s
-Life</em>, a conversation between two sisters from the Santa Barbara
-Corpus of Spoken American English (Du Bois et al. 2000). The first 162
-lines have been annotated and will be used in this tutorial; they deal
-with the topic of one of the sisters’ roommates. The data is also
-available through the <code>sbc007</code> object in the package itself,
-where a detailed description of the annotations included may be found.
-The full corpus, with text and audio files, can be downloaded at the <a href="https://www.linguistics.ucsb.edu/research/santa-barbara-corpus" class="external-link">Santa
+<p>The first 162 lines have been annotated and will be used in this
+tutorial; they deal with the topic of one of the sisters’ roommates. The
+data is also available through the <code>sbc007</code> object in the
+package itself, where a detailed description of the annotations included
+may be found. The full corpus, with text and audio files, can be
+downloaded at the <a href="https://www.linguistics.ucsb.edu/research/santa-barbara-corpus" class="external-link">Santa
 Barbara Corpus page on the UC Santa Barbara Linguistics Department
 Website</a>. The corpus in <code>.rez</code> format, the file format
 which is used by the Rezonator program and can be imported into R using
@@ -563,7 +608,7 @@ structures above the level of a token, such as
 <code>chunkDF</code>or<code>unitDF</code>, you want to be able to see
 the text. For example, take the following line:</p>
 <div class="figure">
-<img src="images/paste-5FB50E2C.png" width="444" alt=""><p class="caption">Figure 15: A unit containing the chunk *’m also going
+<img src="images/paste-5FB50E2C.png" width="444" alt=""><p class="caption">Figure 15: A unit containing the chunk *'m also going
 to suggest*</p>
 </div>
 <p>When browsing the <code>unitDF</code>, you would want to see all the
@@ -932,18 +977,18 @@ keep it simple for this tutorial.)</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -1.2529 -0.5447 -0.1392  0.1636  2.6742 </span></span>
+<span><span class="co">#&gt; -1.2557 -0.5473 -0.1419  0.1648  2.6715 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)  1.252905   0.089304  14.030   &lt;2e-16 ***</span></span>
-<span><span class="co">#&gt; gapUnits    -0.015094   0.009577  -1.576    0.117    </span></span>
+<span><span class="co">#&gt; (Intercept)  1.255666   0.088784   14.14   &lt;2e-16 ***</span></span>
+<span><span class="co">#&gt; gapUnits    -0.015183   0.009549   -1.59    0.114    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.9972 on 161 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.01519,    Adjusted R-squared:  0.009077 </span></span>
-<span><span class="co">#&gt; F-statistic: 2.484 on 1 and 161 DF,  p-value: 0.117</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.9945 on 162 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.01537,    Adjusted R-squared:  0.009288 </span></span>
+<span><span class="co">#&gt; F-statistic: 2.528 on 1 and 162 DF,  p-value: 0.1138</span></span></code></pre></div>
 <p>As we can see, although there is a negative coefficient that says a
 larger <code>gapUnits</code> leads to a smaller character count (as
 expected from our graph - though contrary to our usual expectations), it
@@ -982,18 +1027,18 @@ model:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -1.2447 -0.5436 -0.1370  0.1667  2.6696 </span></span>
+<span><span class="co">#&gt; -1.2475 -0.5457 -0.1385  0.1687  2.6668 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)  1.249282   0.089672  13.932   &lt;2e-16 ***</span></span>
-<span><span class="co">#&gt; gapWords    -0.002282   0.001551  -1.471    0.143    </span></span>
+<span><span class="co">#&gt; (Intercept)  1.252092   0.089134  14.047   &lt;2e-16 ***</span></span>
+<span><span class="co">#&gt; gapWords    -0.002299   0.001546  -1.487    0.139    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.9981 on 161 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.01327,    Adjusted R-squared:  0.00714 </span></span>
-<span><span class="co">#&gt; F-statistic: 2.165 on 1 and 161 DF,  p-value: 0.1431</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.9955 on 162 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.01346,    Adjusted R-squared:  0.007371 </span></span>
+<span><span class="co">#&gt; F-statistic:  2.21 on 1 and 162 DF,  p-value: 0.139</span></span></code></pre></div>
 <p>As we can see, there is little change with the linear model either:
 The negative coefficient indicates that a shorter <code>gapWords</code>
 is associated with longer referential expressions, contrary to usual
@@ -1024,12 +1069,13 @@ little will be more revealing of the effect of lookback distance.</p>
 <div class="section level3">
 <h3 id="counting-previous-mentions">Counting previous mentions<a class="anchor" aria-label="anchor" href="#counting-previous-mentions"></a>
 </h3>
-<p>Apart from the time to the previous time that an entity was
-mentioned, the number of previous mentions within a specified time
-window may also affect accessibility: An entity that was just mentioned
-in the previous intonation unit but never before that might conceivably
-be less accessible than one that was just mentioned in the previous
-intonation unit as well as several intonation units before that.</p>
+<p>Apart from the number of intonation units to the previous instance
+that an entity was mentioned, the number of previous mentions within a
+specified time window may also affect accessibility: An entity that was
+just mentioned in the previous intonation unit but never before that
+might conceivably be less accessible than one that was just mentioned in
+the previous intonation unit as well as several intonation units before
+that.</p>
 <p>The function <code><a href="../reference/trackPrevContext.html">countPrevMentions()</a></code> in
 <code>rezonateR</code> is one function we can use to count the number of
 times the referent of a referential expression was referred to in its
@@ -1111,18 +1157,18 @@ well.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -1.4467 -0.5291 -0.2339  0.2229  2.9221 </span></span>
+<span><span class="co">#&gt; -1.4496 -0.5282 -0.2095  0.2356  2.9213 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         1.44669    0.11510  12.569   &lt;2e-16 ***</span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.11420    0.03747  -3.048   0.0027 ** </span></span>
+<span><span class="co">#&gt; (Intercept)         1.44958    0.11432  12.680  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.11472    0.03732  -3.074  0.00248 ** </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.977 on 161 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.05455,    Adjusted R-squared:  0.04867 </span></span>
-<span><span class="co">#&gt; F-statistic: 9.289 on 1 and 161 DF,  p-value: 0.002696</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.9742 on 162 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.05512,    Adjusted R-squared:  0.04929 </span></span>
+<span><span class="co">#&gt; F-statistic: 9.451 on 1 and 162 DF,  p-value: 0.002478</span></span></code></pre></div>
 <p>From the linear model, we also find that the number of previous
 mentions in the previous 10 units <em>is</em> a significant predictor at
 the 0.05 significance level. It seems that pure lookback distance is not
@@ -1218,18 +1264,18 @@ linear model now:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -1.8009 -0.5622 -0.1972  0.3521  2.4736 </span></span>
+<span><span class="co">#&gt; -1.7746 -0.5822 -0.2122  0.3404  2.4543 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)    0.40002    0.19692   2.031   0.0439 *  </span></span>
-<span><span class="co">#&gt; noCompetitors  0.07004    0.01627   4.305 2.89e-05 ***</span></span>
+<span><span class="co">#&gt; (Intercept)    0.44969    0.19316   2.328   0.0211 *  </span></span>
+<span><span class="co">#&gt; noCompetitors  0.06624    0.01601   4.138 5.62e-05 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.9515 on 161 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.1032, Adjusted R-squared:  0.09765 </span></span>
-<span><span class="co">#&gt; F-statistic: 18.53 on 1 and 161 DF,  p-value: 2.893e-05</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.9532 on 162 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.09559,    Adjusted R-squared:  0.09001 </span></span>
+<span><span class="co">#&gt; F-statistic: 17.12 on 1 and 162 DF,  p-value: 5.618e-05</span></span></code></pre></div>
 <p>As we can see from here, there is a small effect whereby a larger
 number of competitors is associated the use of longer referential
 expressions, which is just as we expect. However, we shouldn’t conclude
@@ -1267,19 +1313,19 @@ out:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -1.7867 -0.5755 -0.2145  0.3787  2.4320 </span></span>
+<span><span class="co">#&gt; -1.7640 -0.5630 -0.2240  0.3856  2.4626 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         0.66546    0.25724   2.587  0.01057 *  </span></span>
-<span><span class="co">#&gt; noCompetitors       0.05920    0.01756   3.371  0.00094 ***</span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.06276    0.03940  -1.593  0.11311    </span></span>
+<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
+<span><span class="co">#&gt; (Intercept)         0.72853    0.24992   2.915  0.00406 **</span></span>
+<span><span class="co">#&gt; noCompetitors       0.05518    0.01713   3.221  0.00154 **</span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.06807    0.03907  -1.742  0.08338 . </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.947 on 160 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.1172, Adjusted R-squared:  0.1062 </span></span>
-<span><span class="co">#&gt; F-statistic: 10.62 on 2 and 160 DF,  p-value: 4.655e-05</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.9472 on 161 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.1123, Adjusted R-squared:  0.1013 </span></span>
+<span><span class="co">#&gt; F-statistic: 10.19 on 2 and 161 DF,  p-value: 6.828e-05</span></span></code></pre></div>
 <p>As we can see, once we put both in the model,
 <code>noCompetitors</code> becomes the only significant predictor. Of
 course, this does not mean that <code>noPrevMentionsIn10</code> does not
@@ -1303,20 +1349,20 @@ adding <code>gapUnits</code> to the model as well:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -1.9429 -0.5194 -0.2067  0.4325  2.4333 </span></span>
+<span><span class="co">#&gt; -1.9230 -0.5088 -0.2052  0.4195  2.4367 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         0.85499    0.25461   3.358 0.000982 ***</span></span>
-<span><span class="co">#&gt; noCompetitors       0.06471    0.01706   3.794 0.000210 ***</span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.10700    0.04015  -2.665 0.008502 ** </span></span>
-<span><span class="co">#&gt; gapUnits           -0.03313    0.00951  -3.484 0.000639 ***</span></span>
+<span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)         0.914363   0.247319   3.697 0.000299 ***</span></span>
+<span><span class="co">#&gt; noCompetitors       0.061045   0.016642   3.668 0.000332 ***</span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.112180   0.039802  -2.818 0.005435 ** </span></span>
+<span><span class="co">#&gt; gapUnits           -0.033354   0.009506  -3.509 0.000585 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.9157 on 159 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.1798, Adjusted R-squared:  0.1644 </span></span>
-<span><span class="co">#&gt; F-statistic: 11.62 on 3 and 159 DF,  p-value: 6.302e-07</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.9156 on 160 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.1757, Adjusted R-squared:  0.1603 </span></span>
+<span><span class="co">#&gt; F-statistic: 11.37 on 3 and 160 DF,  p-value: 8.421e-07</span></span></code></pre></div>
 <p>Interestingly, this time, all three predictors are significant or
 close to significant. The first two are in expected directions: having
 more competitors leads to longer referential expressions, whereas more
@@ -1359,7 +1405,7 @@ thus discounting non-words:</p>
 <span>                                               zeroProtocol <span class="op">=</span> <span class="st">"unitFinal"</span>,</span>
 <span>                                               zeroCond <span class="op">=</span> <span class="op">(</span><span class="va">text</span> <span class="op">==</span> <span class="st">"&lt;0&gt;"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">gapWordsNew</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 234 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 236 × 3</span></span></span>
 <span><span class="co">#&gt;    id            text                                     gapWordsNew</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 I                                                 <span style="color: #BB0000;">NA</span></span></span>
@@ -1372,7 +1418,7 @@ thus discounting non-words:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1D1F2B7054E32 getting up in the morning                         <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1FA3806680C84 the morning                                       <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 4B32FD84BA10  I                                                 <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 224 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 226 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span></span></code></pre></div>
 <p>Now we can put this new <code>gapWords</code> into the model:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
@@ -1388,21 +1434,21 @@ thus discounting non-words:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -1.7947 -0.5776 -0.2112  0.3650  2.4197 </span></span>
+<span><span class="co">#&gt; -1.7712 -0.5631 -0.2307  0.3834  2.4534 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; (Intercept)         0.671725   0.272805   2.462  0.01491 * </span></span>
-<span><span class="co">#&gt; noCompetitors       0.059212   0.018052   3.280  0.00128 **</span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.061301   0.040753  -1.504  0.13457   </span></span>
-<span><span class="co">#&gt; gapWordsNew        -0.006517   0.004309  -1.512  0.13247   </span></span>
+<span><span class="co">#&gt; (Intercept)         0.743495   0.263924   2.817  0.00548 **</span></span>
+<span><span class="co">#&gt; noCompetitors       0.054772   0.017540   3.123  0.00214 **</span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.067691   0.040293  -1.680  0.09497 . </span></span>
+<span><span class="co">#&gt; gapWordsNew        -0.006661   0.004308  -1.546  0.12407   </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.9323 on 154 degrees of freedom</span></span>
+<span><span class="co">#&gt; Residual standard error: 0.9325 on 155 degrees of freedom</span></span>
 <span><span class="co">#&gt;   (5 observations deleted due to missingness)</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.1295, Adjusted R-squared:  0.1126 </span></span>
-<span><span class="co">#&gt; F-statistic:  7.64 on 3 and 154 DF,  p-value: 8.55e-05</span></span></code></pre></div>
+<span><span class="co">#&gt; Multiple R-squared:  0.1246, Adjusted R-squared:  0.1076 </span></span>
+<span><span class="co">#&gt; F-statistic: 7.351 on 3 and 155 DF,  p-value: 0.0001224</span></span></code></pre></div>
 <p>This has no significant effect, unfortunately, so it does not seem
 that <code>gapWords</code> is a useful predictor after all.</p>
 </div>
@@ -1451,22 +1497,22 @@ our model and see what happens:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -1.2554 -0.5820 -0.2281  0.3892  2.0978 </span></span>
+<span><span class="co">#&gt; -1.2599 -0.5751 -0.2264  0.4249  2.0727 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         0.876811   0.249070   3.520 0.000568 ***</span></span>
-<span><span class="co">#&gt; noCompetitors       0.064585   0.016348   3.951 0.000119 ***</span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10  0.036618   0.040361   0.907 0.365691    </span></span>
-<span><span class="co">#&gt; gapWordsNew        -0.008649   0.003912  -2.211 0.028545 *  </span></span>
-<span><span class="co">#&gt; seqInTrail         -0.046968   0.007898  -5.947 1.79e-08 ***</span></span>
+<span><span class="co">#&gt; (Intercept)         0.934727   0.240570   3.885 0.000151 ***</span></span>
+<span><span class="co">#&gt; noCompetitors       0.061113   0.015882   3.848 0.000174 ***</span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10  0.032174   0.040037   0.804 0.422873    </span></span>
+<span><span class="co">#&gt; gapWordsNew        -0.008776   0.003908  -2.246 0.026140 *  </span></span>
+<span><span class="co">#&gt; seqInTrail         -0.047256   0.007887  -5.991 1.42e-08 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.843 on 153 degrees of freedom</span></span>
+<span><span class="co">#&gt; Residual standard error: 0.8425 on 154 degrees of freedom</span></span>
 <span><span class="co">#&gt;   (5 observations deleted due to missingness)</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.293,  Adjusted R-squared:  0.2745 </span></span>
-<span><span class="co">#&gt; F-statistic: 15.85 on 4 and 153 DF,  p-value: 7.111e-11</span></span></code></pre></div>
+<span><span class="co">#&gt; Multiple R-squared:   0.29,  Adjusted R-squared:  0.2716 </span></span>
+<span><span class="co">#&gt; F-statistic: 15.73 on 4 and 154 DF,  p-value: 8.177e-11</span></span></code></pre></div>
 <p>It turns out that <code>seqInTrail</code> is a significant variable,
 and in the expected direction: The farther along we are in a trail, the
 shorter the form of the referential expression.
@@ -1539,7 +1585,8 @@ our hypothesis that shorter <code>gapUnits</code> should lead to shorter
 orthographic length, which is largely based on expectations about
 <em>anaphora</em> - where expressions refer to things mentioned
 <em>before</em> them - not cataphora, where an expression points to
-something mentioned later in the utterance.</p>
+something mentioned later in the utterance. (This also applies to
+<em>stay up late</em> in Figure 20.)</p>
 <p>However, the case of <em>(…) in self assertiveness ,</em> is an
 error. The problem is that in Rezonator, it is not possible to create
 chunks that span multiple units. We can only create individual chunks
@@ -1689,11 +1736,11 @@ combinations:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2C2FB52C1A11  a real good lesson for them ,                           |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> E818EBA6CB78  too ,                                                   |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 2A382D1098989 (...) in self assertiveness ,                           |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> zLJtmxC8rWsYu the only way it 's gon na work , is if we have respect… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> MH64sUNIzdfCw (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> tGj1zYnu7yqJ0 a real good lesson for them , too , (...) in self asse… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> DvFxH732q4Oef when Ron gets home from work , (...) I wan na &lt;0&gt; spen… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> wbvU7LKYdryHP (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> wP3mGBzsIcVMW the only way it 's gon na work , is if we have respect… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> TnisayMOtoA8g (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 5lGxdC6V9wrg4 a real good lesson for them , too , (...) in self asse… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Ky0RVxwjgOa4M when Ron gets home from work , (...) I wan na &lt;0&gt; spen… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> IOpiUuAZjtdzh (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 <p>The function <code><a href="../reference/mergedChunksToTrack.html">mergedChunksToTrack()</a></code> puts this information
 in the <code>trackDF</code> too:</p>
@@ -1717,11 +1764,11 @@ in the <code>trackDF</code> too:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 129168B539994 weekly house meetings          a real good lesson for … |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 144636EDDE11B weekly house meetings          too ,                    |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 231F6E448A5E7 weekly house meetings          (...) in self assertive… |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> MKoCD8eALvpnU having respect for one another the only way it 's gon … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> qCc4v56PHKtgm complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> SkgvcoVlAxIP9 weekly house meetings          a real good lesson for … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> IcqdMSOlepDQA what they don't realize        when Ron gets home from… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> Yt32aDpv9kxEV complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> GPWAa6NBMyS4c having respect for one another the only way it 's gon … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> puK2AiGaDlXm5 complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> NqQ9yR082SUfh weekly house meetings          a real good lesson for … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> EeItsC1G4QFxo what they don't realize        when Ron gets home from… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> MiPnLjOp9I0Ak complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 </div>
 </div>
@@ -1775,21 +1822,21 @@ columns can also be redone to ignore fragments:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -1.2384 -0.4773 -0.1628  0.2887  2.1109 </span></span>
+<span><span class="co">#&gt; -1.2484 -0.4789 -0.1551  0.3138  2.1004 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         1.057993   0.234937   4.503 1.36e-05 ***</span></span>
-<span><span class="co">#&gt; noCompetitors       0.050126   0.016221   3.090   0.0024 ** </span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.030539   0.041843  -0.730   0.4667    </span></span>
-<span><span class="co">#&gt; gapUnitsNew        -0.015440   0.008188  -1.886   0.0613 .  </span></span>
-<span><span class="co">#&gt; seqInTrail         -0.034400   0.007577  -4.540 1.17e-05 ***</span></span>
+<span><span class="co">#&gt; (Intercept)         1.108698   0.226902   4.886 2.66e-06 ***</span></span>
+<span><span class="co">#&gt; noCompetitors       0.046969   0.015768   2.979  0.00339 ** </span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.034747   0.041505  -0.837  0.40385    </span></span>
+<span><span class="co">#&gt; gapUnitsNew        -0.015561   0.008179  -1.903  0.05904 .  </span></span>
+<span><span class="co">#&gt; seqInTrail         -0.034568   0.007567  -4.568 1.03e-05 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.78 on 146 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.2518, Adjusted R-squared:  0.2314 </span></span>
-<span><span class="co">#&gt; F-statistic: 12.29 on 4 and 146 DF,  p-value: 1.226e-08</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.7793 on 147 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:   0.25,  Adjusted R-squared:  0.2296 </span></span>
+<span><span class="co">#&gt; F-statistic: 12.25 on 4 and 147 DF,  p-value: 1.274e-08</span></span></code></pre></div>
 <p>This time, <code>noCompetitors</code> is still significant. The
 coefficient of <code>gapUnitsNew</code> is still in the ‘wrong’
 direction, since a larger <code>gapUnitsNew</code> still leads to a
@@ -1888,22 +1935,22 @@ linear model:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
-<span><span class="co">#&gt; -1.35709 -0.52422 -0.08944  0.36090  1.85158 </span></span>
+<span><span class="co">#&gt; -1.36224 -0.52377 -0.09135  0.35711  1.84910 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         1.412553   0.230841   6.119 8.33e-09 ***</span></span>
-<span><span class="co">#&gt; noCompetitors       0.040775   0.015233   2.677  0.00829 ** </span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.020003   0.039036  -0.512  0.60914    </span></span>
-<span><span class="co">#&gt; gapUnitsNew        -0.014027   0.007632  -1.838  0.06813 .  </span></span>
-<span><span class="co">#&gt; seqInTrail         -0.031243   0.007088  -4.408 2.02e-05 ***</span></span>
-<span><span class="co">#&gt; RelationSubj       -0.587752   0.121816  -4.825 3.51e-06 ***</span></span>
+<span><span class="co">#&gt; (Intercept)         1.438244   0.221384   6.497 1.21e-09 ***</span></span>
+<span><span class="co">#&gt; noCompetitors       0.039285   0.014743   2.665  0.00857 ** </span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.021789   0.038677  -0.563  0.57405    </span></span>
+<span><span class="co">#&gt; gapUnitsNew        -0.014069   0.007610  -1.849  0.06651 .  </span></span>
+<span><span class="co">#&gt; seqInTrail         -0.031291   0.007067  -4.428 1.85e-05 ***</span></span>
+<span><span class="co">#&gt; RelationSubj       -0.592829   0.120827  -4.906 2.45e-06 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.7266 on 145 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.3553, Adjusted R-squared:  0.3331 </span></span>
-<span><span class="co">#&gt; F-statistic: 15.99 on 5 and 145 DF,  p-value: 1.57e-12</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.7245 on 146 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.3561, Adjusted R-squared:  0.3341 </span></span>
+<span><span class="co">#&gt; F-statistic: 16.15 on 5 and 146 DF,  p-value: 1.168e-12</span></span></code></pre></div>
 <p>As we can see, subjects are likely to be far shorter than
 non-subjects. The variables <code>seqInTrail</code> and
 <code>noCompetitors</code> remain significant.</p>
@@ -1956,7 +2003,7 @@ explanation of what’s going on.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 4</span></span></span>
 <span><span class="co">#&gt;    id            treeParent    verbID        verbText         </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B LYIZmNK8G6QsR said             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B wVJuSeKE2DnMc said             </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06  35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 1F74D2B049FA4 35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2485C4F740FC0 27760709F2C9B <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>
@@ -2007,23 +2054,23 @@ works as a predictor:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
-<span><span class="co">#&gt; -1.34234 -0.52101 -0.09161  0.36257  1.86703 </span></span>
+<span><span class="co">#&gt; -1.34843 -0.52406 -0.08984  0.35067  1.86366 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         1.456093   0.262075   5.556 1.30e-07 ***</span></span>
-<span><span class="co">#&gt; noCompetitors       0.040314   0.015334   2.629  0.00949 ** </span></span>
-<span><span class="co">#&gt; noPrevMentionsIn10 -0.020172   0.039157  -0.515  0.60723    </span></span>
-<span><span class="co">#&gt; gapUnitsNew        -0.013833   0.007675  -1.802  0.07357 .  </span></span>
-<span><span class="co">#&gt; seqInTrail         -0.031079   0.007125  -4.362 2.44e-05 ***</span></span>
-<span><span class="co">#&gt; RelationSubj       -0.623016   0.157533  -3.955  0.00012 ***</span></span>
-<span><span class="co">#&gt; isPredOrFreeTRUE   -0.055827   0.157417  -0.355  0.72337    </span></span>
+<span><span class="co">#&gt; (Intercept)         1.480464   0.254853   5.809 3.83e-08 ***</span></span>
+<span><span class="co">#&gt; noCompetitors       0.038794   0.014860   2.611 0.009985 ** </span></span>
+<span><span class="co">#&gt; noPrevMentionsIn10 -0.022015   0.038801  -0.567 0.571325    </span></span>
+<span><span class="co">#&gt; gapUnitsNew        -0.013886   0.007652  -1.815 0.071627 .  </span></span>
+<span><span class="co">#&gt; seqInTrail         -0.031137   0.007103  -4.384 2.23e-05 ***</span></span>
+<span><span class="co">#&gt; RelationSubj       -0.626455   0.156873  -3.993 0.000103 ***</span></span>
+<span><span class="co">#&gt; isPredOrFreeTRUE   -0.052943   0.156820  -0.338 0.736153    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.7288 on 144 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.3559, Adjusted R-squared:  0.3291 </span></span>
-<span><span class="co">#&gt; F-statistic: 13.26 on 6 and 144 DF,  p-value: 6.307e-12</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.7267 on 145 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.3566, Adjusted R-squared:   0.33 </span></span>
+<span><span class="co">#&gt; F-statistic:  13.4 on 6 and 145 DF,  p-value: 4.742e-12</span></span></code></pre></div>
 <p>Unfortunately, <code>isPredOrFree</code> does not turn out to be a
 significant predictor, and the p-value is very large. Subjecthood, it
 seems, is enough.</p>
@@ -2088,24 +2135,24 @@ linear model, but with <code>noPrevMentionsIn10</code> split up:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
-<span><span class="co">#&gt; -1.33588 -0.52408 -0.08787  0.36193  1.86026 </span></span>
+<span><span class="co">#&gt; -1.34330 -0.52749 -0.08254  0.34910  1.85800 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                            Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)                1.459545   0.263611   5.537 1.43e-07 ***</span></span>
-<span><span class="co">#&gt; noCompetitors              0.041075   0.015921   2.580 0.010888 *  </span></span>
-<span><span class="co">#&gt; noPrevSubjMentionsIn10    -0.015563   0.046440  -0.335 0.738025    </span></span>
-<span><span class="co">#&gt; noPrevNonSubjMentionsIn10 -0.030831   0.069440  -0.444 0.657715    </span></span>
-<span><span class="co">#&gt; gapUnitsNew               -0.014100   0.007833  -1.800 0.073962 .  </span></span>
-<span><span class="co">#&gt; seqInTrail                -0.031397   0.007350  -4.272 3.52e-05 ***</span></span>
-<span><span class="co">#&gt; RelationSubj              -0.627628   0.159993  -3.923 0.000135 ***</span></span>
-<span><span class="co">#&gt; isPredOrFreeTRUE          -0.058384   0.158543  -0.368 0.713231    </span></span>
+<span><span class="co">#&gt; (Intercept)                1.483987   0.256739   5.780 4.45e-08 ***</span></span>
+<span><span class="co">#&gt; noCompetitors              0.039377   0.015384   2.560  0.01151 *  </span></span>
+<span><span class="co">#&gt; noPrevSubjMentionsIn10    -0.018280   0.045882  -0.398  0.69092    </span></span>
+<span><span class="co">#&gt; noPrevNonSubjMentionsIn10 -0.030825   0.069243  -0.445  0.65687    </span></span>
+<span><span class="co">#&gt; gapUnitsNew               -0.014107   0.007811  -1.806  0.07299 .  </span></span>
+<span><span class="co">#&gt; seqInTrail                -0.031400   0.007329  -4.284 3.33e-05 ***</span></span>
+<span><span class="co">#&gt; RelationSubj              -0.630342   0.159418  -3.954  0.00012 ***</span></span>
+<span><span class="co">#&gt; isPredOrFreeTRUE          -0.054962   0.157898  -0.348  0.72828    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.7312 on 143 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.3561, Adjusted R-squared:  0.3245 </span></span>
-<span><span class="co">#&gt; F-statistic:  11.3 on 7 and 143 DF,  p-value: 2.391e-11</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.7292 on 144 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.3567, Adjusted R-squared:  0.3255 </span></span>
+<span><span class="co">#&gt; F-statistic: 11.41 on 7 and 144 DF,  p-value: 1.816e-11</span></span></code></pre></div>
 <p>Unfortunately, splitting up <code>noPrevSubjMentions</code> does not
 help much.</p>
 </div>
@@ -2272,7 +2319,7 @@ Let’s put these in the model and see what happens:</p>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residual standard error: 0.6971 on 139 degrees of freedom</span></span>
-<span><span class="co">#&gt;   (3 observations deleted due to missingness)</span></span>
+<span><span class="co">#&gt;   (4 observations deleted due to missingness)</span></span>
 <span><span class="co">#&gt; Multiple R-squared:  0.3454, Adjusted R-squared:  0.3078 </span></span>
 <span><span class="co">#&gt; F-statistic: 9.169 on 8 and 139 DF,  p-value: 4.404e-10</span></span></code></pre></div>
 <p>Whether the current mention is a subject continues to turn out to be
@@ -2414,6 +2461,16 @@ informativity (amount of lexical information contained), rigidity
 <em>him</em>, it stands to reason that a dependent measure based on
 informativity and/or rigidity may reveal greater effects in this
 particular text snippet than phonological size.</p>
+<p>Another possible venue for exploration is to explore
+<em>phonetic</em> length (and perhaps other prosodic measures such as
+intensity and pitch), rather than phonological size. We have seen that
+instances of cataphora complicate the analysis, but it is probable that
+cataphoric forms will have longer prosodic length and more stress than
+anaphoric ones. This information can be extracted through a program like
+Praat and <a href="https://onzeminer.sourceforge.net/" class="external-link">LaBB-CAT</a>, and
+then re-integrated into the rezonateR data using functions like
+<code><a href="../reference/rez_left_join.html">rez_left_join()</a></code> to perform fancier modelling that separates
+cataphoric from anaphoric cases.</p>
 </div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
@@ -2449,11 +2506,10 @@ question.</p>
 <div class="section level2">
 <h2 id="where-to-go-from-here">Where to go from here?<a class="anchor" aria-label="anchor" href="#where-to-go-from-here"></a>
 </h2>
-<p>This simple project shows most of the basic capabilities of
-<code>rezonateR</code>, though it still leaves out a lot, such as
-<em>reloads</em>, which allow you to update certain column automatically
-after changing other columns. The series of tutorials, starting from an
-introduction to <a href="https://rezonators.github.io/rezonateR/articles/import_save_basics.html">imports,
+<p>As stated at the beginning, this simple tutorial still leaves out a
+lot of features, such as <em>reloads</em>, which allow you to update
+certain column automatically after changing other columns. The series of
+tutorials, starting from an introduction to <a href="https://rezonators.github.io/rezonateR/articles/import_save_basics.html">imports,
 saving and data structure</a>
 (<code><a href="../articles/import_save_basics.html">vignette("import_save_basics")</a></code>), is based on the same
 dataset as this tutorial, but covers most functionality of the package

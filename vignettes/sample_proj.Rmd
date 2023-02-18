@@ -19,7 +19,9 @@ library(dplyr)
 
 ## Introduction to the tutorial
 
-This tutorial is a sample project in `rezonateR` aiming to predict the length of referential expressions in natural discourse based on several discourse and grammatical factors. `rezonateR` is an R package mainly designed to import, organise and analyse data produced by the annotation and discourse visualisation software [Rezonator](http://rezonator.com/), which handles a variety of linguistic annotations, including span annotations, coreference chains, dependency trees, and more, with a focus on spoken discourse. `rezonateR` aims to simplify the process of working with Rezonator data using a wealth of built-in functions for data wrangling and feature engineering in R. This tutorial will cover some of the most important functions, including:
+This tutorial is a sample project in `rezonateR` aiming to predict the length of referential expressions in natural discourse based on several discourse and grammatical factors. `rezonateR` is an R package mainly designed to import, organise and analyse data produced by the annotation and discourse visualisation software [Rezonator](http://rezonator.com/), Rezonator, developed at the University of California, Santa Barbara led by John W Du Bois, handles a variety of linguistic annotations, including span annotations, coreference chains, dependency trees, and more, with a focus on spoken discourse. The package `rezonateR`, created by the author (Ryan Ka Yau Lai), aims to simplify the process of working with Rezonator data using a wealth of built-in functions for data wrangling, feature engineering, and combining Rezonator data with other sources of annotations.
+
+This tutorial will cover some of the most important functions, including:
 
 -   Importing a .rez file (the Rezonator data format) and reading annotations imported
 
@@ -32,6 +34,10 @@ This tutorial is a sample project in `rezonateR` aiming to predict the length of
 -   Merging chunks (Rezonator's implementation of span annotations)
 
 -   Doing automatic annotations within `rezonateR`, then exporting the results to a spreadsheet and importing it back into R
+
+This simple project shows most of the basic capabilities of `rezonateR`. The longer series of tutorials starting from an introduction to [imports, saving and data structure](https://rezonators.github.io/rezonateR/articles/import_save_basics.html) (`vignette("import_save_basics")`) is based on the same dataset as this page, but covers most functionality of the package down to the smallest details, and you can pick and choose topics from there to read. If you are already familiar with using Rezonator, you may want to consult the [overview](https://rezonators.github.io/rezonateR/articles/overview.html) for Rezonator users (`vignette("overview")`), a less topically focused overview that tells you how `rezonateR` can support your Rezonator work, covering more topics about different aspects of `rezonateR` than this page.
+
+This article does not assume that you have read any of these other articles, so there is some overlap in the topics covered. However, this article will have less focus on how to write the code, and more on showing you how to answer the sample research question using `rezonateR`. So don't worry if you don't understand the details of how the code works - that can come later, as you read the detailed tutorials and documentation. I will point you to other tutorials for further details when relevant.
 
 ## Research question: Referent accessibility and referential choice
 
@@ -79,17 +85,13 @@ So far, we have talked about notions like accessibility and prominence in rather
 
 In this project, we will propose some factors that may increase accessibility (e.g. the number of times an entity has been recently mentioned), and then determine whether they are associated with the use of a shorter form in natural discourse. For example, if certain referents have just been mentioned a lot in the previous context, we might expect that they are relatively mentally accessible. If such referents are statistically more likely to be referred to using shorter, simpler forms - like the example of *they* that we have just discussed - then we have support for the idea that people choose to use shorter, simpler forms when referents are more accessible in discourse. This project is a preliminary investigation of this issue using a short snippet of conversation.
 
-## What we will do
+## This tutorial in a nutshell
 
 The aim of this article is to demonstrate, using a sample, highly simplified project, what type of analysis may be conducted using Rezonator and `rezonateR`. This particular example will examine the choice of referential forms in spoken dialogue: What factors lead to the choice of a longer form versus a shorter one? The following snippet of conversation (Figure 7), for example, has two referential expressions referring to the same entity - a dog - but the first one is a rather long noun phrase (*this darn dog*) while the second is a simple, one-word pronoun (*her*). Can we tell what factors are at play here that motivated the speaker's choice of referential expression?
 
 ![Figure 7: Coreference chain containing two mentions of a dog](images/paste-CF41A72C.png){width="577"}
 
-To this end, we will annotate each referential expression in the text using properties that we believe are related to accessibility, such as the number of times the referent has been mentioned recently, or whether the expression is the subject of a clause. We will then use this information and attempt to see whether some of these properties are associated with the use of shorter, simpler referential expressions and others with longer, more complex expressions.
-
-The data here is the same as that used in the [series of detailed tutorials](https://rezonators.github.io/rezonateR/articles/import_save_basics.html) (`vignette("import_save_basics")`), but this article will have less focus on how to write the code, and more on showing you how to answer the sample research question using `rezonateR`. So don't worry if you don't understand the details of how the code works - that can come later, as you read the detailed tutorials and documentation.
-
-This article does not assume that you have read any of the other articles on `rezonateR`. So there is some overlap in the topics covered. I will point you to other tutorials for further details when necessary. However, if you have not installed `rezonateR`, please do it now using this code:
+To this end, we will annotate each referential expression in the text using properties that we believe are related to accessibility, such as the number of times the referent has been mentioned recently, or whether the expression is the subject of a clause. We will then use this information and attempt to see whether some of these properties are associated with the use of shorter, simpler referential expressions and others with longer, more complex expressions. The only prerequisite of this tutorial is that you have installed `rezonateR`. If you have not, please do it now using this code:
 
 +----------------------------------------+
 | Installing rezonateR                   |
@@ -209,7 +211,7 @@ During the import process, we will need to specify two types of information:
 
 -   **Which fields of a token contains text to be concatenated:** When you are browsing data frames containing data structures above the level of a token, such as `chunkDF`or`unitDF`, you want to be able to see the text. For example, take the following line:
 
-    ![Figure 15: A unit containing the chunk \*'m also going to suggest\*](images/paste-5FB50E2C.png){width="444"}
+    ![Figure 15: A unit containing the chunk \*\'m also going to suggest\*](images/paste-5FB50E2C.png){width="444"}
 
     When browsing the `unitDF`, you would want to see all the text in this unit, *(...) (H) I 'm also going to suggest ,*, in one of the columns. Similarly, when browsing `chunkDF`, you would want a column that gives you *'m also going to suggest*. Thus, we have to tell Rezonator where to look for the textual content of individual tokens so that they can be concatenated in the `rezrDF`s for higher structures like chunks and units.
 
@@ -599,7 +601,7 @@ Notice that some of these cases do not seem to be actual referential expressions
 
 ![Figure 21: A case of cataphoric *it* creating an exception to the general rule that shorter `gapUnits` is associated with shorter length.](images/paste-AA63E6C5.png){width="437"}
 
-Since this is a case of cataphora and one of the expressions is a full clause, it is not surprising that it throws a monkey wrench into our hypothesis that shorter `gapUnits` should lead to shorter orthographic length, which is largely based on expectations about *anaphora* - where expressions refer to things mentioned *before* them - not cataphora, where an expression points to something mentioned later in the utterance.
+Since this is a case of cataphora and one of the expressions is a full clause, it is not surprising that it throws a monkey wrench into our hypothesis that shorter `gapUnits` should lead to shorter orthographic length, which is largely based on expectations about *anaphora* - where expressions refer to things mentioned *before* them - not cataphora, where an expression points to something mentioned later in the utterance. (This also applies to *stay up late* in Figure 20.)
 
 However, the case of *(...) in self assertiveness ,* is an error. The problem is that in Rezonator, it is not possible to create chunks that span multiple units. We can only create individual chunks for each unit. So in this screenshot, *a real good lesson for them ,*, *too ,*, and *(...) in self assertiveness ,* are three separate chunks, when they should really only be a single chunk:
 
@@ -960,6 +962,8 @@ As we can see in this table, the top referents are all humans, and they are most
 
 The fact that 'Tim' (and in fact many other names in this text, like Ron and Mary) are orthographically short also compels us to consider other dimensions of accessibility theory. In this project, our response measure is orthographic length, which is a proxy for phonological length. As defined by Ariel (2001), however, the form-function correlations claimed by accessibility theory are not based on phonological size alone. There are also two other dimensions: informativity (amount of lexical information contained), rigidity (ability of a form to pick a unique referent). Because forms like *Tim* are more rigid and informative than forms like *him*, it stands to reason that a dependent measure based on informativity and/or rigidity may reveal greater effects in this particular text snippet than phonological size.
 
+Another possible venue for exploration is to explore *phonetic* length (and perhaps other prosodic measures such as intensity and pitch), rather than phonological size. We have seen that instances of cataphora complicate the analysis, but it is probable that cataphoric forms will have longer prosodic length and more stress than anaphoric ones. This information can be extracted through a program like Praat and [LaBB-CAT](https://onzeminer.sourceforge.net/), and then re-integrated into the rezonateR data using functions like `rez_left_join()` to perform fancier modelling that separates cataphoric from anaphoric cases.
+
 ## Conclusion
 
 In this tutorial, we have explored the topic of referent accessibility and referential choice using a small snippet of natural conversation. We derived a number of predictors hypothesised to be associated with higher accessibility, and explored their relationship with the length of referential expressions. We have seen that there is a large discrepancy between subjects and non-subjects - subjects tend to be much shorter than non-subjects - as well as an effect of position in the coreference chain - that is, the more times a referent has been mentioned before, the shorter the form used to refer to it. We have also discussed why other factors do not seem to have much of an effect in our small sample.
@@ -968,7 +972,7 @@ In the process, we have explored many of the major features of `rezonateR`. We h
 
 ## Where to go from here?
 
-This simple project shows most of the basic capabilities of `rezonateR`, though it still leaves out a lot, such as *reloads*, which allow you to update certain column automatically after changing other columns. The series of tutorials, starting from an introduction to [imports, saving and data structure](https://rezonators.github.io/rezonateR/articles/import_save_basics.html) (`vignette("import_save_basics")`), is based on the same dataset as this tutorial, but covers most functionality of the package down to the smallest details, and you can pick and choose topics from there to read. If you are already familiar with using Rezonator, the [overview](https://rezonators.github.io/rezonateR/articles/overview.html) (`vignette("overview")`) is a less topically focused overview that tells you how `rezonateR` can support your Rezonator work, covering more topics about different aspects of `rezonateR`. Good luck!
+As stated at the beginning, this simple tutorial still leaves out a lot of features, such as *reloads*, which allow you to update certain column automatically after changing other columns. The series of tutorials, starting from an introduction to [imports, saving and data structure](https://rezonators.github.io/rezonateR/articles/import_save_basics.html) (`vignette("import_save_basics")`), is based on the same dataset as this tutorial, but covers most functionality of the package down to the smallest details, and you can pick and choose topics from there to read. If you are already familiar with using Rezonator, the [overview](https://rezonators.github.io/rezonateR/articles/overview.html) (`vignette("overview")`) is a less topically focused overview that tells you how `rezonateR` can support your Rezonator work, covering more topics about different aspects of `rezonateR`. Good luck!
 
 ## References
 
