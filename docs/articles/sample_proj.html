@@ -379,6 +379,10 @@ corresponds to a referential expression, and the columns include all of
 these factors (plus <code>charCount</code>, the number of characters).
 This can be done easily using the <code>rezonateR</code> functions after
 inputting the raw Rezonator data.</p>
+<p>The analysis we will make here is not the optimal one for the
+dataset, but mainly serves as a way of showcase the functionalities on
+offer. Thus, the dataset is very small and modelling choices will be
+kept simple, compared to what one would do in an actual project.</p>
 </div>
 </div>
 <div class="section level2">
@@ -1736,11 +1740,11 @@ combinations:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2C2FB52C1A11  a real good lesson for them ,                           |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> E818EBA6CB78  too ,                                                   |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 2A382D1098989 (...) in self assertiveness ,                           |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> xYeDgrmTt3dM4 the only way it 's gon na work , is if we have respect… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> dhTbCetDj2ymK (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> s5VEYeFTIhPGD a real good lesson for them , too , (...) in self asse… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> ud9NQaKWV3fsT when Ron gets home from work , (...) I wan na &lt;0&gt; spen… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> vEuImsY4gXTtO (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Y645SVK0yBhsd the only way it 's gon na work , is if we have respect… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> luZVQfONr5khW (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> xSbAo1lCGEkwa a real good lesson for them , too , (...) in self asse… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> tEa0zA8ZFj6mJ when Ron gets home from work , (...) I wan na &lt;0&gt; spen… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> yHaTg6IRso4B8 (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 <p>The function <code><a href="../reference/mergedChunksToTrack.html">mergedChunksToTrack()</a></code> puts this information
 in the <code>trackDF</code> too:</p>
@@ -1764,11 +1768,11 @@ in the <code>trackDF</code> too:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 129168B539994 weekly house meetings          a real good lesson for … |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 144636EDDE11B weekly house meetings          too ,                    |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 231F6E448A5E7 weekly house meetings          (...) in self assertive… |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> hr9WcCx8UMnYG having respect for one another the only way it 's gon … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> QIZgLEmKUWPGY complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Ql9JEjXuwtzgH weekly house meetings          a real good lesson for … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> s6pcAUM5tHZke what they don't realize        when Ron gets home from… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> MEJXrDdT78tm6 complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> hHkOKm8bdUQwx having respect for one another the only way it 's gon … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> bT146P8Nf3KJR complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> ewiQYTOvIf8B5 weekly house meetings          a real good lesson for … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Gks4LaHP7ibo3 what they don't realize        when Ron gets home from… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> W7pjxw0rdyvZG complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 </div>
 </div>
@@ -2003,7 +2007,7 @@ explanation of what’s going on.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 4</span></span></span>
 <span><span class="co">#&gt;    id            treeParent    verbID        verbText         </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B dbwOoDHtIFR3u said             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B UfF94Z6PaElc5 said             </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06  35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 1F74D2B049FA4 35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2485C4F740FC0 27760709F2C9B <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>

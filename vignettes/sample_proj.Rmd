@@ -122,6 +122,8 @@ We will be building a model that predicts the `charCount` from several predictor
 
 Thus, our goal within R is to create a data frame where each row corresponds to a referential expression, and the columns include all of these factors (plus `charCount`, the number of characters). This can be done easily using the `rezonateR` functions after inputting the raw Rezonator data.
 
+The analysis we will make here is not the optimal one for the dataset, but mainly serves as a way of showcase the functionalities on offer. Thus, the dataset is very small and modelling choices will be kept simple, compared to what one would do in an actual project.
+
 ## The input data from Rezonator
 
 The first 162 lines have been annotated and will be used in this tutorial; they deal with the topic of one of the sisters' roommates. The data is also available through the `sbc007` object in the package itself, where a detailed description of the annotations included may be found. The full corpus, with text and audio files, can be downloaded at the [Santa Barbara Corpus page on the UC Santa Barbara Linguistics Department Website](https://www.linguistics.ucsb.edu/research/santa-barbara-corpus). The corpus in `.rez` format, the file format which is used by the Rezonator program and can be imported into R using `rezonateR`, is shipped with Rezonator, which can be downloaded on the [Rezonator website](http://rezonator.com/).
