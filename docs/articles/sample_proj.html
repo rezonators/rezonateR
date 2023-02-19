@@ -321,10 +321,9 @@ on the ‘run’ button (green ‘play’ icon on the top right of each box) to
 run the code. As long as all the code blocks are run sequentially, the
 code should work; otherwise, please <a href="https://github.com/rezonators/rezonateR/issues" class="external-link">submit a
 ticket</a> on GitHub!</p>
-</div>
-<div class="section level2">
-<h2 id="what-we-will-do-in-this-tutorial">What we will do in this tutorial<a class="anchor" aria-label="anchor" href="#what-we-will-do-in-this-tutorial"></a>
-</h2>
+<div class="section level3">
+<h3 id="overview-of-our-goal-in-rezonater">Overview of our goal in rezonateR<a class="anchor" aria-label="anchor" href="#overview-of-our-goal-in-rezonater"></a>
+</h3>
 <p>As we said above, our goal is to propose several factors that are
 potentially relevant to accessibility of referents in discourse, and see
 if they are associated with simpler referential forms. For the purposes
@@ -380,6 +379,7 @@ corresponds to a referential expression, and the columns include all of
 these factors (plus <code>charCount</code>, the number of characters).
 This can be done easily using the <code>rezonateR</code> functions after
 inputting the raw Rezonator data.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="the-input-data-from-rezonator">The input data from Rezonator<a class="anchor" aria-label="anchor" href="#the-input-data-from-rezonator"></a>
@@ -608,7 +608,7 @@ structures above the level of a token, such as
 <code>chunkDF</code>or<code>unitDF</code>, you want to be able to see
 the text. For example, take the following line:</p>
 <div class="figure">
-<img src="images/paste-5FB50E2C.png" width="444" alt=""><p class="caption">Figure 15: A unit containing the chunk *'m also going
+<img src="images/paste-5FB50E2C.png" width="444" alt=""><p class="caption">Figure 15: A unit containing the chunk *’m also going
 to suggest*</p>
 </div>
 <p>When browsing the <code>unitDF</code>, you would want to see all the
@@ -1736,11 +1736,11 @@ combinations:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2C2FB52C1A11  a real good lesson for them ,                           |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> E818EBA6CB78  too ,                                                   |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 2A382D1098989 (...) in self assertiveness ,                           |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> wP3mGBzsIcVMW the only way it 's gon na work , is if we have respect… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> TnisayMOtoA8g (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 5lGxdC6V9wrg4 a real good lesson for them , too , (...) in self asse… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Ky0RVxwjgOa4M when Ron gets home from work , (...) I wan na &lt;0&gt; spen… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> IOpiUuAZjtdzh (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> xYeDgrmTt3dM4 the only way it 's gon na work , is if we have respect… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> dhTbCetDj2ymK (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> s5VEYeFTIhPGD a real good lesson for them , too , (...) in self asse… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> ud9NQaKWV3fsT when Ron gets home from work , (...) I wan na &lt;0&gt; spen… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> vEuImsY4gXTtO (H) &lt;0&gt; going to (...) our parents , and (...) &lt;0&gt; com… combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 <p>The function <code><a href="../reference/mergedChunksToTrack.html">mergedChunksToTrack()</a></code> puts this information
 in the <code>trackDF</code> too:</p>
@@ -1764,11 +1764,11 @@ in the <code>trackDF</code> too:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 129168B539994 weekly house meetings          a real good lesson for … |infom…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 144636EDDE11B weekly house meetings          too ,                    |membe…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 231F6E448A5E7 weekly house meetings          (...) in self assertive… |membe…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> GPWAa6NBMyS4c having respect for one another the only way it 's gon … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> puK2AiGaDlXm5 complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> NqQ9yR082SUfh weekly house meetings          a real good lesson for … combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> EeItsC1G4QFxo what they don't realize        when Ron gets home from… combin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> MiPnLjOp9I0Ak complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> hr9WcCx8UMnYG having respect for one another the only way it 's gon … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> QIZgLEmKUWPGY complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Ql9JEjXuwtzgH weekly house meetings          a real good lesson for … combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> s6pcAUM5tHZke what they don't realize        when Ron gets home from… combin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> MEJXrDdT78tm6 complaining about one another  (H) &lt;0&gt; going to (...) … combin…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​combinedChunk</span></span></span></code></pre></div>
 </div>
 </div>
@@ -2003,7 +2003,7 @@ explanation of what’s going on.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 4</span></span></span>
 <span><span class="co">#&gt;    id            treeParent    verbID        verbText         </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B wVJuSeKE2DnMc said             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1096E4AFFFE65 3005263A8352B dbwOoDHtIFR3u said             </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 92F20ACA5F06  35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 1F74D2B049FA4 35B1DC6EA25E5 744AD104FE64  was n't gon na do</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2485C4F740FC0 27760709F2C9B <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>               </span></span>

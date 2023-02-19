@@ -105,7 +105,7 @@ To this end, we will annotate each referential expression in the text using prop
 
 You are welcome to follow this tutorial in R. If you are reading this in R using the file `sample_proj.Rmd`, you can simply click on the 'run' button (green 'play' icon on the top right of each box) to run the code. As long as all the code blocks are run sequentially, the code should work; otherwise, please [submit a ticket](https://github.com/rezonators/rezonateR/issues) on GitHub!
 
-## What we will do in this tutorial
+### Overview of our goal in rezonateR
 
 As we said above, our goal is to propose several factors that are potentially relevant to accessibility of referents in discourse, and see if they are associated with simpler referential forms. For the purposes of this tutorial, we will use orthographic length, or how many English letters there are in an expression, as a proxy for how 'simple' the referential forms will be, since this is the easiest to calculate. This acts as a proxy for phonological size, which is often claimed to be associated with accessibility: the more accessible an entity, the smaller the phonological size of the referential expression used (Ariel 2001). The orthographic length variable will be referred to as `charCount` in the code.
 
@@ -211,7 +211,7 @@ During the import process, we will need to specify two types of information:
 
 -   **Which fields of a token contains text to be concatenated:** When you are browsing data frames containing data structures above the level of a token, such as `chunkDF`or`unitDF`, you want to be able to see the text. For example, take the following line:
 
-    ![Figure 15: A unit containing the chunk \*\'m also going to suggest\*](images/paste-5FB50E2C.png){width="444"}
+    ![Figure 15: A unit containing the chunk \*'m also going to suggest\*](images/paste-5FB50E2C.png){width="444"}
 
     When browsing the `unitDF`, you would want to see all the text in this unit, *(...) (H) I 'm also going to suggest ,*, in one of the columns. Similarly, when browsing `chunkDF`, you would want a column that gives you *'m also going to suggest*. Thus, we have to tell Rezonator where to look for the textual content of individual tokens so that they can be concatenated in the `rezrDF`s for higher structures like chunks and units.
 
