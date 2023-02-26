@@ -1,6 +1,6 @@
 # rezonateR
 
-`rezonateR` (pronounced "resonate R") uses R (statistics software) to analyze and visualize data about natural language discourse. The data that `rezonateR` takes as input are those created by the companion tool [Rezonator](https://github.com/johnwdubois/rezonator). While the Rezonator tool is used for manual annotating and visualising discourse features and useful for qualitative analysis, `rezonateR` takes Rezonator input and helps perform automated or semi-automated annotation and prepare the data for quantitative analysis in R.
+[`rezonateR`](rezonators.github.io/rezonateR/) (pronounced "resonate R") uses R (statistics software) to analyze and visualize data about natural language discourse. The data that `rezonateR` takes as input are those created by the companion tool [Rezonator](https://github.com/johnwdubois/rezonator). While the Rezonator tool is used for manual annotating and visualising discourse features and useful for qualitative analysis, `rezonateR` takes Rezonator input and helps perform automated or semi-automated annotation and prepare the data for quantitative analysis in R.
 
 Some examples of research questions you could investigate with Rezonator + `rezonateR` include:
 
@@ -16,4 +16,8 @@ If you're starting out, this site contains different resources that you can use 
 -   **Detailed walkthrough**: If you are already confident that `rezonateR` is the tool you want to be using, the series of tutorials starting from the one on [imports, saves, and data structure](https://rezonators.github.io/rezonateR/articles/import_save_basics.html) `vignette("import_save_basics")` goes into the nitty-gritty of how to use `rezonateR`. This doubles as a reference to look up how to do different things in `rezonateR`.
 -   **Documentation**: If you need more detailed explanation of how individual functions, you can access the documentation of `rezonateR` with the [reference tab](https://rezonators.github.io/rezonateR/reference/index.html) if you're on the website, or with `help(package = "rezonateR")` if you're on your local machine.
 
-For the public-facing website for this project, see [Rezonator.com](https://rezonator.com/).
+For the public-facing website for the entire project, see [Rezonator.com](https://rezonator.com/).
+
+# Acknowledgements
+
+Thanks to Giorgia Troiani, Stefan Th Gries, Argyro Katsika and the UCSB CEILing group for their comments on this project.
