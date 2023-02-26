@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">rezonateR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.0000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.0000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,9 @@
     <a class="dropdown-item" href="articles/track.html">Tracking down coreference phenomena</a>
   </div>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">Changelog</a>
+</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -70,7 +73,7 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="rezonater">rezonateR<a class="anchor" aria-label="anchor" href="#rezonater"></a>
 </h1></div>
-<p><code>rezonateR</code> (pronounced “resonate R”) uses R (statistics software) to analyze and visualize data about natural language discourse. The data that <code>rezonateR</code> takes as input are those created by the companion tool <a href="https://github.com/johnwdubois/rezonator" class="external-link">Rezonator</a>. While the Rezonator tool is used for manual annotating and visualising discourse features and useful for qualitative analysis, <code>rezonateR</code> takes Rezonator input and helps perform automated or semi-automated annotation and prepare the data for quantitative analysis in R.</p>
+<p><a href="rezonators.github.io/rezonateR/"><code>rezonateR</code></a> (pronounced “resonate R”) uses R (statistics software) to analyze and visualize data about natural language discourse. The data that <code>rezonateR</code> takes as input are those created by the companion tool <a href="https://github.com/johnwdubois/rezonator" class="external-link">Rezonator</a>. While the Rezonator tool is used for manual annotating and visualising discourse features and useful for qualitative analysis, <code>rezonateR</code> takes Rezonator input and helps perform automated or semi-automated annotation and prepare the data for quantitative analysis in R.</p>
 <p>Some examples of research questions you could investigate with Rezonator + <code>rezonateR</code> include:</p>
 <ul>
 <li>In spoken English discourse, what factors can be used to predict when a speaker will use a pronoun instead of a noun phrase to refer to some entity?</li>
@@ -89,8 +92,15 @@
 <li>
 <strong>Documentation</strong>: If you need more detailed explanation of how individual functions, you can access the documentation of <code>rezonateR</code> with the <a href="https://rezonators.github.io/rezonateR/reference/index.html">reference tab</a> if you’re on the website, or with <code><a href="https://rezonators.github.io/rezonateR/reference">help(package = "rezonateR")</a></code> if you’re on your local machine.</li>
 </ul>
-<p>For the public-facing website for this project, see <a href="https://rezonator.com/" class="external-link">Rezonator.com</a>.</p>
+<p>This is the first official release of <code>rezonateR</code>. Currently, it contains a rich set of functions for editing and analysing coreference-related phenomena. Functionality for visualisation and analysing resonance and turn-taking phenomena to be added soon. Functionaity is added on a needs-based basis, so please <a href="https://github.com/rezonators/rezonateR/issues" class="external-link">submit an issue on GitHub</a> if you need any!</p>
+<p>For the public-facing website for the entire project, see <a href="https://rezonator.com/" class="external-link">Rezonator.com</a>.</p>
 </div>
+<div class="section level1">
+<h1 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h1>
+<p>Thanks to Giorgia Troiani, Stefan Th Gries, Argyro Katsika and the UCSB CEILing group for their comments on this project.</p>
+</div>
+
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
@@ -111,7 +121,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Ryan Ka Yau Lai <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-6478-0649" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>John W Du Bois <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -123,7 +133,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Ryan Ka Yau Lai, John W Du Bois.</p>
+<p>Developed by Ryan Ka Yau Lai.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rezonateR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.0000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.0000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,11 +42,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Overview</h6>
-    <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR 0.1.1</a>
-    <a class="dropdown-item" href="../articles/sample_proj.html">Toy example of a coreference analysis in rezonateR</a>
+    <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR for Rezonator users</a>
+    <a class="dropdown-item" href="../articles/sample_proj.html">Sample mini-project: Analysing coreference in rezonateR</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
-    <a class="dropdown-item" href="../articles/import_save_basics.html">Importing .rez files, saving rezrObjs, and basic data structure</a>
+    <a class="dropdown-item" href="../articles/import_save_basics.html">Importing Rezonator files, saving rezonateR objects, and basic data structure</a>
     <a class="dropdown-item" href="../articles/time_seq.html">Time and sequence</a>
     <a class="dropdown-item" href="../articles/edit_easyEdit.html">Editing I: Using EasyEdit</a>
     <a class="dropdown-item" href="../articles/edit_tidyRez.html">Editing II: Using TidyRez</a>
@@ -54,6 +54,9 @@
     <a class="dropdown-item" href="../articles/tree.html">Dealing with Trees</a>
     <a class="dropdown-item" href="../articles/track.html">Tracking down coreference phenomena</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -139,17 +142,17 @@ sequence-related fields:</p>
 <code>docTokenSeq</code> of the first token.</li>
 <li>
 <code>docTokenSeqLast</code> - refers to the
-<code>docTokenSeq</code> of the first token.</li>
+<code>docTokenSeq</code> of the last token.</li>
 <li>
 <code>tokenOrderFirst</code> - refers to the <code>tokenOrder</code>
 of the first token.</li>
 <li>
 <code>tokenOrderLast</code> - refers to the <code>tokenOrder</code>
-of the first token.</li>
+of the last token.</li>
 </ul>
 <p>You can see these fields in action in the <code>chunkDF</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">doc</span>, <span class="va">name</span>, <span class="va">text</span>, <span class="va">tokenOrderFirst</span>, <span class="va">docTokenSeqFirst</span>, <span class="va">tokenOrderLast</span>, <span class="va">docTokenSeqLast</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">doc</span>, <span class="va">name</span>, <span class="va">text</span>, <span class="va">tokenOrderFirst</span>, <span class="va">docTokenSeqFirst</span>, <span class="va">tokenOrderLast</span>, <span class="va">docTokenSeqLast</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 8</span></span></span>
 <span><span class="co">#&gt;   id            doc    name     text             token…¹ docTo…² token…³ docTo…⁴</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -209,7 +212,7 @@ counterparts, except non-words are give 0 values, and only words are
 counted in determining order.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/addIsWordField.html">addIsWordField</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="va">kind</span> <span class="op">==</span> <span class="st">"Word"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">tokenOrder</span>, <span class="va">docTokenSeq</span>, <span class="va">wordOrder</span>, <span class="va">docWordSeq</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">tokenOrder</span>, <span class="va">docTokenSeq</span>, <span class="va">wordOrder</span>, <span class="va">docWordSeq</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
 <span><span class="co">#&gt;   id            tokenOrder docTokenSeq wordOrder docWordSeq</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -219,7 +222,7 @@ counted in determining order.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 37EFCBECFD691          1           4         1          2</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 12D67756890C1          2           5         2          3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 936363B71D59           3           6         3          4</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">tokenOrderFirst</span>, <span class="va">tokenOrderLast</span>, <span class="va">docTokenSeqFirst</span>, <span class="va">docTokenSeqLast</span>, <span class="va">wordOrderFirst</span>, <span class="va">wordOrderLast</span>, <span class="va">docWordSeqFirst</span>, <span class="va">docWordSeqLast</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">chunkDF</span><span class="op">$</span><span class="va">refexpr</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">tokenOrderFirst</span>, <span class="va">tokenOrderLast</span>, <span class="va">docTokenSeqFirst</span>, <span class="va">docTokenSeqLast</span>, <span class="va">wordOrderFirst</span>, <span class="va">wordOrderLast</span>, <span class="va">docWordSeqFirst</span>, <span class="va">docWordSeqLast</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 9</span></span></span>
 <span><span class="co">#&gt;   id            tokenO…¹ token…² docTo…³ docTo…⁴ wordO…⁵ wordO…⁶ docWo…⁷ docWo…⁸</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -250,7 +253,7 @@ get it.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/addUnitSeq.html">addUnitSeq</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"track"</span><span class="op">)</span></span>
 <span><span class="va">rez007</span> <span class="op">=</span> <span class="fu"><a href="../reference/addUnitSeq.html">addUnitSeq</a></span><span class="op">(</span><span class="va">rez007</span>, <span class="st">"stack"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">unitSeqFirst</span>, <span class="va">unitSeqLast</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">trackDF</span><span class="op">$</span><span class="va">default</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">unitSeqFirst</span>, <span class="va">unitSeqLast</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   id            text              unitSeqFirst unitSeqLast</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -260,7 +263,7 @@ get it.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1F74D2B049FA4 this                         2           2</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2485C4F740FC0 &lt;0&gt;                          3           3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1BF2260B4AB78 Stay up late                 3           3</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">stackDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">name</span>, <span class="va">unitSeqFirst</span>, <span class="va">unitSeqLast</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">stackDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">name</span>, <span class="va">unitSeqFirst</span>, <span class="va">unitSeqLast</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   id            name      unitSeqFirst unitSeqLast</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -331,7 +334,7 @@ in the Rezonator version of the Santa Barbara Corpus, we can get it from
 the place within the prosodic sentence (<code>pSentOrder</code>):</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"pSent"</span>, <span class="fu"><a href="../reference/orderseq.html">getSeqFromOrder</a></span><span class="op">(</span><span class="va">pSentOrder</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSent</span>, <span class="va">pSentOrder</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSent</span>, <span class="va">pSentOrder</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   id            text  pSent pSentOrder</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
@@ -349,7 +352,7 @@ something is the initial or final member of a larger unit.
 start of the prosodic sentence:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"isPSentInitial"</span>, <span class="fu"><a href="../reference/initfin.html">isInitial</a></span><span class="op">(</span><span class="va">pSentOrder</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSentOrder</span>, <span class="va">isPSentInitial</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSentOrder</span>, <span class="va">isPSentInitial</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   id            text  pSentOrder isPSentInitial</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>         </span></span>
@@ -368,7 +371,7 @@ part of the prosodic sentence.)</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"pSentLength"</span>, <span class="fu"><a href="../reference/complexActions.html">inLength</a></span><span class="op">(</span><span class="va">pSentOrder</span>, isWord <span class="op">=</span> <span class="op">(</span><span class="va">text</span> <span class="op">!=</span> <span class="st">"&lt;0&gt;"</span><span class="op">)</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"complex"</span>, groupField <span class="op">=</span> <span class="st">"pSent"</span><span class="op">)</span></span>
 <span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">addFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"isPSentFinal"</span>, <span class="fu"><a href="../reference/initfin.html">isFinal</a></span><span class="op">(</span><span class="va">pSentOrder</span>, <span class="va">pSentLength</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSentOrder</span>, <span class="va">pSentLength</span>, <span class="va">isPSentFinal</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSentOrder</span>, <span class="va">pSentLength</span>, <span class="va">isPSentFinal</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
 <span><span class="co">#&gt;   id            text  pSentOrder pSentLength isPSentFinal</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       </span></span>
@@ -382,7 +385,7 @@ part of the prosodic sentence.)</p>
 length. Let’s get the BILUO values for prosodic sentences:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">=</span> <span class="fu"><a href="../reference/acFieldLocal.html">changeFieldLocal</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span>, <span class="st">"pSentBiluo"</span>, <span class="fu"><a href="../reference/getBiluoFromOrder.html">getBiluoFromOrder</a></span><span class="op">(</span><span class="va">pSentOrder</span>, <span class="va">pSentLength</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSentOrder</span>, <span class="va">pSentLength</span>, <span class="va">pSentBiluo</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rez007</span><span class="op">$</span><span class="va">tokenDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">text</span>, <span class="va">pSentOrder</span>, <span class="va">pSentLength</span>, <span class="va">pSentBiluo</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
 <span><span class="co">#&gt;   id            text  pSentOrder pSentLength pSentBiluo</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
@@ -415,7 +418,7 @@ add automatic annotations to <code>rezrDF</code>s!</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Ryan Ka Yau Lai, John W Du Bois.</p>
+<p>Developed by Ryan Ka Yau Lai.</p>
 </div>
 
 <div class="pkgdown-footer-right">

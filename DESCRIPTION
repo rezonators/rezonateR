@@ -1,6 +1,6 @@
 Package: rezonateR
 Title: A Support Package for Working with Rezonator in R
-Version: 0.1.1.0000
+Version: 0.1.2.0000
 Authors@R:
     c(person(given = "Ryan Ka Yau",
            family = "Lai",
@@ -9,7 +9,7 @@ Authors@R:
            comment = c(ORCID = "0000-0001-6478-0649")),
            person(given = "John W",
            family = "Du Bois",
-           role = c("aut"),
+           role = c("ths"),
            email = "dubois@ucsb.edu")
            )
 Maintainer: Ryan Ka Yau Lai <kayaulai@ucsb.edu>

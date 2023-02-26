@@ -32,11 +32,13 @@ rez007 = rez_load(path)
 ```{r, echo = FALSE}
 rez007$tokenDF$pSentOrder[1:14] = 1:14
 ```
+
 ## Token order and sequence
+
 Rezonator by default provides two fields related to the position of a token, which you will see in `tokenDF` as columns:
 
-* `docTokenSeq` - refers to the order of a token within the entire text
-* `tokenOrder` -  refers to the position of a token within its intonation unit
+-   `docTokenSeq` - refers to the order of a token within the entire text
+-   `tokenOrder` - refers to the position of a token within its intonation unit
 
 Both orders count all tokens. In the Santa Barbara Corpus text we are using, this includes endnotes (such as `,` and `.`), transcriptions of vocalisms (such as `(H)` for in-breaths and `@@@` for laughter), and so on. You can see these in the `tokenDF` of our sample file here:
 
@@ -46,10 +48,10 @@ head(rez007$tokenDF)
 
 'Larger' elements that span multiple tokens have four token sequence-related fields:
 
-* `docTokenSeqFirst` - refers to the `docTokenSeq` of the first token.
-* `docTokenSeqLast` - refers to the `docTokenSeq` of the first token.
-* `tokenOrderFirst` - refers to the `tokenOrder` of the first token.
-* `tokenOrderLast` - refers to the `tokenOrder` of the first token.
+-   `docTokenSeqFirst` - refers to the `docTokenSeq` of the first token.
+-   `docTokenSeqLast` - refers to the `docTokenSeq` of the last token.
+-   `tokenOrderFirst` - refers to the `tokenOrder` of the first token.
+-   `tokenOrderLast` - refers to the `tokenOrder` of the last token.
 
 You can see these fields in action in the `chunkDF`:
 
@@ -61,9 +63,9 @@ head(rez007$chunkDF$refexpr %>% select(id, doc, name, text, tokenOrderFirst, doc
 
 The Santa Barbara Corpus by default contains other tokens, provided through the `tagMap` in the Rezonator edition, such as these:
 
-* `corpusSeq` - the position of a token within the entire corpus.
-* `place` - the position of a word within the intonation unit, *excluding* elements like endnotes and vocalisms.
-* `negPlace` - the position of a word within the intonation unit, counting backwards from the last token.
+-   `corpusSeq` - the position of a token within the entire corpus.
+-   `place` - the position of a word within the intonation unit, *excluding* elements like endnotes and vocalisms.
+-   `negPlace` - the position of a word within the intonation unit, counting backwards from the last token.
 
 However, if you are working with your own texts rather than the Santa Barbara Corpus, you will not have access to `place` by default. We will therefore have to create `place` by ourselves.
 
@@ -73,7 +75,6 @@ The function `addIsWordField` adds a column `isWord` to a `rezrDF` or `rezrObj` 
 
 By default, `addIsWordField` also adds the fields `docWordSeq` and `wordOrder` (=`place`) to the `tokenDF` and `entryDF`, and the columns `wordOrderFirst`, `wordOrderLast`, `docWordSeqFirst` and `docWordSeqLast` will be added to `unitDF`, `chunkDF` and `trackDF`. These work similarly to their `token` counterparts, except non-words are give 0 values, and only words are counted in determining order.
 
-
 ```{r, cache = TRUE}
 rez007 = addIsWordField(rez007, kind == "Word")
 head(rez007$tokenDF %>% select(id, tokenOrder, docTokenSeq, wordOrder, docWordSeq))
@@ -81,7 +82,8 @@ head(rez007$chunkDF$refexpr %>% select(id, tokenOrderFirst, tokenOrderLast, docT
 ```
 
 ## Unit order
-The ordering of units, `unitSeq`, is not available to `rezrDF`s other than `unitDF` by default. The `addUnitSeq()` function adds `unitSeq` to other fields.  This function allows you to set which entity (and optionally, layer). Whichever entity type you specify, everything 'below' it will also get unit orders. For example, if you specify '`track`' as the level at which you want unit order, then `tokenDF` and `chunkDF` will get it too. Similarly, if you specify '`stack`' as the level, then `cardDF` will also get it.
+
+The ordering of units, `unitSeq`, is not available to `rezrDF`s other than `unitDF` by default. The `addUnitSeq()` function adds `unitSeq` to other fields. This function allows you to set which entity (and optionally, layer). Whichever entity type you specify, everything 'below' it will also get unit orders. For example, if you specify '`track`' as the level at which you want unit order, then `tokenDF` and `chunkDF` will get it too. Similarly, if you specify '`stack`' as the level, then `cardDF` will also get it.
 
 ```{r}
 rez007 = addUnitSeq(rez007, "track")
@@ -94,23 +96,19 @@ Note that `chunkDF` and layers depend on it get `unitSeqFirst` and `unitSeqLast`
 
 The function `getSeqBounds()` is mostly used `rezonateR`-internally, though more advanced users may use it to create functions similar to `addIsWordField()` and `addUnitSeq()`.
 
-
 ## Advanced sequence operations
 
 In addition to the two most common operations we covered above, `rezonateR` also has other functions to deal with common problems related to time and sequence. These require knowledge of editing, so if you want to learn more about these functions, you can skip this for now and come back after having read `vignette("edit_easyEdit")`.
 
-Generally, when elements in a file belong to a larger structure, there are three ways of representing them inside the rezrDF that houses the smaller structure:
-* Sequence of the larger structure: `unitSeq` in `tokenDF` is an example.
-* Order (position) of the smaller element within the larger structure: `tokenOrder` in `tokenDF` is an example.
-* BILUO: Is the current element the beginning (B) of the larger structure, an intermediate (I) element, the last (L) element, the only (U) element, or not within the larger structure (O)? Generally used for artificial intelligence applications.
+Generally, when elements in a file belong to a larger structure, there are three ways of representing them inside the rezrDF that houses the smaller structure: \* Sequence of the larger structure: `unitSeq` in `tokenDF` is an example. \* Order (position) of the smaller element within the larger structure: `tokenOrder` in `tokenDF` is an example. \* BILUO: Is the current element the beginning (B) of the larger structure, an intermediate (I) element, the last (L) element, the only (U) element, or not within the larger structure (O)? Generally used for artificial intelligence applications.
 
 The following functions are currently available for dealing with these and related issues:
 
-* `getOrderFromSeq()`: Converts from the first representation to the second one.
-* `getSeqFromOrder()`: Converts from the second representation to the first one.
-* `isInitial()`: Is the current element the initial member of a larger structure?
-* `isFinal()`: Is the current element the final member of a larger structure? Used after `inLength()`.
-* `getBiluoFromOrder()`: Converts from the second representation to the third one.
+-   `getOrderFromSeq()`: Converts from the first representation to the second one.
+-   `getSeqFromOrder()`: Converts from the second representation to the first one.
+-   `isInitial()`: Is the current element the initial member of a larger structure?
+-   `isFinal()`: Is the current element the final member of a larger structure? Used after `inLength()`.
+-   `getBiluoFromOrder()`: Converts from the second representation to the third one.
 
 `getOrderFromseq()` is straightforward. For example, if we want to replicate `tokenOrder` from `unitSeq`, we can do this:
 
@@ -136,8 +134,8 @@ rez007$tokenDF = addFieldLocal(rez007$tokenDF, "isPSentInitial", isInitial(pSent
 head(rez007$tokenDF %>% select(id, text, pSentOrder, isPSentInitial))
 ```
 
- `inLength()` gives the length of the larger unit and its result is used by `isFinal()`, which takes the length of the larger unit in addition to the order value. (Note that for `pSentLength`, `isWord` is set to simply text not being zeroes, since we count non-words like breaths, endnotes, etc., as part of the prosodic sentence.)
- 
+`inLength()` gives the length of the larger unit and its result is used by `isFinal()`, which takes the length of the larger unit in addition to the order value. (Note that for `pSentLength`, `isWord` is set to simply text not being zeroes, since we count non-words like breaths, endnotes, etc., as part of the prosodic sentence.)
+
 ```{r}
 rez007$tokenDF = addFieldLocal(rez007$tokenDF, "pSentLength", inLength(pSentOrder, isWord = (text != "<0>")), type = "complex", groupField = "pSent")
 rez007$tokenDF = addFieldLocal(rez007$tokenDF, "isPSentFinal", isFinal(pSentOrder, pSentLength))
@@ -151,7 +149,6 @@ rez007$tokenDF = changeFieldLocal(rez007$tokenDF, "pSentBiluo", getBiluoFromOrde
 head(rez007$tokenDF %>% select(id, text, pSentOrder, pSentLength, pSentBiluo))
 ```
 
-
 ## Onwards!
 
 Let's practice saving our data again:
@@ -160,6 +157,5 @@ Let's practice saving our data again:
 savePath = "rez007.Rdata"
 rez_save(rez007, savePath)
 ```
-
 
 Now that you know how to deal with time and sequence, it will be even easier to work with `rezonateR.` If you're following the whole tutorial series, the next tutorial is `vignette("edit_easyEdit")`, where you will start learning to add automatic annotations to `rezrDF`s!

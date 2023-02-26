@@ -2,7 +2,7 @@
 title: "An overview of rezonateR for Rezonator users"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{An overview of rezonateR 0.1.1}
+  %\VignetteIndexEntry{An overview of rezonateR for Rezonator users}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -46,6 +46,8 @@ install.packages("devtools")
 library(devtools)
 install_github("rezonators/rezonateR")
 ```
+
+Some folks have reported that this does not work. You may want to try adding the code `options(download.file.method = "auto")` before running `install_github()` if this is the case.
 
 ### A quick import
 

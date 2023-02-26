@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rezonateR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.0000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.0000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +54,9 @@
     <a class="dropdown-item" href="../articles/tree.html">Dealing with Trees</a>
     <a class="dropdown-item" href="../articles/track.html">Tracking down coreference phenomena</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -91,17 +94,21 @@ better for you:</p>
 <table style="width:97%;" class="table">
 <colgroup><col width="97%"></colgroup>
 <tbody><tr class="odd">
-<td><ul>
-<li><p>If you are not very familiar with the <a href="http://rezonator.com/" class="external-link">Rezonator</a> program that this package is
-the companion tool of, I recommend going through the <a href="https://rezonators.github.io/rezonateR/articles/sample_proj.html">toy
-exampl e</a> <code><a href="../articles/sample_proj.html">vignette("sample_proj")</a></code> first, which gives a
-concrete example of a mini-research project in
-<code>rezonateR</code>.</p></li>
+<td>
+<ul>
+<li>If you are not very familiar with the <a href="http://rezonator.com/" class="external-link">Rezonator</a> program that this package is
+the companion tool of, I recommend going through the [toy exampl</li>
+</ul>
+<p>e] ( <a href="https://rezonators.github.io/rezonateR/articles/sample_proj.html" class="uri">https://rezonators.github.io/rezonateR/articles/sample_proj.html</a>)
+<code><a href="../articles/sample_proj.html">vignette("sample_proj")</a></code> first, which gives a concrete
+example of a mini-research project in <code>rezonateR</code>.</p>
+<ul>
 <li>
 <p>If you are familiar with Rezonator but not yet with what
-<code>rezonateR</code> does, the <a href="https://rezonators.%20g%20ithub.io/rezonateR/articles/sample_proj.html" class="external-link">overview</a><code><a href="../articles/overview.html">vignette("overview")</a></code>
-gives a bird’s-eye view of how <code>rezonateR</code> can be useful for
-accompanying your Rezonator work.</p>
+<code>rezonateR</code> does, the <a href="h%2%20%20%20%200%20ttps://rezonators.%20github.io/rezonateR/articles/sample_proj.html">overview</a>
+<code><a href="../articles/overview.html">vignette("overview")</a></code> gives a bird’s-eye view of how
+<code>rezonateR</code> can be useful for accompanying your Rezonator
+work.</p>
 <p>None of the content in those tutorials is strictly prerequisites for
 this one, but they help motivate why <code>rezonateR</code> is useful
 and help you decide whether <code>rezonateR</code> is a useful tool for
@@ -109,7 +116,8 @@ you to learn. This tutorial gets into the nitty gritty of how to code
 with <code>rezonateR</code>, rather than discussing the big
 picture.</p>
 </li>
-</ul></td>
+</ul>
+</td>
 </tr></tbody>
 </table>
 <p>In this tutorial, you will learn about:</p>
@@ -277,7 +285,7 @@ for access using R code.</p>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alexcb/rjson" class="external-link">rjson</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "C:/Users/kayau/Documents/GitHub/rezonateR/vignettes"</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/User/Documents/GitHub/rezonateR/vignettes"</span></span>
 <span><span class="va">rez007_json</span> <span class="op">=</span> <span class="fu">rjson</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rjson/man/fromJSON.html" class="external-link">fromJSON</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">path</span><span class="op">)</span></span>
 <span><span class="va">rez007_nm</span> <span class="op">=</span> <span class="va">rez007_json</span><span class="op">[[</span><span class="st">"ROOT"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">"nodeMap"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <p>Let’s zero on to a single node. The simplest type of node is a token,
@@ -312,25 +320,25 @@ embeddded inside the node:</p>
 <span><span class="co">#&gt;         "1"     "51219"        "14"      "NOUN"        "86"          "" </span></span>
 <span><span class="co">#&gt;   turnOrder largerChunk </span></span>
 <span><span class="co">#&gt;        "25"          ""</span></span></code></pre></div>
-<p>The <code>type</code> value indicates that we’re looking at a token.
-<code>docTokenSeq</code> indicates the position of the word within the
-document. <code>unit</code> is a pointer to the node that contains the
-token’s unit. <code>place</code> gives the position of the token within
-the unit.</p>
+<p>The <code>type</code> value indicates that we’re looking at a token;
+other <code>type</code> values might be <code>chunk</code>,
+<code>stack</code>, etc. <code>docTokenSeq</code> indicates the position
+of the word within the document. <code>unit</code> is a pointer to the
+node that contains the token’s unit. <code>place</code> gives the
+position of the token within the unit.</p>
 <p>The next three are lists of pointers to larger structures that may
-contain the token. (These ‘lists’ in <code>.rez</code> files are
-represented by vectors, not lists, in R.) <code>inEntryList</code>,
+contain the token. These ‘lists’ in <code>.rez</code> files are
+represented by vectors, not lists, in R. <code>inEntryList</code>,
 <code>inChainsList</code> and <code>inChunkList</code> give the entries,
 chains and chunks in which ‘midnight’ are found. We will discuss entries
-in the next section. (If you are using later versions of Rezonator,
-<code>inChainsList</code> will be replaced by
-<code>inResonanceList</code> and <code>inTrailList</code>. (???)) A
-chain can be a Track chain, i.e. trail, or a Rez chain, i.e. a
-resonance. In this case, ‘midnight’ was put in a trail, albeit one that
-contains only itself (i.e. it is a singleton), which is why you see a
-coloured box around the word, but no links emanating from it. So we do
-see a pointer to the track chain. It does not belong to any chunks,
-i.e. the larger rectangles typically consisting of multiple words.</p>
+in the next section. A chain can be a Track chain, i.e. trail, or a Rez
+chain, i.e. a resonance. In this case, ‘midnight’ was put in a trail,
+albeit one that contains only itself (i.e. it is a singleton), which is
+why you see a coloured box around the word, but no links emanating from
+it (<img src="images/paste-CADE71BC.png" width="43" height="17">) .So
+we do see a pointer to the track chain. It does not belong to any
+chunks, i.e. the larger rectangles typically consisting of multiple
+words.</p>
 <p>The <code>tagMap</code> of a specific node includes the tags that
 were given when the raw file was first imported into Rezonator, as well
 as tags that were created by Rezonator or manually added in Rezonator.
@@ -343,11 +351,13 @@ see examples of these later.</p>
 general rule, entries correspond one-to-one with tokens. This is a
 technicality that you will occasionally need to know when working in
 rezonateR.</p>
-<p>Basically, a unit only contains pointers to the entries that consists
-of it, in the attribute <code>entryList</code>. To look up individual
-tokens from a unit, then, you will have to go to individual entries’
-nodes to look up the corresponding token. For example, here is the
-<code>entryList</code> of the unit <code>2D1B3667B6110</code>:</p>
+<p>A unit contains list of pointers referring to each individual entry
+that is found within any unit of data (e.g. within an intonation unit).
+This list can be accessed through the argument <code>entryList</code>.
+To look up individual tokens from a unit, then, you will have to go to
+individual entries’ nodes to look up the corresponding token. For
+example, here is the <code>entryList</code> of the unit
+<code>2D1B3667B6110</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># entryList of unit 2D1B3667B6110:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"2D1B3667B6110"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">"entryList"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
@@ -392,7 +402,7 @@ Let’s look at those two chunks. The ID for the token <em>Stay</em> is
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Chunks that contain 1A0742C9033E5:</span></span>
 <span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"1A0742C9033E5"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">inChunkList</span></span>
-<span><span class="co">#&gt; [1] "35E3E0AB6803A" "15B9BB5D5086C"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "35E3E0AB6803A"</span></span></code></pre></div>
 <p>So the two chunks that contain <em>Stay</em> are
 <code>35E3E0AB6803A</code> <em>Stay up late</em> and
 <code>15B9BB5D5086C</code> <em>Stay</em>. <code>35E3E0AB6803A</code> is
@@ -415,7 +425,7 @@ for mentions in track chains, but filled for verbs:</p>
 <span><span class="co">#&gt; [1] ""</span></span>
 <span><span class="co">#chunkType of 15B9BB5D5086C:</span></span>
 <span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"15B9BB5D5086C"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">tagMap</span><span class="op">$</span><span class="va">chunkType</span></span>
-<span><span class="co">#&gt; [1] "verb"</span></span></code></pre></div>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
 <p>This point will be important later on when we import, as it will be
 used to separate chunks into layers.</p>
 </div>
@@ -467,12 +477,12 @@ Bighare ?</em>.</p>
 <span><span class="va">rez007_nm</span><span class="op">[[</span><span class="st">"1BF2260B4AB78"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">goalLinkList</span></span>
 <span><span class="co">#&gt; [1] "ED8C92307B42" "52452779949"  "601CE9FAEBDB"</span></span></code></pre></div>
 <p><em>Stay up late</em> belongs to the chain, and corresponds to the
-‘token’ (actually chunk - this is a quirk of the .rez format that will
-be important to remember when working in rezonateR) 35E3E0AB6803A.
-<code>goalLinkList</code> is a list of links that starts from this
-entry. Links live in a world of their own and are not particularly
-important for working in rezonateR, so we can safely ignore them for
-now.</p>
+‘token’ 35E3E0AB6803A (this ‘token’ ID is actually a chunk - this is a
+quirk of the .rez format that will be important to remember when working
+in rezonateR) . <code>goalLinkList</code> is a list of links that starts
+from this entry. Links live in a world of their own and are not
+particularly important for working in rezonateR, so we can safely ignore
+them for now.</p>
 <p>To find out the member entries that a chain contains, you can look at
 its <code>setIDList</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -704,10 +714,13 @@ being a node, and each column being its attributes.</p>
 <p>There are a few ways in which columns are not identical to node
 attributes:</p>
 <ul>
-<li>The <code>id</code> column gives the ID of each node.</li>
+<li>While nodes in the <code>nodeMap</code> are named using IDs, the
+<code>id</code> column gives the ID of each node.</li>
 <li>
-<code>tagMap</code>s are ‘flattened’ (i.e. each tag its own
-column).</li>
+<code>tagMap</code>s are ‘flattened’ (i.e. each tag its own column);
+thus there is no longer a <code>tagMap</code> object in
+<code>rezrDF</code>s: only the attribute-value pairs within it are
+retained.</li>
 <li>Some attributes that are Rezonator-internal (e.g. focused on
 visualisation in Rezonator) and not useful for data analysis are
 discarded; you can always view them in the <code>nodeMap</code> if you
@@ -765,8 +778,8 @@ rows in a <code>rezrDF</code>:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1F6B5F0B3FF… sbc0… Chun…     3 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    the … the pu… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 24FE2B219BD… sbc0… Chun…     2 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    gett… gettin… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 158B579C1BA… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    the … the mo… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2B6521E8813… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    all … all th… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 5B854594DD34 sbc0… Chun…     2 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    the … the wa… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2F857247FD9… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    a ha… a hard… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2B6521E8813… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    all … all th… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 12 more variables: corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, largerChunk &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   tokenOrderFirst &lt;dbl&gt;, docTokenSeqFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;,</span></span></span>
@@ -779,10 +792,10 @@ rows in a <code>rezrDF</code>:</p>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 210FB26A315A sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    said  said    <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 744AD104FE64 sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    was … was n'… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 15B9BB5D508… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    Stay  Stay    <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1A14BB68EDA… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    defe… defeats <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2CCD5F5A950… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    know  know    <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1F1135429F3… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    's    's      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1A14BB68EDA… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    defe… defeats <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2CCD5F5A950… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    know  know    <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1F1135429F3… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    's    's      <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 30F18BABDB8… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    do n… do n't] <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 12 more variables: corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, largerChunk &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   tokenOrderFirst &lt;dbl&gt;, docTokenSeqFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;,</span></span></span>
@@ -801,7 +814,7 @@ rows in a <code>rezrDF</code>:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 13B30F106D8DF sbc007             27 The two couples                   10 defa…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 21E91EA9BEFE2 sbc007             49 ànything positive about Tim…       1 defa…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 14CE0A33F22EB sbc007             71 the thing that really scare…       3 defa…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2B670736C6823 sbc007             87 Trail 87                           1 defa…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 4D1295B2824B  sbc007             39 our parents                        1 defa…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​chainSize</span></span></span></code></pre></div>
 <p>When you have multiple layers, in many cases you will need to combine
 information from all layers to perform certain actions in
@@ -822,8 +835,8 @@ in <code>rezrDF</code>s that don’t have that column.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1F6B5F0B3FF… sbc0… Chun…     3 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    the … the pu… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 24FE2B219BD… sbc0… Chun…     2 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    gett… gettin… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 158B579C1BA… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    the … the mo… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2B6521E8813… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    all … all th… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 5B854594DD34 sbc0… Chun…     2 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    the … the wa… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2F857247FD9… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    a ha… a hard… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2B6521E8813… sbc0… Chun…     1 <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>    all … all th… <span style="color: #949494;">""</span>      <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 12 more variables: corpusSeq &lt;chr&gt;, pSentOrder &lt;chr&gt;, POS_dft &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   tokenSeq &lt;chr&gt;, chunkType &lt;chr&gt;, turnOrder &lt;chr&gt;, largerChunk &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   tokenOrderFirst &lt;dbl&gt;, docTokenSeqFirst &lt;dbl&gt;, tokenOrderLast &lt;dbl&gt;,</span></span></span>
@@ -911,18 +924,19 @@ extracts the <code>kind</code> value of tracks:</p>
 <span><span class="co">#&gt; $`92F20ACA5F06`</span></span>
 <span><span class="co">#&gt; [1] "Word"</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`7E5BB65072C`</span></span>
-<span><span class="co">#&gt; [1] "Word" "Word" "Word" "Word" "Word"</span></span></code></pre></div>
+<span><span class="co">#&gt; $`1F74D2B049FA4`</span></span>
+<span><span class="co">#&gt; [1] "Word"</span></span></code></pre></div>
 <p>In general, though, it is preferable to minimise this type of
 extraction. The coming tutorials will explain how we can do common
 operations without resorting to using <code><a href="../reference/lowerList.html">getLowerFieldList()</a></code>;
 for example, <code><a href="../reference/acFieldForeign.html">addFieldForeign()</a></code> in <code>EasyEdit</code>
-(see <code><a href="../articles/edit_easyEdit.html">vignette("edit_easyEdit")</a></code>) will allow you to add a
-field to the table with the higher-level (e.g. structure that is created
-by getting a single summary value of a field in a a lower-level
-structure), and <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code> in <code>TidyRez</code>
-allows you to perform similar operations with a tidyverse syntax (see
-<code><a href="../articles/edit_tidyRez.html">vignette("edit_tidyRez")</a></code>.</p>
+(see the <a href="https://rezonators.github.io/rezonateR/articles/edit_easyEdit.html">EasyEdit
+tutorial</a> at <code><a href="../articles/edit_easyEdit.html">vignette("edit_easyEdit")</a></code>) will allow you
+to add a field to the table with the higher-level (e.g. structure that
+is created by getting a single summary value of a field in a a
+lower-level structure), and <code><a href="../reference/rez_left_join.html">rez_left_join()</a></code> in
+<code>TidyRez</code> allows you to perform similar operations with a
+tidyverse syntax (see <code><a href="../articles/edit_tidyRez.html">vignette("edit_tidyRez")</a></code>.</p>
 </div>
 </div>
 </div>
@@ -942,7 +956,7 @@ on time and sequence</a> (<code><a href="../articles/time_seq.html">vignette("ti
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Ryan Ka Yau Lai, John W Du Bois.</p>
+<p>Developed by Ryan Ka Yau Lai.</p>
 </div>
 
 <div class="pkgdown-footer-right">

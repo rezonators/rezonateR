@@ -2,7 +2,7 @@
 title: "Importing Rezonator files, saving rezonateR objects, and basic data structure"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Importing .rez files, saving rezrObjs, and basic data structure}
+  %\VignetteIndexEntry{Importing Rezonator files, saving rezonateR objects, and basic data structure}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 resource_files:
@@ -32,29 +32,32 @@ If you are not yet familiar with what rezonateR does and want to see if
 this is the right tool for you, here are some pages that will work
 better for you:
 
-+----------------------------------------------------------------------+
-| -   If you are not very familiar with the                            |
-|     [Rezonator](http://rezonator.com/) program that this package is  |
-|     the companion tool of, I recommend going through the [toy exampl |
-|                                                                      |
-| e]                                                                   |
-| (<https://rezonators.github.io/rezonateR/articles/sample_proj.html>) |
-| `vignette("sample_proj")` first, which gives a concrete example of a |
-| mini-research project in `rezonateR`.                                |
-|                                                                      |
-| -   If you are familiar with Rezonator but not yet with what         |
-|     `rezonateR` does, the                                            |
-|     [overview](h%2%20%20%20                                          |
-| 0ttps://rezonators.%20github.io/rezonateR/articles/sample_proj.html) |
-|     `vignette("overview")` gives a bird's-eye view of how            |
-|     `rezonateR` can be useful for accompanying your Rezonator work.  |
-|                                                                      |
-|     None of the content in those tutorials is strictly prerequisites |
-|     for this one, but they help motivate why `rezonateR` is useful   |
-|     and help you decide whether `rezonateR` is a useful tool for you |
-|     to learn. This tutorial gets into the nitty gritty of how to     |
-|     code with `rezonateR`, rather than discussing the big picture.   |
-+----------------------------------------------------------------------+
++---------------------------------------------------------------------+
+| -   If you are not very familiar with the                           |
+|     [Rezonator](http://rezonator.com/) program that this package is |
+|     the companion tool of, I recommend going through the [toy       |
+|     exampl                                                          |
+|                                                                     |
+| e]                                                                  |
+| (                                                                   |
+| <https://rezonators.github.io/rezonateR/articles/sample_proj.html>) |
+| `vignette("sample_proj")` first, which gives a concrete example of  |
+| a mini-research project in `rezonateR`.                             |
+|                                                                     |
+| -   If you are familiar with Rezonator but not yet with what        |
+|     `rezonateR` does, the                                           |
+|     [overview](h%2%20%20%20%200                                     |
+| ttps://rezonators.%20github.io/rezonateR/articles/sample_proj.html) |
+|     `vignette("overview")` gives a bird's-eye view of how           |
+|     `rezonateR` can be useful for accompanying your Rezonator work. |
+|                                                                     |
+|     None of the content in those tutorials is strictly              |
+|     prerequisites for this one, but they help motivate why          |
+|     `rezonateR` is useful and help you decide whether `rezonateR`   |
+|     is a useful tool for you to learn. This tutorial gets into the  |
+|     nitty gritty of how to code with `rezonateR`, rather than       |
+|     discussing the big picture.                                     |
++---------------------------------------------------------------------+
 
 In this tutorial, you will learn about:
 
@@ -238,24 +241,24 @@ print(paste0("inChunkList: ", midnight$inChunkList))
 print(sapply(midnight$tagMap, c))
 ```
 
-The `type` value indicates that we're looking at a token. `docTokenSeq`
-indicates the position of the word within the document. `unit` is a
-pointer to the node that contains the token's unit. `place` gives the
-position of the token within the unit.
+The `type` value indicates that we're looking at a token; other `type`
+values might be `chunk`, `stack`, etc. `docTokenSeq` indicates the
+position of the word within the document. `unit` is a pointer to the
+node that contains the token's unit. `place` gives the position of the
+token within the unit.
 
 The next three are lists of pointers to larger structures that may
-contain the token. (These 'lists' in `.rez` files are represented by
-vectors, not lists, in R.) `inEntryList`, `inChainsList` and
+contain the token. These 'lists' in `.rez` files are represented by
+vectors, not lists, in R. `inEntryList`, `inChainsList` and
 `inChunkList` give the entries, chains and chunks in which 'midnight'
-are found. We will discuss entries in the next section. (If you are
-using later versions of Rezonator, `inChainsList` will be replaced by
-`inResonanceList` and `inTrailList`. (???)) A chain can be a Track
-chain, i.e. trail, or a Rez chain, i.e. a resonance. In this case,
+are found. We will discuss entries in the next section. A chain can be a
+Track chain, i.e. trail, or a Rez chain, i.e. a resonance. In this case,
 'midnight' was put in a trail, albeit one that contains only itself
 (i.e. it is a singleton), which is why you see a coloured box around the
-word, but no links emanating from it. So we do see a pointer to the
-track chain. It does not belong to any chunks, i.e. the larger
-rectangles typically consisting of multiple words.
+word, but no links emanating from it
+(![](images/paste-CADE71BC.png){width="43" height="17"}) .So we do see a
+pointer to the track chain. It does not belong to any chunks, i.e. the
+larger rectangles typically consisting of multiple words.
 
 The `tagMap` of a specific node includes the tags that were given when
 the raw file was first imported into Rezonator, as well as tags that
@@ -270,11 +273,12 @@ general rule, entries correspond one-to-one with tokens. This is a
 technicality that you will occasionally need to know when working in
 rezonateR.
 
-Basically, a unit only contains pointers to the entries that consists of
-it, in the attribute `entryList`. To look up individual tokens from a
-unit, then, you will have to go to individual entries' nodes to look up
-the corresponding token. For example, here is the `entryList` of the
-unit `2D1B3667B6110`:
+A unit contains list of pointers referring to each individual entry that
+is found within any unit of data (e.g. within an intonation unit). This
+list can be accessed through the argument `entryList`. To look up
+individual tokens from a unit, then, you will have to go to individual
+entries' nodes to look up the corresponding token. For example, here is
+the `entryList` of the unit `2D1B3667B6110`:
 
 ```{r}
 # entryList of unit 2D1B3667B6110:
@@ -394,11 +398,12 @@ rez007_nm[["1BF2260B4AB78"]]$goalLinkList
 ```
 
 *Stay up late* belongs to the chain, and corresponds to the 'token'
-(actually chunk - this is a quirk of the .rez format that will be
-important to remember when working in rezonateR) 35E3E0AB6803A.
-`goalLinkList` is a list of links that starts from this entry. Links
-live in a world of their own and are not particularly important for
-working in rezonateR, so we can safely ignore them for now.
+35E3E0AB6803A (this 'token' ID is actually a chunk - this is a quirk of
+the .rez format that will be important to remember when working in
+rezonateR) . `goalLinkList` is a list of links that starts from this
+entry. Links live in a world of their own and are not particularly
+important for working in rezonateR, so we can safely ignore them for
+now.
 
 To find out the member entries that a chain contains, you can look at
 its `setIDList`.
@@ -611,8 +616,11 @@ row being a node, and each column being its attributes.
 There are a few ways in which columns are not identical to node
 attributes:
 
--   The `id` column gives the ID of each node.
--   `tagMap`s are 'flattened' (i.e. each tag its own column).
+-   While nodes in the `nodeMap` are named using IDs, the `id` column
+    gives the ID of each node.
+-   `tagMap`s are 'flattened' (i.e. each tag its own column); thus there
+    is no longer a `tagMap` object in `rezrDF`s: only the
+    attribute-value pairs within it are retained.
 -   Some attributes that are Rezonator-internal (e.g. focused on
     visualisation in Rezonator) and not useful for data analysis are
     discarded; you can always view them in the `nodeMap` if you really
