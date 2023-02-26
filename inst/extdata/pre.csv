@@ -1,0 +1,54 @@
+﻿id,name,unitLastWord,unitSeqFirst,unitSeqLast,word,overallTokenSeqFirst,overallTokenSeqLast,entityType,roleType,case,person,pronType,definite,identifiable,referential
+1E9EF6849663B,zla sgron,<0>ཕེབས་པས།,2,2,<0>,3,3,person,S,,2,nonPron,d,i,R
+25C4363AD28FA,zla ba,ཁྱེད་རང་སྒུག་ཡུན་རིང་སོང་།,4,4,ཁྱེད་རང་,9,9,person,S,,2,pers,d,i,R
+1571B8001E555,zla ba,ང་ཡང་ད་ལྟ་སླེབས་ཙམ་ཡིན།,5,5,ང་,14,14,person,S,,1,pers,d,i,R
+10ADAC8F36FE1,da lta,ང་ཡང་ད་ལྟ་སླེབས་ཙམ་ཡིན།,5,5,ད་ལྟ་,16,16,date/time,ADJ,,3,nonPron,na,i,R
+51B0F2753A16,zla sgron,ཁྱེད་རང་གི་ཨ་མ་ལགས་ཀྱིས་,9,9,ཁྱེད་རང་གི་,29,30,person,POSS,གི,2,pers,d,i,R
+2C94D6A2F07A1,zla sgron gyi a ma las,ཁྱེད་རང་གི་ཨ་མ་ལགས་ཀྱིས་,9,9,ཁྱེད་རང་གི་ཨ་མ་ལགས་ཀྱིས་,29,33,person,A,ཀྱིས,2,pers,d,i,R
+2808C19912784,zla sgron gyi a ma lags kyis gsungs pa,ག་རེ་གསུང་གི་འདུག,10,10,ག་རེ་,34,34,abstract,P,,3,inter,na,n,R
+223002BA9D79,zla sgron,ངའི་ཨ་མ་ལགས་,11,11,ངའི་,38,39,person,POSS,,1,pers,d,i,R
+18768B64763B3,zla sgron gyi a ma las,ངའི་ཨ་མ་ལགས་,11,11,ངའི་ཨ་མ་ལགས་,38,41,person,S,,3,nonPron,na,i,R
+3174A6DE989BF,zla ba,ཁྱེད་རང་ལ་མགུ་པོ་ཞེ་པོ་བྱུང་བཞག,12,12,ཁྱེད་རང་ལ་,42,43,person,STIM,ལ,2,pers,d,i,R
+21D8925D14542,zla ba,འོང་བྱས་པས་ཟླ་བ་ལགས།,16,16,ཟླ་བ་ལགས,57,58,person,VOC,,2,nonPron,d,i,NR
+35FE84C2F2091,zla sgron,ང་ཁྱེད་རང་ལ་ཅིག་ཞུ་ཡ་,17,17,ང་,60,60,person,A,,1,pers,d,i,R
+19B73864CC92A,zla ba,ང་ཁྱེད་རང་ལ་ཅིག་ཞུ་ཡ་,17,17,ཁྱེད་རང་ལ་,61,62,person,G,ལ,2,pers,d,i,R
+3841E323A2DAF,zla sgron gyigs gsung ya,ང་ཁྱེད་རང་ལ་ཅིག་ཞུ་ཡ་,17,17,ཅིག་ཞུ་ཡ་,63,65,abstract,FREE,,3,nonPron,i,n,R
+29226B34FF555,zla sgron,<0><0>གསུང་དང་།,18,18,<0>,66,66,person,A,,2,nonPron,d,i,R
+1071189B8D94B,zla sgron gyigs gsung ya,<0><0>གསུང་དང་།,18,18,<0>,67,67,abstract,P,,3,nonPron,d,i,R
+C01F6F857180,zla sgron dang las rogs,ང་ཚོའི་ལས་ཁུངས་ནས་,20,20,ང་ཚོའི་,72,74,person,POSS,,1,pers,d,i,R
+2B1CA7BA72BDC,zla sgron gyi las khungs,ང་ཚོའི་ལས་ཁུངས་ནས་,20,20,ང་ཚོའི་ལས་ཁུངས་ནས་,72,76,organization,ADJ,ནས,3,pers,d,i,R
+3D442F974004,zla sgron,ང་<0>རྒྱ་ནག་ལ་སློབ་སྦྱོང་བྱེད་གར་རྒྱུགས་ཟེར་གྱིས།,21,21,ང་,77,77,person,S,,1,pers,d,i,R
+22A8E18EBFBFF,zla sgron,ང་<0>རྒྱ་ནག་ལ་སློབ་སྦྱོང་བྱེད་གར་རྒྱུགས་ཟེར་གྱིས།,21,21,<0>,78,78,person,LVS,,1,nonPron,d,i,R
+60486B9D3D92,rgya nag,ང་<0>རྒྱ་ནག་ལ་སློབ་སྦྱོང་བྱེད་གར་རྒྱུགས་ཟེར་གྱིས།,21,21,རྒྱ་ནག་ལ་,79,80,location,OBL,ལ,3,nonPron,d,i,R
+381A9F3E66318,slob sbyong,ང་<0>རྒྱ་ནག་ལ་སློབ་སྦྱོང་བྱེད་གར་རྒྱུགས་ཟེར་གྱིས།,21,21,སློབ་སྦྱོང་,81,81,abstract,LVO,,3,nonPron,na,n,NR
+15C189C67E735,rgya nag,རྒྱ་ནག་ལ་ལགས།,22,22,རྒྱ་ནག་ལ་,88,89,location,OBL,ལ,3,nonPron,d,i,R
+1ED9942FFB01A,lo gynis,རྒྱུན་རིང་ལོས།,24,24,རྒྱུན་རིང་ལོས,94,95,date/time,FREE,,3,nonPron,na,n,R
+2C197EBD6466E,lo gynis,ལོ་གཉིས་ཙམ་ཞིག,26,26,ལོ་གཉིས་ཙམ་ཞིག,98,101,date/time,FREE,,3,nonPron,i,n,R
+81DAB00F1C3F,lo gynis,ལོ་གཉིས།,27,27,ལོ་གཉིས,102,103,date/time,FREE,,3,nonPron,na,n,R
+F5E8CFEF4966,lo gynis,ལོ་གཉིས།,29,29,ལོ་གཉིས,108,109,date/time,FREE,,3,nonPron,na,n,R
+29CF8562B2D7C,lo gynis,ལོ་གཉིས་རིང་པོའང་མ་རེད་ལ་,30,30,ལོ་གཉིས་,111,112,date/time,THEME,,3,nonPron,na,i,R
+BA5F93651AEA,lo gynis,<0>ཐུང་ཐུང་ཡང་མ་རེད།,31,31,<0>,118,118,date/time,THEME,,3,nonPron,na,i,R
+2096F2D43B8BC,zla ba,ཁྱེད་རང་གིས་,32,32,ཁྱེད་རང་གིས་,124,125,person,A,གིས,2,pers,d,i,R
+2ECA11571EFD8,zla sgron,ང་སྒུགས་ཐུབ་པ་འདུག་གས་ལགས།,33,33,ང་,126,126,person,P,,1,pers,d,i,R
+290EAA6DDAB89,zla sgron,ཁྱེད་རང་ངར་ཡིད་ཆེས་གནང་དང་།,35,35,ཁྱེད་རང་,134,134,person,LVS,,2,pers,d,i,R
+2FFD9E489E6E5,zla ba,ཁྱེད་རང་ངར་ཡིད་ཆེས་གནང་དང་།,35,35,ངར་,135,136,person,G,ར,1,pers,d,i,R
+15F13425CD8C2,yid ches,ཁྱེད་རང་ངར་ཡིད་ཆེས་གནང་དང་།,35,35,ཡིད་ཆེས་,137,137,abstract,LVO,,3,nonPron,na,n,NR
+E665A788FBD,lo gynis,ལོ་གཉིས་མི་དགོས་,36,36,ལོ་གཉིས་,141,142,date/time,S,,3,nonPron,na,n,R
+1F487F692FAD8,zla sgron,<0>ལོ་ལྔ་<0><0>སྒུགས་ཟེར་ནའི་ངས་<0>སྒུགས་ཆོག,37,37,<0>,145,145,person,A,,2,nonPron,d,i,R
+36C952B4BDF45,lo lnga,<0>ལོ་ལྔ་<0><0>སྒུགས་ཟེར་ནའི་ངས་<0>སྒུགས་ཆོག,37,37,ལོ་ལྔ་,146,147,date/time,OBL,,3,nonPron,na,n,R
+2F8BA2AF19FA,zla ba,<0>ལོ་ལྔ་<0><0>སྒུགས་ཟེར་ནའི་ངས་<0>སྒུགས་ཆོག,37,37,<0>,148,148,person,A,,1,nonPron,d,i,R
+E5B6C60B5083,zla sgron,<0>ལོ་ལྔ་<0><0>སྒུགས་ཟེར་ནའི་ངས་<0>སྒུགས་ཆོག,37,37,<0>,149,149,person,P,,2,nonPron,d,i,R
+126C31F08B4F4,zla ba,<0>ལོ་ལྔ་<0><0>སྒུགས་ཟེར་ནའི་ངས་<0>སྒུགས་ཆོག,37,37,ངས་,154,155,person,A,ས,1,pers,d,i,R
+362B4E75A7A20,zla sgron,<0>ལོ་ལྔ་<0><0>སྒུགས་ཟེར་ནའི་ངས་<0>སྒུགས་ཆོག,37,37,<0>,156,156,person,P,,2,nonPron,d,i,R
+2AC12710D375B,zla ba,ཁྱེད་རང་,43,43,ཁྱེད་རང་,169,169,person,S,,2,pers,d,i,R
+DCD6E37A7F13,bod kyi rig gnas,བོད་ཀྱི་རིག་གནས་ལ་,44,44,བོད་ཀྱི་རིག་གནས་ལ་,170,173,abstract,STIM,ལ,3,nonPron,na,i,R
+5E23E914379C,bod,བོད་ཀྱི་རིག་གནས་ལ་,44,44,བོད་ཀྱི་,170,171,thing,POSS,ཀྱི,3,nonPron,d,i,R
+260F97E875ADC,zla sgron,ངས་དེབ་འདི་ཆེད་མངགས་ཁྱེད་རང་ལ་ཉོས་པ་ཡིན།,46,46,ངས་,177,178,person,A,,1,pers,d,i,R
+239E114655837,deb 'di,ངས་དེབ་འདི་ཆེད་མངགས་ཁྱེད་རང་ལ་ཉོས་པ་ཡིན།,46,46,དེབ་འདི་,179,180,thing,P,,3,nonPron,d,i,R
+1DF9C4E465506,zla ba,ངས་དེབ་འདི་ཆེད་མངགས་ཁྱེད་རང་ལ་ཉོས་པ་ཡིན།,46,46,ཁྱེད་རང་ལ་,182,183,person,G,ལ,2,pers,d,i,R
+389E829EAD9A1,zla ba,ང་<0>དེབ་འདི་མ་རག་པར་བསྡད་ཡོད་ད།,50,50,ང་,195,195,person,S,,1,pers,d,i,R
+31D3367FB9D08,zla ba,ང་<0>དེབ་འདི་མ་རག་པར་བསྡད་ཡོད་ད།,50,50,<0>,196,196,person,ABEN,,1,nonPron,d,i,R
+32457C80E8DB,deb 'di,ང་<0>དེབ་འདི་མ་རག་པར་བསྡད་ཡོད་ད།,50,50,དེབ་འདི་,197,198,thing,PBEN,,3,nonPron,d,i,R
+DE303E3303A7,da lta 2,ད་ང་གཉིས་ཐད་དོ།,52,52,ད་,210,210,date/time,ADJ,,3,nonPron,na,i,R
+1DEAB924EC5E,zla sgron dang zla ba,ད་ང་གཉིས་ཐད་དོ།,52,52,ང་གཉིས་,211,212,person,S,,1,pers,d,i,R
+new_id,ming tshig yod ma red,མིང་ཚིག་ཡོད་མ་རེད,,,,,,,FAKE,,,,,,
