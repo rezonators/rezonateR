@@ -163,7 +163,14 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
     } else {
       stop("Could not detect sequence in sourceDF. Please file this as a bug with details.")
     }
-    result = suppressMessages(lowerToHigher(sourceDF, targetDF, complexNodeMap = targetNodeMap, fieldnames = sourceFieldName, higherFieldnames = targetFieldName, action = complexAction, tokenListName = targetForeignKeyName, fieldaccess = fieldaccess, complexNodeMapAddress = targetEntity, simpleDFAddress = sourceDFAddress, seqName = seq))
+
+    if(targetForeignKeyName == "card"){
+      tokenListName = "setIDList"
+    } else {
+      tokenListName = targetForeignKeyName
+    }
+
+    result = suppressMessages(lowerToHigher(sourceDF, targetDF, complexNodeMap = targetNodeMap, fieldnames = sourceFieldName, higherFieldnames = targetFieldName, action = complexAction, tokenListName = tokenListName, fieldaccess = fieldaccess, complexNodeMapAddress = targetEntity, simpleDFAddress = sourceDFAddress, seqName = seq))
 
   } else {
     stop("The only available types are simple and complex.")
@@ -316,9 +323,9 @@ addRow.rezrObj = function(rezrObj, entity, layer, nodeMapArgs = list(), ...){
 #' @export
 removeField.rezrObj = function(rezrObj, entity, layer, fields){
   if(layer != ""){
-    removeField(rezrObj[[entity %+% "DF"]][[layer]], fields)
+    rezrObj[[entity %+% "DF"]][[layer]] = removeField(rezrObj[[entity %+% "DF"]][[layer]], fields)
   } else {
-    removeField(rezrObj[[entity %+% "DF"]], fields)
+    rezrObj[[entity %+% "DF"]] = removeField(rezrObj[[entity %+% "DF"]], fields)
   }
   rezrObj
 

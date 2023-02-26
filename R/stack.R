@@ -1,0 +1,3 @@
+getTurnFromStacks = function(rezrObj){
+
+}

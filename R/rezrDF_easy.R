@@ -144,7 +144,14 @@ addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
       }
     }
   } else if(type == "complex"){
-    result = suppressMessages(lowerToHigher(sourceDF, targetDF, complexNodeMap = targetNodeMap, fieldnames = sourceFieldName, higherFieldnames = targetFieldName, action = complexAction, tokenListName = targetForeignKeyName, fieldaccess = fieldaccess))
+    if(targetForeignKeyName == "card"){
+      tokenListName = "setIDList"
+      seqName = "unitSeq"
+    } else {
+      tokenListName = targetForeignKeyName
+      seqName = "docTokenSeq"
+    }
+    result = suppressMessages(lowerToHigher(sourceDF, targetDF, complexNodeMap = targetNodeMap, fieldnames = sourceFieldName, higherFieldnames = targetFieldName, action = complexAction, seqName = seqName, tokenListName = tokenListName, fieldaccess = fieldaccess))
   } else {
     stop("The only available types are simple and complex.")
   }
