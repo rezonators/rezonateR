@@ -103,7 +103,7 @@ mergeGivenChunks = function(rezrObj, chunkDF, chunksCombined, selectCond = NULL,
       infoSource = chunkDF %>% filter(id %in% chunksCombined) %>% arrange(docTokenSeqFirst) %>% slice(1)
     }
     newRow = infoSource
-    newRow[fieldaccess(chunkDF) %in% c("foreign", "auto")] = NA
+    newRow[fieldaccess(chunkDF)[colnames(infoSource)] %in% c("foreign", "auto")] = NA
     newRow$name = "New Chunk " %+% i
     newRow$id = createRezId(1, getIDs(rezrObj))
     newRow = as.list(newRow)

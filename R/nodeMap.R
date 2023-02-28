@@ -138,6 +138,7 @@ extractTags = function(nodeList){
   for(field in fields){
     tags[[field]] = sapply(nodeList, function(x) x$tagMap[[field]])
   }
+  names(tags) = str_replace(names(tags), " ", "_")
   return(tags)
 }
 

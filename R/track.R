@@ -8,6 +8,9 @@ grabFromDF = function(...){
   funct_env = caller_env()
   df_env = env_parent(caller_env(n = 2))
   args = list(...)
+  if(!any(args %in% names(env_parent(caller_env(n = 2))))){
+    df_env = env_parent(env_parent(caller_env(n = 2)))
+  }
   for(var in names(args)){
     if(!(var %in% names(funct_env)) | is.null(funct_env[[var]])){
       funct_env[[var]] = df_env[[args[[var]]]]
@@ -29,6 +32,7 @@ isFrag = function(combinedChunk, nonFragmentMember){
 #' @param exclFrag Exclude 'fragments' (i.e. members of a combined chunk which do not serve as meaningful chunks in their own right)
 #' @param combinedChunk The `combinedChunk` column of the rezrDF. By default, named `combinedChunk`.
 #' @param nonFragmentMember Vector indicating whether each entry is a non-fragment member, i.e. a member of a combined chunk that also serves as a meaningful chunk in its own right.
+#' @note The default values do not work with `case_when()`. I am still figuring out why. In the meantime, please specify `unitSeq`, `combinedchunk` etc. within `case_when()`.
 #' @examples
 #' sbc007 = addUnitSeq(sbc007, "track")
 #' #Get the number of units to the last mention
@@ -221,7 +225,7 @@ nextMentionUnit = function(unitSeq = NULL, chain = NULL, exclFrag = F, combinedC
   for(currChain in unique(chain)){
     chainUnits = unitSeq[chain == currChain & !frag] #Grab all the PRE's units
     unitsOrdered = sort(chainUnits) #Put them in the right order
-    unitsOrderedLagged = lag(unitsOrdered, k = -1) #Get the next unit
+    unitsOrderedLagged = dplyr::lead(unitsOrdered, n = 1L) #Get the next unit
     result[chain == currChain & !frag] = unitsOrderedLagged[rank(chainUnits)] #Put it back in the wrong order
   }
   result[frag] = NA

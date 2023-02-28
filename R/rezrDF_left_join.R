@@ -95,8 +95,8 @@ rez_left_join = function(df1, df2 = NULL, ..., fieldaccess = "foreign", df2Addre
 
 
     if(length(df2key) > length(fkey)){
-      print(df2key)
-      print(fkey)
+      #print(df2key)
+      #print(fkey)
       df2key = df2key[1:length(fkey)]
     } else if(length(df2key) < length(fkey)){
       warning("You have more fkeys: " %+% paste(fkey, collapse = ",") %+% " than by-line entries: " %+% paste(names(list(...)[["by"]]), collapse = ",") %+% ". I have removed the fkeys at the end.")

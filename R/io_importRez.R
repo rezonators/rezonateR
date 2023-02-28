@@ -119,7 +119,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
 
 
     if("rez" %in% names(fullNodeMap)){
-      message(">Adding to track DFs ...")
+      message(">Adding to rez DFs ...")
       #mergedDF from the previous condition
       rezDF = rezDF %>% rez_left_join(mergedDF, by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token", df2key = "id")
       #Adding fields to lower-level DFs that depend on higher-level DFs.
@@ -134,6 +134,12 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
       trackDF = trackDF %>% rez_left_join(mergedDF, by = c(token = "id", doc = "doc"), df2Address = c("tokenDF", "chunkDF"), fkey = "token", df2key = "id")
       #Adding fields to lower-level DFs that depend on higher-level DFs.
       trackDF = trackDF %>% rez_left_join(trailDF, by = c(chain = "id", doc = "doc"), df2Address = "trailDF", fkey = "token", df2key = "id")
+
+      #Patch for when one accidentally creates a field for tracks that coincidentally has the same name as the field for handling layers.
+      if(paste0(layerRegex$track$field, "_lower") %in% colnames(trackDF)){
+        colnames(trackDF)[which(colnames(trackDF) == layerRegex$track$field)] = paste0(layerRegex$track$field, "_track") # (e.g. trailLayer_track)
+        colnames(trackDF)[which(colnames(trackDF) == paste0(layerRegex$track$field, "_lower"))] = layerRegex$track$field
+      }
       trackDF = trackDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
     }
 
