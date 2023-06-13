@@ -50,14 +50,29 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
       }
     }
   } else if (entity == "card"){
-    rezrObj = rezrObj %>% addFieldForeign("card", "", "unit", "", "unit", "unitSeq", "unitSeq", fieldaccess = "foreign")
-  } else if (entity == "stack"){
-    if(!("unitSeq" %in% names(rezrObj$cardDF))){
-      rezrObj = rezrObj %>% addUnitSeq("card")
+    if(!is.list(rezrObj$cardDF)){ #No stackings
+      rezrObj = rezrObj %>% addFieldForeign("card", "", "unit", "", "unit", "unitSeq", "unitSeq", fieldaccess = "foreign")
+    } else {
+      for(layer in layers){ #With stackings
+        rezrObj = rezrObj %>% addFieldForeign("card", layer, "unit", "", "unit", "unitSeq", "unitSeq", fieldaccess = "foreign")
+      }
     }
-    #FUTURE TODO: After layers are implemented for stacks, rewrite this to take layers into account
-    rezrObj = rezrObj %>% addFieldForeign("stack", "", "card", "", "setIDList", "unitSeqFirst", "unitSeq", type = "complex", fieldaccess = "foreign", complexAction = min)
-    rezrObj = rezrObj %>% addFieldForeign("stack", "", "card", "", "setIDList", "unitSeqLast", "unitSeq", type = "complex", fieldaccess = "foreign", complexAction = max)
+  } else if (entity == "stack"){
+    if(!is.list(rezrObj$stackDF)){ #Pre-stacking era files
+      if(!("unitSeq" %in% names(rezrObj$cardDF))){
+        rezrObj = rezrObj %>% addUnitSeq("card")
+      }
+      rezrObj = rezrObj %>% addFieldForeign("stack", "", "card", "", "setIDList", "unitSeqFirst", "unitSeq", type = "complex", fieldaccess = "foreign", complexAction = min)
+      rezrObj = rezrObj %>% addFieldForeign("stack", "", "card", "", "setIDList", "unitSeqLast", "unitSeq", type = "complex", fieldaccess = "foreign", complexAction = max)
+    } else { #Does have stackings
+      for(layer in layers){
+        if(!("unitSeq" %in% names(rezrObj$cardDF[[layer]]))){
+          rezrObj = rezrObj %>% addUnitSeq("card")
+        }
+        rezrObj = rezrObj %>% addFieldForeign("stack", layer, "card", layer, "setIDList", "unitSeqFirst", "unitSeq", type = "complex", fieldaccess = "foreign", complexAction = min)
+        rezrObj = rezrObj %>% addFieldForeign("stack", layer, "card", layer, "setIDList", "unitSeqLast", "unitSeq", type = "complex", fieldaccess = "foreign", complexAction = max)
+      }
+    }
   }
   rezrObj
 }
