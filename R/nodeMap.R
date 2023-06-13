@@ -37,11 +37,14 @@ nodeMap = function(importNodeMap, docname){
   treeMap = NULL
   mapNames = names(importNodeMap)[str_detect(names(importNodeMap), "Map")]
   for(mapName in mapNames){
-    if(mapName != "treeMap"){
+    if(mapName != "treeMap" & mapName != "cliqueMap"){
       maps[[mapName]] = importNodeMap[[mapName]]
       importNodeMap[[mapName]] = NULL
-    } else {
+    } else if(mapName == "treeMap"){
       treeMap = importNodeMap[[mapName]]
+      importNodeMap[[mapName]] = NULL
+    } else if(mapName == "cliqueMap"){
+      cliqueMap = importNodeMap[[mapName]]
       importNodeMap[[mapName]] = NULL
     }
   }
@@ -66,6 +69,11 @@ nodeMap = function(importNodeMap, docname){
     }
   }
 
+  #TODO: Grab cliques
+  #if(!is.null(cliqueMap)){
+
+  #}
+
   #Grab tree nodes
   if(!is.null(treeMap)){
     for(nodeName in names(treeMap)){
@@ -89,6 +97,18 @@ nodeMap = function(importNodeMap, docname){
         } else {
           warning("Unknown tree node encountered:" %+% node$type)
         }
+      }
+    }
+  }
+
+
+  if(!is.null(cliqueMap)){
+    for(nodeName in names(cliqueMap)){
+      if(nodeName == "type") next
+      node = cliqueMap[[nodeName]]
+      if(length(node) > 1){
+          rawNodeMap[["clique"]][[nodeName]] = node
+          rawNodeMap[["clique"]][[nodeName]][["doc"]] = docname
       }
     }
   }

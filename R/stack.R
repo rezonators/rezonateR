@@ -1,3 +1,3 @@
-getTurnFromStacks = function(rezrObj){
+stackToUnit = function(rezrObj){
 
 }

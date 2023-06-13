@@ -90,6 +90,9 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
       stackDF = nodeToDF(fullNodeMap[["stack"]], stackDFFields)
       cardDF = nodeToDF(fullNodeMap[["card"]], cardDFFields)
     }
+    if("clique" %in% names(fullNodeMap)){
+      cliqueDF = nodeToDF(fullNodeMap[["clique"]], cliqueDFFields)
+    }
 
     docDF = nodeToDF(fullNodeMap[["doc"]], docDFFields)
 
@@ -158,8 +161,6 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
       treeDF = treeDF %>% arrange(docTokenSeqFirst, docTokenSeqLast)
       }
 
-    #TODO: Rez, Stack, Clique
-
     message("Splitting rezrDFs into layers ...")
 
     #Split DFs by layer
@@ -225,6 +226,30 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
         }
       }
     }
+    splitStackings = function(x){
+      result = suppressMessages(rez_mutate(x, layer = case_when(!!!parse_exprs(cwText))) %>% rez_group_split(layer))
+      names(result) = sapply(result, function(x) x$layer[1])
+      result
+    }
+
+
+    if("stack" %in% names(fullNodeMap)){
+      if(!all(sapply(stackDF$stacking, is.null))){
+        cardDF = suppressMessages(cardDF %>% rez_left_join(stackDF %>% rez_select(id, stacking), by = c(chain = "id")))
+        stackDF = suppressMessages(rez_group_split(stackDF, stacking))
+        stackings = sapply(stackDF, function(x) x$stacking[1])
+        stackingMap = attr(fullNodeMap, "smallMaps")$stackingMap
+        stackingNames = sapply(stackingMap[names(stackingMap) != "type"], function(x) x$name)
+        names(stackDF) = stackingNames[stackings]
+
+        cardDF = suppressMessages(rez_group_split(cardDF, stacking))
+        stackings = sapply(cardDF, function(x) x$stacking[1])
+        names(cardDF) = stackingNames[stackings]
+
+      }
+    }
+
+
 
     message("A few finishing touches ...")
     #Track DFs needs dependencies fixed for two reasons:
@@ -260,15 +285,16 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
 }
 
 entryDFFields = c("doc", "unit", "token")
-unitDFFields = c("doc", "unitStart", "unitEnd", "unitSeq", "pID")
+unitDFFields = c("doc", "unitStart", "unitEnd", "unitSeq", "pID", "inClique")
 tokenDFFields = c("doc", "unit", "docTokenSeq", "tokenOrder")
 chunkDFFields = c("doc", "name", "nest")
 trackDFFields = c("doc", "chain", "sourceLink", "token")
 trailDFFields = c("doc", "chainCreateSeq", "name")
 cardDFFields = c("doc", "chain", "unit")
-stackDFFields = c("doc", "chainCreateSeq", "name")
+stackDFFields = c("doc", "chainCreateSeq", "name", "stacking")
 rezDFFields = c("doc", "chain", "sourceLink", "token")
-resonanceDFFields = c("doc", "chainCreateSeq", "name")
+resonanceDFFields = c("doc", "chainCreateSeq", "name", "inClique")
+cliqueDFFields = c("chainCount", "linkCount", "unitCount")
 linkDFFields = c("doc", "source", "goal", "type", "subtype")
 treeEntryDFFields = c("doc", "order", "sourceLink", "level")
 treeDFFields = c("doc", "name", "maxLevel")

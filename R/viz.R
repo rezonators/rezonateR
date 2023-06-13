@@ -1,6 +1,6 @@
 
 
-getGantt = function(rezrObj, x = "token", y = "participant", obj = "unit", thickness = 8){
+getGantt = function(rezrObj, x = "token", y = "participant", obj = "unit", thickness = 8, stackName = "Turn"){
 
   if(x == "token"){
     if(obj == "unit"){
@@ -12,9 +12,9 @@ getGantt = function(rezrObj, x = "token", y = "participant", obj = "unit", thick
   }
 
   if(x == "unit"){
-    if(obj == "turn"){
+    if(obj == "stack"){
       turnColours = paste0("#", sapply(names(rezrObj$nodeMap$stack), function(x) rezrObj$nodeMap$stack[[x]]$chainColor)[rezrObj$stackDF$id] %>% as.hexmode %>% format(width = 6, upper.case = T) %>% as.character)
-      result = ggplot(rezrObj$stackDF, aes(x = unitSeqFirst, xend = unitSeqLast, y = participant, yend = participant)) + geom_segment(size = thickness, colour = turnColours) + xlab("Unit")
+      result = ggplot(rezrObj$stackDF[[stackName]], aes(x = unitSeqFirst, xend = unitSeqLast, y = participant, yend = participant)) + geom_segment(size = thickness, colour = turnColours) + xlab("Unit")
     }
   }
   result
