@@ -2,7 +2,7 @@
 % Please edit documentation in R/turn.R
 \name{getTurnFromAnnos}
 \alias{getTurnFromAnnos}
-\title{Get turn IDs from turn position annotations}
+\title{Get turn IDs from turn position annotations (deprecated)}
 \usage{
 getTurnFromAnnos(
   unitDF,
@@ -27,5 +27,5 @@ getTurnFromAnnos(
 A vector of turn IDs.
 }
 \description{
-Get turn IDs from turn position annotations
+Get turn IDs from turn position annotations (deprecated)
 }

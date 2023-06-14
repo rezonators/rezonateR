@@ -206,6 +206,9 @@ countPrevBridges(
 \description{
 See also \link{countCompetitors}.
 }
+\note{
+The default values do not work with \code{case_when()}. I am still figuring out why. In the meantime, please specify \code{unitSeq}, \code{combinedchunk} etc. within \code{case_when()}.
+}
 \examples{
 sbc007 = addUnitSeq(sbc007, "track")
 #Get the number of units to the last mention

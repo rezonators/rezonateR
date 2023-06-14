@@ -48,7 +48,8 @@ changeFieldForeign(x, ...)
   sourceFieldName = "",
   type = "simple",
   fieldaccess = "flex",
-  complexAction = NULL
+  complexAction = NULL,
+  sourceKeyName = ""
 )
 
 \method{changeFieldForeign}{rezrObj}(

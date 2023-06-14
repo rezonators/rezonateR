@@ -1,3 +1,5 @@
+#' @rdname stackToX
+#' @export
 stackToUnit = function(rezrObj, layers = character(0)){
   if(length(layers) == 0) layers = names(rezrObj$stackDF)
   for(layer in layers){
@@ -8,6 +10,16 @@ stackToUnit = function(rezrObj, layers = character(0)){
   rezrObj
 }
 
+#' Add stack sequence information to tokens and units
+#'
+#' @rdname stackToX
+#' @param rezrObj The `rezrObj` to modify.
+#' @param layers Stack layers to be added to tokens and units.
+#'
+#' @return A `rezrObj` with stack sequence information added. The name of the column will be the column name followed by "Seq". If `stackToToken()` is called, the information will be added to `unitDF` as well (if the information is not already there). Both methods will add the information to `cardDF` (again, if the information is not already there.
+#' @export
+#'
+#' @examples
 stackToToken = function(rezrObj, layers = character(0)){
   if(length(layers) == 0) layers = names(rezrObj$stackDF)
 
