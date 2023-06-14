@@ -100,7 +100,7 @@ validateACFieldLocalObj = function(rezrObj, entity, layer, fieldName, expression
 #' @returns When applied on a rezrObj, the rezrObj with the change applied on the rezrDF.
 #' @note There are no major differences between rezrDFs and rezrObjs. However, only the rezrDF variant can be applied on emancipated rezrDFs (rezrDFs that do not belong to a rezrObj), whereas the rezrObj variant is more elegant when working with rezrDFs within a rezrObj.
 #' @export
-addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL){
+addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sourceEntity, sourceLayer = "", targetForeignKeyName, targetFieldName = "", sourceFieldName = "", type = "simple", fieldaccess = "flex", complexAction = NULL, sourceKeyName = ""){
 
   #A bunch of validation
   validateSimpleForeignObj(targetEntity, targetLayer, sourceEntity, sourceLayer, targetForeignKeyName, targetFieldName, sourceFieldName, type, fieldaccess, complexAction)
@@ -135,7 +135,9 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
 
   #Performing the actual actions
   if(type == "simple"){
-    sourceKey = getKey(sourceDF)
+    if(sourceKeyName == ""){
+      sourceKey = getKey(sourceDF)
+    } else sourceKey = sourceKeyName
     sourceDF = sourceDF %>% select(c(all_of(sourceKey), all_of(sourceFieldName)))
     byLine = character()
     byLine[targetForeignKeyName] = sourceKey
