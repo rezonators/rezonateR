@@ -121,6 +121,18 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
     }
 
 
+    if("stack" %in% names(fullNodeMap)){
+      message(">Adding to stack DFs ...")
+      cardDF = suppressWarnings(cardDF %>% addFieldForeign(unitDF, "unit", "unitSeq", "unitSeq", fieldaccess = "core"))
+      stackDF = suppressWarnings(stackDF %>% addFieldForeign(cardDF, "card", "unitSeqFirst", "unitSeq", type = "complex", fieldaccess = "core", complexAction = min, targetNodeMap = fullNodeMap$stack))
+      stackDF = suppressWarnings(stackDF %>% addFieldForeign(cardDF, "card", "unitSeqLast", "unitSeq", type = "complex", fieldaccess = "core", complexAction = max, targetNodeMap = fullNodeMap$stack))
+
+      cardDF = cardDF %>% addFieldForeign(unitDF, "unit", "docTokenSeqFirst", "docTokenSeqFirst", fieldaccess = "core") %>% addFieldForeign(unitDF, "unit", "docTokenSeqLast", "docTokenSeqLast", fieldaccess = "core")
+      stackDF = suppressWarnings(stackDF %>% addFieldForeign(cardDF, "card", "docTokenSeqFirst", "docTokenSeqFirst", type = "complex", fieldaccess = "core", complexAction = min, targetNodeMap = fullNodeMap$stack)%>% addFieldForeign(cardDF, "card", "docTokenSeqLast", "docTokenSeqLast", type = "complex", fieldaccess = "core", complexAction = min, targetNodeMap = fullNodeMap$stack))
+
+    }
+
+
     if("rez" %in% names(fullNodeMap)){
       message(">Adding to rez DFs ...")
       #mergedDF from the previous condition

@@ -14,7 +14,7 @@ getGantt = function(rezrObj, x = "token", y = "participant", obj = "unit", thick
   if(x == "unit"){
     if(obj == "stack"){
       turnColours = paste0("#", sapply(names(rezrObj$nodeMap$stack), function(x) rezrObj$nodeMap$stack[[x]]$chainColor)[rezrObj$stackDF[[stacking]]$id] %>% as.hexmode %>% format(width = 6, upper.case = T) %>% as.character)
-      result = ggplot(rezrObj$stackDF[[stacking]], aes(x = unitSeqFirst - .2, xend = unitSeqLast + .2, y = participant, yend = participant)) + geom_segment(size = thickness, colour = turnColours) + xlab("unit")
+      result = ggplot(rezrObj$stackDF[[stacking]], aes(x = unitSeqFirst - .5, xend = unitSeqLast + .5, y = participant, yend = participant)) + geom_segment(size = thickness, colour = turnColours, alpha = .5) + xlab("unit") + theme_bw() + theme(panel.grid.major.y = element_blank())
     }
   }
   result
