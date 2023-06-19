@@ -97,6 +97,7 @@ validateACFieldLocalObj = function(rezrObj, entity, layer, fieldName, expression
 #' @param fieldaccess The field access value you want to set to the new / changed field.
 #' @param complexAction When type = "complex", the action that will aggregate the values from the source DF together. See [rezonateR::concatenateAll] for ideas.
 #' @param targetNodeMap The node map corresponding to the target DF. It only needs to be specified when type = "complex".
+#' @param sourceKeyName The key from the source rezrDF to be used, when not the default primary key.
 #' @returns When applied on a rezrObj, the rezrObj with the change applied on the rezrDF.
 #' @note There are no major differences between rezrDFs and rezrObjs. However, only the rezrDF variant can be applied on emancipated rezrDFs (rezrDFs that do not belong to a rezrObj), whereas the rezrObj variant is more elegant when working with rezrDFs within a rezrObj.
 #' @export

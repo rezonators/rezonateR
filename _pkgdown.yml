@@ -31,7 +31,7 @@ reference:
   - findContainingChunk
   - undupeSingle
   - mergeChunksWithIDs
-- title: "Time and sequence"
+- title: "Time, sequence and stacks"
   contents:
   - addIsWordField
   - addUnitSeq
@@ -40,6 +40,7 @@ reference:
   - getTurnFromAnnos
   - getBiluoFromOrder
   - getOrderFromSeq
+  - stackToUnit
 - title: "EasyEdit"
   desc: >
     Functions for editing rezonateR objects.
@@ -71,6 +72,7 @@ reference:
      Functions for keeping track of track chains.
   contents:
   - lastBridgeUnit
+  - getPosInChain
   - countCompetitors
   - countMatchingCompetitors
   - mergedChunksToTrack
@@ -88,6 +90,11 @@ reference:
   - mergeChunksWithTree
   - addPositionAmongSiblings
   - getChildrenOfEntry
+- title: "Resonance"
+  desc: >
+     Functions for keeping track of resonance and cliques.
+  contents:
+  - augmentRezInfo
 - title: "Other editing functions"
   desc: >
      Functions not ordinarily called by users, but may be used by advanced users. Subject to change without wwarning. Many are related to update functions.

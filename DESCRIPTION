@@ -1,6 +1,6 @@
 Package: rezonateR
 Title: A Support Package for Working with Rezonator in R
-Version: 0.1.2.0000
+Version: 0.1.3.0000
 Authors@R:
     c(person(given = "Ryan Ka Yau",
            family = "Lai",

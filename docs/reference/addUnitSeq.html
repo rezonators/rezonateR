@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rezonateR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.0000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.0000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,11 +25,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Overview</h6>
-    <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR 0.1.1</a>
-    <a class="dropdown-item" href="../articles/sample_proj.html">Toy example of a coreference analysis in rezonateR</a>
+    <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR for Rezonator users</a>
+    <a class="dropdown-item" href="../articles/sample_proj.html">Sample mini-project: Analysing coreference in rezonateR</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
-    <a class="dropdown-item" href="../articles/import_save_basics.html">Importing .rez files, saving rezrObjs, and basic data structure</a>
+    <a class="dropdown-item" href="../articles/import_save_basics.html">Importing Rezonator files, saving rezonateR objects, and basic data structure</a>
     <a class="dropdown-item" href="../articles/time_seq.html">Time and sequence</a>
     <a class="dropdown-item" href="../articles/edit_easyEdit.html">Editing I: Using EasyEdit</a>
     <a class="dropdown-item" href="../articles/edit_tidyRez.html">Editing II: Using TidyRez</a>
@@ -37,6 +37,9 @@
     <a class="dropdown-item" href="../articles/tree.html">Dealing with Trees</a>
     <a class="dropdown-item" href="../articles/track.html">Tracking down coreference phenomena</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -97,16 +100,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2485C4F740FC0 &lt;0&gt;                          3           3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 1BF2260B4AB78 Stay up late                 3           3</span>
 <span class="r-in"><span><span class="va">sbc007_withunits</span> <span class="op">=</span> <span class="fu">addUnitSeq</span><span class="op">(</span><span class="va">sbc007</span>, <span class="st">"stack"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in UseMethod("left_join"):</span> no applicable method for 'left_join' applied to an object of class "character"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sbc007_withunits</span><span class="op">$</span><span class="va">stackDF</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">unitSeqFirst</span>, <span class="va">unitSeqLast</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   id            unitSeqFirst unitSeqLast</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 16CE3C9693F60          391         392</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> AC5AC90A6E65           689         690</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 1A87960035B5A          225         225</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 31A9F84B7EE07          540         541</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 1E013C5A85CA9          247         251</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 3872B2E956219          609         609</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in select(., id, unitSeqFirst, unitSeqLast):</span> Can't subset columns that don't exist.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Column `unitSeqFirst` doesn't exist.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -114,7 +111,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Ryan Ka Yau Lai, John W Du Bois.</p>
+  <p></p><p>Developed by Ryan Ka Yau Lai.</p>
 </div>
 
 <div class="pkgdown-footer-right">

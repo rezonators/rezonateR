@@ -49,6 +49,39 @@ addUnitSeq = function(rezrObj, entity, layers = ""){
         rezrObj[[entity %+% "DF"]][[layer]] = suppressMessages(rezrObj[[entity %+% "DF"]][[layer]] %>% rez_left_join(rezrObj$tokenDF %>% rez_select(id, unitSeqFirst, unitSeqLast), df2Address = sourceAddress, rezrObj = rezrObj, fkey = "token"))
       }
     }
+  } else if(entity == "clique"){
+    # if(!("unit" %in% names(rezrObj$rezDF$default))){
+    #   if(!("unitSeqFirst" %in% names(rezrObj$rezDF$default))){
+    #     rezrObj = addUnitSeq(rezrObj, entity = "rez", layers = layer)
+    #   }
+    #   if(!("unitSeq" %in% names(rezrObj$rezDF$default))){
+    #     rezrObj$rezDF$default = rezrObj$rezDF$default %>% rez_mutate(unitSeq = unitSeqLast)
+    #   }
+    #
+    #   rezrObj = rezrObj %>% addFieldForeign("rez", layer, "unit", "", "unitSeq", "unit", "id", sourceKeyName = "unitSeq")
+    # }
+    #
+    # rezToUnit = rezrObj$rezDF$default$unit
+    # names(rezToUnit) = rezrObj$rezDF$default$id
+    #
+    # resonanceToUnits = lapply(rezrObj$nodeMap[["resonance"]], function(node){
+    #   rezToUnit[node$setIDList]
+    # })
+    #
+    # unitToSeq = rezrObj$unitDF$unitSeq
+    # names(unitToSeq) = rezrObj$unitDF$id
+    # resonanceToUnitSeqMax = sapply(resonanceToUnits, function(x){
+    #   max(unitToSeq[x])
+    # })
+    # resonanceToUnitSeqMin = sapply(resonanceToUnits, function(x){
+    #   min(unitToSeq[x])
+    # })
+    for(layer in names(rezrObj$rezDF)){
+      rezrObj = rezrObj %>% addFieldForeign("clique", "", "unit", "", "unitList", "unitSeqFirst", "unitSeq", complexAction = min, type = "complex")
+      rezrObj = rezrObj %>% addFieldForeign("clique", "", "unit", "", "unitList", "unitSeqLast", "unitSeq", complexAction = max, type = "complex")
+    }
+
+
   } else if (entity == "card"){
     if(!is.list(rezrObj$cardDF)){ #No stackings
       rezrObj = rezrObj %>% addFieldForeign("card", "", "unit", "", "unit", "unitSeq", "unitSeq", fieldaccess = "foreign")
@@ -205,17 +238,18 @@ getBiluoFromOrder = function(seq, length){
 #' @rdname orderseq
 #' @param id The ID of the larger structure within which you would like to find the position of an individual component.
 #' For example, if you want to find the position of a word within a prosodic sentence from the prosodic sentence ID.
+#' @param isWord Vector of logical values indicating whether something is to be counted as word.
 #'
 #' @return A vector of sequence values within that structure. For example, if you are working with the tokenDF and `id`
 #' gives the prosodic sentence ID, then this function will return the position of a token within a prosodic sentence.
 #' @export
 #'
 #' @examples sbc007$tokenDF = addFieldLocal(sbc007$tokenDF, "tokenOrder2", getOrderFromSeq(unitSeq))
-getOrderFromSeq = function(id){
+getOrderFromSeq = function(id, isWord = T){
   ids = unique(id[!is.na(id) & id != 0])
   ord = integer(length(id))
   for(currID in ids){
-    ord[id == currID] = seq(1,length(id[id == currID]))
+    ord[id == currID & isWord] = seq(1,length(id[id == currID & isWord]))
   }
   ord
 }

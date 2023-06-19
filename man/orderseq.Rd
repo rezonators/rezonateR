@@ -5,13 +5,15 @@
 \alias{getSeqFromOrder}
 \title{Get sequence number (position) within a larger structure (turn, prosodic sentence, etc.) from the ID of that structure, or the other way around}
 \usage{
-getOrderFromSeq(id)
+getOrderFromSeq(id, isWord = T)
 
 getSeqFromOrder(order)
 }
 \arguments{
 \item{id}{The ID of the larger structure within which you would like to find the position of an individual component.
 For example, if you want to find the position of a word within a prosodic sentence from the prosodic sentence ID.}
+
+\item{isWord}{Vector of logical values indicating whether something is to be counted as word.}
 
 \item{order}{The position of an individual component within a larger structure.}
 }

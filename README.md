@@ -22,4 +22,4 @@ For the public-facing website for the entire project, see [Rezonator.com](https:
 
 # Acknowledgements
 
-Thanks to Giorgia Troiani, Stefan Th Gries, Argyro Katsika and the UCSB CEILing group for their comments on this project.
+Thanks to John W DuBois for supervising the project, Terry DuBois, Brady Moore and Georgio Klironomo for their work on Rezonator (and answering my questions), Sabrina Sun whose work on turn-taking motivated parts of the package, and Giorgia Troiani, Stefan Th Gries, Argyro Katsika and the UCSB CEILing group for their comments on this project.

@@ -94,6 +94,8 @@ changeFieldForeign(x, ...)
 \item{sourceEntity}{The Rezonator entity that you will be getting your information from.}
 
 \item{sourceLayer}{The layer of the Rezonator entity that you will be changing from. Leave blank for entities without layers (e.g. token, entry and unit). If you don't have layers for entities that may have layers (i.e. track, rez, chunk), type 'default'.}
+
+\item{sourceKeyName}{The key from the source rezrDF to be used, when not the default primary key.}
 }
 \value{
 When applied on a rezrDF, a rezrDF object with the added / changed field.

@@ -135,3 +135,82 @@ test_that("Member chunks ignored", {
   b = b %>% rez_mutate(competitors = countCompetitors(window = 10, exclFrag = T))
   b = b %>% rez_mutate(competitors2 = countMatchingCompetitors(matchCol = layer, window = 10, exclFrag = T))
 })
+
+test_that("SEMDIAL stuff works", {
+  discoName = "sbc007_animacy"
+  path = "inst/extdata/" %+% discoName %+% ".rez"
+  layerRegex = list(chunk = list(field = "chunkType",
+                                 regex = c("verb"),
+                                 names = c("verb", "refexpr")))
+  concatFields = c("text", "transcript")
+  sbc007_anim = importRez(path,
+                     layerRegex = layerRegex,
+                     concatFields = concatFields)
+  sbc007_anim = addUnitSeq(sbc007_anim, entity = "track")
+
+  sbc007_anim$trackDF$default %>% filter(gapUnits <= 1, charCount > 20) %>% select(id, gapUnits, charCount, text)
+  sbc007_anim = getAllTreeCorrespondences(sbc007_anim, entity = "track")
+  sbc007_anim = mergeChunksWithIDs(sbc007_anim, "largerChunk")
+  sbc007_anim = mergeChunksWithTree(sbc007_anim)
+  sbc007_anim = mergedChunksToTrack(sbc007_anim, "default")
+
+  sbc007_anim$trackDF$default = sbc007_anim$trackDF$default %>%
+    rez_mutate(noPrevMentionsIn10 = countPrevMentions(10,
+                                                      exclFrag = T))
+
+  sbc007_anim = sbc007_anim %>%
+    addFieldForeign("track", "default", "treeEntry", "default", "treeEntry", "Relation", "Relation", fieldaccess = "foreign")
+
+  sbc007_anim$trackDF$default = sbc007_anim$trackDF$default %>% mutate(formType = case_when(
+    text == "<0>" ~ "zero",
+    str_detect(tolower(text), "I|(you)|we|they|he|she|it|me|us|them|him") ~ "pronominal",
+    tolower(text) %in% c("her", "this", "that") ~ "pronominal",
+    T ~ "lexical"
+  ))
+  rez_write_csv(sbc007_anim$trackDF$default, "rez007_refform.csv", c("id", "text", "formType"))
+
+  changeDF = rez_read_csv("inst/extdata/rez007_refform_edited.csv", origDF = sbc007_anim$trackDF$default)
+  sbc007_anim$trackDF$default = sbc007_anim$trackDF$default %>% updateFromDF(changeDF, changeCols = "formType")
+
+  sbc007_anim$trackDF$default = sbc007_anim$trackDF$default %>%
+    rez_mutate(Relation = coalesce(Relation, "NonSubj"), fieldaccess = "flex") %>%
+    rez_mutate(Relation = case_when(Relation == "Subj" ~ "subject", Relation == "NonSubj" ~ "non-subject")) %>%
+    rez_mutate(Relation = factor(Relation, levels = c("subject", "non-subject")))
+  sbc007_anim$trackDF$default = sbc007_anim$trackDF$default %>% rez_mutate(noPrevMentionsBinned = case_when(noPrevMentionsIn10 == 0 ~ "0",noPrevMentionsIn10 == 1 ~ "1", noPrevMentionsIn10 == 2 ~ "2", T ~ "3+"))
+  ggplot(sbc007_anim$trackDF$default, aes(fill = formType, x = noPrevMentionsBinned)) +
+    geom_bar(position="fill") + facet_grid(rows = vars(Relation), cols = vars(animacy)) + ylab("proportion") + theme(legend.position = "none") + xlab("number of previous mentions")
+
+
+  sbc007_anim = sbc007_anim %>% addFieldForeign("track", "default", "unit", "", "unitSeqFirst", "participant", "participant", sourceKeyName = "unitSeq")
+  sbc007_anim$trackDF$default %>%
+    filter(name %in% c("Tim", "Ron", "Tim and Mandy", "The two couples")) %>%
+    rez_mutate(name_new = case_when(
+      name == "Tim and Mandy" ~ "T+M",
+      name == "Tim" ~ "T",
+      name == "The two couples" ~ "T+M+A+R",
+      name == "Ron" ~ "R"
+    ) %>% factor(levels = c("T", "R", "T+M", "T+M+A+R"))) %>%
+    rez_mutate(formTypeShort = case_when(formType == "zero" ~ "Z", formType == "pronominal" ~ "P", T ~ "L"),
+      formWeight = case_when(formType == "zero" ~ 1, formType == "pronominal" ~ 2, T ~ 3)) %>%
+    ggplot(aes(x = docTokenSeqFirst, y = name_new)) + geom_point(aes(col = participant, size = formWeight), shape = "O") + theme_bw() + theme(axis.title = element_blank(), legend.position = "none") + scale_y_discrete(limits=rev)+
+    scale_colour_manual(name="Speaker",
+    labels = c("ALICE;", "MARY;"),
+    values = c("#026440", "purple"))
+
+  rez_save(sbc007_anim, "sbc007_semdial_track.Rdata")
+
+  sbc007_turn =  sbc007_turn %>% stackToToken
+  sbc007_turn$tokenDF = sbc007_turn$tokenDF %>% rez_mutate(TurnOrder = getOrderFromSeq(TurnSeq, kind == "word"))
+  sbc007_turn$tokenDF = sbc007_turn$tokenDF %>% rez_group_by(TurnSeq) %>% rez_mutate(TurnLength = sum(kind == "word")) %>% rez_ungroup()
+  sbc007_turn$tokenDF = sbc007_turn$tokenDF %>% rez_mutate(TurnBack = as.integer(TurnLength) - as.integer(TurnOrder))
+
+
+  library(ggbreak)
+ # bargraph_place =
+    sbc007_turn$tokenDF %>% filter(tolower(text) %in% c("oh", "like")) %>% ggplot(aes(x = as.integer(TurnOrder), fill = tolower(text))) + geom_bar(position = "dodge") + theme(legend.position = "none") + xlab("Position from turn start") + ylab("Frequency") + scale_x_continuous(breaks =c(0,20,40,60, 90,120,280)) +scale_x_break(c(60, 85))+scale_x_break(c(95, 115))  + scale_x_break(c(125, 280)) + theme(axis.text.x.top = element_blank(), axis.ticks.x.top = element_blank())
+  bargraph_back = sbc007_turn$tokenDF %>% filter(tolower(text) %in% c("oh", "like")) %>% ggplot(aes(x = as.integer(TurnBack), fill = tolower(text))) + geom_bar(position = "dodge") + theme(legend.position = "none") + xlab("Position from turn end") + theme(axis.title.y = element_blank())
+  bargraph_place
+  library(patchwork)
+  bargraph_place + bargraph_back
+
+})

@@ -2,6 +2,7 @@
 % Please edit documentation in R/track.R
 \name{countCompetitors}
 \alias{countCompetitors}
+\alias{countCompetitorsMatch}
 \alias{countMatchingCompetitors}
 \title{Count the number of competing referents to the current mention}
 \usage{
@@ -16,6 +17,17 @@ countCompetitors(
   combinedChunk = NULL,
   nonFragmentMember = F,
   windowType = "unit"
+)
+
+countCompetitorsMatch(
+  matchCol,
+  windowSize = Inf,
+  tokenOrder = NULL,
+  chain = NULL,
+  between = T,
+  exclFrag = F,
+  combinedChunk = NULL,
+  nonFragmentMember = F
 )
 
 countMatchingCompetitors(

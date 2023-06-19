@@ -420,7 +420,7 @@ countCompetitors = function(cond = NULL, windowSize = Inf, tokenSeq = NULL, unit
 #' @param matchCol The column for which a value is to be matched.
 #' @rdname countCompete
 #' @export
-countMatchingCompetitors = function(matchCol, windowSize = Inf, tokenOrder = NULL, chain = NULL, between = T, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
+countCompetitorsMatch = function(matchCol, windowSize = Inf, tokenOrder = NULL, chain = NULL, between = T, exclFrag = F, combinedChunk = NULL, nonFragmentMember = F){
   grabFromDF(tokenOrder = "docTokenSeqLast", chain = "chain", combinedChunk = "combinedChunk")
   lastMentionPos = lastMentionToken(tokenOrder, chain, exclFrag, combinedChunk, nonFragmentMember)
   if(exclFrag) frag = isFrag(combinedChunk, nonFragmentMember) else frag = F
@@ -477,3 +477,9 @@ getPosInChain = function(tokenOrder = NULL, chain = NULL, exclFrag = F, combined
   }
   result
 }
+
+
+#' @rdname countCompete
+#' @export
+countMatchingCompetitors = countCompetitorsMatch
+

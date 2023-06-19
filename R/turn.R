@@ -13,8 +13,6 @@ defaultScheme = c(turnStart = "", turnEnd = "turnEnd", turn = "turnEnd",
 #'
 #' @return A vector of turn IDs.
 #' @export
-#'
-#' @examples
 getTurnFromAnnos = function(unitDF, annoScheme = defaultScheme, sior = "new", bc = "noTurn", turnAnno = "turnPos"){
   for(cat in names(defaultScheme)){
     if(!(cat %in% names(annoScheme))) annoScheme[[cat]] = defaultScheme[[cat]]

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rezonateR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.0000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.0000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,11 +25,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Overview</h6>
-    <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR 0.1.1</a>
-    <a class="dropdown-item" href="../articles/sample_proj.html">Toy example of a coreference analysis in rezonateR</a>
+    <a class="dropdown-item" href="../articles/overview.html">An overview of rezonateR for Rezonator users</a>
+    <a class="dropdown-item" href="../articles/sample_proj.html">Sample mini-project: Analysing coreference in rezonateR</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Detailed walkthrough</h6>
-    <a class="dropdown-item" href="../articles/import_save_basics.html">Importing .rez files, saving rezrObjs, and basic data structure</a>
+    <a class="dropdown-item" href="../articles/import_save_basics.html">Importing Rezonator files, saving rezonateR objects, and basic data structure</a>
     <a class="dropdown-item" href="../articles/time_seq.html">Time and sequence</a>
     <a class="dropdown-item" href="../articles/edit_easyEdit.html">Editing I: Using EasyEdit</a>
     <a class="dropdown-item" href="../articles/edit_tidyRez.html">Editing II: Using TidyRez</a>
@@ -37,6 +37,9 @@
     <a class="dropdown-item" href="../articles/tree.html">Dealing with Trees</a>
     <a class="dropdown-item" href="../articles/track.html">Tracking down coreference phenomena</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -144,7 +147,7 @@
         </dt>
         <dd>Relate table rows to tree entries covering the same tokens.</dd>
       </dl></div><div class="section level2">
-      <h2 id="time-and-sequence">Time and sequence<a class="anchor" aria-label="anchor" href="#time-and-sequence"></a></h2>
+      <h2 id="time-sequence-and-stacks">Time, sequence and stacks<a class="anchor" aria-label="anchor" href="#time-sequence-and-stacks"></a></h2>
       
       
 
@@ -178,7 +181,7 @@
           
           <code><a href="getTurnFromAnnos.html">getTurnFromAnnos()</a></code> 
         </dt>
-        <dd>Get turn IDs from turn position annotations</dd>
+        <dd>Get turn IDs from turn position annotations (deprecated)</dd>
       </dl><dl><dt>
           
           <code><a href="getBiluoFromOrder.html">getBiluoFromOrder()</a></code> 
@@ -189,6 +192,11 @@
           <code><a href="orderseq.html">getOrderFromSeq()</a></code> <code><a href="orderseq.html">getSeqFromOrder()</a></code> 
         </dt>
         <dd>Get sequence number (position) within a larger structure (turn, prosodic sentence, etc.) from the ID of that structure, or the other way around</dd>
+      </dl><dl><dt>
+          
+          <code><a href="stackToX.html">stackToUnit()</a></code> <code><a href="stackToX.html">stackToToken()</a></code> 
+        </dt>
+        <dd>Add stack sequence information to tokens and units</dd>
       </dl></div><div class="section level2">
       <h2 id="easyedit">EasyEdit<a class="anchor" aria-label="anchor" href="#easyedit"></a></h2>
       
@@ -319,7 +327,12 @@
         <dd>Functions related to bridging and frames.</dd>
       </dl><dl><dt>
           
-          <code><a href="countCompete.html">countCompetitors()</a></code> <code><a href="countCompete.html">countMatchingCompetitors()</a></code> 
+          <code><a href="getPosInChain.html">getPosInChain()</a></code> 
+        </dt>
+        <dd>Get the position of a chain entry (track or rez) in a chain (trail or resonance).</dd>
+      </dl><dl><dt>
+          
+          <code><a href="countCompete.html">countCompetitors()</a></code> <code><a href="countCompete.html">countCompetitorsMatch()</a></code> <code><a href="countCompete.html">countMatchingCompetitors()</a></code> 
         </dt>
         <dd>Count the number of competing referents to the current mention</dd>
       </dl><dl><dt>
@@ -388,6 +401,22 @@
           <code><a href="chunkfam.html">getChildrenOfEntry()</a></code> <code><a href="chunkfam.html">getChildrenOfChunk()</a></code> <code><a href="chunkfam.html">getChildrenOfChunkIf()</a></code> <code><a href="chunkfam.html">getSiblingsOfEntry()</a></code> <code><a href="chunkfam.html">getSiblingsOfChunk()</a></code> <code><a href="chunkfam.html">getSiblingOfChunkIf()</a></code> 
         </dt>
         <dd>Get children and siblings of tree entries and chunks.</dd>
+      </dl></div><div class="section level2">
+      <h2 id="resonance">Resonance<a class="anchor" aria-label="anchor" href="#resonance"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions for keeping track of resonance and cliques.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="augmentRezInfo.html">augmentRezInfo()</a></code> 
+        </dt>
+        <dd>Augment unitDF and cliqueDF with resonance-related information.</dd>
       </dl></div><div class="section level2">
       <h2 id="other-editing-functions">Other editing functions<a class="anchor" aria-label="anchor" href="#other-editing-functions"></a></h2>
       
@@ -481,7 +510,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Ryan Ka Yau Lai, John W Du Bois.</p>
+  <p></p><p>Developed by Ryan Ka Yau Lai.</p>
 </div>
 
 <div class="pkgdown-footer-right">
