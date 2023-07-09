@@ -131,7 +131,7 @@ addFieldForeign.rezrDF = function(targetDF, sourceDF, targetForeignKeyName, targ
     sourceDF = sourceDF %>% select(c(sourceKey, sourceFieldName))
     byLine = character()
     byLine[targetForeignKeyName] = sourceKey
-    result = suppressMessages(targetDF %>% rez_left_join(sourceDF, fieldName = sourceFieldName, fieldaccess = fieldaccess, by = byLine, df2key = sourceKey, fkey = targetForeignKeyName))
+    result = suppressMessages(targetDF %>% rez_left_join(sourceDF, fieldaccess = fieldaccess, by = byLine, df2key = sourceKey, fkey = targetForeignKeyName))
 
     #Rename if sourceFieldName != targetFieldName
     if(sourceFieldName != targetFieldName){
