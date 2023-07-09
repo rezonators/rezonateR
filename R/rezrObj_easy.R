@@ -142,7 +142,7 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
     sourceDF = sourceDF %>% select(c(all_of(sourceKey), all_of(sourceFieldName)))
     byLine = character()
     byLine[targetForeignKeyName] = sourceKey
-    result = suppressMessages(targetDF %>% rez_left_join(sourceDF, fieldName = sourceFieldName, fieldaccess = fieldaccess, by = byLine, df2Address = sourceDFAddress, fkey = targetForeignKeyName, df2key = sourceKey))
+    result = suppressMessages(targetDF %>% rez_left_join(sourceDF, fieldaccess = fieldaccess, by = byLine, df2Address = sourceDFAddress, fkey = targetForeignKeyName, df2key = sourceKey))
 
     #Rename if sourceFieldName != targetFieldName
     if(sourceFieldName != targetFieldName){
