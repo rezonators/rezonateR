@@ -141,3 +141,31 @@ augZoo = function(zoo, windowSize = 10, mode = "zero"){
   }
   zoo
 }
+
+
+#' Find resonances.between two sets of units.
+#'
+#' @param rezrObj The rezrObj.
+#' @param units_1 A list of vectors of units.
+#' @param units_2 A list of vectors of units, same length as units_1.
+#' @param rez_layer The resonance layer you're considering.
+#'
+#' @return A vector containing the number of resonances between the first vector of units_1 and first vector of units_2, second vector of units_1 and second vector of units_2, etc.
+#' @export
+#'
+#' @examples
+findResonancesBetween = function(rezrObj, units_1, units_2, rez_layer = "default"){
+  #If there's *no* unitSeq in rezDF, add it
+  if(!("unitSeqLast" %in% names(rezrObj$rezDF[[rez_layer]]))){
+    rezrObj = addUnitSeq(rezrObj, "rez", "default")
+  }
+
+  sapply(1:length(units_1), function(i){
+    unitSeq_1 = rezrObj$unitDF$unitSeq[(rezrObj$unitDF$id %in% units_1[[i]])]
+    unitSeq_2 = rezrObj$unitDF$unitSeq[(rezrObj$unitDF$id %in% units_2[[i]])]
+
+    chains_1 = rezrObj$rezDF$default %>% filter(unitSeqFirst %in% unitSeq_1) %>% pull(chain)
+    chains_2 = rezrObj$rezDF$default %>% filter(unitSeqFirst %in% unitSeq_2) %>% pull(chain)
+    length(intersect(chains_1, chains_2))
+  })
+}

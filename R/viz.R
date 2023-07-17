@@ -1,5 +1,18 @@
 
 
+#' Get Gantt charts from rezrObj.
+#'
+#' @param rezrObj The rezrObj that the Gantt chart is to be created fromm
+#' @param x The unit of the x-axis (token, unit ...)
+#' @param y The unit of the y-axis (generally participant, I don't support anything else at the moment)
+#' @param obj What does each rectangle on the Gantt chart represent? By default, "unit", but can also be "stack".
+#' @param thickness Thickness of the rectangles.
+#' @param stacking The stacking that you would like the rectangles to be, if obj = "stack".
+#'
+#' @return
+#' @export
+#'
+#' @examples
 getGantt = function(rezrObj, x = "token", y = "participant", obj = "unit", thickness = 12, stacking = "Turn"){
 
   if(x == "token"){
