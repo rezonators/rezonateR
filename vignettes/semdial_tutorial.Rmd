@@ -175,7 +175,7 @@ getGantt(sbc007_qa, x = "token", obj = "stack", stacking = "Turn")+ theme(axis.t
 # Clustering
 
 This code derives the non-manually-created features for the yeah/mhm dataset:
-```{r}
+```{r message=FALSE, warning=FALSE}
 #Get lowercase words
 sbc007_qa$tokenDF <- sbc007_qa$tokenDF %>% rez_mutate(textLower = tolower(text))
 
@@ -283,7 +283,7 @@ yeah_mhm_sbc007 = yeah_mhm_sbc007 %>%
 
 Draw Sankey diagram:
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(ggforce)
 yeah_mhm_all_ggforce = yeah_mhm_sbc007 %>%
   group_by(category_coarse, category_fine, textLower) %>%
