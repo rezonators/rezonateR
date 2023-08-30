@@ -358,8 +358,8 @@ getNextMentionField = function(field, tokenOrder = NULL, chain = NULL, exclFrag 
   grabFromDF(tokenOrder = "docTokenSeqFirst", chain = "chain", combinedChunk = "combinedChunk")
   if(exclFrag) frag = isFrag(combinedChunk, nonFragmentMember) else frag = F
 
-  prevMentionPos = lastMentionToken(tokenOrder = tokenOrder, chain = chain, exclFrag, combinedChunk, nonFragmentMember)
-  sapply(1:length(field), function(i) field[which(tokenOrder == prevMentionPos[i] & !frag & chain == chain[i])]) %>% zeroEntryToNA
+  nextMentionPos = nextMentionToken(tokenOrder = tokenOrder, chain = chain, exclFrag, combinedChunk, nonFragmentMember)
+  sapply(1:length(field), function(i) field[which(tokenOrder == nextMentionPos[i] & !frag & chain == chain[i])]) %>% zeroEntryToNA
 }
 
 #' Count the number of competing referents to the current mention
