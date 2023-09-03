@@ -140,20 +140,15 @@ addFieldForeign.rezrObj = function(rezrObj, targetEntity, targetLayer = "", sour
       sourceKey = getKey(sourceDF)
     } else sourceKey = sourceKeyName
     sourceDF = sourceDF %>% select(c(all_of(sourceKey), all_of(sourceFieldName)))
+        #Rename if sourceFieldName != targetFieldName
+    if(sourceFieldName != targetFieldName){
+        sourceDF = suppressMessages(sourceDF %>% rez_rename(!!targetFieldName := !!sourceFieldName))
+    }
+
     byLine = character()
     byLine[targetForeignKeyName] = sourceKey
     result = suppressMessages(targetDF %>% rez_left_join(sourceDF, fieldaccess = fieldaccess, by = byLine, df2Address = sourceDFAddress, fkey = targetForeignKeyName, df2key = sourceKey))
 
-    #Rename if sourceFieldName != targetFieldName
-    if(sourceFieldName != targetFieldName){
-      if((sourceFieldName %+% "_lower") %in% names(result)){
-        result = suppressMessages(result %>% rez_rename(!!targetFieldName := !!expr(sourceFieldName %+% "_lower")))
-      } else if(sourceFieldName %in% names(result)){
-        result = suppressMessages(result %>% rez_rename(!!targetFieldName := !!sourceFieldName))
-      } else {
-        stop("Mysterious error. Please contact package manager with the following information: In addFieldForeign, sourceFieldName and sourceFieldName %+% '_lower' both absent in result table.")
-      }
-    }
 
   } else if(type == "complex"){
     targetNodeMap = rezrObj[["nodeMap"]][[targetEntity]]
