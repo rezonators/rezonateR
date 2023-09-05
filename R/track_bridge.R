@@ -115,6 +115,8 @@ obscureUpper = function(frameMatrix){
 #' newFrame = rez_read_csv(inpath, origDF = frameMatrix(sbc007))
 #' frameMatrix(sbc007) = updateFrameMatrixFromDF(frameMatrix(rez007), newFrame)
 updateFrameMatrixFromDF = function(frameMatrix, changeDF){
+  changeDF = changeDF[(changeDF$id %in% frameMatrix$id), c(T, T, (changeDF$id %in% frameMatrix$id))]
+
   changeDF = changeDF %>% mutate(
     across(all_of(colnames(changeDF) %>% setdiff(c("id", "name"))),
            function(x) case_when(x == "/" | is.na(x) ~ "", T ~ x)

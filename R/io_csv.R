@@ -142,6 +142,8 @@ updateFromDF = function(targetDF, changeDF, changeCols = NULL, changeType = "fle
   }
   if(addRows){
     targetDF = targetDF %>% rez_add_row(!!parse_expr(getKey(targetDF)) := setdiff(changeIDs, targetIDs))
+  } else {
+    changeDF = changeDF %>% filter(changeDF[[getKey(targetDF)]] %in% targetDF[[getKey(targetDF)]])
   }
 
   joinDF = suppressMessages(rez_left_join(targetDF %>% select(all_of(c(getKey(targetDF)))), changeDF %>% select(all_of(c(getKey(targetDF), changeCols))), by = getKey(targetDF)))
