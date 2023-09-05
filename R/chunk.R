@@ -61,7 +61,7 @@ updateContainingChunk = function(containedDF, rezrObj, containerDFAdd){
 mergeChunksWithIDs = function(rezrObj, idField, addToTrack = F, selectCond = NULL){
   tcDF = combineTokenChunk(rezrObj)
   chunkDF = combineChunks(rezrObj)
-  newChunks = unique(chunkDF[[idField]][!is.na(chunkDF[[idField]])])
+  newChunks = unique(chunkDF[[idField]][!is.na(chunkDF[[idField]]) & chunkDF[[idField]] != ""])
 
   #What number shall we start at? (If no new chunks have been added before, then we'll just start from 1)
   currNewChunkNames = chunkDF$name[str_detect(chunkDF$name, "New Chunk ")]
@@ -77,7 +77,7 @@ mergeChunksWithIDs = function(rezrObj, idField, addToTrack = F, selectCond = NUL
 
   for(newChunk in newChunks){
     chunksCombined = chunkDF %>% filter(!!parse_expr(idField) == newChunk) %>% pull(id)
-    rezrObj = mergeGivenChunks(rezrObj, chunkDF, chunksCombined, selectCond, i)
+    rezrObj = mergeGivenChunks(rezrObj, chunkDF, chunksCombined, enexpr(selectCond), i)
     i = i + 1
   }
   if(addToTrack){
