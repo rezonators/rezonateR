@@ -51,6 +51,7 @@ updateContainingChunk = function(containedDF, rezrObj, containerDFAdd){
 #'
 #' @inheritParams addUnitSeq
 #' @param treeEntryDF A treeEntry data.frame, possibly filtered.
+#' @param idField The field with merged chunk IDs. Chunks to be combined need to have the same integer ID.
 #' @param addToTrack Do you want to add the chunks to the trackDF as well?
 #' @param selectCond The condition for selecting which chunk provides the field values.
 #'
