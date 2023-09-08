@@ -11,12 +11,15 @@
 #' @export
 #'
 #' @examples sbc007$chunkDF$verb = sbc007$chunkDF$verb %>% rez_mutate(containingRefexpr = findContainingChunk(sbc007$chunkDF$verb, sbc007$chunkDF$refexpr, proper = T))
-findContainingChunk = function(containedDF, containerDF, proper = F){
+findContainingChunk = function(containedDF, containerDF, proper = F, cond = T){
   #Will have to be modified when I have multiple docs
   sapply(1:nrow(containedDF), function(x){
     result = containerDF %>%
-      filter(containerDF$docTokenSeqFirst <= containedDF$docTokenSeqFirst[x], containerDF$docTokenSeqLast >= containedDF$docTokenSeqLast[x],
-      !proper | (containerDF$docTokenSeqFirst != containedDF$docTokenSeqFirst[x] | containerDF$docTokenSeqLast != containedDF$docTokenSeqLast[x])) %>%
+      filter(!!enexpr(cond),
+            containerDF$docTokenSeqFirst <= containedDF$docTokenSeqFirst[x],
+             containerDF$docTokenSeqLast >= containedDF$docTokenSeqLast[x],
+             !proper | (containerDF$docTokenSeqFirst != containedDF$docTokenSeqFirst[x] |
+                          containerDF$docTokenSeqLast != containedDF$docTokenSeqLast[x])) %>%
       arrange(docTokenSeqLast - docTokenSeqFirst, desc(docTokenSeqFirst), docTokenSeqLast) %>%
       slice(1) %>% pull(id)
     if(length(result) == 0) result = NA
@@ -77,8 +80,12 @@ mergeChunksWithIDs = function(rezrObj, idField, addToTrack = F, selectCond = NUL
 
   for(newChunk in newChunks){
     chunksCombined = chunkDF %>% filter(!!parse_expr(idField) == newChunk) %>% pull(id)
-    rezrObj = mergeGivenChunks(rezrObj, chunkDF, chunksCombined, enexpr(selectCond), i)
-    i = i + 1
+    existing = chunkDF %>% filter(docTokenSeqFirst == min(chunkDF$docTokenSeqFirst),
+                                  docTokenSeqLast == max(chunkDF$docTokenSeqLast))
+    if(nrow(existing) == 0){
+      rezrObj = mergeGivenChunks(rezrObj, chunkDF, chunksCombined, enexpr(selectCond), i)
+      i = i + 1
+    }
   }
   if(addToTrack){
     #todo: addToTrack
