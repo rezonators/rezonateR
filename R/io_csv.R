@@ -36,6 +36,7 @@ rez_write_csv = function(df, path, inclCols = character(0), exclCols = character
 #' @export
 rez_read_csv = function(path, origDF = NULL, lubridate = F, inclCols = character(0), exclCols = character(0), ...){
   inImport = strsplit(read_lines(path, n_max = 1), ",")[[1]]
+  inImport = inImport %>% str_replace_all("\"", "") #Remove quotes from CSV if present
 
   #Handling cases with commas in column names
   inString = F
