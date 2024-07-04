@@ -97,6 +97,80 @@ lowerToHigher = function(simpleDF = NULL, complexDF, complexNodeMap = NULL, fiel
   complexDF
 }
 
+#For no overlap cases
+lowerToHigher_alt = function(simpleDF, complexDF,
+                             foreignKey,
+                            fieldnames, higherFieldnames = "", action,
+                            seqName = "docTokenSeq", tokenListName = "tokenList",
+                            simpleDFAddress = "",
+                            rezrObj = NULL, fieldaccess = "foreign"){
+  if(is.null(simpleDF)){
+    if(!all(simpleDFAddress == "") & !is.null(rezrObj)){
+      simpleDF = listAt(rezrObj, simpleDFAddress)
+    } else {
+      stop("No simple DF and/or rezrObj specified.")
+    }
+  }
+
+  if(!all(higherFieldnames == "") & length(fieldnames) != length(higherFieldnames)){
+    stop("Field name vectors do not match in length.")
+  }
+
+  if(!(foreignKey %in% colnames(simpleDF))){
+    stop("Foreign key provided is incorrect.")
+  }
+
+  complexKey = getKey(complexDF)
+
+  #If there are no higher fieldnames passed, then the higher DF has the same fieldname as the lower DF.
+  if(all(higherFieldnames == "")){
+    higherFieldnames = fieldnames
+  }
+
+  #Get the values of the field for the higher DF, and store in the colsToAdd list.
+  colsToAdd = list()
+  simpleDF %>% group_by(!!parse_expr(foreignKey)) %>%
+    summarise(across(all_of(fieldnames), action))
+
+  for(i in 1:length(fieldnames)){
+    fieldname = fieldnames[i]
+    higherFieldname = higherFieldnames[i]
+    colsToAdd[[higherFieldname]] = sapply(complexNodeMap, function(entry){
+      simpleDF %>% filter(id %in% entry[[tokenListName]]) %>% arrange(!!as.symbol(seqName)) %>% select(!!fieldname) %>% unlist %>% action
+    })
+  }
+
+  #Integrate the data in the colsToAdd list to the complexDF
+  oldFieldnames = intersect(names(complexDF), higherFieldnames)
+  newFieldnames = setdiff(higherFieldnames, names(complexDF))
+  complexDF = complexDF %>% mutate(across(all_of(oldFieldnames), function(x) colsToAdd[[cur_column()]]))
+  for(name in newFieldnames){
+    values = colsToAdd[[name]]
+    complexDF = complexDF %>% rez_mutate(!!name := values, fieldaccess = fieldaccess)
+  }
+
+  if(length(fieldaccess) > 1){
+    stop("Multiple field access values not yet implemented for lowerToHigher functions. Please perform action separately.")
+  }
+
+  #Attribute stuff
+  # for(i in 1:length(higherFieldnames)){
+  #   field = fieldnames[i]
+  #   higherField = higherFieldnames[i]
+  #   if(!(higherField %in% names(updateFunct(complexDF)))){
+  #     if(simpleDFAddress != "" & complexNodeMapAddress != ""){
+  #       updateFunct(complexDF, higherField) = createLowerToHigherUpdate(simpleDFAddress %+% "/" %+% field, complexNodeMapAddress %+% "/" %+% tokenListName, action, higherField, fkeyInDF = FALSE, seqName)
+  #     } else {
+  #       message("You didn't specify simple and/or complex DF addresses, so I cannot create an update function for you.")
+  #     }
+  #   }
+  # }
+
+
+  complexDF
+}
+
+
 #' Concatenate string values in a lower-level data frame
 #'
 #' Not recommended to be called by most users; [rezonateR::addFieldForeign] with [rezonateR::concatenateAll] suffices for most purposes.
@@ -203,6 +277,40 @@ updateLowerToHigher = function(df, rezrObj, address, fkeyAddress, action, field 
 
   result
 }
+
+updateLowerToHigher_alt = function(df, rezrObj, address, fkeyAddress, action, field = "", fkeyInDF = FALSE, seqName = "docTokenSeq"){
+  if(length(fkeyAddress) > 1){
+    stop("Multiple sources are currently not supported in the updateLowerToHigher function. Please run this function multiple times. Sorry!")
+  } else if(fkeyInDF){
+    stop("Foreign keys in the current DF in the lowerToHigher function are not currently supported. Please use the correponding nodeMap.")
+  }
+
+  #Get the source table, source field, primary key
+  sourceTableInfo = getSourceTableInfo(rezrObj, address, "", field)
+  unpackList(sourceTableInfo)
+  field = sourceTableInfo[["field"]]
+  #This operation yields four new variables in the local environment:
+  #df2key (source DF key), df2field (source DF info field), df2 (source DF), field (target DF, if not specified at the beginning)
+
+  if(!fkeyInDF){
+    #TODO: Multiple sources
+    fkeyAddressVec = strsplit(fkeyAddress, "/")[[1]]
+    fkeyField = fkeyAddressVec[length(fkeyAddressVec)]
+    fkeyPath = fkeyAddressVec[-length(fkeyAddressVec)]
+    if(length(fkeyPath) > 1){
+      stop("Nested node maps are not currently supported. Please check your foreign key address.")
+    }
+    complexNodeMap = rezrObj %>% listAt("nodeMap/" %+% fkeyPath)
+    fieldnames = field
+
+  } else {
+    #TODO: Placeholder for when I support fkeyInDF = T
+  }
+  result = lowerToHigher(df2, df, complexNodeMap, df2field, field, action, seqName, fkeyField)
+
+  result
+}
+
 
 #' Create an update function based on a lowerToHigher-type action.
 #'
