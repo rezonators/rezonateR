@@ -1,0 +1,8 @@
+bibentry(
+  bibtype  = "Article",
+  title    = "From annotation to analysis: Exploring conversational dynamics with rezonateR",
+  author   = "Ryan Ka Yau Lai",
+  journal  = "Pacific Asia Conference on Language, Information and Computation",
+  year     = "2023",
+  pages    = "303–313"
+)
