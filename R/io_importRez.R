@@ -14,7 +14,7 @@
 #' @param docnames A character vector of the document names. If left blank, a `docname` will be generated according to the filenames of files you import. For example, the document foo/bar.rez will be named 'bar'.
 #' @param concatFields A string of names of token-level fields, for example word or transcription, that should be concatenated to form chunk- or entry-level fields. For example, if your word field is called 'word' and you have an IPA transcription field called 'ipa', then concatFields should be c("word", "ipa").
 #' @param separator The character you wish to use to separate words in concatenated columns, generally the empty string in languages like Tibetan and Chinese, and a single space in languages like Spanish and English.
-#' @param layerRegex A list, each of which is a component (just tree, track, rez, or chunk for now; stack to be added later). In each list entry, there are three components: `field` is the field on which the splitting is based; `regex` is a vector of regular expressions; `names` is a vector of layer names. `regex` should have one fewer entry than `names`, as the last of the '`names`' should be the default case.
+#' @param layerRegex A list, each of which is a component (tree, track, rez, or chunk). In each list entry, there are three components: `field` is the field on which the splitting is based; `regex` is a vector of regular expressions; `names` is a vector of layer names. `regex` should have one fewer entry than `names`, as the last of the '`names`' should be the default case.
 #'
 #' @return A rezrObj object. See [rezonateR::new_rezrObj] for details.
 #' @note After import, you may consider calling such functions as [rezonateR::addUnitSeq], [rezonateR::addIsWordField] or [rezonateR::getAllTreeCorrespondences], which are excluded from the import because of performance issues.
@@ -197,7 +197,15 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
         conds = c(paste0("str_detect(", info[["field"]], ", \'", c(info[["regex"]]), "\')"), "T")
         cwText = paste0(conds, " ~ '", info[["names"]], "'")
         splitLayers = function(x){
-          result = suppressMessages(rez_mutate(x, layer = case_when(!!!parse_exprs(cwText))) %>% rez_group_split(layer))
+          if(!(info[["field"]] %in% colnames(x))){
+            message(paste0("Field not found: ", info[["field"]],
+                           " in ", type,
+                           "; all entries will be in the default layer."))
+            x = x %>% mutate('{info[["field"]]}' := info[["names"]][length(info[["names"]])])
+          }
+          result = suppressMessages(rez_mutate(x,
+                                               layer = case_when(!!!parse_exprs(cwText))) %>%
+                                      rez_group_split(layer))
           names(result) = sapply(result, function(x) x$layer[1])
           result
         }
