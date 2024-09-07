@@ -223,10 +223,12 @@ getNextChunks = function(chunkDF, currDoc, p, currDTSL, currVec = character(0)){
 #' @return A `rezrObj` with the `trackDF` augmented with a combined chunks from the `chunkDF`.
 #' @examples sbc007 = sbc007 %>% getAllTreeCorrespondences %>% mergeChunksWithTree %>% mergedChunksToTrack("default")
 #' @export
-mergedChunksToTrack = function(rezrObj, trackLayers = NULL){
+mergedChunksToTrack = function(rezrObj, trackLayers = NULL, mergedChunks = character(0)){
   chunkDF = combineChunks(rezrObj)
 
-  mergedChunks = chunkDF %>% filter(combinedChunk == "combined") %>% pull(id)
+  if(length(mergedChunks) == 0){
+    mergedChunks = chunkDF %>% filter(combinedChunk == "combined") %>% pull(id)
+  }
   members = list()
   for(mergedChunk in mergedChunks){
     members[[mergedChunk]] = chunkDF %>% filter(str_detect(combinedChunk, "member-" %+% mergedChunk)) %>% pull(id)
@@ -261,7 +263,7 @@ mergedChunksToTrack = function(rezrObj, trackLayers = NULL){
     }
   }
   rezrObj
-}
+  }
 
 #' Get children and siblings of tree entries and chunks.
 #'

@@ -50,7 +50,7 @@ updateContainingChunk = function(containedDF, rezrObj, containerDFAdd){
 }
 
 
-#' Relate table rows to tree entries covering the same tokens.
+#' Merge chunks using manually created IDs.
 #'
 #' @inheritParams addUnitSeq
 #' @param treeEntryDF A treeEntry data.frame, possibly filtered.
@@ -78,17 +78,31 @@ mergeChunksWithIDs = function(rezrObj, idField, addToTrack = F, selectCond = NUL
     }
   }
 
+  newIDs = character(0)
+  newChunkLayers = character(0)
   for(newChunk in newChunks){
     chunksCombined = chunkDF %>% filter(!!parse_expr(idField) == newChunk) %>% pull(id)
     existing = chunkDF %>% filter(docTokenSeqFirst == min(chunkDF$docTokenSeqFirst),
                                   docTokenSeqLast == max(chunkDF$docTokenSeqLast))
     if(nrow(existing) == 0){
       rezrObj = mergeGivenChunks(rezrObj, chunkDF, chunksCombined, enexpr(selectCond), i)
+      currLayer = chunkDF %>% filter(!!parse_expr(idField) == newChunk) %>% slice(1) %>% pull(layer)
+      newChunkLayers = c(newChunkLayers, currLayer)
+      newIDs = c(newIDs, rezrObj$chunkDF[[currLayer]]$id[nrow(rezrObj$chunkDF[[currLayer]])])
       i = i + 1
     }
   }
+
+  #new = getTreeEntryForChunk(rezrObj$chunkDF$refexpr, rezrObj$nodeMap$chunk, rezrObj$treeEntryDF$default, rezrObj$nodeMap$treeEntry)
+  for(layer in newChunkLayers){
+    treeEntryAll = combineLayers(rezrObj, "treeEntry")
+    if("treeEntry" %in% names(rezrObj$chunkDF[[layer]])){
+      rezrObj$chunkDF[[layer]] = getTreeEntryForChunk(rezrObj$chunkDF[[layer]], rezrObj$nodeMap$chunk, treeEntryAll, rezrObj$nodeMap$treeEntry)
+    }
+  }
+
   if(addToTrack){
-    #todo: addToTrack
+    rezrObj = mergedChunksToTrack(rezrObj, mergedChunks = newIDs)
   }
   rezrObj
 }
