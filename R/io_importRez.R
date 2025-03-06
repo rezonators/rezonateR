@@ -302,7 +302,7 @@ importRez = function(paths, docnames = "", concatFields, layerRegex = list(), se
     for(name in dfNames) objList[[name]] = environment()[[name]]
 
     returnObj = new_rezrObj(objList)
-    message("Done!")
+    message("Done importing .rez file into R!")
     return(returnObj)
 }
 

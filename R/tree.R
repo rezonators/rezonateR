@@ -390,3 +390,9 @@ addAllPositionsAmongSiblings = function(rezrObj, cond = expr(TRUE)){
   }
   rezrObj
 }
+
+getNotieRank = function(v){
+  cats = unique(v)
+  cat_rank = rank(cats)
+  sapply(v, function(x) cat_rank[which(cats == x)])
+}

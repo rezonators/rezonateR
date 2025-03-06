@@ -75,8 +75,8 @@ rez_read_csv = function(path, origDF = NULL, lubridate = F, inclCols = character
         else if(is.integer(origDF[[x]])) result = col_integer()
         else if(is.double(origDF[[x]])) result = col_double()
         else if(is.numeric(origDF[[x]])) result = col_number()
-        else if(is.date(origDF[[x]])) result = col_date()
-        else if(is.time(origDF[[x]])) result = col_time()
+        else if("Date" %in% class(origDF[[x]])) result = col_date()
+        else if("chron" %in% class(origDF[[x]])) result = col_time()
         else if(lubridate){
           if(lubridate::is.instant(origDF[[x]]) | lubridate::is.timepoint(origDF[[x]])){
             result = col_datetime()
