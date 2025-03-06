@@ -1,6 +1,6 @@
 # rezonateR
 
-[`rezonateR`](rezonators.github.io/rezonateR/) (pronounced "resonate R") uses R (statistics software) to analyze and visualize data about natural language discourse. The data that `rezonateR` takes as input are those created by the companion tool [Rezonator](https://github.com/johnwdubois/rezonator). While the Rezonator tool is used for manual annotating and visualising discourse features and useful for qualitative analysis, `rezonateR` takes Rezonator input and helps perform automated or semi-automated annotation and prepare the data for quantitative analysis in R.
+[`rezonateR`](http://rezonators.github.io/rezonateR/) (pronounced "resonate R") uses R (statistics software) to analyze and visualize data about natural language discourse. The data that `rezonateR` takes as input are those created by the companion tool [Rezonator](https://github.com/johnwdubois/rezonator). While the Rezonator tool is used for manual annotating and visualising discourse features and useful for qualitative analysis, `rezonateR` takes Rezonator input and helps perform automated or semi-automated annotation and prepare the data for quantitative analysis in R.
 
 Some examples of research questions you could investigate with Rezonator + `rezonateR` include:
 
