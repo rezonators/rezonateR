@@ -249,7 +249,7 @@ getOrderFromSeq = function(id, isWord = T){
   ids = unique(id[!is.na(id) & id != 0])
   ord = integer(length(id))
   for(currID in ids){
-    ord[id == currID & isWord] = seq(1,length(id[id == currID & isWord]))
+    ord[id == currID & isWord & !is.na(id)] = seq(1,length(id[id == currID & isWord & !is.na(id)]))
   }
   ord
 }
